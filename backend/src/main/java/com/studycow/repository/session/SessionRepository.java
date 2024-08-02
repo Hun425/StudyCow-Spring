@@ -3,10 +3,12 @@ package com.studycow.repository.session;
 
 import com.studycow.dto.session.EnterRequestDto;
 import com.studycow.dto.session.SessionDto;
+import com.studycow.dto.session.SessionRankDto;
 import com.studycow.dto.session.SessionRequestDto;
 import jakarta.persistence.PersistenceException;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * <pre>
@@ -27,5 +29,8 @@ public interface SessionRepository {
     Integer roomStudyTime(int userId, Long roomId, LocalDate studyDate) throws PersistenceException;
 
     /** 방 퇴장 시 log 업데이트 */
-    void modifyStudyTime(SessionRequestDto sessionRequestDto, int userId) throws PersistenceException;
+    SessionDto modifyStudyTime(SessionRequestDto sessionRequestDto, int userId) throws PersistenceException;
+
+    /** 현재 방의 랭크 조회 */
+    List<SessionRankDto> roomRank(Long roomId, LocalDate studyDate) throws PersistenceException;
 }

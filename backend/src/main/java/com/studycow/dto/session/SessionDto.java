@@ -31,4 +31,20 @@ public class SessionDto {
     private LocalDateTime inDate;
     /** 퇴장 시간 */
     private LocalDateTime outDate;
+    /** 방 랭킹 정보 */
+    private List<SessionRankDto> rankDto;
+
+    public SessionDto(Long sessionId, int userId, Long roomId,
+                      LocalDate studyDate, Integer studyTime, Integer roomStudyTime,
+                      LocalDateTime inDate, LocalDateTime outDate) {
+        this.sessionId = sessionId;
+        this.userId = userId;
+        this.roomId = roomId;
+        this.studyDate = studyDate;
+        this.studyTime = studyTime;
+        this.roomStudyTime = roomStudyTime;
+        this.inDate = inDate;
+        this.outDate = outDate;
+        this.rankDto = null;
+    }
 }

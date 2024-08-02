@@ -3,6 +3,7 @@ package com.studycow.web.session;
 
 import com.studycow.dto.session.EnterRequestDto;
 import com.studycow.dto.session.SessionDto;
+import com.studycow.dto.session.SessionRankDto;
 import com.studycow.dto.session.SessionRequestDto;
 import com.studycow.dto.user.CustomUserDetails;
 import com.studycow.service.session.SessionService;
@@ -14,6 +15,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.List;
 
 /**
  * <pre>
@@ -71,11 +75,28 @@ public class SessionController {
             @AuthenticationPrincipal CustomUserDetails userDetails) {
         try {
             int userId = userDetails.getUser().getUserId();
-            sessionService.modifyStudyTime(sessionRequestDto, userId);
-            return new ResponseEntity<>("시간 갱신 성공", HttpStatus.OK);
+            SessionDto sessionDto = sessionService.modifyStudyTime(sessionRequestDto, userId);
+            return ResponseEntity.ok(sessionDto);
         } catch(Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("시간 갱신 실패", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Operation(summary = "랭크 조회", description="현재 방의 공부시간 랭킹을 조회합니다.")
+    @GetMapping("/rank/{roomId}")
+    public ResponseEntity<?> roomRank(
+            @PathVariable Long roomId,
+            @RequestParam LocalDate studyDate,
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
+        try {
+            //int userId = userDetails.getUser().getUserId();
+            List<SessionRankDto> rankDtoList = sessionService.roomRank(roomId, studyDate);
+            return ResponseEntity.ok(rankDtoList);
+
+        } catch(Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("방 입장 실패", HttpStatus.BAD_REQUEST);
         }
     }
 }
