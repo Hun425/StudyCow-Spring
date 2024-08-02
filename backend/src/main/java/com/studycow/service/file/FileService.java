@@ -16,4 +16,7 @@ public interface FileService {
     /** 파일 업로드 */
     String uploadFile(MultipartFile file) throws IOException;
 
+    /** 파일 삭제 */
+    void deleteFile(String fileLink) throws RuntimeException;
+
 }

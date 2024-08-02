@@ -14,6 +14,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.PersistenceException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -503,5 +504,56 @@ public class ScoreRepositoryImpl implements ScoreRepository{
         } catch(Exception e) {
             throw new PersistenceException("성적 조회 중 에러 발생", e);
         }
+    }
+
+    /**
+     * 과목별 n개월간의 평균 점수, 등급
+     * @param userId : 성적을 조회할 유저 id
+     * @param months : n개월
+     * @return
+     * @throws PersistenceException
+     */
+    @Override
+    public List<ResponseStatsDto> scoreStats(int userId, int months, LocalDate now) throws PersistenceException {
+        return queryFactory
+                .select(Projections.constructor(ResponseStatsDto.class,
+                        userSubjectScore.subjectCode.code,
+                        userSubjectScore.subjectCode.name,
+                        userSubjectScore.testScore.avg().round(),
+                        userSubjectScore.testGrade.avg().round()))
+                .from(userSubjectScore)
+                .where(userSubjectScore.user.id.eq(userId)
+                        .and(userSubjectScore.testDate.between(
+                                now.minusMonths(months), now
+                        )))
+                .groupBy(userSubjectScore.subjectCode.code)
+                .orderBy(userSubjectScore.subjectCode.code.asc())
+                .fetch();
+    }
+
+    /**
+     * 과목별 n개월간의 틀린 유형
+     *
+     * @param userId
+     * @param months
+     * @return
+     * @throws PersistenceException
+     */
+    @Override
+    public List<ScoreDetailStatsDto> statsDetail(int userId, int subCode, int months, LocalDate now) throws PersistenceException {
+        return queryFactory
+                .select(Projections.constructor(ScoreDetailStatsDto.class,
+                        wrongProblem.problemCategory.code,
+                        wrongProblem.problemCategory.name,
+                        wrongProblem.wrongCount.sum()))
+                .from(wrongProblem)
+                .where(wrongProblem.userSubjectScore.user.id.eq(userId)
+                        .and(wrongProblem.userSubjectScore.subjectCode.code.eq(subCode))
+                        .and(wrongProblem.userSubjectScore.testDate.between(
+                                now.minusMonths(months), now
+                        )))
+                .groupBy(wrongProblem.problemCategory.code)
+                .orderBy(wrongProblem.problemCategory.code.asc())
+                .fetch();
     }
 }

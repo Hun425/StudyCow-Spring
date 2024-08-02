@@ -1,12 +1,18 @@
 import "./styles/Infobox.css";
 
-const Infobox = ({ name }) => {
+const Infobox = ({ name, value, onChange, placeholder }) => {
   return (
     <div className="whole">
       <div className="title">
-        <p>{name}</p>
+        <p className="titleName">{name}</p>
       </div>
-      <input className="content" type="text" />
+      <input
+        className="content"
+        type="text"
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+      />
     </div>
   );
 };

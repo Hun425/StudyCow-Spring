@@ -135,10 +135,21 @@ public class StudyRoomRepositoryImpl implements StudyRoomRepository {
                 .set(studyRoom.roomStatus, requestDto.getRoomStatus())
                 .set(studyRoom.roomContent, requestDto.getRoomContent());
 
-        // 요청에 파일 있을 경우 클라우드에 업로드 후 링크 생성, 수정
+        // 요청에 파일 있을 경우 클라우드에 업로드 후 링크 생성, 수정(동적 쿼리)
         if (requestDto.getRoomThumb() != null) {
+            // 이전 사진 존재 확인
+            String prevThumb = getStudyRoomInfo(studyRoomId).getRoomThumb();
+
+            // 파일 업로드
             String fileLink = fileService.uploadFile(requestDto.getRoomThumb());
+
+            // 썸네일 설정
             updateClause.set(studyRoom.roomThumb, fileLink);
+
+            // 업로드 전에 있었다면 이전 이미지 삭제
+            if(prevThumb != null && !prevThumb.isBlank()) {
+                fileService.deleteFile(prevThumb);
+            }
         }
 
         updateClause.where(studyRoom.id.eq(studyRoomId));

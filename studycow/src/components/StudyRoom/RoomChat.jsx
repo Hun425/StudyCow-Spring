@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Form, Button, InputGroup, FormControl } from 'react-bootstrap';
+import { Button, InputGroup, FormControl } from 'react-bootstrap';
 
 function RoomChat() {
   const [messages, setMessages] = useState([]);

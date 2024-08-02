@@ -1,4 +1,4 @@
-package com.studycow.web;
+package com.studycow.web.score;
 
 
 import com.studycow.dto.common.SubjectCodeDto;
@@ -16,7 +16,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * <pre>
@@ -209,6 +208,22 @@ public class ScoreController {
     public ResponseEntity<?> recentScores(@PathVariable int userId) {
         try {
             List<ResponseScoreDto> responseScoreDtoList = scoreService.recentScores(userId);
+            return ResponseEntity.ok(responseScoreDtoList);
+        } catch(Exception e) {
+            //e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Operation(summary = "과목별 최근 5개 성적 조회", description = "과목별 최근 5개 성적을 조회합니다.")
+    @GetMapping("/{userId}/stats/{months}")
+    public ResponseEntity<?> statsScores(
+            @PathVariable int userId,
+            @PathVariable int months,
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
+        try {
+            int myId = userDetails.getUser().getUserId();
+            List<ResponseStatsDto> responseScoreDtoList = scoreService.scoreStats(userId, myId, months);
             return ResponseEntity.ok(responseScoreDtoList);
         } catch(Exception e) {
             //e.printStackTrace();

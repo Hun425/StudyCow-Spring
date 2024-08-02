@@ -1,10 +1,15 @@
 import "./styles/StudyRoomItem.css";
 
-const StudyRoomItem = () => {
+const StudyRoomItem = ({ title, thumb, maxPerson, nowPerson }) => {
   return (
-    <div className="studyRoomContainer">
-      <p className="studyRoomTitle">방 제목</p>
-      <p className="studyRoomCount">방 인원</p>
+    <div
+      className="studyRoomContainer"
+      style={{ backgroundImage: `url(${thumb})` }}
+    >
+      <p className="studyRoomTitle">{title}</p>
+      <p className="studyRoomCount">
+        {nowPerson}/{maxPerson}
+      </p>
       <button className="studyRoomEnterBtn">입장하기</button>
     </div>
   );

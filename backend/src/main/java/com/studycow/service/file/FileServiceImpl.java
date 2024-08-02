@@ -1,6 +1,7 @@
 package com.studycow.service.file;
 
-
+import com.google.cloud.storage.Blob;
+import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import lombok.RequiredArgsConstructor;
@@ -56,6 +57,45 @@ public class FileServiceImpl implements FileService {
         String fileLink = "https://storage.googleapis.com/studycow-bucket/" + uuid;
 
         return fileLink;
+    }
+
+    /**
+     * 파일 삭제
+     *
+     * @param fileLink 파일링크
+     * @throws RuntimeException
+     */
+    public void deleteFile(String fileLink) throws RuntimeException {
+        // 링크에서 파일 이름 추출
+        String fileName = extractFileNameFromLink(fileLink);
+
+        Blob blob = storage.get(bucketName, fileName);
+
+        System.out.println(fileLink.isBlank() + "," + fileName  + ", "+ blob);
+
+        // 파일 삭제
+        if (!fileLink.isBlank() && fileName != null && blob != null) {
+            Storage.BlobSourceOption precondition =
+                    Storage.BlobSourceOption.generationMatch(blob.getGeneration());
+
+            storage.delete(bucketName, fileName, precondition);
+        } else {
+            throw new RuntimeException("올바르지 않은 파일 링크입니다.");
+        }
+    }
+
+    /**
+     * 파일 링크에서 uuid로 된 파일명 추출
+     * @param fileLink 파일 링크
+     * @return String 파일명
+     */
+    private String extractFileNameFromLink(String fileLink) {
+        // https://storage.googleapis.com/studycow_bucket/fileName.jpg
+        // '/'를 delimiter로 나누기
+        String[] parts = fileLink.split("/");
+
+        // Bucket name 다음의 파일 이름
+        return parts.length > 4 ? parts[4] : null;
     }
 
 }

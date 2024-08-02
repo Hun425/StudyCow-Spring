@@ -58,12 +58,22 @@ public class UserController {
             MultipartFile file,
             UserUpdateDto userUpdateDto
     ) throws IOException {
-        //String token = authorizationHeader.replace("Bearer ", "");
-        //int currentUserId = jwtUtil.getUserId(token);
+        long userId = customUserDetails.getUser().getUserId();
 
+        // 프로필 사진 존재 확인
+        String prevUserThumb = userService.getUserInfo(userId).getUserThumb();
 
+        // 파일 넘어왔는지 확인
         if(file != null) {
+            // 파일 업로드
             String fileLink = fileService.uploadFile(file);
+
+            // 업로드 전에 있었다면 이전 이미지 삭제
+            if(prevUserThumb != null && !prevUserThumb.isBlank()) {
+                fileService.deleteFile(prevUserThumb);
+            }
+
+            // 회원 프로필 사진 설정
             userUpdateDto.setUserThumb(fileLink);
         }
 

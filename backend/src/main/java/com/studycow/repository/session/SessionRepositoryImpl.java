@@ -1,9 +1,13 @@
 package com.studycow.repository.session;
 
+import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.studycow.domain.*;
+import com.studycow.dto.score.ScoreDetailStatsDto;
 import com.studycow.dto.session.EnterRequestDto;
 import com.studycow.dto.session.SessionDto;
+import com.studycow.dto.session.SessionRankDto;
 import com.studycow.dto.session.SessionRequestDto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
@@ -14,6 +18,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 import static com.studycow.domain.QUserStudyRoomEnter.userStudyRoomEnter;
@@ -155,7 +160,7 @@ public class SessionRepositoryImpl implements SessionRepository{
      * @throws PersistenceException : JPA 표준 예외
      */
     @Override
-    public void modifyStudyTime(SessionRequestDto sessionRequestDto, int userId) throws PersistenceException {
+    public SessionDto modifyStudyTime(SessionRequestDto sessionRequestDto, int userId) throws PersistenceException {
         try {
             UserStudyRoomEnter ure = em.find(UserStudyRoomEnter.class,
                     Long.parseLong(sessionRequestDto.getSessionId()));
@@ -171,11 +176,47 @@ public class SessionRepositoryImpl implements SessionRepository{
                         .set(userStudyRoomEnter.studyTime, studyTime)
                         .where(userStudyRoomEnter.id.eq(ure.getId()))
                         .execute();
+
+                em.refresh(ure);
+
+                return new SessionDto(
+                        ure.getId(),
+                        ure.getUser().getId(),
+                        ure.getStudyRoom().getId(),
+                        ure.getStudyDate(),
+                        ure.getStudyTime(),
+                        0,
+                        ure.getInDate(),
+                        ure.getOutDate()
+                );
             }else{
                 throw new EntityNotFoundException("잘못된 세션 ID입니다.");
             }
         }catch(Exception e){
             throw new PersistenceException("시간 갱신 중 에러 발생", e);
         }
+    }
+
+    /**
+     * 현재 방의 랭크 조회
+     *
+     * @param roomId : 방 id
+     * @param studyDate : 공부 날짜
+     */
+    @Override
+    public List<SessionRankDto> roomRank(Long roomId, LocalDate studyDate) throws PersistenceException {
+        return queryFactory
+                .select(Projections.constructor(SessionRankDto.class,
+                        Expressions.template(Integer.class,
+                                "rank() over (order by {0} desc)"
+                                ,userStudyRoomEnter.studyTime.sum()),
+                        userStudyRoomEnter.user.id,
+                        userStudyRoomEnter.user.userNickname,
+                        userStudyRoomEnter.studyTime.sum()))
+                .from(userStudyRoomEnter)
+                .where(userStudyRoomEnter.studyRoom.id.eq(roomId)
+                        .and(userStudyRoomEnter.studyDate.eq(studyDate)))
+                .groupBy(userStudyRoomEnter.user.id)
+                .fetch();
     }
 }

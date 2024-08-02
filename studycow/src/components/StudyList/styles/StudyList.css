@@ -18,17 +18,17 @@
 
 .rankTitle {
   font-size: 30px;
-  margin-top: 16px;
+  margin: 40px 0px 20px; /* 상, 좌우, 하 */
 }
 
 .recentEnterTitle {
   font-size: 30px;
-  margin-top: 16px;
+  margin: 40px 0px 20px;
 }
 
 .studyListTitle {
   font-size: 30px;
-  margin-top: 16px;
+  margin: 40px 0px 20px;
 }
 
 .rankChange,
@@ -77,7 +77,7 @@
 .studyRoomGrid {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 50px;
   justify-content: flex-start;
 }
 

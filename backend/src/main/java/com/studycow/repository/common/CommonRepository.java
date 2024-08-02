@@ -20,4 +20,6 @@ public interface CommonRepository {
     List<SubjectCodeDto> viewSubject() throws PersistenceException;
     /** 오답 유형 리스트 조회 */
     List<CategoryCodeDto> viewCategory(int subCode) throws PersistenceException;
+    /** 타 유저의 정보 조회 시 공개 여부 확인 */
+    int checkPublic(int userId, int myId) throws PersistenceException;
 }

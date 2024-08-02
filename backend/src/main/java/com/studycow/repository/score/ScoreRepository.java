@@ -5,6 +5,7 @@ import com.studycow.dto.common.SubjectCodeDto;
 import com.studycow.dto.score.*;
 import jakarta.persistence.PersistenceException;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -58,4 +59,10 @@ public interface ScoreRepository {
 
     /** 최근 성적 조회 전 성적 목표 조회 */
     List<ResponseScoreDto> targetList(int userId) throws PersistenceException;
+
+    /** 과목별 n개월간의 평균 점수, 등급 */
+    List<ResponseStatsDto> scoreStats(int userId, int months, LocalDate now) throws PersistenceException;
+
+    /** 과목별 n개월간의 틀린 유형 */
+    List<ScoreDetailStatsDto> statsDetail(int userId, int subCode, int months, LocalDate now) throws PersistenceException;
 }

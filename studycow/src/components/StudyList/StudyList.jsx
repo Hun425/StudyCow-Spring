@@ -1,12 +1,18 @@
 import "./styles/StudyList.css";
 import StudyRoomItem from "./StudyRoomItem";
 import { Link } from "react-router-dom";
+import useStudyStore from "../../stores/study";
+import { useEffect } from "react";
 
 const StudyList = () => {
-  // return 전의 아래 코드는 나중에 API로 방 정보와 개수를 받아와 수정할 예정입니다
-  const rooms = Array(5)
-    .fill()
-    .map((_, index) => ({ id: index + 1, name: `Room ${index + 1}` }));
+  const { rooms, fetchRooms } = useStudyStore((state) => ({
+    rooms: state.rooms,
+    fetchRooms: state.fetchRooms,
+  }));
+
+  useEffect(() => {
+    fetchRooms();
+  }, [fetchRooms]);
 
   return (
     <div className="studyListContainer">
@@ -26,7 +32,13 @@ const StudyList = () => {
         <p className="studyListTitle">스터디룸 목록</p>
         <div className="studyRoomGrid">
           {rooms.map((room) => (
-            <StudyRoomItem key={room.id} room={room} />
+            <StudyRoomItem
+              key={room.id}
+              title={room.title}
+              thumb={room.thumb}
+              maxPerson={room.maxPerson}
+              nowPerson={room.nowPerson}
+            />
           ))}
         </div>
       </div>

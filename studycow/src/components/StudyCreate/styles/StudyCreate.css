@@ -27,7 +27,7 @@
   width: 700px;
   height: 350px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   flex-direction: column;
 }
@@ -71,4 +71,14 @@
   background-color: #84c1f6;
   margin-bottom: 10px;
   border: solid 1px black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.subbox img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }
