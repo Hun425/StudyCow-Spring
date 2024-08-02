@@ -4,11 +4,20 @@
     height: 70px;
     box-sizing: border-box;
     position: relative;
+    border-bottom: solid grey 0.1px;
 }
 
 .studyRoomMain {
     width: 1440px;
-    background-color: grey;
+    background-color: black;
     height: 703px;
     box-sizing: border-box;
+}
+
+.studyRoomSidebar {
+    width: 70px;
+    background-color: black;
+    height: 702.9px;
+    box-sizing: border-box;
+    border-right: solid grey 0.1px;
 }

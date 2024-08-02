@@ -1,0 +1,18 @@
+.StudySideContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 702.8px !important; /* 전체 화면 높이 */
+  }
+  
+  .studySideButtonContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .studySideSettingButtonContainer {
+    margin-top: auto; /* 설정 버튼을 컨테이너 하단에 배치 */
+  }
+  

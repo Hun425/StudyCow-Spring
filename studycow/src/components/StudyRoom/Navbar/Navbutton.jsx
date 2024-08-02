@@ -1,11 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import './styles/Navbutton.css'
 
-function Navbutton(image) {
+function Navbutton( {image, onButtonClick}) {
   return (
-    <>
-    <img src={image} alt="버튼이미지" />
-    </>
+    <button className="NavButtonContainer" onClick={onButtonClick}>
+      <img className="NavButtonImg" src={image} alt="버튼이미지" />
+    </button>
   );
 }
 export default Navbutton;

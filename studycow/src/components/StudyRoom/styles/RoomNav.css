@@ -1,0 +1,20 @@
+.StudyNavContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.studyNavButtonContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.utilButton, .exitButton {
+    display: flex;
+    align-items: center; /* 수직 정렬 */
+  }
+.exitButton {
+margin-left: '25px'
+}
+  

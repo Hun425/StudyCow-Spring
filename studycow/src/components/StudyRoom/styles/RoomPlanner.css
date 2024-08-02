@@ -1,0 +1,55 @@
+.todayPlanTitle {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.singleTodayPlanBox {
+    width: 300px;
+    height: auto;
+    max-height: 300px;
+    overflow-y: auto;
+    margin: 0;    /* 마진 0 */
+    padding: 20px;   /* 패딩 0 */
+    background-color: #f1c40f; /* 위쪽 붙이는 부분 색상 */
+    border-radius: 10px 10px; /* 붙이는 부분 둥글게 */
+    display: flex;
+    align-content: center;
+    justify-content: flex-start;
+    flex-direction: column;
+  }
+  
+  .singleTodayPlanContent {
+    width: 260px;
+    display: flex; /* 체크박스와 텍스트를 일렬로 정렬 */
+    align-items: center; /* 세로 방향 중앙 정렬 */
+    justify-content: flex-start;
+    border-bottom: 1px solid red; /* 빨간 밑줄 */
+    padding-top: 10px;   
+  }
+  
+  .singleTodayPlanContent label {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    font-size: 14px; /* 글자 크기 설정 */
+  }
+  
+  .singleTodayPlanContent input[type="checkbox"] {
+    margin-left: 10px; /* 체크박스 여백 */
+    margin-right: 10px; /* 체크박스 여백 */
+    width: 19px; /* 체크박스의 너비 */
+    height: 19px; /* 체크박스의 높이 */
+    /* transform 속성을 사용하여 체크박스의 크기를 비율로 조절 */
+    transform: scale(1); /* 1.5배 크기 조절 */
+  }
+  
+  .singleTodayPlanContent p {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    font-size: 14px; /* 글자 크기 설정 */
+    padding-left: 10px;
+  }

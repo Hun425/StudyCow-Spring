@@ -20,9 +20,11 @@ const getCurrentDate = () => {
 const usePlanStore = create(
   persist(
     (set) => ({
+      today: getCurrentDate(),
       date: getCurrentDate(),
       plans: [],
       subPlans: [],
+      todayPlans: [],
       // 특정 과목에 대한 계획 상태 업데이트
       subCode: 0,
       setSubPlans: (subPlans) => set({ subPlans: subPlans }),
@@ -35,6 +37,17 @@ const usePlanStore = create(
 
       // 특정 과목 업데이트 상태 확인
       updateSubPlanStatus: (planId) => {
+        set((state) => ({
+          subPlans: state.subPlans.map((plan) =>
+            plan.planId === planId
+              ? { ...plan, planStatus: plan.planStatus === 0 ? 1 : 0 }
+              : plan
+          ),
+        }));
+      },
+
+      // 특정 과목 업데이트 상태 확인
+      updateTodayPlanStatus: (planId) => {
         set((state) => ({
           subPlans: state.subPlans.map((plan) =>
             plan.planId === planId
@@ -57,6 +70,29 @@ const usePlanStore = create(
         }));
       },
       saveDate: (day) => set({ date: day }),
+      // 오늘 플랜 가져오기
+      getTodayPlanRequest: async (date) => {
+        const { token } = useInfoStore.getState();
+        const headers = {
+          Authorization: `Bearer ${token}`,
+        };
+        try {
+          const response = await axios.get(API_URL + "planner/list/day", {
+            params: { date },
+            headers,
+          });
+          if (response.status === 200) {
+            set({ todayPlans: response.data ?? [] });
+            return true;
+          } else {
+            throw new Error("정보불러오기 에러");
+          }
+        } catch (e) {
+          console.log(e);
+          return false;
+        }
+      }
+      ,
       getDatePlanRequest: async (date) => {
         const { token } = useInfoStore.getState();
         const headers = {
