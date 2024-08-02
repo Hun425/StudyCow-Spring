@@ -1,0 +1,87 @@
+.ScoreRegist-container {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f0f8f8;
+  border-radius: 8px;
+}
+
+.ScoreRegist-register,
+.ScoreRegist-mistake-register {
+  padding: 15px;
+  background-color: #dceaea;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+.ScoreRegist-form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* 내부 요소를 좌우 끝에 배치 */
+  margin-bottom: 10px;
+}
+
+.ScoreRegist-mistake-form {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.ScoreRegist-select,
+.ScoreRegist-input-number,
+.ScoreRegist-input-date {
+  width: 45%; /* 각 요소가 동일한 공간을 차지하도록 설정 */
+  margin-right: 2%;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: white;
+}
+
+.ScoreRegist-add-btn {
+  width: 48px;
+  height: 40px;
+  margin-left: 2%;
+  background-color: #7c9ee3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.ScoreRegist-remove-btn {
+  width: 48px;
+  height: 40px;
+  margin-left: 2%;
+  background-color: #e57373;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.ScoreRegist-button-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ScoreRegist-register-btn {
+  width: 48%;
+  padding: 10px;
+  background-color: #7c9ee3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.ScoreRegist-cancel-btn {
+  width: 48%;
+  padding: 10px;
+  background-color: #ccc;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}

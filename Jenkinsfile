@@ -1,12 +1,13 @@
 pipeline {
     agent any
     
+    
     environment {
         DOCKER_NETWORK = "studycow_network"
         GPT_API_KEY = credentials('gpt-api-key-id')
         VITE_API_BASE_URL = 'https://i11c202.p.ssafy.io/studycow/'
+        SPRING_PROFILES_ACTIVE = 'prod'
     }
-
     stages {
         stage('Checkout') {
             steps {
@@ -19,29 +20,28 @@ pipeline {
                 dir('backend') {
                     sh 'chmod +x ./gradlew'
                     sh './gradlew clean bootJar'
-                    sh 'docker build -t backend:${BUILD_NUMBER} .'
+                    sh 'docker build -t backend:${BUILD_NUMBER} --build-arg SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE} .'
                 }
             }
         }
         
         stage('Frontend - Build and Deploy') {
-    steps {
-        dir('studycow') {
-            sh 'npm install'
-            sh 'npm run build'
-            sh 'ls -la build'  // 빌드 결과물 확인
-            sh 'cat build/index.html || echo "index.html not found"'
-            sh 'echo "VITE_API_BASE_URL=${VITE_API_BASE_URL}" > .env'  
-            sh 'docker build -t frontend:${BUILD_NUMBER} --build-arg VITE_API_BASE_URL=${VITE_API_BASE_URL} .'
-            
-            sh 'docker stop frontend || true'
-            sh 'docker rm frontend || true'
-            sh 'docker run -d --name frontend --network studycow_network -p 3000:80 frontend:${BUILD_NUMBER}'
-            sh 'docker cp frontend:/usr/share/nginx/html ./nginx-content'
-
+            steps {
+                dir('studycow') {
+                    sh 'npm install'
+                    sh 'npm run build'
+                    sh 'ls -la build'
+                    sh 'cat build/index.html || echo "index.html not found"'
+                    sh 'echo "VITE_API_BASE_URL=${VITE_API_BASE_URL}" > .env'  
+                    sh 'docker build -t frontend:${BUILD_NUMBER} --build-arg VITE_API_BASE_URL=${VITE_API_BASE_URL} .'
+                    
+                    sh 'docker stop frontend || true'
+                    sh 'docker rm frontend || true'
+                    sh 'docker run -d --name frontend --network studycow_network -p 3000:80 frontend:${BUILD_NUMBER}'
+                    sh 'docker cp frontend:/usr/share/nginx/html ./nginx-content'
+                }
+            }
         }
-    }
-}
         
         stage('Backend - Deploy') {
             steps {
@@ -50,7 +50,14 @@ pipeline {
                     
                     sh 'docker stop backend || true'
                     sh 'docker rm backend || true'
-                    sh "docker run -d --name backend --network ${DOCKER_NETWORK} -p 8080:8080 -e GPT_API_KEY=${GPT_API_KEY} backend:${BUILD_NUMBER}"
+                    sh """
+                    docker run -d --name backend \
+                        --network ${DOCKER_NETWORK} \
+                        -p 8080:8080 \
+                        -e SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE} \
+                        -e GPT_API_KEY=${GPT_API_KEY} \
+                        backend:${BUILD_NUMBER}
+                    """
                 }
             }
         }
@@ -58,10 +65,9 @@ pipeline {
         stage('Health Check') {
             steps {
                 script {
-                    sh 'sleep 3'
-                    sh 'curl http://13.125.238.202:8080 || echo "Backend health check failed"'
-                    sh 'curl http://localhost:8080 || echo "Backend local test"'
-                    sh 'curl http://13.125.238.202 || echo "Frontend health check failed"'
+                    sh 'sleep 10'  // 서비스가 완전히 시작될 때까지 대기 시간
+                    sh 'curl -f http://13.125.238.202:8080/studycow/actuator/health || echo "Backend health check failed, but continuing deployment"'
+                    sh 'curl -f http://13.125.238.202/studycow || echo "Frontend health check failed, but continuing deployment"'
                 }
             }
         }

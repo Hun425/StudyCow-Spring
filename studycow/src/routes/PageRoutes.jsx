@@ -29,6 +29,9 @@ import StudyList from "../components/StudyList/StudyList.jsx";
 import StudyCreate from "../components/StudyCreate/StudyCreate.jsx";
 import StudyRoom from "../components/StudyRoom/StudyRoom.jsx";
 
+// 성적 등록
+import ScoreRegist from "../components/ScoreRegist/ScoreRegist.jsx";
+
 const PageRoutes = () => (
   <Routes>
     {/* 마이페이지 */}
@@ -51,7 +54,7 @@ const PageRoutes = () => (
       <Route path="" element={<StudyList />} />
       <Route path="create" element={<StudyCreate />} />
     </Route>
-              {/* 스터디룸 테스트 */}
+    {/* 스터디룸 테스트 */}
     <Route path="/test" element={<StudyRoom />} />
 
     {/* 플랜 */}
@@ -63,6 +66,9 @@ const PageRoutes = () => (
 
     {/* 성적분석 */}
     <Route path="/analyze" element={<a>analyze</a>}></Route>
+
+    {/*성적등록*/}
+    <Route path="/score/regist" element={<ScoreRegist />} />
   </Routes>
 );
 
