@@ -111,4 +111,16 @@ public class StudyRoomController {
 
     }
 
+    @Operation(summary = "최근 입장 목록 조회", description = "최근 입장한 스터디룸 목록을 조회합니다.")
+    @GetMapping("/recent")
+    public ResponseEntity<?> recentRoom(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        try {
+            int userId = userDetails.getUser().getUserId();
+            List<StudyRoomDto> studyRoomDtoList = studyRoomService.recentStudyRoom(userId);
+            return ResponseEntity.ok(studyRoomDtoList);
+        } catch (Exception e) {
+            return new ResponseEntity<>("스터디룸 목록 조회 실패 : " + e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }
