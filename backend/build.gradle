@@ -46,13 +46,19 @@ dependencies {
 	implementation 'org.modelmapper:modelmapper:3.0.0'
 	implementation 'org.modelmapper:modelmapper-module-jsr310:1.2.3'
 
+	// STOMP 라이브러리
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	implementation 'org.webjars:webjars-locator-core'
+	implementation 'org.webjars:sockjs-client:1.5.1'
+	implementation 'org.webjars:stomp-websocket:2.3.4'
+	implementation 'org.webjars:bootstrap:5.2.3'
+	implementation 'org.webjars:jquery:3.6.4'
+
 	// STOMP 웹 소켓 서버 사이드 테스트 (SSR)
 	implementation 'org.springframework.boot:spring-boot-starter-mustache'
 
 	// STOMP 관련 프론트 라이브러리
-	implementation 'org.webjars.bower:jquery:3.3.1'
-	implementation 'org.webjars:sockjs-client:1.1.2'
-	implementation 'org.webjars:stomp-websocket:2.3.3-1'
+
 	implementation 'org.webjars:webjars-locator:0.30'
 
 	// WebRTC 클라이언트 의존성

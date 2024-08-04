@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface UserStudyRoomChatRepository extends JpaRepository<UserStudyRoomChat, Long> {
     List<UserStudyRoomChat> findByStudyRoomIdOrderByChatInDateDesc(Long studyRoomId, Pageable pageable);
+
 }
