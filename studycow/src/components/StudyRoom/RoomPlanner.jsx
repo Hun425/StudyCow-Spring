@@ -16,6 +16,12 @@ function RoomPlanner() {
     8: "제2외국어/한문",
   };
 
+  const formatPlanStudyTime = (minutes) => {
+    const hours = Math.floor(minutes / 60);
+    const remainingMinutes = minutes % 60;
+    return String(hours).padStart(2, '0') + ':' + String(remainingMinutes).padStart(2, '0');
+  };
+
   const handleCheckboxChange = (planId) => {
     updateTodayPlanStatus(planId); // 스토어에 상태 업데이트 요청
   };
@@ -36,7 +42,7 @@ function RoomPlanner() {
                   checked={plan.planStatus === 1}
                   onChange={() => handleCheckboxChange(plan.planId)}
                 />
-                {`0${plan.planStudyTime}:00`} {/* 입력된 시간 표시 */}
+                {`${formatPlanStudyTime(plan.planStudyTime)}`} {/* 입력된 시간 표시 */}
               </label>
               <p>
                 {`${plan.planContent}`} {/* 세부내용 표시 */}

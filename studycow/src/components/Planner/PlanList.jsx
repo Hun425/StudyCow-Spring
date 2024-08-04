@@ -28,6 +28,12 @@ const PlanList = () => {
     navigate(`/Modify/${planId}`); // 수정 페이지로 이동
   };
 
+  const formatPlanStudyTime = (minutes) => {
+    const hours = Math.floor(minutes / 60);
+    const remainingMinutes = minutes % 60;
+    return String(hours).padStart(2, '0') + ':' + String(remainingMinutes).padStart(2, '0');
+  };
+
   return (
     <div className="singlePlanBox">
       {plans.length === 0 ? (
@@ -43,7 +49,7 @@ const PlanList = () => {
                   checked={plan.planStatus === 1}
                   onChange={() => handleCheckboxChange(plan.planId)}
                 />
-                {`0${plan.planStudyTime}:00`} {/* 입력된 시간 표시 */}
+                {`${formatPlanStudyTime(plan.planStudyTime)}`} {/* 입력된 시간 표시 */}
               </label>
               <p>
                 {`${sub_code_dic[`${plan.subCode}`]}`} {/* 과목 표시 */}
