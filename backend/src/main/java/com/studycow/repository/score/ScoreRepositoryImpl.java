@@ -2,6 +2,7 @@ package com.studycow.repository.score;
 
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPAExpressions;
@@ -44,18 +45,20 @@ public class ScoreRepositoryImpl implements ScoreRepository{
     private final EntityManager em;
     private final JPAQueryFactory queryFactory;
 
-    /**과목별 등록한 성적 조회
+    /**
+     * (과목별) 등록한 성적 조회
      * <pre>
      *      현재 로그인한 userId, 입력받은 과목코드를 기반으로
      *      등록된 성적들을 불러온다
+     *      과목코드가 null일 경우 회원의 등록 성적 목록을 조회함.
      * </pre>
-     * @param userId : 내 회원 ID
-     * @param subCode : 과목 코드
+     * @param userId 내 회원 ID
+     * @param subCode 과목 코드(null일 경우 회원의 전체 성적 조회)
      * @return : ScoreDto 리스트
      * @throws PersistenceException : JPA 표준 예외
      */
     @Override
-    public List<ScoreDto> listScores(int userId, int subCode, int myId, int limitCnt) throws PersistenceException {
+    public List<ScoreDto> listScores(int userId, Integer subCode, int myId, int limitCnt) throws PersistenceException {
         try{
             User user = em.find(User.class, userId);
 
@@ -73,7 +76,7 @@ public class ScoreRepositoryImpl implements ScoreRepository{
                     ))
                     .from(userSubjectScore)
                     .where(userSubjectScore.user.id.eq(user.getId())
-                            .and(userSubjectScore.subjectCode.code.eq(subCode)))
+                            .and(hasSubCode(subCode)))
                     .orderBy(userSubjectScore.testDate.desc());
             if(limitCnt > 0){
                 query.limit(limitCnt);
@@ -87,6 +90,7 @@ public class ScoreRepositoryImpl implements ScoreRepository{
         }
     }
 
+
     /** 단일 성적 조회
      * <pre>
      *      List로부터 받아온 ID를 기반으로
@@ -96,7 +100,6 @@ public class ScoreRepositoryImpl implements ScoreRepository{
      * @return : ScoreDto
      * @throws PersistenceException : JPA 표준 예외
      */
-
     @Override
     public ScoreDto scoreDetail(Long scoreId, int userId, int myId) throws PersistenceException {
         try {
@@ -556,4 +559,15 @@ public class ScoreRepositoryImpl implements ScoreRepository{
                 .orderBy(wrongProblem.problemCategory.code.asc())
                 .fetch();
     }
+
+    /**
+     * 과목 코드 존재 여부에 따른 동적 쿼리
+     *
+     * @param subCode 과목코드
+     * @return BooleanExpression
+     */
+    private BooleanExpression hasSubCode(Integer subCode) {
+        return subCode != null ? userSubjectScore.subjectCode.code.eq(subCode) : null;
+    }
+
 }

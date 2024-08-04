@@ -203,7 +203,7 @@ public class ScoreController {
         }
     }
 
-    @Operation(summary = "과목별 최근 5개 성적 조회", description = "과목별 최근 5개 성적을 조회합니다.")
+    @Operation(summary = "과목 목표별 최근 5개 성적 조회", description = "과목별 최근 5개 성적을 조회합니다.")
     @GetMapping("/{userId}/auto")
     public ResponseEntity<?> recentScores(@PathVariable int userId) {
         try {
@@ -215,7 +215,7 @@ public class ScoreController {
         }
     }
 
-    @Operation(summary = "과목별 최근 5개 성적 조회", description = "과목별 최근 5개 성적을 조회합니다.")
+    @Operation(summary = "과목 목표별 최근 5개 성적 조회", description = "과목별 최근 5개 성적을 조회합니다.")
     @GetMapping("/{userId}/stats/{months}")
     public ResponseEntity<?> statsScores(
             @PathVariable int userId,

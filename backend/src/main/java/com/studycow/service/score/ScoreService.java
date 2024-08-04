@@ -5,7 +5,6 @@ import com.studycow.dto.score.*;
 import jakarta.persistence.PersistenceException;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * <pre>
@@ -47,6 +46,9 @@ public interface ScoreService {
 
     /** 과목별 최근 5개 성적 조회 */
     List<ResponseScoreDto> recentScores(int userId) throws Exception;
+
+    /** 회원의 최근 5개 성적 가져오기 */
+    List<ScoreDto> recentUserScore(int userId) throws Exception;
 
     /** 최근 n개월간의 성적 통계 */
     List<ResponseStatsDto> scoreStats(int userId, int myId, int months) throws Exception;

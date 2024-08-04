@@ -5,6 +5,7 @@ import com.studycow.dto.openai.ChatGPTResponse;
 import com.studycow.dto.openai.PlannerChatRequest;
 import com.studycow.dto.openai.ScoreChatRequest;
 import com.studycow.dto.score.ResponseScoreDto;
+import com.studycow.dto.score.ScoreDto;
 import com.studycow.service.score.ScoreService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -57,23 +58,19 @@ public class ChatGPTController {
         return chatGPTResponse.getChoices().get(0).getMessage().getContent();
     }
 
-    /**
-     * 플래너 프롬프트 응답
-     *
-     * @return
-     */
+
     @Operation(summary = "플래너 자동화", description = "chatGPT를 이용하여 플래너 자동 생성. 오남용 금지")
     @GetMapping("/auto-planner/{userId}")
     public ResponseEntity<?> plannerAdvice(@PathVariable("userId") int userId) {
         try {
-            List<ResponseScoreDto> recentScores = scoreService.recentScores(userId);
+            List<ScoreDto> recentScores = scoreService.recentUserScore(userId);
             PlannerChatRequest request = new PlannerChatRequest(model, recentScores);
             ChatGPTResponse chatGPTResponse = template.postForObject(apiURL, request, ChatGPTResponse.class);
             return ResponseEntity.ok(chatGPTResponse.getChoices().get(0).getMessage().getContent());
+//            return new ResponseEntity<>("OK", HttpStatus.OK);
         } catch(Exception e)  {
             return new ResponseEntity<>("플래너 자동생성 실패", HttpStatus.BAD_REQUEST);
         }
     }
-
 
 }
