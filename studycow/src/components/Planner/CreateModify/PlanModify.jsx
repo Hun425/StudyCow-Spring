@@ -81,10 +81,8 @@ const PlanModify = ({ planId, show, onClose }) => {
   useEffect(() => {
     if (selectedSubject) {
       setSubSubjects(sub_subjects_dic[selectedSubject] || []);
-      setSelectedSubSubject(sub_subjects_dic[selectedSubject]?.[0] || "");
     } else {
       setSubSubjects([]);
-      setSelectedSubSubject("");
     }
   }, [selectedSubject]);
 
@@ -100,13 +98,12 @@ const PlanModify = ({ planId, show, onClose }) => {
 
           if (response.ok) {
             const data = await response.json();
-            console.log("Fetched Data:", data);
-            setSelectedSubject(sub_code_dic[data.subCode] || "");
+            setSelectedSubject(sub_code_dic[data.subCode]);
             setSelectedSubSubject(data.planContent);
             setSelectedTime(Math.floor(data.planStudyTime / 60));
             setSelectedMinutes(data.planStudyTime % 60);
-            setContent(data.planContent || "");
-            setDate(data.planDate || new Date().toISOString().slice(0, 10));
+            setContent(data.planContent);
+            setDate(data.planDate);
           } else {
             console.error("Failed to fetch planner data.");
           }
@@ -140,8 +137,6 @@ const PlanModify = ({ planId, show, onClose }) => {
       planStatus: 0,
     };
 
-    console.log("Submitting Data:", data); // 디버그용 로그
-
     try {
       const response = await fetch(modifyPlannerUrl(planId), {
         method: "PATCH",
@@ -157,12 +152,9 @@ const PlanModify = ({ planId, show, onClose }) => {
         onClose(); // 모달 닫기
         window.location.reload(); // 페이지 새로고침
       } else {
-        const errorData = await response.json();
-        console.error("Server response:", errorData);
         alert("플래너 수정에 실패했습니다.");
       }
     } catch (error) {
-      console.error("플래너 수정 중 오류가 발생했습니다:", error);
       alert("플래너 수정 중 오류가 발생했습니다.");
     }
   };
@@ -189,24 +181,6 @@ const PlanModify = ({ planId, show, onClose }) => {
               {Object.entries(sub_code_dic).map(([key, value]) => (
                 <option key={key} value={value}>
                   {value}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="CreateModify-form-group">
-            <label htmlFor="subSubject">세부 과목</label>
-            <select
-              id="subSubject"
-              name="subSubject"
-              onChange={(e) => setSelectedSubSubject(e.target.value)}
-              value={selectedSubSubject}
-            >
-              <option value="" disabled hidden>
-                세부 과목 선택
-              </option>
-              {subSubjects.map((sub, index) => (
-                <option key={index} value={sub}>
-                  {sub}
                 </option>
               ))}
             </select>

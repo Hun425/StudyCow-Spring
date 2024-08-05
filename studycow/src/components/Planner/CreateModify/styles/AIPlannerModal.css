@@ -1,5 +1,4 @@
-/* AIPlannerModal.css */
-.AIPlannerModalOverlay {
+.ai-planner-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -12,23 +11,70 @@
   z-index: 1000;
 }
 
-.AIPlannerModalContent {
+.ai-planner-modal-content {
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  max-width: 600px;
+  max-width: 1000px;
   width: 90%;
 }
 
-.AIPlannerModalButtons {
+.ai-planner-modal-content-body {
+  max-height: 400px; /* 최대 높이를 설정하여 스크롤 가능하게 */
+  overflow-y: auto; /* 수직 스크롤 활성화 */
+}
+
+.ai-planner-modal-table {
+  width: 100%;
+  border-collapse: collapse; /* 테두리 중첩 제거 */
+}
+
+.ai-planner-modal-table th,
+.ai-planner-modal-table td {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.ai-planner-modal-table th {
+  background-color: #f9f9f9; /* 테이블 헤더의 배경색 */
+  font-weight: bold;
+}
+
+.ai-planner-modal-table td {
+  vertical-align: middle; /* 세로 가운데 정렬 */
+}
+
+.ai-planner-modal-time-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ai-planner-modal-time-input input {
+  width: 50px;
+  margin: 0 5px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.ai-planner-modal-time-input span {
+  margin-left: 5px;
+  font-size: 0.9em;
+  color: #333;
+}
+
+.ai-planner-modal-buttons {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
 }
 
-.AIPlannerModalRegisterButton,
-.AIPlannerModalCloseButton {
+.ai-planner-modal-register-button,
+.ai-planner-modal-close-button {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -36,20 +82,36 @@
   transition: background-color 0.3s ease;
 }
 
-.AIPlannerModalRegisterButton {
+.ai-planner-modal-register-button {
   background-color: #4caf50;
   color: white;
 }
 
-.AIPlannerModalRegisterButton:hover {
+.ai-planner-modal-register-button:hover {
   background-color: #45a049;
 }
 
-.AIPlannerModalCloseButton {
+.ai-planner-modal-close-button {
   background-color: #f44336;
   color: white;
 }
 
-.AIPlannerModalCloseButton:hover {
+.ai-planner-modal-close-button:hover {
   background-color: #d32f2f;
+}
+
+.edit-button,
+.save-button {
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.edit-button:hover,
+.save-button:hover {
+  background-color: #1976d2;
 }

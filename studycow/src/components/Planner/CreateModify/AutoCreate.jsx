@@ -8,7 +8,6 @@ import "./styles/AutoCreate.css"; // 스타일 임포트
 const AutoCreate = ({ show, onClose }) => {
   const { generatePlanner } = useOpenAiStore(); // AI 플래너 생성 함수 가져오기
 
-  const [requestDay, setRequestDay] = useState(5);
   const [startDay, setStartDay] = useState(
     new Date().toISOString().slice(0, 10)
   );
@@ -19,7 +18,7 @@ const AutoCreate = ({ show, onClose }) => {
   const [showAIPlannerModal, setShowAIPlannerModal] = useState(false); // AIPlannerModal 표시 여부 상태
 
   const handleCreate = async () => {
-    const result = await generatePlanner(requestDay, startDay, studyTime);
+    const result = await generatePlanner(startDay, studyTime);
     if (result) {
       setAnalysis(result.analysis);
       setAiPlans(result.plans);
@@ -36,7 +35,7 @@ const AutoCreate = ({ show, onClose }) => {
       <div className="AutoCreateModalOverlay">
         <div className="AutoCreateModalContent">
           <h2>AI 플래너 자동 생성</h2>
-          <div className="AutoCreate-form-group">
+          {/* <div className="AutoCreate-form-group">
             <label>몇일치 생성할까요?</label>
             <input
               type="number"
@@ -45,7 +44,7 @@ const AutoCreate = ({ show, onClose }) => {
               min="1"
               max="7"
             />
-          </div>
+          </div> */}
           <div className="AutoCreate-form-group">
             <label>시작 날짜</label>
             <input

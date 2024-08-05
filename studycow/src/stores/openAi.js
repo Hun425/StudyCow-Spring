@@ -8,7 +8,7 @@ const API_URL =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/studycow/";
 
 const useOpenAiStore = create((set) => ({
-  generatePlanner: async (requestDay, startDay, studyTime) => {
+  generatePlanner: async (startDay, studyTime) => {
     const { token } = useInfoStore.getState(); // 사용자 토큰 가져오기
 
     try {
@@ -17,7 +17,6 @@ const useOpenAiStore = create((set) => ({
           Authorization: `Bearer ${token}`,
         },
         params: {
-          requestDay,
           startDay,
           studyTime,
         },
