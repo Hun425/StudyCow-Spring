@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 
-import com.studycow.dto.session.LogRequestDto;
-import com.studycow.dto.session.StudyRoomLogDto;
+import com.studycow.dto.roomLog.LogRequestDto;
+import com.studycow.dto.roomLog.StudyRoomLogDto;
 import com.studycow.dto.user.CustomUserDetails;
-import com.studycow.service.session.SessionService;
+import com.studycow.service.roomLog.RoomLogService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.PostConstruct;
@@ -49,7 +49,7 @@ public class OpenViduController {
     private String OPENVIDU_SECRET;
 
     private OpenVidu openvidu;
-    private final SessionService sessionService;
+    private final RoomLogService roomLogService;
 
     @PostConstruct
     public void init() {
@@ -84,7 +84,7 @@ public class OpenViduController {
             Connection connection = session.createConnection(properties);
 
             int userId = userDetails.getUser().getUserId();
-            StudyRoomLogDto studyRoomLogDto = sessionService.enterRoom(studyRoomId, userId);
+            StudyRoomLogDto studyRoomLogDto = roomLogService.enterRoom(studyRoomId, userId);
             studyRoomLogDto.setToken(connection.getToken());
             //토큰 반환
             return ResponseEntity.ok(studyRoomLogDto);
@@ -130,7 +130,7 @@ public class OpenViduController {
             }
 
             int userId = userDetails.getUser().getUserId();
-            StudyRoomLogDto studyRoomLogDto = sessionService.exitRoom(logRequestDto, userId);
+            StudyRoomLogDto studyRoomLogDto = roomLogService.exitRoom(logRequestDto, userId);
 
             return ResponseEntity.ok(studyRoomLogDto);
         } catch (Exception e) {

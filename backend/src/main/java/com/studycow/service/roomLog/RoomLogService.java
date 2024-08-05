@@ -1,20 +1,20 @@
-package com.studycow.service.session;
+package com.studycow.service.roomLog;
 
-import com.studycow.dto.session.StudyRoomLogDto;
-import com.studycow.dto.session.SessionRankDto;
-import com.studycow.dto.session.LogRequestDto;
+import com.studycow.dto.roomLog.StudyRoomLogDto;
+import com.studycow.dto.roomLog.SessionRankDto;
+import com.studycow.dto.roomLog.LogRequestDto;
 
 import java.time.LocalDate;
 import java.util.List;
 
 /**
  * <pre>
- *      방 세션 관련 서비스 인터페이스
+ *      방 내부활동 서비스 인터페이스
  * </pre>
  * @author 노명환
  * @since JDK17
  */
-public interface SessionService {
+public interface RoomLogService {
     /** 방 입장 시도 */
     StudyRoomLogDto enterRoom(Long roomId, int userId) throws Exception;
     /** 방 퇴장 시도 */

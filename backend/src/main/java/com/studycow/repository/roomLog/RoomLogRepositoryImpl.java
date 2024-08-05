@@ -1,12 +1,12 @@
-package com.studycow.repository.session;
+package com.studycow.repository.roomLog;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.studycow.domain.*;
-import com.studycow.dto.session.StudyRoomLogDto;
-import com.studycow.dto.session.SessionRankDto;
-import com.studycow.dto.session.LogRequestDto;
+import com.studycow.dto.roomLog.StudyRoomLogDto;
+import com.studycow.dto.roomLog.SessionRankDto;
+import com.studycow.dto.roomLog.LogRequestDto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
@@ -22,14 +22,14 @@ import static com.studycow.domain.QUserStudyRoomEnter.userStudyRoomEnter;
 
 /**
  * <pre>
- *      방 세션 관련 레포지토리 구현
+ *      방 내부활동 레포지토리 구현
  * </pre>
  * @author 노명환
  * @since JDK17
  */
 @Repository
 @RequiredArgsConstructor
-public class SessionRepositoryImpl implements SessionRepository{
+public class RoomLogRepositoryImpl implements RoomLogRepository {
 
     @PersistenceContext
     private final EntityManager em;

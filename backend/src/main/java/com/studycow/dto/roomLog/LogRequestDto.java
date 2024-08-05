@@ -1,4 +1,4 @@
-package com.studycow.dto.session;
+package com.studycow.dto.roomLog;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

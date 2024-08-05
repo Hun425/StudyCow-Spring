@@ -1,9 +1,9 @@
-package com.studycow.repository.session;
+package com.studycow.repository.roomLog;
 
 
-import com.studycow.dto.session.StudyRoomLogDto;
-import com.studycow.dto.session.SessionRankDto;
-import com.studycow.dto.session.LogRequestDto;
+import com.studycow.dto.roomLog.StudyRoomLogDto;
+import com.studycow.dto.roomLog.SessionRankDto;
+import com.studycow.dto.roomLog.LogRequestDto;
 import jakarta.persistence.PersistenceException;
 
 import java.time.LocalDate;
@@ -11,13 +11,13 @@ import java.util.List;
 
 /**
  * <pre>
- *      방 세션 관련 레포지토리 인터페이스
+ *      방 내부활동 레포지토리 인터페이스
  * </pre>
  * @author 노명환
  * @since JDK17
  */
 
-public interface SessionRepository {
+public interface RoomLogRepository {
     /** 방 입장 시 log 입력 */
     StudyRoomLogDto enterRoom(Long roomId, int userId) throws PersistenceException;
 
