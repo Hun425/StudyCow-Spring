@@ -4,7 +4,7 @@ import com.studycow.dto.chat.ChatMessage;
 import com.studycow.dto.chat.ChatRoom;
 import com.studycow.repository.chat.ChatRoomRepository;
 import com.studycow.repository.user.UserRepository;
-import com.studycow.service.chat.RedisPublisher;
+
 import com.studycow.config.jwt.JwtUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -30,7 +30,7 @@ public class ChatController {
 
     private final ChatRoomRepository chatRoomRepository;
     private final UserRepository userRepository;
-    private final RedisPublisher redisPublisher;
+
     private final JwtUtil jwtUtil;
 
     @Operation(summary = "방 생성", description = "새로운 채팅 방을 생성합니다.")
