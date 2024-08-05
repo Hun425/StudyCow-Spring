@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 방 입장 요청 Dto
+ * 학습시간 갱신 및 방 퇴장 요청 Dto
  * @author 노명환
  * @since JDK17
  */
@@ -13,6 +13,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EnterRequestDto {
-    private String roomId;
+
+public class LogRequestDto {
+    private Long logId;
+    private int studyTime;
+    private String token;
 }

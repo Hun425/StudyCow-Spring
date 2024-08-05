@@ -4,12 +4,19 @@ import java.util.List;
 import java.util.Map;
 
 
+import com.studycow.dto.session.LogRequestDto;
+import com.studycow.dto.session.StudyRoomLogDto;
+import com.studycow.dto.user.CustomUserDetails;
+import com.studycow.service.session.SessionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.PostConstruct;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import io.openvidu.java.client.Connection;
@@ -32,6 +39,7 @@ import io.openvidu.java.client.SessionProperties;
 @CrossOrigin(origins = "*")
 @RequestMapping("/openvidu")
 @RestController
+@RequiredArgsConstructor
 public class OpenViduController {
 
     @Value("${OPENVIDU_URL}")
@@ -41,6 +49,7 @@ public class OpenViduController {
     private String OPENVIDU_SECRET;
 
     private OpenVidu openvidu;
+    private final SessionService sessionService;
 
     @PostConstruct
     public void init() {
@@ -56,7 +65,10 @@ public class OpenViduController {
      */
     @Operation(summary = "방 입장(연결)", description = "방(세션) ID로 세션을 조회하고 없을 시, 세션을 생성합니다.<br>세션이 있는 경우 연결하고 커넥션 토큰을 반환합니다.")
     @PostMapping("/connect/{studyRoomId}")
-    public ResponseEntity<String> createConnection(@PathVariable("studyRoomId") Long studyRoomId, @RequestBody(required = false) Map<String, Object> params) {
+    public ResponseEntity<?> createConnection(
+            @PathVariable("studyRoomId") Long studyRoomId,
+            @RequestBody(required = false) Map<String, Object> params,
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
         try {
             // 세션이 존재하는지 확인
             Session session = openvidu.getActiveSession(studyRoomId.toString());
@@ -71,8 +83,11 @@ public class OpenViduController {
             ConnectionProperties properties = new ConnectionProperties.Builder().build();
             Connection connection = session.createConnection(properties);
 
+            int userId = userDetails.getUser().getUserId();
+            StudyRoomLogDto studyRoomLogDto = sessionService.enterRoom(studyRoomId, userId);
+            studyRoomLogDto.setToken(connection.getToken());
             //토큰 반환
-            return new ResponseEntity<>(connection.getToken(), HttpStatus.OK);
+            return ResponseEntity.ok(studyRoomLogDto);
         } catch (Exception e) {
             return new ResponseEntity<>("방 입장 실패 : " + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -80,14 +95,15 @@ public class OpenViduController {
 
     @Operation(
             summary = "연결 종료",
-            description = "방(세션) ID의 token에 해당하는 연결을 종료합니다.<br>마지막 연결일 경우, 세션을 닫습니다.<br>{'token': 'string'} 전달")
+            description = "방(세션) ID의 token에 해당하는 연결을 종료합니다.<br>마지막 연결일 경우, 세션을 닫습니다.<br>token : 방id 전달")
     @PostMapping("/disconnect/{studyRoomId}")
     public ResponseEntity<?> disconnect(
             @PathVariable("studyRoomId") Long studyRoomId,
-            @RequestBody Map<String, String> requestBody
+            @RequestBody @Valid LogRequestDto logRequestDto,
+            @AuthenticationPrincipal CustomUserDetails userDetails
     ) {
         try {
-            String token = requestBody.get("token");
+            String token = logRequestDto.getToken();
             Session session = openvidu.getActiveSession(studyRoomId.toString());
 
             // Openvidu 에서 사용자 연결 끊기
@@ -113,7 +129,10 @@ public class OpenViduController {
                 session.close();
             }
 
-            return new ResponseEntity<>("연결 종료 성공", HttpStatus.OK);
+            int userId = userDetails.getUser().getUserId();
+            StudyRoomLogDto studyRoomLogDto = sessionService.exitRoom(logRequestDto, userId);
+
+            return ResponseEntity.ok(studyRoomLogDto);
         } catch (Exception e) {
             return new ResponseEntity<>("연결 종료 실패 : " + e.getMessage(), HttpStatus.BAD_REQUEST);
         }

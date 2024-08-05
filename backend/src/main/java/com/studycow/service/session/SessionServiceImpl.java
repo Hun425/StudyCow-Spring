@@ -1,9 +1,8 @@
 package com.studycow.service.session;
 
-import com.studycow.dto.session.EnterRequestDto;
-import com.studycow.dto.session.SessionDto;
+import com.studycow.dto.session.StudyRoomLogDto;
 import com.studycow.dto.session.SessionRankDto;
-import com.studycow.dto.session.SessionRequestDto;
+import com.studycow.dto.session.LogRequestDto;
 import com.studycow.repository.session.SessionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @Service
@@ -23,56 +21,50 @@ public class SessionServiceImpl implements SessionService{
 
     @Override
     @Transactional
-    public SessionDto enterRoom(EnterRequestDto enterRequestDto, int userId) throws Exception {
+    public StudyRoomLogDto enterRoom(Long roomId, int userId) throws Exception {
         //방 입장 시 log 입력
-        SessionDto sessionDto = sessionRepository.enterRoom(enterRequestDto, userId);
+        StudyRoomLogDto studyRoomLogDto = sessionRepository.enterRoom(roomId, userId);
 
         //해당 방에서 금일 공부한 시간 조회
-        sessionDto.setRoomStudyTime(sessionRepository.roomStudyTime(
-                sessionDto.getUserId(),
-                sessionDto.getRoomId(),
-                sessionDto.getStudyDate()
+        studyRoomLogDto.setRoomStudyTime(sessionRepository.roomStudyTime(
+                studyRoomLogDto.getUserId(),
+                studyRoomLogDto.getRoomId(),
+                studyRoomLogDto.getStudyDate()
         ));
 
-        sessionDto.setRankDto(sessionRepository.roomRank(
-                sessionDto.getRoomId(), sessionDto.getStudyDate()
+        studyRoomLogDto.setRankDto(sessionRepository.roomRank(
+                studyRoomLogDto.getRoomId(), studyRoomLogDto.getStudyDate()
         ));
-        return sessionDto;
+        return studyRoomLogDto;
     }
 
     @Override
     @Transactional
-    public SessionDto exitRoom(SessionRequestDto sessionRequestDto, int userId) throws Exception {
+    public StudyRoomLogDto exitRoom(LogRequestDto logRequestDto, int userId) throws Exception {
         // 방 퇴장 시 log 갱신
-        SessionDto sessionDto = sessionRepository.exitRoom(sessionRequestDto, userId);
+        StudyRoomLogDto studyRoomLogDto = sessionRepository.exitRoom(logRequestDto, userId);
 
         // 해당 방에서 금일 공부한 시간 조회
-        sessionDto.setRoomStudyTime(sessionRepository.roomStudyTime(
-                sessionDto.getUserId(),
-                sessionDto.getRoomId(),
-                sessionDto.getStudyDate()
+        studyRoomLogDto.setRoomStudyTime(sessionRepository.roomStudyTime(
+                studyRoomLogDto.getUserId(),
+                studyRoomLogDto.getRoomId(),
+                studyRoomLogDto.getStudyDate()
         ));
-        return sessionDto;
+        return studyRoomLogDto;
     }
 
     @Override
     @Transactional
-    public SessionDto modifyStudyTime(SessionRequestDto sessionRequestDto, int userId) throws Exception {
+    public StudyRoomLogDto modifyStudyTime(LogRequestDto logRequestDto, int userId) throws Exception {
         // 세션 공부시간 갱신
-        SessionDto sessionDto = sessionRepository.modifyStudyTime(sessionRequestDto, userId);
-
-        // 해당 방에서 금일 공부한 시간 조회
-        /*sessionDto.setRoomStudyTime(sessionRepository.roomStudyTime(
-                sessionDto.getUserId(),
-                sessionDto.getRoomId(),
-                sessionDto.getStudyDate()));*/
+        StudyRoomLogDto studyRoomLogDto = sessionRepository.modifyStudyTime(logRequestDto, userId);
 
         // 현재 방의 랭킹 조회
-        sessionDto.setRankDto(sessionRepository.roomRank(
-                sessionDto.getRoomId(), sessionDto.getStudyDate()
+        studyRoomLogDto.setRankDto(sessionRepository.roomRank(
+                studyRoomLogDto.getRoomId(), studyRoomLogDto.getStudyDate()
         ));
 
-        return sessionDto;
+        return studyRoomLogDto;
     }
 
     /**
