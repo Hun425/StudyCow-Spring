@@ -169,40 +169,23 @@ public class StudyRoomRepositoryImpl implements StudyRoomRepository {
      */
     @Override
     public List<StudyRoomDto> recentStudyRoom(int userId) throws PersistenceException {
-
-        List<Tuple> roomList = queryFactory
-                .select(userStudyRoomEnter.studyRoom.id,
-                        userStudyRoomEnter.studyDate.max())
-                .from(userStudyRoomEnter)
-                .where(userStudyRoomEnter.user.id.eq(userId)
-                        .and(userStudyRoomEnter.studyDate.between(
-                                LocalDate.now().minusWeeks(1),
-                                LocalDate.now()
-                        )))
-                .groupBy(userStudyRoomEnter.studyRoom.id)
-                .orderBy(userStudyRoomEnter.studyDate.max().desc())
-                .limit(5).fetch();
-
-        List<Long> roomIds = roomList.stream().map(
-                tuple -> tuple.get(userStudyRoomEnter.studyRoom.id))
-                .toList();
-
         return queryFactory
                 .select(Projections.constructor(StudyRoomDto.class,
-                        studyRoom.id,
-                        studyRoom.roomTitle,
-                        studyRoom.roomMaxPerson,
-                        studyRoom.roomNowPerson,
-                        studyRoom.roomCreateDate,
-                        studyRoom.roomEndDate,
-                        studyRoom.roomStatus,
-                        studyRoom.roomUpdateDate,
-                        studyRoom.roomContent,
-                        studyRoom.roomThumb,
-                        studyRoom.user.id
-                ))
-                .from(studyRoom)
-                .where(studyRoom.id.in(roomIds))
+                        userStudyRoomEnter.studyRoom.id,
+                        userStudyRoomEnter.studyRoom.roomTitle,
+                        userStudyRoomEnter.studyRoom.roomMaxPerson,
+                        userStudyRoomEnter.studyRoom.roomNowPerson,
+                        userStudyRoomEnter.studyRoom.roomCreateDate,
+                        userStudyRoomEnter.studyRoom.roomEndDate,
+                        userStudyRoomEnter.studyRoom.roomStatus,
+                        userStudyRoomEnter.studyRoom.roomUpdateDate,
+                        userStudyRoomEnter.studyRoom.roomContent,
+                        userStudyRoomEnter.studyRoom.roomThumb,
+                        userStudyRoomEnter.studyRoom.user.id))
+                .from(userStudyRoomEnter)
+                .where(userStudyRoomEnter.user.id.eq(userId))
+                .groupBy(userStudyRoomEnter.studyRoom.id)
+                .orderBy(userStudyRoomEnter.id.max().desc())
                 .fetch();
     }
 
