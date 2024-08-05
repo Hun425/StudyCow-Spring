@@ -1,0 +1,55 @@
+/* AIPlannerModal.css */
+.AIPlannerModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7); /* 배경을 어둡게 설정 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.AIPlannerModalContent {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 600px;
+  width: 90%;
+}
+
+.AIPlannerModalButtons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.AIPlannerModalRegisterButton,
+.AIPlannerModalCloseButton {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.AIPlannerModalRegisterButton {
+  background-color: #4caf50;
+  color: white;
+}
+
+.AIPlannerModalRegisterButton:hover {
+  background-color: #45a049;
+}
+
+.AIPlannerModalCloseButton {
+  background-color: #f44336;
+  color: white;
+}
+
+.AIPlannerModalCloseButton:hover {
+  background-color: #d32f2f;
+}

@@ -25,11 +25,12 @@
 
 <script>
     let stompClient = null;
-    const token = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjMsInVzZXJOYW1lIjoi67iM66Gg7KaIIiwidXNlckVtYWlsIjoiY2hhZTA3MzhAYXNkZi5jb20iLCJpYXQiOjE3MjI4MjI2NzAsImV4cCI6MTgwOTIyMjY3MH0.uH4HVjXVe8iXWqD8BQEx34YpiGGNJlmQkXUBrb8Scbw';
+    const token = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjE0LCJ1c2VyTmFtZSI6Iuu4jOuhoOymiCIsInVzZXJFbWFpbCI6ImFzZGZAYXNkZi5jb20iLCJpYXQiOjE3MjI4MzI4NTgsImV4cCI6MTgwOTIzMjg1OH0.uEVlXT0ugm2RCZl_W1DYvejRSVyA0Mol-BpJHZfmgak';
     const roomId = '1';
 
     function connect() {
-        const socket = new SockJS('http://localhost:8080/studycow/ws-stomp');
+        // 배포 서버의 WebSocket URL로 변경
+        const socket = new SockJS('https://i11c202.p.ssafy.io/studycow/ws-stomp');
         stompClient = Stomp.over(socket);
 
         const headers = {

@@ -20,6 +20,44 @@
   width: 90%;
 }
 
+.AutoCreate-form-group {
+  margin-bottom: 15px;
+}
+
+.AutoCreate-form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.AutoCreate-form-group input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.AutoCreate-form-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.AutoCreate-register-button {
+  background-color: #4caf50;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.AutoCreate-register-button:hover {
+  background-color: #45a049;
+}
+
 .AutoCreateCloseButton {
   background-color: #f44336;
   color: #fff;
@@ -27,7 +65,6 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 15px;
   transition: background-color 0.3s ease;
 }
 
