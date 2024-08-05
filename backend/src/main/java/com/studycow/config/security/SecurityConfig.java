@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.http.auth.AUTH;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -28,6 +29,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationEn
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
 import java.util.Arrays;
 
@@ -44,12 +46,12 @@ import java.util.Arrays;
 @EnableWebSecurity // HTTP 요청에 대한 인증 및 인가 구성
 @EnableMethodSecurity
 @RequiredArgsConstructor
-public class SecurityConfig {
+public class SecurityConfig implements WebSocketMessageBrokerConfigurer {
 
     private static final String[] AUTH_WHITELIST = {
             "/api/v1/user/**", "/swagger-ui/**", "/api-docs", "/swagger-ui-custom.html",
             "/v3/api-docs/**", "/api-docs/**", "/swagger-ui.html", "/api/v1/auth/**",
-            "/login","/swagger-ui.html#/**","/studycow/**"
+            "/login","/swagger-ui.html#/**","/studycow/**","/ws/**","/ws-stomp/**"
     };
 
 
@@ -68,7 +70,8 @@ public class SecurityConfig {
                         .accessDeniedHandler(accessDeniedHandler()))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(AUTH_WHITELIST).permitAll()
-                        .anyRequest().authenticated());
+                        .requestMatchers("/ws/**").permitAll()
+                        .anyRequest().permitAll());
 
         return http.build();
     }
@@ -81,18 +84,15 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173","http://localhost:8080", "http://localhost:4443",
-                "http://13.125.238.202:8080", "http://13.125.238.202:443","https://i11c202.p.ssafy.io","http://i11c202.p.ssafy.io",
-                "https://i11c202.p.ssafy.io/studycow","http://i11c202.p.ssafy.io/studycow"));
+        configuration.setAllowedOrigins(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE","PATCH"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
-        configuration.setAllowCredentials(true);
+        configuration.setAllowCredentials(false);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-
 
 
     @Bean

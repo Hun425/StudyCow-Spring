@@ -4,6 +4,8 @@ import { Route, Routes } from "react-router-dom";
 import MainPage from "../views/MainPage.jsx";
 // 비로그인
 import Main_Unlogin from "../components/MainPage/Main_Unlogin.jsx";
+// 로그인
+import Main_Login from "../components/MainPage/Main_Login.jsx";
 
 // 로그인/회원가입페이지
 import SignPage from "../views/SignPage.jsx";
@@ -42,9 +44,7 @@ const PageRoutes = () => (
     </Route>
 
     {/* 홈 */}
-    <Route path="/" element={<MainPage />}>
-      <Route path="" element={<Main_Unlogin />} />
-    </Route>
+    <Route path="/" element={<MainPage />} />
 
     {/* 로그인 */}
     <Route path="/login" element={<SignPage />}></Route>

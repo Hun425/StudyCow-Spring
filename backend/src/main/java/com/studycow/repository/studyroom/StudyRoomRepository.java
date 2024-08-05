@@ -29,4 +29,7 @@ public interface StudyRoomRepository {
 
     /** 스터디룸 수정 */
     void updateStudyRoom(Long studyRoomId, StudyRoomRequestDto requestDto, int userId) throws PersistenceException, IOException;
+
+    /** 최근 입장한 스터디룸 목록 조회 */
+    List<StudyRoomDto> recentStudyRoom(int userId) throws PersistenceException;
 }

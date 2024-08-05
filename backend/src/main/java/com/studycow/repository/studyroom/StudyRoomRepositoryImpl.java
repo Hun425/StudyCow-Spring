@@ -1,10 +1,13 @@
 package com.studycow.repository.studyroom;
 
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.querydsl.jpa.impl.JPAUpdateClause;
 import com.studycow.domain.StudyRoom;
+import com.studycow.domain.UserStudyRoomEnter;
 import com.studycow.dto.listoption.ListOptionDto;
 import com.studycow.dto.studyroom.StudyRoomDto;
 import com.studycow.dto.studyroom.StudyRoomRequestDto;
@@ -18,9 +21,12 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.studycow.domain.QStudyRoom.*;
+import static com.studycow.domain.QUserStudyRoomEnter.userStudyRoomEnter;
 
 
 /**
@@ -154,6 +160,33 @@ public class StudyRoomRepositoryImpl implements StudyRoomRepository {
 
         updateClause.where(studyRoom.id.eq(studyRoomId));
         updateClause.execute();
+    }
+
+    /**
+     * 최근 입장한 스터디룸 목록 조회
+     *
+     * @param userId : 유저Id
+     */
+    @Override
+    public List<StudyRoomDto> recentStudyRoom(int userId) throws PersistenceException {
+        return queryFactory
+                .select(Projections.constructor(StudyRoomDto.class,
+                        userStudyRoomEnter.studyRoom.id,
+                        userStudyRoomEnter.studyRoom.roomTitle,
+                        userStudyRoomEnter.studyRoom.roomMaxPerson,
+                        userStudyRoomEnter.studyRoom.roomNowPerson,
+                        userStudyRoomEnter.studyRoom.roomCreateDate,
+                        userStudyRoomEnter.studyRoom.roomEndDate,
+                        userStudyRoomEnter.studyRoom.roomStatus,
+                        userStudyRoomEnter.studyRoom.roomUpdateDate,
+                        userStudyRoomEnter.studyRoom.roomContent,
+                        userStudyRoomEnter.studyRoom.roomThumb,
+                        userStudyRoomEnter.studyRoom.user.id))
+                .from(userStudyRoomEnter)
+                .where(userStudyRoomEnter.user.id.eq(userId))
+                .groupBy(userStudyRoomEnter.studyRoom.id)
+                .orderBy(userStudyRoomEnter.id.max().desc())
+                .fetch();
     }
 
     /**

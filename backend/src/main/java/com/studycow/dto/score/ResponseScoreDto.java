@@ -1,5 +1,8 @@
 package com.studycow.dto.score;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,12 +15,19 @@ import java.util.List;
 @Getter
 @Setter
 public class ResponseScoreDto {
+    /** 과목 코드 */
     private int subCode;
+    /** 과목 이름 */
     private String subName;
+    /** 목표 점수 */
     private int targetScore;
+    /** 목표 등급 */
     private int targetGrade;
+    /** 해당 과목의 최대 점수 */
     private int maxScore;
+    /** 조언 */
     private String advice;
+    /** 성적 목록 */
     private List<ScoreDto> scores;
 
     public ResponseScoreDto(int subCode, String subName, int targetScore, int targetGrade, int maxScore){
@@ -45,4 +55,23 @@ public class ResponseScoreDto {
         sb.append("\n").append("]}");
         return sb.toString();
     }
+
+    /**
+     * json으로 변환하는 함수
+     *
+     * @return String json문자열
+     */
+    public String toJson() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        // Java 8 날짜/시간 모듈 등록
+        objectMapper.registerModule(new JavaTimeModule());
+
+        try {
+            return objectMapper.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return super.toString();
+        }
+    }
+
 }

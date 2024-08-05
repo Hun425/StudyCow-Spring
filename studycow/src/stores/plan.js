@@ -4,18 +4,17 @@ import { persist } from "zustand/middleware";
 import axios from "axios";
 import useInfoStore from "./infos";
 
-const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/studycow/";
-
+const API_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/studycow/";
 
 // 현재 날짜를 YYYY-MM-DD 형식으로 반환하는 함수
 const getCurrentDate = () => {
   const today = new Date();
   const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, '0');
-  const day = String(today.getDate()).padStart(2, '0');
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
   return `${year}-${month}-${day}`;
 };
-
 
 const usePlanStore = create(
   persist(
@@ -30,10 +29,13 @@ const usePlanStore = create(
       setSubPlans: (subPlans) => set({ subPlans: subPlans }),
 
       // 특정 과목 선택 시 계획 필터링
-      filterPlansBySubCode: (subCode) => set((state) => ({
-        subPlans: state.plans.filter(plan => plan.subCode === parseInt(subCode, 10)),
-        subCode: parseInt(subCode, 10)
-      })),
+      filterPlansBySubCode: (subCode) =>
+        set((state) => ({
+          subPlans: state.plans.filter(
+            (plan) => plan.subCode === parseInt(subCode, 10)
+          ),
+          subCode: parseInt(subCode, 10),
+        })),
 
       // 특정 과목 업데이트 상태 확인
       updateSubPlanStatus: (planId) => {
@@ -56,7 +58,6 @@ const usePlanStore = create(
           ),
         }));
       },
-
 
       createPlannerUrl: API_URL + "planner/create",
       modifyPlannerUrl: (planId) => API_URL + `planner/${planId}`,
@@ -91,8 +92,7 @@ const usePlanStore = create(
           console.log(e);
           return false;
         }
-      }
-      ,
+      },
       getDatePlanRequest: async (date) => {
         const { token } = useInfoStore.getState();
         const headers = {

@@ -77,7 +77,8 @@ const PlanModify = () => {
   const [selectedSubject, setSelectedSubject] = useState("");
   const [subSubjects, setSubSubjects] = useState([]);
   const [selectedSubSubject, setSelectedSubSubject] = useState("");
-  const [selectedTime, setSelectedTime] = useState(1);
+  const [selectedTime, setSelectedTime] = useState(1); // 시간
+  const [selectedMinutes, setSelectedMinutes] = useState(0); // 분 추가
   const [content, setContent] = useState("");
   const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
 
@@ -108,7 +109,11 @@ const PlanModify = () => {
           console.log("Fetched data:", data);
           setSelectedSubject(sub_code_dic[data.subCode]);
           setSelectedSubSubject(data.planContent);
-          setSelectedTime(data.planStudyTime);
+
+          // 시간과 분을 나누어 설정
+          setSelectedTime(Math.floor(data.planStudyTime / 60)); // 시간
+          setSelectedMinutes(data.planStudyTime % 60); // 분
+
           setContent(data.planContent);
           setDate(data.planDate);
         } else {
@@ -132,11 +137,15 @@ const PlanModify = () => {
       10
     );
 
+    // 시간을 분 단위로 변환하여 저장
+    const totalMinutes =
+      parseInt(selectedTime, 10) * 60 + parseInt(selectedMinutes, 10);
+
     const data = {
       subCode,
       planDate: date,
       planContent: content,
-      planStudyTime: parseInt(selectedTime, 10),
+      planStudyTime: totalMinutes, // 총 분
       planStatus: 0,
     };
 
@@ -192,7 +201,7 @@ const PlanModify = () => {
               ))}
             </select>
           </div>
-          <div className="CreateModify-form-group">
+          {/* <div className="CreateModify-form-group">
             <label htmlFor="subSubject">세부과목</label>
             <select
               id="subSubject"
@@ -210,7 +219,7 @@ const PlanModify = () => {
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
           <div className="CreateModify-form-group">
             <label htmlFor="date">날짜</label>
             <input
@@ -222,7 +231,7 @@ const PlanModify = () => {
             />
           </div>
           <div className="CreateModify-form-group">
-            <label htmlFor="estimatedTime">목표시간</label>
+            <label htmlFor="estimatedTime">목표 시간</label>
             <input
               type="range"
               id="estimatedTime"
@@ -233,6 +242,20 @@ const PlanModify = () => {
               onChange={(e) => setSelectedTime(e.target.value)}
             />
             <span className="time-display">{selectedTime} 시간</span>
+          </div>
+          <div className="CreateModify-form-group">
+            <label htmlFor="estimatedMinutes">목표 분</label>
+            <input
+              type="range"
+              id="estimatedMinutes"
+              name="estimatedMinutes"
+              min="0"
+              max="50"
+              step="10" // 10분 단위로
+              value={selectedMinutes}
+              onChange={(e) => setSelectedMinutes(e.target.value)}
+            />
+            <span className="time-display">{selectedMinutes} 분</span>
           </div>
           <div className="CreateModify-form-group">
             <label htmlFor="content">내용</label>

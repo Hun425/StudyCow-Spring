@@ -28,4 +28,7 @@ public interface StudyRoomService {
     /** 스터디룸 수정 */
     void updateStudyRoom(Long studyRoomId, StudyRoomRequestDto studyRoomRequestDto, int userId) throws Exception;
 
+    /** 최근 입장한 스터디룸 목록 조회 */
+    List<StudyRoomDto> recentStudyRoom(int userId) throws Exception;
+
 }

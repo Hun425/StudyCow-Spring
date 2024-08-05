@@ -11,9 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <pre>
@@ -41,7 +39,6 @@ public class ScoreServiceImpl implements ScoreService{
         ResponseScoreDto responseScoreDto = scoreRepository.subTarget(userId, subCode, myId);
 
         // 과목별 성적 리스트
-        //List<ScoreDto> scoreDtoList = scoreRepository.listScores(userId, subCode, myId);
         responseScoreDto.setScores(scoreRepository.listScores(userId, subCode, myId, 0));
 
         // 오답 유형 리스트 조회
@@ -175,15 +172,16 @@ public class ScoreServiceImpl implements ScoreService{
     }
 
     /**
-     * 상세 포함 과목별 성적 리스트 조회
+     * 과목별 최근 5개 과목 목표별 성적 조회
      * @param userId : 유저 id
      * @throws Exception
      */
     @Override
     public List<ResponseScoreDto> recentScores(int userId) throws Exception {
+        // 해당 회원의 과목 목표 리스트
         List<ResponseScoreDto> responseScoreDtoList = scoreRepository.targetList(userId);
 
-        // 과목별 성적 리스트
+        // 과목 목표별 성적 리스트
         for(ResponseScoreDto responseScoreDto : responseScoreDtoList) {
             responseScoreDto.setScores(scoreRepository.listScores(userId,
                     responseScoreDto.getSubCode(), userId, 5));
@@ -199,6 +197,30 @@ public class ScoreServiceImpl implements ScoreService{
         }
         // return scoreDtoList;
         return responseScoreDtoList;
+    }
+
+    /**
+     * 회원의 최근 10개 성적 가져오기
+     *
+     * @param userId 회원 ID
+     * @return List<ScoreDto>
+     * @throws Exception
+     */
+    @Override
+    public List<ScoreDto> recentUserScore(int userId) throws Exception {
+            // 최근 10개 성적
+            List<ScoreDto> recentScoreList = scoreRepository.listScores(userId, null, userId, 10);
+
+            // 오답 유형 리스트 조회
+            for (ScoreDto score : recentScoreList) {
+                Long scoreId = score.getScoreId();
+
+                List<ScoreDetailDto> scoreDetailDtoList = scoreRepository.listScoreDetails(scoreId);
+                if (scoreDetailDtoList != null && !scoreDetailDtoList.isEmpty()) {
+                    score.setScoreDetails(scoreDetailDtoList);
+                }
+            }
+            return recentScoreList;
     }
 
     /**

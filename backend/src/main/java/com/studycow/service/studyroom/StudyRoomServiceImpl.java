@@ -87,4 +87,14 @@ public class StudyRoomServiceImpl implements StudyRoomService {
         studyRoomRepository.updateStudyRoom(studyRoomId, studyRoomRequestDto, userId);
     }
 
+    /**
+     * 최근 입장한 스터디룸 목록 조회
+     *
+     * @param userId
+     */
+    @Override
+    public List<StudyRoomDto> recentStudyRoom(int userId) throws Exception {
+        return studyRoomRepository.recentStudyRoom(userId);
+    }
+
 }
