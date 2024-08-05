@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import "./styles/PlanList.css";
 import deleteButton from "./img/deleteButton.png";
 import editButton from "./img/editButton.png";
@@ -7,8 +6,7 @@ import usePlanStore from "../../stores/plan";
 import PlanModify from "./CreateModify/PlanModify"; // PlanModify 모달 컴포넌트
 
 const PlanList = () => {
-  const navigate = useNavigate();
-  const { plans, updatePlanStatus } = usePlanStore();
+  const { plans, updatePlanStatus, deletePlan } = usePlanStore();
 
   const sub_code_dic = {
     1: "국어",
@@ -36,6 +34,24 @@ const PlanList = () => {
   const handleCloseModifyModal = () => {
     setShowModifyModal(false); // PlanModify 모달 닫기
     setSelectedPlanId(null); // 선택된 계획 ID 초기화
+  };
+
+  const handleDeleteClick = async (planId) => {
+    const confirmed = window.confirm("정말로 삭제하시겠습니까?");
+    if (confirmed) {
+      try {
+        const success = await deletePlan(planId);
+        if (success) {
+          alert("플래너가 성공적으로 삭제되었습니다.");
+          window.location.reload(); // 새로고침하여 삭제된 데이터 반영
+        } else {
+          alert("플래너 삭제에 실패했습니다.");
+        }
+      } catch (error) {
+        console.error("플래너 삭제 중 오류가 발생했습니다:", error);
+        alert("플래너 삭제 중 오류가 발생했습니다.");
+      }
+    }
   };
 
   const formatPlanStudyTime = (minutes) => {
@@ -78,7 +94,10 @@ const PlanList = () => {
                       alt="수정버튼"
                     />
                   </button>
-                  <button className="buttonCase">
+                  <button
+                    className="buttonCase"
+                    onClick={() => handleDeleteClick(plan.planId)} // 삭제 클릭 핸들러 추가
+                  >
                     <img
                       className="deleteButton"
                       src={deleteButton}

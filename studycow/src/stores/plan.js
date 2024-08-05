@@ -1,4 +1,3 @@
-// planStore.js
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import axios from "axios";
@@ -24,11 +23,8 @@ const usePlanStore = create(
       plans: [],
       subPlans: [],
       todayPlans: [],
-      // 특정 과목에 대한 계획 상태 업데이트
       subCode: 0,
       setSubPlans: (subPlans) => set({ subPlans: subPlans }),
-
-      // 특정 과목 선택 시 계획 필터링
       filterPlansBySubCode: (subCode) =>
         set((state) => ({
           subPlans: state.plans.filter(
@@ -36,8 +32,6 @@ const usePlanStore = create(
           ),
           subCode: parseInt(subCode, 10),
         })),
-
-      // 특정 과목 업데이트 상태 확인
       updateSubPlanStatus: (planId) => {
         set((state) => ({
           subPlans: state.subPlans.map((plan) =>
@@ -47,8 +41,6 @@ const usePlanStore = create(
           ),
         }));
       },
-
-      // 특정 과목 업데이트 상태 확인
       updateTodayPlanStatus: (planId) => {
         set((state) => ({
           subPlans: state.subPlans.map((plan) =>
@@ -58,9 +50,9 @@ const usePlanStore = create(
           ),
         }));
       },
-
       createPlannerUrl: API_URL + "planner/create",
       modifyPlannerUrl: (planId) => API_URL + `planner/${planId}`,
+      deletePlannerUrl: (planId) => API_URL + `planner/${planId}`, // DELETE URL 추가
       updatePlanStatus: (planId) => {
         set((state) => ({
           plans: state.plans.map((plan) =>
@@ -71,7 +63,6 @@ const usePlanStore = create(
         }));
       },
       saveDate: (day) => set({ date: day }),
-      // 오늘 플랜 가져오기
       getTodayPlanRequest: async (date) => {
         const { token } = useInfoStore.getState();
         const headers = {
@@ -111,6 +102,37 @@ const usePlanStore = create(
           }
         } catch (e) {
           console.log(e);
+          return false;
+        }
+      },
+      deletePlan: async (planId) => {
+        const { token } = useInfoStore.getState();
+        console.log("Deleting plan with ID:", planId); // 로그 추가
+        console.log("Authorization token:", token); // 로그 추가
+        try {
+          const response = await axios.delete(API_URL + `planner/${planId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          console.log("Response status:", response.status); // 로그 추가
+
+          if (response.status === 200) {
+            // 상태 코드 200으로 수정
+            set((state) => ({
+              plans: state.plans.filter((plan) => plan.planId !== planId),
+            }));
+            return true;
+          } else {
+            console.error(
+              "플래너 삭제에 실패했습니다. 서버 응답 코드:",
+              response.status
+            );
+            return false;
+          }
+        } catch (error) {
+          console.error("플래너 삭제 중 오류가 발생했습니다:", error);
           return false;
         }
       },

@@ -6,7 +6,7 @@ import PlanModify from "./CreateModify/PlanModify"; // Import the PlanModify mod
 import "./styles/CatPlanList.css";
 
 const CatPlanList = () => {
-  const { subPlans, updateSubPlanStatus, subCode } = usePlanStore();
+  const { subPlans, updateSubPlanStatus, subCode, deletePlan } = usePlanStore(); // deletePlan 추가
 
   const sub_code_dic = {
     1: "국어",
@@ -46,6 +46,25 @@ const CatPlanList = () => {
     setSelectedPlanId(null); // Clear the selected plan ID
   };
 
+  const handleDeleteClick = async (planId) => {
+    // 플래너 삭제 핸들러
+    const confirmed = window.confirm("정말로 삭제하시겠습니까?");
+    if (confirmed) {
+      try {
+        const success = await deletePlan(planId); // deletePlan 호출
+        if (success) {
+          alert("플래너가 성공적으로 삭제되었습니다.");
+          window.location.reload(); // 새로고침하여 삭제된 데이터 반영
+        } else {
+          alert("플래너 삭제에 실패했습니다.");
+        }
+      } catch (error) {
+        console.error("플래너 삭제 중 오류가 발생했습니다:", error);
+        alert("플래너 삭제 중 오류가 발생했습니다.");
+      }
+    }
+  };
+
   return (
     <div className="singleSubPlanBox">
       {subPlans.length === 0 && subCode > 0 ? (
@@ -64,9 +83,7 @@ const CatPlanList = () => {
                   {`${formatPlanStudyTime(plan.planStudyTime)}`}{" "}
                   {/* Display study time */}
                 </label>
-                <p>
-                  {`${plan.planContent}`} {/* Display plan content */}
-                </p>
+                <p>{`${plan.planContent}`}</p> {/* Display plan content */}
                 <div className="buttonBox">
                   <button
                     className="buttonCase"
@@ -78,7 +95,10 @@ const CatPlanList = () => {
                       alt="수정버튼"
                     />
                   </button>
-                  <button className="buttonCase">
+                  <button
+                    className="buttonCase"
+                    onClick={() => handleDeleteClick(plan.planId)} // 삭제 버튼에 클릭 핸들러 추가
+                  >
                     <img
                       className="deleteButton"
                       src={deleteButton}
