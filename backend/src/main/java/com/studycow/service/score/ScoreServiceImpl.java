@@ -200,7 +200,7 @@ public class ScoreServiceImpl implements ScoreService{
     }
 
     /**
-     * 회원의 최근 5개 성적 가져오기
+     * 회원의 최근 10개 성적 가져오기
      *
      * @param userId 회원 ID
      * @return List<ScoreDto>
@@ -209,7 +209,7 @@ public class ScoreServiceImpl implements ScoreService{
     @Override
     public List<ScoreDto> recentUserScore(int userId) throws Exception {
             // 최근 5개 성적
-            List<ScoreDto> recentScoreList = scoreRepository.listScores(userId, null, userId, 5);
+            List<ScoreDto> recentScoreList = scoreRepository.listScores(userId, null, userId, 10);
 
             // 오답 유형 리스트 조회
             for (ScoreDto score : recentScoreList) {
