@@ -78,6 +78,7 @@ const Modal = ({ closeModal }) => {
   const [subSubjects, setSubSubjects] = useState([]);
   const [selectedSubSubject, setSelectedSubSubject] = useState("");
   const [selectedTime, setSelectedTime] = useState(1);
+  const [selectedMinutes, setSelectedMinutes] = useState(0); // 분 추가
   const [content, setContent] = useState("");
   const [selectedDate, setSelectedDate] = useState(date); // 기본 날짜를 상태에서 가져옴
 
@@ -99,11 +100,13 @@ const Modal = ({ closeModal }) => {
       10
     );
 
+    const totalMinutes = selectedTime * 60 + parseInt(selectedMinutes, 10); // 총 분 계산
+
     const data = {
       subCode,
       planDate: selectedDate,
       planContent: content,
-      planStudyTime: parseInt(selectedTime, 10),
+      planStudyTime: totalMinutes,
       planStatus: 0, // 기본값으로 설정
     };
 
@@ -146,11 +149,15 @@ const Modal = ({ closeModal }) => {
 
     // 공부 시간은 1에서 9시간 사이에서 랜덤으로 선택
     const tempTime = Math.floor(Math.random() * 9) + 1;
+    const tempMinutes = Math.floor(Math.random() * 6) * 10; // 0부터 50까지 10단위로 랜덤
 
     setSelectedSubject(selectedSubject);
     setSelectedSubSubject(tempSubSubject);
     setSelectedTime(tempTime);
-    setContent(tempSubSubject + " " + tempTime + "시간 공부");
+    setSelectedMinutes(tempMinutes);
+    setContent(
+      tempSubSubject + " " + tempTime + "시간 " + tempMinutes + "분 공부"
+    );
   };
 
   const handleDateChange = (e) => {
@@ -212,11 +219,11 @@ const Modal = ({ closeModal }) => {
             />
           </div>
           <div className="CreateModify-form-group">
-            <label htmlFor="estimatedTime">목표시간</label>
+            <label htmlFor="estimatedHours">목표 시간</label>
             <input
               type="range"
-              id="estimatedTime"
-              name="estimatedTime"
+              id="estimatedHours"
+              name="estimatedHours"
               min="1"
               max="9"
               value={selectedTime}
@@ -224,6 +231,22 @@ const Modal = ({ closeModal }) => {
             />
             <span className="time-display">{selectedTime} 시간</span>
           </div>
+
+          <div className="CreateModify-form-group">
+            <label htmlFor="estimatedMinutes">목표 분</label>
+            <input
+              type="range"
+              id="estimatedMinutes"
+              name="estimatedMinutes"
+              min="0"
+              max="50"
+              step="10"
+              value={selectedMinutes}
+              onChange={(e) => setSelectedMinutes(e.target.value)}
+            />
+            <span className="time-display">{selectedMinutes} 분</span>
+          </div>
+
           <div className="CreateModify-form-group">
             <label htmlFor="content">내용</label>
             <textarea
