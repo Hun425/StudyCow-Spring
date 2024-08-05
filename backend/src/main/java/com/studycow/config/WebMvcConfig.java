@@ -20,7 +20,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .exposedHeaders("Authorization")
                 .maxAge(3600); // 3600초 동안 preflight 결과를 캐시에 저장
 
-
     }
 
 }

@@ -68,7 +68,7 @@ public class ChatRoomRepository {
 
     public boolean leaveRoom(ChatMessage chatMessage) {
         String roomId = chatMessage.getRoomId();
-        chatMessage.setType(ChatMessage.MessageType.ENTER); // LEAVE 타입이 없으므로 ENTER로 대체
+        chatMessage.setType(ChatMessage.MessageType.LEAVE); //
         chatMessage.setMessage(chatMessage.getSenderNickname() + "님이 퇴장하셨습니다.");
         return publishMessage(roomId, chatMessage);
     }

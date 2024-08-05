@@ -39,6 +39,13 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registry.addEndpoint("/ws-stomp").setAllowedOriginPatterns("*").withSockJS();
     }
 
+
+    /**
+     * <pre>
+     * 채팅방 사용자 인증을 위한 인터셉터 추가
+     * </pre>
+     * @param registration
+     */
     @Override
     public void configureClientInboundChannel(ChannelRegistration registration) {
         registration.interceptors(new ChannelInterceptor() {

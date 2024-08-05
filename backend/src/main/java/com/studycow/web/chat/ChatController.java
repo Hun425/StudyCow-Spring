@@ -3,6 +3,7 @@ package com.studycow.web.chat;
 import com.studycow.dto.chat.ChatMessage;
 import com.studycow.dto.chat.ChatRoom;
 import com.studycow.repository.chat.ChatRoomRepository;
+import com.studycow.repository.user.UserRepository;
 import com.studycow.service.chat.RedisPublisher;
 import com.studycow.config.jwt.JwtUtil;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,6 +19,8 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.NoSuchElementException;
+
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "CHAT", description = "채팅 관련 메서드")
@@ -26,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 public class ChatController {
 
     private final ChatRoomRepository chatRoomRepository;
+    private final UserRepository userRepository;
     private final RedisPublisher redisPublisher;
     private final JwtUtil jwtUtil;
 
@@ -74,8 +78,9 @@ public class ChatController {
 
         if (jwtUtil.validateToken(token)) {
             int userId = jwtUtil.getUserId(token);
+            String userName = userRepository.findById((long)userId).orElseThrow(()->new NoSuchElementException("유저가 없습니다")).getUserNickname();
             message.setSenderId(String.valueOf(userId));
-
+            message.setSenderNickname(userName);
             log.info("Received message: " + message);
             boolean success = chatRoomRepository.processMessage(message);
 
