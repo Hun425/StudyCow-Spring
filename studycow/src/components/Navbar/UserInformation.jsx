@@ -1,3 +1,4 @@
+import { useState } from "react";
 import useInfoStore from "../../stores/infos.js";
 import upImg from "./img/up.png";
 import downImg from "./img/down.png";
@@ -5,8 +6,15 @@ import "./styles/UserInformation.css";
 import Navbar from "react-bootstrap/Navbar";
 
 function UserInformation() {
-  const { toggleDropdown, isOpen, userInfo, logout } = useInfoStore();
+  const { userInfo, logout } = useInfoStore();
+  
+  const [isOpen, setIsOpen] = useState(false);
 
+  const toggleDropdown = () => {
+    setIsOpen(prevState => !prevState);
+  };
+
+        
   return (
     <>
       <div className="userDropdown">

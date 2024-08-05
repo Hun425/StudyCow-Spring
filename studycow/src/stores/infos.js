@@ -92,13 +92,6 @@ const useInfoStore = create(
         navigate("/login");
       },
 
-      isOpen: false,
-      toggleDropdown: () =>
-        set((state) => {
-          const newState = !state.isOpen;
-          return { isOpen: newState };
-        }),
-
       ChangeInfoUrl: API_URL + "user/me",
 
       updateUserInfo: async (email, nickname, thumb, publicStatus) => {

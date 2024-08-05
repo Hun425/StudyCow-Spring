@@ -1,0 +1,68 @@
+#chat-container {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 300px;
+  height: 300px;
+  border: 1px solid #ddd;
+  background-color: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+}
+
+#chat-messages {
+  padding: 10px;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+/* Style for messages from the current user */
+.my-message {
+  font-size: 15px;
+  padding: 3px;
+  padding-bottom: 1px;
+  text-align: right;
+  background-color: #d1ecf1;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  max-width: 70%;
+  word-wrap: break-word;
+  margin-left: auto;
+}
+
+/* Style for messages from others */
+.other-message {
+  font-size: 15px;
+  padding: 3px;
+  padding-bottom: 1px;
+  height: auto;
+  text-align: left;
+  background-color: #e2e3e5;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  max-width: 70%;
+  word-wrap: break-word;
+  margin-right: auto;
+}
+
+/* Adjust the input field and button size */
+#message-input {
+  flex-grow: 1;
+}
+
+
+.sendButtonImg {
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+}
+
+
+.messageSendButton {
+
+  background-color: rgba(0, 0, 0, 0); /* 완전 투명 배경 */
+  border: none;
+  margin: 5px;
+  width: 30px;
+  height: 30px;
+}
