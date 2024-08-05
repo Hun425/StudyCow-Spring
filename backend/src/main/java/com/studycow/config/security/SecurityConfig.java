@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.http.auth.AUTH;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -28,6 +29,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationEn
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
 import java.util.Arrays;
 
@@ -44,7 +46,7 @@ import java.util.Arrays;
 @EnableWebSecurity // HTTP 요청에 대한 인증 및 인가 구성
 @EnableMethodSecurity
 @RequiredArgsConstructor
-public class SecurityConfig {
+public class SecurityConfig implements WebSocketMessageBrokerConfigurer {
 
     private static final String[] AUTH_WHITELIST = {
             "/api/v1/user/**", "/swagger-ui/**", "/api-docs", "/swagger-ui-custom.html",
@@ -91,7 +93,6 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-
 
 
     @Bean

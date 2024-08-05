@@ -22,6 +22,7 @@ public class RedisPublisher {
 
     public void publish(ChannelTopic topic, ChatMessage message) {
         log.info("Publishing to channel: {}, message: {}", topic.getTopic(), message);
+
         redisTemplate.convertAndSend(topic.getTopic(),message);
     }
 }

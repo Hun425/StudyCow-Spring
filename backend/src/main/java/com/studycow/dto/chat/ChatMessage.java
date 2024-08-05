@@ -13,12 +13,13 @@ public class ChatMessage {
 
     private MessageType type;
     private String roomId;
-    private String sender;
+    private String senderId;
+    private String senderNickname;
     private String message;
 
     @Override
     public String toString() {
-        return "ChatMessage [type=" + type + ", roomId=" + roomId + ", sender=" + sender
-                + ", message=" + message + "]";
+        return "ChatMessage [type=" + type + ", roomId=" + roomId + ", senderId=" +senderId
+                + ", senderNickname=" + senderNickname + ", message=" + message + "]";
     }
 }
