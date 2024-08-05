@@ -1,6 +1,6 @@
 .mainPlanContainer {
   width: 530px;
-  height: 350px;
+  height: 450px;
   display: flex;
   flex-direction: column;
   background-color: yellow;
