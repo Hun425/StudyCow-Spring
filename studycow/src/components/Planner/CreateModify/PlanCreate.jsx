@@ -189,7 +189,7 @@ const Modal = ({ closeModal }) => {
               ))}
             </select>
           </div>
-          <div className="CreateModify-form-group">
+          {/* <div className="CreateModify-form-group">
             <label htmlFor="subSubject">세부과목</label>
             <select
               id="subSubject"
@@ -207,7 +207,7 @@ const Modal = ({ closeModal }) => {
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
           <div className="CreateModify-form-group">
             <label htmlFor="date">날짜</label>
             <input
