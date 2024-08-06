@@ -452,7 +452,7 @@ public class ScoreRepositoryImpl implements ScoreRepository{
     public ResponseScoreDto subTarget(int userId, int subCode, int myId) throws PersistenceException {
         try{
             User user = em.find(User.class, userId);
-            SubjectCode subjectCode = em.find(SubjectCode.class, subCode);
+            SubjectCode subCodeInfo = em.find(SubjectCode.class, subCode);
 
             if(user.getId() != myId && user.getUserPublic() == 0){
                 throw new IllegalStateException("비공개 유저입니다.");
@@ -460,17 +460,18 @@ public class ScoreRepositoryImpl implements ScoreRepository{
 
             return queryFactory
                     .select(Projections.constructor(ResponseScoreDto.class,
-                            userScoreTarget.subjectCode.code,
-                            userScoreTarget.subjectCode.name,
+                            subjectCode.code,
+                            subjectCode.name,
                             userScoreTarget.targetScore,
                             userScoreTarget.targetGrade,
-                            userScoreTarget.subjectCode.maxScore
+                            subjectCode.maxScore
                     ))
-                    .from(userScoreTarget)
-                    .where(userScoreTarget.subjectCode.code.eq(subjectCode.getCode())
-                            .and(userScoreTarget.user.id.eq(user.getId())))
+                    .from(subjectCode)
+                    .leftJoin(userScoreTarget).on(
+                            subjectCode.code.eq(userScoreTarget.subjectCode.code)
+                                    .and(userScoreTarget.user.id.eq(user.getId())))
+                    .where(subjectCode.code.eq(subCodeInfo.getCode()))
                     .fetchOne();
-
         }catch(IllegalStateException e) {
             throw e;
         } catch(Exception e) {
