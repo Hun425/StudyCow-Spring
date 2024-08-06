@@ -51,9 +51,18 @@ import java.util.Arrays;
 public class SecurityConfig implements WebSocketMessageBrokerConfigurer {
 
     private static final String[] AUTH_WHITELIST = {
-            "/api/v1/user/**", "/swagger-ui/**", "/api-docs", "/swagger-ui-custom.html",
-            "/v3/api-docs/**", "/api-docs/**", "/swagger-ui.html", "/api/v1/auth/**",
-            "/login","/swagger-ui.html#/**","/studycow/**","/ws/**","/ws-stomp/**"
+            "/studycow/",
+            "/api/v1/auth/**",
+            "/studycow/api/v1/auth/**",
+            "/swagger-ui/**",
+            "/swagger-ui-custom.html",
+            "/v3/api-docs/**",
+            "/api-docs/**",
+            "/swagger-ui.html",
+            "/swagger-ui.html#/**",
+            "/ws/**",
+            "/ws-stomp/**",
+            "/error"
     };
 
 
@@ -72,13 +81,13 @@ public class SecurityConfig implements WebSocketMessageBrokerConfigurer {
                         .accessDeniedHandler(accessDeniedHandler()))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(AUTH_WHITELIST).permitAll()
-                        .requestMatchers("/ws/**").permitAll()
-                        .anyRequest().authenticated());
+                        .anyRequest().permitAll());
+
 
         return http.build();
     }
 
-    private static @NotNull AuthenticationEntryPoint getAuthenticationEntryPoint() {
+    private static AuthenticationEntryPoint getAuthenticationEntryPoint() {
         return (request, response, authException) -> {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
@@ -95,8 +104,8 @@ public class SecurityConfig implements WebSocketMessageBrokerConfigurer {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173","https://i11c202.p.ssafy.io","http://localhost:8080"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE","PATCH"));
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("*"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(false);
 

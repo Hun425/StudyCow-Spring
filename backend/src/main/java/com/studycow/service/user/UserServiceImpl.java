@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(()->new CustomException(ErrorCode.WRONG_EMAIL));
 
         if(user ==null) throw new CustomException(ErrorCode.USER_NOT_FOUND);
-        if(!userPassword.equals(passwordEncoder.encode(userPassword))) throw new CustomException(ErrorCode.WRONG_PASSWORD);
+        if(!passwordEncoder.matches(userPassword,user.getUserPassword())) throw new CustomException(ErrorCode.WRONG_PASSWORD);
 
         CustomUserInfoDto info = modelMapper.map(user, CustomUserInfoDto.class);
         String accessToken = jwtUtil.createAccessToken(info);
