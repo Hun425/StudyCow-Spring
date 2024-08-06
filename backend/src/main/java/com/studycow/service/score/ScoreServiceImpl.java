@@ -2,6 +2,8 @@ package com.studycow.service.score;
 
 import com.studycow.dto.common.SubjectCodeDto;
 import com.studycow.dto.score.*;
+import com.studycow.dto.target.RequestTargetDto;
+import com.studycow.dto.target.ScoreTargetDto;
 import com.studycow.repository.common.CommonRepository;
 import com.studycow.repository.score.ScoreRepository;
 import jakarta.persistence.PersistenceException;
@@ -10,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -137,59 +138,6 @@ public class ScoreServiceImpl implements ScoreService{
     @Transactional
     public void deleteScore(int userId, Long scoreId) throws Exception {
         scoreRepository.deleteScore(userId, scoreId);
-    }
-
-    /**
-     * 성적 목표 등록
-     * @param requestTargetDto : 성적 목표 정보
-     * @throws Exception
-     */
-    @Override
-    @Transactional
-    public void saveScoreTarget(RequestTargetDto requestTargetDto, int userId) throws Exception {
-        scoreRepository.saveScoreTarget(requestTargetDto, userId);
-    }
-
-    /**
-     * 목표 목록 조회
-     * @param userId : 유저 id
-     * @throws Exception
-     */
-    @Override
-    public List<ScoreTargetDto> targetList(int userId, int myId) throws PersistenceException {
-        return scoreRepository.targetList(userId, myId);
-    }
-
-    /**
-     * 성적 목표 삭제
-     * @param targetId : 목표 id
-     * @throws Exception
-     */
-    @Override
-    @Transactional
-    public void deleteTarget(int userId, Long targetId) throws Exception {
-        scoreRepository.deleteScoreTarget(userId, targetId);
-    }
-
-    /**
-     * 성적 목표 수정
-     * @param requestTargetDto : 목표 정보
-     * @throws Exception
-     */
-    @Override
-    @Transactional
-    public void modifyTarget(RequestTargetDto requestTargetDto, int userId, Long targetId) throws Exception {
-        scoreRepository.modifyScoreTarget(requestTargetDto, userId, targetId);
-    }
-
-    /**
-     * 미설정 목표 과목 조회
-     * @param userId : 유저 id
-     * @throws Exception
-     */
-    @Override
-    public List<SubjectCodeDto> subjectList(int userId) throws PersistenceException {
-        return scoreRepository.subjectList(userId);
     }
 
     /**
