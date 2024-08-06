@@ -6,7 +6,7 @@ import usePlanStore from "../../stores/plan";
 import PlanModify from "./CreateModify/PlanModify"; // PlanModify 모달 컴포넌트
 
 const PlanList = () => {
-  const { plans, updatePlanStatus, deletePlan } = usePlanStore();
+  const { plans, changePlanStatus, deletePlan } = usePlanStore(); // changePlanStatus 가져오기
 
   const sub_code_dic = {
     1: "국어",
@@ -22,8 +22,17 @@ const PlanList = () => {
   const [selectedPlanId, setSelectedPlanId] = useState(null); // 수정할 계획의 ID
   const [showModifyModal, setShowModifyModal] = useState(false); // 모달 가시성 상태
 
-  const handleCheckboxChange = (planId) => {
-    updatePlanStatus(planId); // 스토어에 상태 업데이트 요청
+  // 기존 상태 업데이트 핸들러를 changePlanStatus로 대체
+  const handleCheckboxChange = async (planId) => {
+    try {
+      const success = await changePlanStatus(planId); // 상태 변경 요청
+      if (!success) {
+        alert("플랜 상태 변경에 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("플랜 상태 변경 중 오류가 발생했습니다:", error);
+      alert("플랜 상태 변경 중 오류가 발생했습니다.");
+    }
   };
 
   const handleEditClick = (planId) => {
@@ -70,43 +79,39 @@ const PlanList = () => {
         <p>플랜을 등록하세요.</p>
       ) : (
         plans.map((plan) => (
-          <div key={plan.planId}>
-            {!plan.planStatus && (
-              <div className="singlePlanContent">
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={plan.planStatus === 1}
-                    onChange={() => handleCheckboxChange(plan.planId)}
-                  />
-                  {`${formatPlanStudyTime(plan.planStudyTime)}`}{" "}
-                  {/* 입력된 시간 표시 */}
-                </label>
-                <p>{`${sub_code_dic[`${plan.subCode}`]}`}</p> {/* 과목 표시 */}
-                <div className="buttonBox">
-                  <button
-                    className="buttonCase"
-                    onClick={() => handleEditClick(plan.planId)}
-                  >
-                    <img
-                      className="editButton"
-                      src={editButton}
-                      alt="수정버튼"
-                    />
-                  </button>
-                  <button
-                    className="buttonCase"
-                    onClick={() => handleDeleteClick(plan.planId)} // 삭제 클릭 핸들러 추가
-                  >
-                    <img
-                      className="deleteButton"
-                      src={deleteButton}
-                      alt="삭제버튼"
-                    />
-                  </button>
-                </div>
-              </div>
-            )}
+          <div key={plan.planId} className={`singlePlanContent ${plan.planStatus === 1 ? 'completed' : ''}`}>
+            <label>
+              <input
+                type="checkbox"
+                checked={plan.planStatus === 1}
+                onChange={() => handleCheckboxChange(plan.planId)} // 상태 변경 함수 사용
+              />
+              {`${formatPlanStudyTime(plan.planStudyTime)}`}{" "}
+              {/* 입력된 시간 표시 */}
+            </label>
+            <p>{`${sub_code_dic[`${plan.subCode}`]}`}</p> {/* 과목 표시 */}
+            <div className="singleButtonBox">
+              <button
+                className="singleButtonCase"
+                onClick={() => handleEditClick(plan.planId)}
+              >
+                <img
+                  className="singleEditButton"
+                  src={editButton}
+                  alt="수정버튼"
+                />
+              </button>
+              <button
+                className="singleButtonCase"
+                onClick={() => handleDeleteClick(plan.planId)} // 삭제 클릭 핸들러 추가
+              >
+                <img
+                  className="singleDeleteButton"
+                  src={deleteButton}
+                  alt="삭제버튼"
+                />
+              </button>
+            </div>
           </div>
         ))
       )}

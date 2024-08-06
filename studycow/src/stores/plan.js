@@ -43,7 +43,7 @@ const usePlanStore = create(
       },
       updateTodayPlanStatus: (planId) => {
         set((state) => ({
-          subPlans: state.subPlans.map((plan) =>
+          todayPlans: state.todayPlans.map((plan) =>
             plan.planId === planId
               ? { ...plan, planStatus: plan.planStatus === 0 ? 1 : 0 }
               : plan
@@ -61,6 +61,33 @@ const usePlanStore = create(
               : plan
           ),
         }));
+      },
+      changePlanStatus: async (planId) => {
+        const { token } = useInfoStore.getState();
+        try {
+          const response = await axios.post(API_URL + `planner/${planId}`, {}, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (response.status === 200) {
+            set((state) => ({
+              plans: state.plans.map((plan) =>
+                plan.planId === planId
+                  ? { ...plan, planStatus: plan.planStatus === 0 ? 1 : 0 }
+                  : plan
+              ),
+            }));
+            return true;
+          } else {
+            console.error("플래너 상태 변경에 실패했습니다. 서버 응답 코드:", response.status);
+            return false;
+          }
+        } catch (error) {
+          console.error("플래너 상태 변경 중 오류가 발생했습니다:", error);
+          return false;
+        }
       },
       saveDate: (day) => set({ date: day }),
       getTodayPlanRequest: async (date) => {

@@ -71,43 +71,42 @@ const CatPlanList = () => {
         <p>해당 과목에 등록된 플랜이 없습니다.</p>
       ) : (
         subPlans.map((plan) => (
-          <div key={plan.planId}>
-            {!plan.planStatus && (
-              <div className="singleSubPlanContent">
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={plan.planStatus === 1}
-                    onChange={() => handleCheckboxChange(plan.planId)}
-                  />
-                  {`${formatPlanStudyTime(plan.planStudyTime)}`}{" "}
-                  {/* Display study time */}
-                </label>
-                <p>{`${plan.planContent}`}</p> {/* Display plan content */}
-                <div className="buttonBox">
-                  <button
-                    className="buttonCase"
-                    onClick={() => handleEditClick(plan.planId)}
-                  >
-                    <img
-                      className="editButton"
-                      src={editButton}
-                      alt="수정버튼"
-                    />
-                  </button>
-                  <button
-                    className="buttonCase"
-                    onClick={() => handleDeleteClick(plan.planId)} // 삭제 버튼에 클릭 핸들러 추가
-                  >
-                    <img
-                      className="deleteButton"
-                      src={deleteButton}
-                      alt="삭제버튼"
-                    />
-                  </button>
-                </div>
-              </div>
-            )}
+          <div
+            key={plan.planId}
+            className={`singleSubPlanContent ${plan.planStatus === 1 ? "completed" : ""}`}
+          >
+            <label>
+              <input
+                type="checkbox"
+                checked={plan.planStatus === 1}
+                onChange={() => handleCheckboxChange(plan.planId)}
+              />
+              {`${formatPlanStudyTime(plan.planStudyTime)}`}{" "}
+              {/* Display study time */}
+            </label>
+            <p>{`${plan.planContent}`}</p> {/* Display plan content */}
+            <div className="singleButtonBox">
+              <button
+                className="singleButtonCase"
+                onClick={() => handleEditClick(plan.planId)}
+              >
+                <img
+                  className="singleEditButton"
+                  src={editButton}
+                  alt="수정버튼"
+                />
+              </button>
+              <button
+                className="singleButtonCase"
+                onClick={() => handleDeleteClick(plan.planId)} // 삭제 버튼에 클릭 핸들러 추가
+              >
+                <img
+                  className="singleDeleteButton"
+                  src={deleteButton}
+                  alt="삭제버튼"
+                />
+              </button>
+            </div>
           </div>
         ))
       )}
