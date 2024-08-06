@@ -6,9 +6,15 @@ import RoomChat from "./RoomChat.jsx";
 import RoomPlanner from "./RoomPlanner.jsx";
 import './styles/StudyRoom.css'
 import useStudyStore from "../../stores/study.js";
+import { useParams } from 'react-router-dom';
+import RoomCam from "./RoomCam.jsx";
 
 function StudyRoom() {
-  const {showChat, showList, showLank} = useStudyStore();
+  const {showChat, showList, showLank } = useStudyStore();
+
+  // URL에서 roomId 추출
+  const { roomId } = useParams();
+
 
   return (
     <>
@@ -30,12 +36,11 @@ function StudyRoom() {
           )}
           {showLank && (
             <div style={{ position: 'fixed', bottom: '370px', right: '20px', width: '300px', zIndex: 1000 }}>
-              <RoomChat />
             </div>
           )}
             {showChat && (
             <div style={{ position: 'fixed', bottom: '70px', right: '20px', width: '300px', zIndex: 1000 }}>
-              <RoomChat />
+              <RoomChat roomId={roomId} />
             </div>
           )}
         </div>

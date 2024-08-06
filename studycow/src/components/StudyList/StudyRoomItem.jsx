@@ -1,6 +1,14 @@
 import "./styles/StudyRoomItem.css";
+import { useNavigate } from "react-router-dom";
 
-const StudyRoomItem = ({ title, thumb, maxPerson, nowPerson }) => {
+const StudyRoomItem = ({ roomId, title, thumb, maxPerson, nowPerson }) => {
+  // 이동 - 방 접속
+  const navigate = useNavigate();
+
+  const goRoom = (roomNum) => {
+    navigate(`/study/room/${roomNum}`);
+  }
+
   return (
     <div
       className="studyRoomContainer"
@@ -10,7 +18,12 @@ const StudyRoomItem = ({ title, thumb, maxPerson, nowPerson }) => {
       <p className="studyRoomCount">
         {nowPerson}/{maxPerson}
       </p>
-      <button className="studyRoomEnterBtn">입장하기</button>
+      <button 
+        className="studyRoomEnterBtn" 
+        onClick={() => goRoom(roomId)}
+      >
+        입장하기
+      </button>
     </div>
   );
 };

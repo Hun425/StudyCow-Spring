@@ -34,6 +34,7 @@ const StudyList = () => {
           {rooms.map((room) => (
             <StudyRoomItem
               key={room.id}
+              roomId={room.id}
               title={room.title}
               thumb={room.thumb}
               maxPerson={room.maxPerson}
