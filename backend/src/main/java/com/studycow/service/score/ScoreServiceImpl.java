@@ -35,11 +35,12 @@ public class ScoreServiceImpl implements ScoreService{
      * @throws Exception
      */
     @Override
-    public ResponseScoreDto listScores(int userId, int subCode, int myId) throws Exception {
+    public ResponseScoreDto listScores(int userId, int subCode, int myId, Integer limitCnt) throws Exception {
+        // 과목의 목표 조회
         ResponseScoreDto responseScoreDto = scoreRepository.subTarget(userId, subCode, myId);
 
         // 과목별 성적 리스트
-        responseScoreDto.setScores(scoreRepository.listScores(userId, subCode, myId, 0));
+        responseScoreDto.setScores(scoreRepository.listScores(userId, subCode, myId, limitCnt));
 
         // 오답 유형 리스트 조회
         for(ScoreDto scores : responseScoreDto.getScores()){
@@ -49,7 +50,27 @@ public class ScoreServiceImpl implements ScoreService{
             if(scoreDetailDtoList != null && !scoreDetailDtoList.isEmpty())
                 scores.setScoreDetails(scoreDetailDtoList);
         }
-        // return scoreDtoList;
+
+        int scoreSize = responseScoreDto.getScores().size();
+
+        if(scoreSize > 0) {
+            // 가장 최근 성적
+            responseScoreDto.setNowScore(responseScoreDto.getScores().get(0).getTestScore());
+            // 오답유형 통계
+            responseScoreDto.setDetailStats(
+                    scoreRepository.statsDetail(
+                            userId,
+                            subCode,
+                            responseScoreDto.getScores().get(scoreSize - 1).getTestDate(),
+                            responseScoreDto.getScores().get(0).getTestDate()
+                    )
+            );
+        }
+        if(scoreSize > 1)
+            // 성적 등락확인
+            responseScoreDto.setDiffScore(responseScoreDto.getNowScore() -
+                    responseScoreDto.getScores().get(1).getTestScore());
+
         return responseScoreDto;
     }
 
@@ -233,7 +254,7 @@ public class ScoreServiceImpl implements ScoreService{
      */
     @Override
     public List<ResponseStatsDto> scoreStats(int userId, int myId, int months) throws Exception {
-        if(commonRepository.checkPublic(userId, myId) == 1){
+        /*if(commonRepository.checkPublic(userId, myId) == 1){
             LocalDate now = LocalDate.now();
             List<ResponseStatsDto> responseStatsList = scoreRepository.scoreStats(
                     userId, months, now);
@@ -246,7 +267,8 @@ public class ScoreServiceImpl implements ScoreService{
             return responseStatsList;
         }else{
             return null;
-        }
+        }*/
+        return null;
     }
 
 }

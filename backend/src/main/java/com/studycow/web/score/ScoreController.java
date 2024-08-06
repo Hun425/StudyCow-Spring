@@ -40,15 +40,17 @@ public class ScoreController {
     public ResponseEntity<?> listScore(
             @PathVariable int userId,
             @PathVariable int subCode,
+            @RequestParam(value = "limit", required = false) Integer limitCnt,
             @AuthenticationPrincipal CustomUserDetails userDetails
     ) {
         try {
             int myId = userDetails.getUser().getUserId();
-            ResponseScoreDto responseScoreDto = scoreService.listScores(userId, subCode, myId);
+            ResponseScoreDto responseScoreDto = scoreService.listScores(userId, subCode, myId, limitCnt);
             if(myId == userId){
-                responseScoreDto.setAdvice(gptController.scoreAdvice(responseScoreDto));
+                //responseScoreDto.setAdvice(gptController.scoreAdvice(responseScoreDto));
+                responseScoreDto.setAdvice("성적을 분석해 줄수 있어요. 한번 해보실래요?");
             }else{
-                responseScoreDto.setAdvice("공부 추천은 내 주인에게만 해줄 수 있소.");
+                responseScoreDto.setAdvice("공부 추천은 내 주인에게만 해줄 수 있어요.");
             }
             return ResponseEntity.ok(responseScoreDto);
         } catch(Exception e) {
@@ -203,7 +205,7 @@ public class ScoreController {
         }
     }
 
-    @Operation(summary = "과목 목표별 최근 5개 성적 조회", description = "과목별 최근 5개 성적을 조회합니다.")
+    /*@Operation(summary = "과목 목표별 최근 5개 성적 조회", description = "과목별 최근 5개 성적을 조회합니다.")
     @GetMapping("/{userId}/auto")
     public ResponseEntity<?> recentScores(@PathVariable int userId) {
         try {
@@ -213,9 +215,9 @@ public class ScoreController {
             //e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-    }
+    }*/
 
-    @Operation(summary = "과목 목표별 최근 5개 성적 조회", description = "과목별 최근 5개 성적을 조회합니다.")
+    /*@Operation(summary = "최근 n개월간의 성적 통계", description = "최근 n개월간의 성적 통계를 조회합니다.")
     @GetMapping("/{userId}/stats/{months}")
     public ResponseEntity<?> statsScores(
             @PathVariable int userId,
@@ -229,5 +231,5 @@ public class ScoreController {
             //e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-    }
+    }*/
 }
