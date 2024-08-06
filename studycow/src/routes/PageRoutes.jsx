@@ -34,6 +34,10 @@ import StudyRoom from "../components/StudyRoom/StudyRoom.jsx";
 // 성적 등록
 import ScoreRegist from "../components/ScoreRegist/ScoreRegist.jsx";
 
+// 성적 분석 페이지
+import AnalyzePage from "../views/AnalyzePage.jsx";
+import TestAnalyze from "../components/TestAnalyze/TestAnalyze.jsx";
+
 const PageRoutes = () => (
   <Routes>
     {/* 마이페이지 */}
@@ -65,7 +69,9 @@ const PageRoutes = () => (
     <Route path="/modify/:planId" element={<PlanModify />} />
 
     {/* 성적분석 */}
-    <Route path="/analyze" element={<a>analyze</a>}></Route>
+    <Route path="/analyze" element={<AnalyzePage />}>
+      <Route path="" element={<TestAnalyze />} />
+    </Route>
 
     {/*성적등록*/}
     <Route path="/score/regist" element={<ScoreRegist />} />

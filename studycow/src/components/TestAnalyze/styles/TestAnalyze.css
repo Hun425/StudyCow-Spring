@@ -1,0 +1,30 @@
+.analyzeTotalContainer {
+  margin-top: 105px;
+  margin-bottom: 30px;
+  padding: 0px 80px;
+}
+
+.analyzeHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.gradeSubjectSelect {
+  align-items: center;
+}
+
+.gradeSubjectSelect select {
+  width: 150px;
+}
+
+.analyzeCowStatus {
+  width: 320px;
+  height: 460px;
+  background-color: violet;
+}
+
+.analyzeBody {
+  display: flex;
+  justify-content: space-between;
+}
