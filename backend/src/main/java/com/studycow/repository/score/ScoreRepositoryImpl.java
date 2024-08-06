@@ -58,14 +58,15 @@ public class ScoreRepositoryImpl implements ScoreRepository{
      * @throws PersistenceException : JPA 표준 예외
      */
     @Override
-    public List<ScoreDto> listScores(int userId, Integer subCode, int myId, int limitCnt) throws PersistenceException {
+    public List<ScoreDto> listScores(int userId, Integer subCode, int myId, Integer limitCnt) throws PersistenceException {
         try{
             User user = em.find(User.class, userId);
 
             if(user.getId() != myId && user.getUserPublic() == 0){
                 throw new IllegalStateException("비공개 유저입니다.");
             }
-            var query = queryFactory
+
+            return queryFactory
                     .select(Projections.constructor(ScoreDto.class,
                             userSubjectScore.id,
                             userSubjectScore.subjectCode.code,
@@ -77,11 +78,9 @@ public class ScoreRepositoryImpl implements ScoreRepository{
                     .from(userSubjectScore)
                     .where(userSubjectScore.user.id.eq(user.getId())
                             .and(hasSubCode(subCode)))
-                    .orderBy(userSubjectScore.testDate.desc());
-            if(limitCnt > 0){
-                query.limit(limitCnt);
-            }
-            return query.fetch();
+                    .orderBy(userSubjectScore.testDate.desc())
+                    .limit(hasLimit(limitCnt))
+                    .fetch();
 
         }catch(IllegalStateException e) {
             throw e;
@@ -535,15 +534,14 @@ public class ScoreRepositoryImpl implements ScoreRepository{
     }
 
     /**
-     * 과목별 n개월간의 틀린 유형
+     * 과목별 특정 기간동안 틀린 유형
      *
      * @param userId
-     * @param months
      * @return
      * @throws PersistenceException
      */
     @Override
-    public List<ScoreDetailStatsDto> statsDetail(int userId, int subCode, int months, LocalDate now) throws PersistenceException {
+    public List<ScoreDetailStatsDto> statsDetail(int userId, int subCode, LocalDate startDate, LocalDate endDate) throws PersistenceException {
         return queryFactory
                 .select(Projections.constructor(ScoreDetailStatsDto.class,
                         wrongProblem.problemCategory.code,
@@ -553,7 +551,7 @@ public class ScoreRepositoryImpl implements ScoreRepository{
                 .where(wrongProblem.userSubjectScore.user.id.eq(userId)
                         .and(wrongProblem.userSubjectScore.subjectCode.code.eq(subCode))
                         .and(wrongProblem.userSubjectScore.testDate.between(
-                                now.minusMonths(months), now
+                                startDate, endDate
                         )))
                 .groupBy(wrongProblem.problemCategory.code)
                 .orderBy(wrongProblem.problemCategory.code.asc())
@@ -568,6 +566,10 @@ public class ScoreRepositoryImpl implements ScoreRepository{
      */
     private BooleanExpression hasSubCode(Integer subCode) {
         return subCode != null ? userSubjectScore.subjectCode.code.eq(subCode) : null;
+    }
+
+    private int hasLimit(Integer limit) {
+        return (limit != null && limit <= 10) ? limit : 10;
     }
 
 }

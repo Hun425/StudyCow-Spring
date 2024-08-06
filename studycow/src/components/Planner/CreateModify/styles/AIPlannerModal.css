@@ -1,0 +1,87 @@
+.ai-planner-modal__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7); /* 배경을 어둡게 설정 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.ai-planner-modal__content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 1000px;
+  width: 90%;
+}
+
+.ai-planner-modal__content-body {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.ai-planner-modal__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ai-planner-modal__table th,
+.ai-planner-modal__table td {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.ai-planner-modal__buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.ai-planner-modal__register-button,
+.ai-planner-modal__close-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.ai-planner-modal__register-button {
+  background-color: #4caf50;
+  color: white;
+}
+
+.ai-planner-modal__register-button:hover {
+  background-color: #45a049;
+}
+
+.ai-planner-modal__close-button {
+  background-color: #f44336;
+  color: white;
+}
+
+.ai-planner-modal__close-button:hover {
+  background-color: #d32f2f;
+}
+
+.ai-planner-modal__edit-button,
+.ai-planner-modal__save-button {
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.ai-planner-modal__edit-button:hover,
+.ai-planner-modal__save-button:hover {
+  background-color: #1976d2;
+}

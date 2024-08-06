@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
  * @author 채기훈
  * @since JDK17
  */
-
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -32,9 +31,7 @@ public class RedisSubscriber implements MessageListener {
         try{
             //redis에서 발행된 데이터 받아 deserialize
             String publishMessage = (String) redisTemplate.getStringSerializer().deserialize(message.getBody());
-            log.info("redis에서 받은 메세지: {}", publishMessage);
             ChatMessage chatMessage = objectMapper.readValue(publishMessage, ChatMessage.class);
-            log.info("redis에서 보낸 메세지: {}", chatMessage);
             messagingTemplate.convertAndSend("/sub/chat/room/"+chatMessage.getRoomId(), chatMessage);
         }
         catch (Exception e){

@@ -12,6 +12,7 @@ const useInfoStore = create(
       isLogin: false,
       token: null,
       userInfo: {
+        userId: 0,
         userEmail: null,
         userPublic: 0,
         userThumb: defaultProfile,
@@ -60,6 +61,7 @@ const useInfoStore = create(
               token: response.data.token ?? null,
               isLogin: true,
               userInfo: {
+                userId: response.data.userId ?? 0,
                 userEmail: response.data.userEmail ?? null,
                 userNickName: response.data.userNickName ?? null,
                 userThumb: response.data?.userThumb ?? defaultProfile,
@@ -91,13 +93,6 @@ const useInfoStore = create(
         set({ isLogin: false });
         navigate("/login");
       },
-
-      isOpen: false,
-      toggleDropdown: () =>
-        set((state) => {
-          const newState = !state.isOpen;
-          return { isOpen: newState };
-        }),
 
       ChangeInfoUrl: API_URL + "user/me",
 

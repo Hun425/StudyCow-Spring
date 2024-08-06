@@ -1,6 +1,7 @@
 package com.studycow.service.planner;
 
 import com.studycow.domain.UserSubjectPlan;
+import com.studycow.dto.plan.PlanCountByDateDto;
 import com.studycow.dto.plan.PlannerCreateDto;
 import com.studycow.dto.plan.PlannerGetDto;
 import com.studycow.dto.user.CustomUserDetails;
@@ -25,6 +26,9 @@ public interface PlannerService  {
 
     /** 플래너 과목코드 기준 조회 **/
     List<PlannerGetDto> getPlansBySubjectForUser(int userId, int subjectId);
+
+    /** 플래너 잔디 조회 **/
+    List<PlanCountByDateDto> getPlanCountByDateForUser(int month, int year, int userId);
 
     /** 플래너 기준 상세 정보 조회 **/
     PlannerGetDto getPlanByIdForUser(int userId, int planId);

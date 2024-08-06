@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./styles/CreateModify.css";
 import useInfoStore from "../../../stores/infos";
-import usePlanStore from "../../../stores/plan"; // 새로운 스토어 import
+import usePlanStore from "../../../stores/plan";
 
 const sub_code_dic = {
   1: "국어",
@@ -62,7 +62,7 @@ const sub_subjects_dic = {
   ],
 };
 
-const Modal = ({ closeModal }) => {
+const PlanCreate = ({ show, onClose }) => {
   const navigate = useNavigate();
   const { token } = useInfoStore((state) => ({
     token: state.token,
@@ -74,38 +74,58 @@ const Modal = ({ closeModal }) => {
     saveDate: state.saveDate,
   }));
 
-  const [selectedSubject, setSelectedSubject] = useState("");
-  const [subSubjects, setSubSubjects] = useState([]);
-  const [selectedSubSubject, setSelectedSubSubject] = useState("");
-  const [selectedTime, setSelectedTime] = useState(1);
-  const [selectedMinutes, setSelectedMinutes] = useState(0); // 분 추가
-  const [content, setContent] = useState("");
-  const [selectedDate, setSelectedDate] = useState(date); // 기본 날짜를 상태에서 가져옴
+  // 기본 상태값 정의
+  const initialState = {
+    selectedSubject: "",
+    selectedSubSubject: "",
+    selectedTime: 1,
+    selectedMinutes: 0,
+    content: "",
+    selectedDate: date,
+  };
 
+  const [formState, setFormState] = useState(initialState);
+
+  // 모달이 열릴 때마다 초기 상태 설정
   useEffect(() => {
-    if (selectedSubject) {
-      setSubSubjects(sub_subjects_dic[selectedSubject] || []);
-    } else {
-      setSubSubjects([]);
+    if (show) {
+      setFormState({
+        selectedSubject: "",
+        selectedSubSubject: "",
+        selectedTime: 1,
+        selectedMinutes: 0,
+        content: "",
+        selectedDate: date,
+      });
     }
-  }, [selectedSubject]);
+  }, [show, date]);
+
+  // 선택된 과목이 변경될 때 세부 과목 업데이트
+  const handleSubjectChange = (subject) => {
+    setFormState((prevState) => ({
+      ...prevState,
+      selectedSubject: subject,
+      selectedSubSubject: "", // 과목 변경 시 세부 과목 초기화
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const subCode = parseInt(
       Object.keys(sub_code_dic).find(
-        (key) => sub_code_dic[key] === selectedSubject
+        (key) => sub_code_dic[key] === formState.selectedSubject
       ),
       10
     );
 
-    const totalMinutes = selectedTime * 60 + parseInt(selectedMinutes, 10); // 총 분 계산
+    const totalMinutes =
+      formState.selectedTime * 60 + parseInt(formState.selectedMinutes, 10);
 
     const data = {
       subCode,
-      planDate: selectedDate,
-      planContent: content,
+      planDate: formState.selectedDate,
+      planContent: formState.content,
       planStudyTime: totalMinutes,
       planStatus: 0, // 기본값으로 설정
     };
@@ -122,7 +142,9 @@ const Modal = ({ closeModal }) => {
 
       if (response.ok) {
         alert("플래너가 성공적으로 생성되었습니다.");
-        navigate("/plan");
+        onClose(); // 모달 닫기
+        navigate("/plan", { replace: true }); // PlanPage로 이동
+        window.location.reload(); // 새로고침하여 데이터 보이도록 처리
       } else {
         alert("플래너 생성에 실패했습니다.");
       }
@@ -132,39 +154,17 @@ const Modal = ({ closeModal }) => {
   };
 
   const handleCancel = () => {
-    navigate("/plan");
-  };
-
-  const handleAutoComplete = () => {
-    // 과목 코드는 1에서 8까지 랜덤으로 선택
-    const tempSubCode = Math.floor(Math.random() * 8) + 1;
-    const selectedSubject = sub_code_dic[tempSubCode];
-
-    // 선택된 과목 코드에 해당하는 세부 과목 리스트를 가져옴
-    const subSubjectArray = sub_subjects_dic[selectedSubject];
-    const randomSubSubjectIndex = Math.floor(
-      Math.random() * subSubjectArray.length
-    );
-    const tempSubSubject = subSubjectArray[randomSubSubjectIndex];
-
-    // 공부 시간은 1에서 9시간 사이에서 랜덤으로 선택
-    const tempTime = Math.floor(Math.random() * 9) + 1;
-    const tempMinutes = Math.floor(Math.random() * 6) * 10; // 0부터 50까지 10단위로 랜덤
-
-    setSelectedSubject(selectedSubject);
-    setSelectedSubSubject(tempSubSubject);
-    setSelectedTime(tempTime);
-    setSelectedMinutes(tempMinutes);
-    setContent(
-      tempSubSubject + " " + tempTime + "시간 " + tempMinutes + "분 공부"
-    );
+    onClose(); // 모달 닫기
   };
 
   const handleDateChange = (e) => {
     const newDate = e.target.value;
-    setSelectedDate(newDate);
+    setFormState((prevState) => ({ ...prevState, selectedDate: newDate }));
     saveDate(newDate); // 스토어에 새로운 날짜 저장
   };
+
+  // 모달이 보이지 않을 경우 아무것도 렌더링하지 않음
+  if (!show) return null;
 
   return (
     <div className="CreateModify-modal-overlay">
@@ -176,8 +176,8 @@ const Modal = ({ closeModal }) => {
             <select
               id="subject"
               name="subject"
-              onChange={(e) => setSelectedSubject(e.target.value)}
-              value={selectedSubject}
+              onChange={(e) => handleSubjectChange(e.target.value)}
+              value={formState.selectedSubject}
             >
               <option value="" disabled hidden>
                 과목 선택
@@ -189,32 +189,39 @@ const Modal = ({ closeModal }) => {
               ))}
             </select>
           </div>
-          {/* <div className="CreateModify-form-group">
+          <div className="CreateModify-form-group">
             <label htmlFor="subSubject">세부과목</label>
             <select
               id="subSubject"
               name="subSubject"
-              disabled={!selectedSubject}
-              onChange={(e) => setSelectedSubSubject(e.target.value)}
-              value={selectedSubSubject}
+              disabled={!formState.selectedSubject}
+              onChange={(e) =>
+                setFormState((prevState) => ({
+                  ...prevState,
+                  selectedSubSubject: e.target.value,
+                }))
+              }
+              value={formState.selectedSubSubject}
             >
               <option value="" disabled hidden>
                 세부과목 선택
               </option>
-              {subSubjects.map((subSubject, index) => (
-                <option key={index} value={subSubject}>
-                  {subSubject}
-                </option>
-              ))}
+              {sub_subjects_dic[formState.selectedSubject]?.map(
+                (subSubject, index) => (
+                  <option key={index} value={subSubject}>
+                    {subSubject}
+                  </option>
+                )
+              )}
             </select>
-          </div> */}
+          </div>
           <div className="CreateModify-form-group">
             <label htmlFor="date">날짜</label>
             <input
               type="date"
               id="date"
               name="date"
-              value={selectedDate}
+              value={formState.selectedDate}
               onChange={handleDateChange}
             />
           </div>
@@ -226,10 +233,15 @@ const Modal = ({ closeModal }) => {
               name="estimatedHours"
               min="1"
               max="9"
-              value={selectedTime}
-              onChange={(e) => setSelectedTime(e.target.value)}
+              value={formState.selectedTime}
+              onChange={(e) =>
+                setFormState((prevState) => ({
+                  ...prevState,
+                  selectedTime: e.target.value,
+                }))
+              }
             />
-            <span className="time-display">{selectedTime} 시간</span>
+            <span className="time-display">{formState.selectedTime} 시간</span>
           </div>
 
           <div className="CreateModify-form-group">
@@ -241,10 +253,15 @@ const Modal = ({ closeModal }) => {
               min="0"
               max="50"
               step="10"
-              value={selectedMinutes}
-              onChange={(e) => setSelectedMinutes(e.target.value)}
+              value={formState.selectedMinutes}
+              onChange={(e) =>
+                setFormState((prevState) => ({
+                  ...prevState,
+                  selectedMinutes: e.target.value,
+                }))
+              }
             />
-            <span className="time-display">{selectedMinutes} 분</span>
+            <span className="time-display">{formState.selectedMinutes} 분</span>
           </div>
 
           <div className="CreateModify-form-group">
@@ -252,20 +269,18 @@ const Modal = ({ closeModal }) => {
             <textarea
               id="content"
               name="content"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
+              value={formState.content}
+              onChange={(e) =>
+                setFormState((prevState) => ({
+                  ...prevState,
+                  content: e.target.value,
+                }))
+              }
             ></textarea>
           </div>
           <div className="CreateModify-form-buttons">
             <button type="submit" className="CreateModify-register-button">
               등록
-            </button>
-            <button
-              type="button"
-              onClick={handleAutoComplete}
-              className="CreateModify-autocomplete-button"
-            >
-              자동완성
             </button>
             <button
               type="button"
@@ -281,4 +296,4 @@ const Modal = ({ closeModal }) => {
   );
 };
 
-export default Modal;
+export default PlanCreate;

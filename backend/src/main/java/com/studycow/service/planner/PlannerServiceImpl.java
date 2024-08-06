@@ -3,6 +3,7 @@ package com.studycow.service.planner;
 import com.studycow.domain.SubjectCode;
 import com.studycow.domain.User;
 import com.studycow.domain.UserSubjectPlan;
+import com.studycow.dto.plan.PlanCountByDateDto;
 import com.studycow.dto.plan.PlannerCreateDto;
 import com.studycow.dto.plan.PlannerGetDto;
 import com.studycow.dto.user.CustomUserDetails;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -107,6 +109,24 @@ public class PlannerServiceImpl implements PlannerService {
     }
 
     /**
+     * 플래너 잔디 조회
+     * @param month
+     * @param year
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<PlanCountByDateDto> getPlanCountByDateForUser(int month, int year, int userId) {
+        YearMonth yearMonth = YearMonth.of(year, month);
+        LocalDate startDate = yearMonth.atDay(1);
+        LocalDate endDate = yearMonth.atEndOfMonth();
+      List<PlanCountByDateDto> planCountByDateDto = plannerRepository.findPlanCountByMonth(startDate,endDate,userId)
+                .orElseThrow(()->new EntityNotFoundException("해당 조건의 플래너는 존재하지 않습니다."));
+        return planCountByDateDto;
+    }
+
+
+    /**
      * 플래너 업데이트
      * @param planId 업데이트할 플래너
      * @param customUser 작성 요청하는 사용자
@@ -167,4 +187,6 @@ public class PlannerServiceImpl implements PlannerService {
                 .map(plan -> modelMapper.map(plan, PlannerGetDto.class))
                 .collect(Collectors.toList());
     }
+
+
 }

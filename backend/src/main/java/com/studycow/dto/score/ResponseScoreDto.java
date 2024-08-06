@@ -20,17 +20,23 @@ public class ResponseScoreDto {
     /** 과목 이름 */
     private String subName;
     /** 목표 점수 */
-    private int targetScore;
+    private Integer targetScore;
     /** 목표 등급 */
-    private int targetGrade;
+    private Integer targetGrade;
     /** 해당 과목의 최대 점수 */
     private int maxScore;
     /** 조언 */
     private String advice;
+    /** 현재 성적 */
+    private Integer nowScore;
+    /** 성적 등락 */
+    private Integer diffScore;
     /** 성적 목록 */
     private List<ScoreDto> scores;
+    /** 유형별 오답 개수 */
+    private List<ScoreDetailStatsDto> detailStats;
 
-    public ResponseScoreDto(int subCode, String subName, int targetScore, int targetGrade, int maxScore){
+    public ResponseScoreDto(int subCode, String subName, Integer targetScore, Integer targetGrade, int maxScore){
         this.subCode = subCode;
         this.subName = subName;
         this.targetScore = targetScore;
@@ -38,6 +44,9 @@ public class ResponseScoreDto {
         this.maxScore = maxScore;
         this.advice = "";
         this.scores = null;
+        this.nowScore = null;
+        this.diffScore = null;
+        this.detailStats = null;
     }
 
     @Override

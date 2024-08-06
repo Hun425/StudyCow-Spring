@@ -44,14 +44,28 @@ public class ChatRoomRepository {
         return chatRoom;
     }
 
+    /**
+     * 메세지 전송 프로세스 진행
+     * @param chatMessage
+     * @return true : 성공 , false : 실패
+     */
     public boolean processMessage(ChatMessage chatMessage) {
         if (chatMessage.getType() == ChatMessage.MessageType.ENTER) {
             return enterRoom(chatMessage);
-        } else {
+        }
+        else if (chatMessage.getType() == ChatMessage.MessageType.LEAVE) {
+            return leaveRoom(chatMessage);
+        }
+        else {
             return publishMessage(chatMessage.getRoomId(), chatMessage);
         }
     }
 
+    /**
+     * 방 입장
+     * @param chatMessage
+     * @return true : 성공, false : 실패
+     */
     private boolean enterRoom(ChatMessage chatMessage) {
 
         String roomId = chatMessage.getRoomId();
@@ -66,6 +80,11 @@ public class ChatRoomRepository {
         return publishMessage(roomId, chatMessage);
     }
 
+    /**
+     * 사용자 퇴장
+     * @param chatMessage
+     * @return true : 성공 , false : 실패
+     */
     public boolean leaveRoom(ChatMessage chatMessage) {
         String roomId = chatMessage.getRoomId();
         chatMessage.setType(ChatMessage.MessageType.LEAVE); //
@@ -77,6 +96,12 @@ public class ChatRoomRepository {
         return topics.get(roomId);
     }
 
+    /**
+     * 메세지 전송
+     * @param roomId
+     * @param chatMessage
+     * @return true : 성공 , false : 실패
+     */
     public boolean publishMessage(String roomId, ChatMessage chatMessage) {
         ChannelTopic topic = getTopic(roomId);
         if (topic != null) {

@@ -1,14 +1,12 @@
-package com.studycow.repository.session;
+package com.studycow.repository.roomLog;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.studycow.domain.*;
-import com.studycow.dto.score.ScoreDetailStatsDto;
-import com.studycow.dto.session.EnterRequestDto;
-import com.studycow.dto.session.SessionDto;
-import com.studycow.dto.session.SessionRankDto;
-import com.studycow.dto.session.SessionRequestDto;
+import com.studycow.dto.roomLog.StudyRoomLogDto;
+import com.studycow.dto.roomLog.SessionRankDto;
+import com.studycow.dto.roomLog.LogRequestDto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
@@ -19,20 +17,19 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 import static com.studycow.domain.QUserStudyRoomEnter.userStudyRoomEnter;
 
 /**
  * <pre>
- *      방 세션 관련 레포지토리 구현
+ *      방 내부활동 레포지토리 구현
  * </pre>
  * @author 노명환
  * @since JDK17
  */
 @Repository
 @RequiredArgsConstructor
-public class SessionRepositoryImpl implements SessionRepository{
+public class RoomLogRepositoryImpl implements RoomLogRepository {
 
     @PersistenceContext
     private final EntityManager em;
@@ -43,21 +40,20 @@ public class SessionRepositoryImpl implements SessionRepository{
      *      방으로 입장을 시도한다.
      *      trigger : TRG_BEFORE_INSERT_IN_LOG
      * </pre>
-     * @param enterRequestDto : 방 Id DTO
+     * @param roomId : 방 id
      * @param userId : 유저 id
      * @throws PersistenceException : JPA 표준 예외
      */
     @Override
-    public SessionDto enterRoom(EnterRequestDto enterRequestDto, int userId) throws PersistenceException {
+    public StudyRoomLogDto enterRoom(Long roomId, int userId) throws PersistenceException {
         try {
             User user = em.find(User.class, userId);
-            StudyRoom studyRoom = em.find(StudyRoom.class,
-                    Long.parseLong(enterRequestDto.getRoomId()));
+            StudyRoom studyRoom = em.find(StudyRoom.class, roomId);
 
             UserStudyRoomEnter ure = new UserStudyRoomEnter(
                     null,
                     0,
-                    LocalDate.now(),
+                    LocalDateTime.now().minusHours(6).toLocalDate(),
                     LocalDateTime.now(),
                     null,
                     studyRoom,
@@ -67,7 +63,7 @@ public class SessionRepositoryImpl implements SessionRepository{
             em.persist(ure);
             em.flush();
 
-            return new SessionDto(
+            return new StudyRoomLogDto(
                     ure.getId(),
                     ure.getUser().getId(),
                     ure.getStudyRoom().getId(),
@@ -87,22 +83,22 @@ public class SessionRepositoryImpl implements SessionRepository{
      *      세션 id를 기반으로 방 퇴장 log를 최신화한다
      *      trigger : TRG_AFTER_UPDATE_IN_LOG
      * </pre>
-     * @param sessionRequestDto : 세션 id, 공부시간
+     * @param logRequestDto : 세션 id, 공부시간
      * @param userId : 유저 id
      * @throws PersistenceException : JPA 표준 예외
      */
     @Override
-    public SessionDto exitRoom(SessionRequestDto sessionRequestDto, int userId) throws PersistenceException {
+    public StudyRoomLogDto exitRoom(LogRequestDto logRequestDto, int userId) throws PersistenceException {
         try {
             UserStudyRoomEnter ure = em.find(UserStudyRoomEnter.class,
-                    Long.parseLong(sessionRequestDto.getSessionId()));
+                    logRequestDto.getLogId());
 
             if(ure != null) {
                 if (ure.getUser().getId() != userId) {
                     throw new IllegalStateException("세션ID의 사용자가 일치하지 않습니다.");
                 }
 
-                Integer studyTime = sessionRequestDto.getStudyTime();
+                Integer studyTime = logRequestDto.getStudyTime();
 
                 queryFactory
                         .update(userStudyRoomEnter)
@@ -113,7 +109,7 @@ public class SessionRepositoryImpl implements SessionRepository{
                 em.flush();
                 em.refresh(ure);
 
-                return new SessionDto(
+                return new StudyRoomLogDto(
                         ure.getId(),
                         ure.getUser().getId(),
                         ure.getStudyRoom().getId(),
@@ -155,21 +151,21 @@ public class SessionRepositoryImpl implements SessionRepository{
      * <pre>
      *      세션 id를 기반으로 공부시간을 갱신한다
      * </pre>
-     * @param sessionRequestDto : 세션 id, 공부시간
+     * @param logRequestDto : 세션 id, 공부시간
      * @param userId : 유저 id
      * @throws PersistenceException : JPA 표준 예외
      */
     @Override
-    public SessionDto modifyStudyTime(SessionRequestDto sessionRequestDto, int userId) throws PersistenceException {
+    public StudyRoomLogDto modifyStudyTime(LogRequestDto logRequestDto, int userId) throws PersistenceException {
         try {
             UserStudyRoomEnter ure = em.find(UserStudyRoomEnter.class,
-                    Long.parseLong(sessionRequestDto.getSessionId()));
+                    logRequestDto.getLogId());
 
             if(ure != null) {
                 if (ure.getUser().getId() != userId) {
                     throw new IllegalStateException("세션ID의 사용자가 일치하지 않습니다.");
                 }
-                Integer studyTime = sessionRequestDto.getStudyTime();
+                Integer studyTime = logRequestDto.getStudyTime();
 
                 queryFactory
                         .update(userStudyRoomEnter)
@@ -179,7 +175,7 @@ public class SessionRepositoryImpl implements SessionRepository{
 
                 em.refresh(ure);
 
-                return new SessionDto(
+                return new StudyRoomLogDto(
                         ure.getId(),
                         ure.getUser().getId(),
                         ure.getStudyRoom().getId(),

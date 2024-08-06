@@ -1,4 +1,4 @@
-package com.studycow.dto.session;
+package com.studycow.dto.roomLog;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +14,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class SessionRequestDto {
-    private String sessionId;
+public class LogRequestDto {
+    private Long logId;
     private int studyTime;
+    private String token;
 }

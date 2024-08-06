@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -15,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Table(name = "t_proc_user_study", uniqueConstraints =
 @UniqueConstraint(name = "UNI_USER_DATE", columnNames = {"USER_ID", "PROC_DATE"}))
-public class UserStudyTImeCalculate {
+public class UserStudyTimeCalculate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

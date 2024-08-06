@@ -9,7 +9,7 @@ const MainPage = () => {
   return (
     <>
       <Navbar />
-      <div className="main">{isLogin ? <Main_Login /> : <Main_Unlogin />};</div>
+      <div className="main">{isLogin ? <Main_Login /> : <Main_Unlogin />}</div>
     </>
   );
 };

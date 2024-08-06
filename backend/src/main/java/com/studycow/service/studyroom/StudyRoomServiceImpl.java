@@ -2,6 +2,7 @@ package com.studycow.service.studyroom;
 
 import com.studycow.domain.StudyRoom;
 import com.studycow.domain.User;
+import com.studycow.dto.calculate.RankDto;
 import com.studycow.dto.listoption.ListOptionDto;
 import com.studycow.dto.studyroom.StudyRoomDto;
 import com.studycow.dto.studyroom.StudyRoomRequestDto;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -95,6 +97,18 @@ public class StudyRoomServiceImpl implements StudyRoomService {
     @Override
     public List<StudyRoomDto> recentStudyRoom(int userId) throws Exception {
         return studyRoomRepository.recentStudyRoom(userId);
+    }
+
+    /**
+     * 날짜 별 랭킹 조회
+     *
+     * @param date
+     * @param limit
+     */
+    @Override
+    public RankDto getRanks(LocalDate date, Integer limit) throws Exception {
+        return new RankDto(studyRoomRepository.rankStudyRoom(date, limit),
+                studyRoomRepository.rankUser(date, limit));
     }
 
 }

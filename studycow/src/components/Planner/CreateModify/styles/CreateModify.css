@@ -8,6 +8,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000; /* z-index 설정 추가 */
 }
 
 .CreateModify-modal-content {
@@ -16,6 +17,7 @@
   border-radius: 5px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   width: 400px;
+  z-index: 1100; /* 콘텐츠 z-index 설정 추가 */
 }
 
 .CreateModify-modal-form {

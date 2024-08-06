@@ -62,24 +62,24 @@ public class ChatGPTController {
 
 
     @Operation(
-            summary = "플래너 자동화",
-            description = "chatGPT를 이용하여 플래너 자동 생성. 오남용 금지. <br>" +
-                    "requestDay(몇일치?): int, startDay(시작일): String(YYYY-MM-DD)")
+            summary = "플래너 자동 생성",
+            description = "chatGPT를 이용하여 플래너 7일치 자동 생성. 오남용 금지. <br>" +
+                    "{ startDay(시작일): String(YYYY-MM-DD), studyTime(하루 공부시간): int(분) }")
     @GetMapping("/auto-planner")
     public ResponseEntity<?> plannerAutomation(
             @AuthenticationPrincipal CustomUserDetails userDetails,
-            @RequestParam("requestDay") int requestDay,
-            @RequestParam("startDay") String startDay
+            @RequestParam("startDay") String startDay,
+            @RequestParam("studyTime") int studyTime
     ) {
         try {
             int userId = userDetails.getUser().getUserId();
 
             List<ScoreDto> recentScores = scoreService.recentUserScore(userId);
-            PlannerChatRequest request = new PlannerChatRequest(model, recentScores, requestDay, startDay);
+            PlannerChatRequest request = new PlannerChatRequest(model, recentScores, startDay, studyTime);
             ChatGPTResponse chatGPTResponse = template.postForObject(apiURL, request, ChatGPTResponse.class);
             return ResponseEntity.ok(chatGPTResponse.getChoices().get(0).getMessage().getContent());
         } catch(Exception e)  {
-            return new ResponseEntity<>("플래너 자동생성 실패", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("플래너 자동생성 실패 : " + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 

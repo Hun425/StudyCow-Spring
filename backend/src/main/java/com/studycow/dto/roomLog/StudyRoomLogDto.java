@@ -1,6 +1,5 @@
-package com.studycow.dto.session;
+package com.studycow.dto.roomLog;
 
-import com.studycow.dto.score.ScoreDetailDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,9 +13,9 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class SessionDto {
-    /** 입장 시 생성된 세션 id */
-    private Long sessionId;
+public class StudyRoomLogDto {
+    /** 입장 시 생성된 로그 id */
+    private Long logId;
     /** 입장 유저 id */
     private int userId;
     /** 입장 방 id */
@@ -33,11 +32,13 @@ public class SessionDto {
     private LocalDateTime outDate;
     /** 방 랭킹 정보 */
     private List<SessionRankDto> rankDto;
+    /** connection 토큰 */
+    private String token;
 
-    public SessionDto(Long sessionId, int userId, Long roomId,
-                      LocalDate studyDate, Integer studyTime, Integer roomStudyTime,
-                      LocalDateTime inDate, LocalDateTime outDate) {
-        this.sessionId = sessionId;
+    public StudyRoomLogDto(Long logId, int userId, Long roomId,
+                           LocalDate studyDate, Integer studyTime, Integer roomStudyTime,
+                           LocalDateTime inDate, LocalDateTime outDate) {
+        this.logId = logId;
         this.userId = userId;
         this.roomId = roomId;
         this.studyDate = studyDate;
@@ -46,5 +47,6 @@ public class SessionDto {
         this.inDate = inDate;
         this.outDate = outDate;
         this.rankDto = null;
+        this.token = null;
     }
 }

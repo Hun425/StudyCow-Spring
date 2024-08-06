@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Test Page</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <style>
+        #chat-messages {
+            height: 300px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<div id="chat-container">
+    <div id="chat-messages"></div>
+    <input type="text" id="message-input" placeholder="Type a message...">
+    <button onclick="sendMessage()">Send</button>
+</div>
+
+<script>
+    let stompClient = null;
+    const token = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjMsInVzZXJOYW1lIjoi67iM66Gg7KaIIiwidXNlckVtYWlsIjoiY2hhZTA3MzhAYXNkZi5jb20iLCJpYXQiOjE3MjI4MzU2NTIsImV4cCI6MTgwOTIzNTY1Mn0.YtWiHat21E2ce8fDIqONw65h-wJTCzcXLUj_uJ8kDRo';
+    const roomId = '1';
+
+    function connect() {
+        // 배포 서버의 WebSocket URL로 변경
+        const socket = new SockJS('http://localhost:8080/studycow/ws-stomp');
+        stompClient = Stomp.over(socket);
+
+        const headers = {
+            'Authorization': token
+        };
+
+        stompClient.connect(headers, function(frame) {
+            console.log('Connected: ' + frame);
+            stompClient.subscribe('/sub/chat/room/' + roomId, function(message) {
+                showMessage(JSON.parse(message.body));
+            });
+
+            sendEnterMessage();
+        }, function(error) {
+            console.error('STOMP error:', error);
+            alert('Could not connect to WebSocket server. Please try again later.');
+        });
+    }
+
+    function sendEnterMessage() {
+        sendChatMessage('ENTER', 'has entered the room');
+    }
+
+    function sendMessage() {
+        const messageInput = document.getElementById('message-input');
+        const message = messageInput.value.trim();
+        if (message) {
+            sendChatMessage('TALK', message);
+            messageInput.value = '';
+        }
+    }
+
+    function sendChatMessage(type, message) {
+        if (stompClient && stompClient.connected) {
+            const chatMessage = {
+                type: type,
+                roomId: roomId,
+                message: message
+            };
+            stompClient.send("/pub/chat/message", { 'Authorization': token }, JSON.stringify(chatMessage));
+        } else {
+            console.error('STOMP client is not connected');
+            alert('Not connected to chat server. Please try again.');
+        }
+    }
+
+    function showMessage(message) {
+        const messageElement = document.createElement('div');
+        messageElement.textContent = `${message.senderNickname || 'Unknown'}: ${message.message}`;
+        document.getElementById('chat-messages').appendChild(messageElement);
+    }
+
+    connect();
+</script>
+</body>
+</html>

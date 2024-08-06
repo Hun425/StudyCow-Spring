@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
 import "./styles/CreateModify.css";
 import useInfoStore from "../../../stores/infos";
-import usePlanStore from "../../../stores/plan"; // 새로운 스토어 import
+import usePlanStore from "../../../stores/plan";
 
 const sub_code_dic = {
   1: "국어",
@@ -62,8 +61,7 @@ const sub_subjects_dic = {
   ],
 };
 
-const PlanModify = () => {
-  const navigate = useNavigate();
+const PlanModify = ({ planId, show, onClose }) => {
   const { token } = useInfoStore((state) => ({
     token: state.token,
   }));
@@ -72,13 +70,11 @@ const PlanModify = () => {
     modifyPlannerUrl: state.modifyPlannerUrl,
   }));
 
-  const { planId } = useParams();
-
   const [selectedSubject, setSelectedSubject] = useState("");
   const [subSubjects, setSubSubjects] = useState([]);
   const [selectedSubSubject, setSelectedSubSubject] = useState("");
-  const [selectedTime, setSelectedTime] = useState(1); // 시간
-  const [selectedMinutes, setSelectedMinutes] = useState(0); // 분 추가
+  const [selectedTime, setSelectedTime] = useState(1);
+  const [selectedMinutes, setSelectedMinutes] = useState(0);
   const [content, setContent] = useState("");
   const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
 
@@ -91,41 +87,34 @@ const PlanModify = () => {
   }, [selectedSubject]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        console.log(`Fetching data for planId: ${planId}`);
-        const response = await fetch(modifyPlannerUrl(planId), {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+    if (show && planId) {
+      const fetchData = async () => {
+        try {
+          const response = await fetch(modifyPlannerUrl(planId), {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
 
-        console.log("Response:", response);
-        const text = await response.text();
-        console.log("Response Text:", text);
-
-        if (response.ok) {
-          const data = JSON.parse(text);
-          console.log("Fetched data:", data);
-          setSelectedSubject(sub_code_dic[data.subCode]);
-          setSelectedSubSubject(data.planContent);
-
-          // 시간과 분을 나누어 설정
-          setSelectedTime(Math.floor(data.planStudyTime / 60)); // 시간
-          setSelectedMinutes(data.planStudyTime % 60); // 분
-
-          setContent(data.planContent);
-          setDate(data.planDate);
-        } else {
-          console.error("Failed to fetch planner data.");
+          if (response.ok) {
+            const data = await response.json();
+            setSelectedSubject(sub_code_dic[data.subCode]);
+            setSelectedSubSubject(data.planContent);
+            setSelectedTime(Math.floor(data.planStudyTime / 60));
+            setSelectedMinutes(data.planStudyTime % 60);
+            setContent(data.planContent);
+            setDate(data.planDate);
+          } else {
+            console.error("Failed to fetch planner data.");
+          }
+        } catch (error) {
+          console.error("Error fetching planner data:", error);
         }
-      } catch (error) {
-        console.error("Error fetching planner data:", error);
-      }
-    };
+      };
 
-    fetchData();
-  }, [planId, token, modifyPlannerUrl]);
+      fetchData();
+    }
+  }, [show, planId, token, modifyPlannerUrl]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -137,7 +126,6 @@ const PlanModify = () => {
       10
     );
 
-    // 시간을 분 단위로 변환하여 저장
     const totalMinutes =
       parseInt(selectedTime, 10) * 60 + parseInt(selectedMinutes, 10);
 
@@ -145,13 +133,9 @@ const PlanModify = () => {
       subCode,
       planDate: date,
       planContent: content,
-      planStudyTime: totalMinutes, // 총 분
+      planStudyTime: totalMinutes,
       planStatus: 0,
     };
-
-    console.log("보내는 데이터:", data);
-    console.log("보내는 주소:", modifyPlannerUrl(planId));
-    console.log("토큰:", token);
 
     try {
       const response = await fetch(modifyPlannerUrl(planId), {
@@ -165,7 +149,8 @@ const PlanModify = () => {
 
       if (response.ok) {
         alert("플래너가 성공적으로 수정되었습니다.");
-        navigate("/plan");
+        onClose(); // 모달 닫기
+        window.location.reload(); // 페이지 새로고침
       } else {
         alert("플래너 수정에 실패했습니다.");
       }
@@ -174,9 +159,8 @@ const PlanModify = () => {
     }
   };
 
-  const handleCancel = () => {
-    navigate("/plan");
-  };
+  // 모달이 보이지 않을 경우 아무것도 렌더링하지 않음
+  if (!show) return null;
 
   return (
     <div className="CreateModify-modal-overlay">
@@ -201,25 +185,6 @@ const PlanModify = () => {
               ))}
             </select>
           </div>
-          {/* <div className="CreateModify-form-group">
-            <label htmlFor="subSubject">세부과목</label>
-            <select
-              id="subSubject"
-              name="subSubject"
-              disabled={!selectedSubject}
-              onChange={(e) => setSelectedSubSubject(e.target.value)}
-              value={selectedSubSubject}
-            >
-              <option value="" disabled hidden>
-                세부과목 선택
-              </option>
-              {subSubjects.map((subSubject, index) => (
-                <option key={index} value={subSubject}>
-                  {subSubject}
-                </option>
-              ))}
-            </select>
-          </div> */}
           <div className="CreateModify-form-group">
             <label htmlFor="date">날짜</label>
             <input
@@ -251,7 +216,7 @@ const PlanModify = () => {
               name="estimatedMinutes"
               min="0"
               max="50"
-              step="10" // 10분 단위로
+              step="10"
               value={selectedMinutes}
               onChange={(e) => setSelectedMinutes(e.target.value)}
             />
@@ -272,7 +237,7 @@ const PlanModify = () => {
             </button>
             <button
               type="button"
-              onClick={handleCancel}
+              onClick={onClose}
               className="CreateModify-cancel-button"
             >
               취소

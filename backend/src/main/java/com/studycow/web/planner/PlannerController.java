@@ -1,5 +1,6 @@
 package com.studycow.web.planner;
 
+import com.studycow.dto.plan.PlanCountByDateDto;
 import com.studycow.dto.plan.PlannerCreateDto;
 import com.studycow.dto.plan.PlannerGetDto;
 import com.studycow.dto.user.CustomUserDetails;
@@ -80,6 +81,19 @@ public class PlannerController {
         }
 
     }
+
+    @Operation(summary = "플래너 월 및 일자별 기준 개수 조회", description = "선택한 월의 플래너 일자별 개수를 출력합니다.")
+    @GetMapping("grass/{year}/{month}")
+    public ResponseEntity<?> grassPlan(@AuthenticationPrincipal CustomUserDetails user,@PathVariable int year,@PathVariable int month) {
+        try {
+            List<PlanCountByDateDto> grass = plannerService.getPlanCountByDateForUser(month, year, user.getUser().getUserId());
+            return new ResponseEntity<>(grass, HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
 
     @Operation(summary = "플래너 상세 조회", description = "선택한 플래너의 상세 정보를 출력합니다")
     @GetMapping("{planId}")
