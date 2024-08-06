@@ -98,7 +98,7 @@ public class PlannerController {
     }
 
     @Operation(summary = "플래너 상태 변경", description = "완료인 플래너는 미완료, 미완료인 플래너는 완료처리합니다.")
-    @PostMapping("{planId")
+    @PostMapping("{planId}")
     public ResponseEntity<String> changePlanStatus(@AuthenticationPrincipal CustomUserDetails user,
                                                    @PathVariable int planId){
         plannerService.changePlanStatus(planId, user);
