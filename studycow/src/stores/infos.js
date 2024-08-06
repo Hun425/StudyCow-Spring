@@ -12,6 +12,7 @@ const useInfoStore = create(
       isLogin: false,
       token: null,
       userInfo: {
+        userId: 0,
         userEmail: null,
         userPublic: 0,
         userThumb: defaultProfile,
@@ -60,6 +61,7 @@ const useInfoStore = create(
               token: response.data.token ?? null,
               isLogin: true,
               userInfo: {
+                userId: response.data.userId ?? 0,
                 userEmail: response.data.userEmail ?? null,
                 userNickName: response.data.userNickName ?? null,
                 userThumb: response.data?.userThumb ?? defaultProfile,

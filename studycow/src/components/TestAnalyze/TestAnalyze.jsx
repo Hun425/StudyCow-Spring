@@ -2,6 +2,7 @@ import useInfoStore from "../../stores/infos";
 import "./styles/TestAnalyze.css";
 import { useState } from "react";
 import GradeAnalyzeBox from "./GradeAnalyzeBox";
+import useGradeStore from "../../stores/grade";
 
 const sub_code_dic = {
   1: "국어",
@@ -16,8 +17,13 @@ const sub_code_dic = {
 
 const TestAnalyze = () => {
   const { userInfo } = useInfoStore();
-  const [selectedSubject, setSelectedSubject] = useState("");
-  console.log(selectedSubject);
+  const { selectedSubject, setSelectedSubject } = useGradeStore();
+
+  const handleSubjectChange = (e) => {
+    const key = e.target.value;
+    setSelectedSubject(key);
+    console.log(key); // selectedSubject 변경 시 콘솔에 출력
+  };
 
   return (
     <div className="analyzeTotalContainer">
@@ -27,7 +33,7 @@ const TestAnalyze = () => {
           <select
             id="subject"
             name="subject"
-            onChange={(e) => setSelectedSubject(e.target.value)}
+            onChange={handleSubjectChange}
             value={selectedSubject}
             className="form-control ml-2"
           >
@@ -35,7 +41,7 @@ const TestAnalyze = () => {
               과목 선택
             </option>
             {Object.entries(sub_code_dic).map(([key, value]) => (
-              <option key={key} value={value}>
+              <option key={key} value={key}>
                 {value}
               </option>
             ))}

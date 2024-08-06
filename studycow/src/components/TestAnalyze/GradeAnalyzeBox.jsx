@@ -1,9 +1,10 @@
 import "./styles/GradeAnalyzeBox.css";
+import RecentGradeGraph from "./RecendGradeGraph";
 
 const GradeAnalyzeBox = () => {
   return (
     <div className="selectedSubjectBox">
-      <h1>상자</h1>
+      <RecentGradeGraph />
     </div>
   );
 };
