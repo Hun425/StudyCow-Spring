@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(java.lang.Exception.class)
     protected ResponseEntity<ErrorResponse> handleException(java.lang.Exception e) {
-        e.printStackTrace();
+        log.error(e.getMessage(), e);
         ErrorResponse response = new ErrorResponse(ErrorCode.INTERNAL_SERVER_ERROR);
         return ResponseEntity.status(response.getErrorCode().getStatus()).body(response);
     }
@@ -87,18 +87,19 @@ public class GlobalExceptionHandler {
      * @param e
      * @return
      */
-//    @ExceptionHandler(AuthenticationException.class)
-//    protected ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException e) {
-//        log.error(e.getMessage());
-//        ErrorResponse response = new ErrorResponse(ErrorCode.NO_AUTHENTICAION);
-//        return ResponseEntity.status(response.getErrorCode().getStatus()).body(response);
-//    }
+    @ExceptionHandler(AuthenticationException.class)
+    protected ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException e) {
+        log.error(e.getMessage());
+        ErrorResponse response = new ErrorResponse(ErrorCode.NOT_AUTHENTICAION);
+        return ResponseEntity.status(response.getErrorCode().getStatus()).body(response);
+    }
 
 
-    @ExceptionHandler(value = {CustomException.class})
+    @ExceptionHandler(CustomException.class)
     protected ResponseEntity<ErrorResponse> handleCustomException(CustomException e) {
         log.error(e.getMessage());
-        ErrorResponse response = new ErrorResponse(ErrorCode.BAD_REQUEST);
+        ErrorCode errorCode = e.getErrorCode();
+        ErrorResponse response = new ErrorResponse(errorCode);
         return ResponseEntity.status(response.getErrorCode().getStatus()).body(response);
     }
 }

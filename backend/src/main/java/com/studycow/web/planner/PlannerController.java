@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -94,5 +95,13 @@ public class PlannerController {
                                              @PathVariable int planId) {
         plannerService.deletePlan(planId, user);
         return ResponseEntity.ok("삭제 성공");
+    }
+
+    @Operation(summary = "플래너 상태 변경", description = "완료인 플래너는 미완료, 미완료인 플래너는 완료처리합니다.")
+    @PostMapping("{planId")
+    public ResponseEntity<String> changePlanStatus(@AuthenticationPrincipal CustomUserDetails user,
+                                                   @PathVariable int planId){
+        plannerService.changePlanStatus(planId, user);
+        return ResponseEntity.ok("상태 변경 성공");
     }
 }

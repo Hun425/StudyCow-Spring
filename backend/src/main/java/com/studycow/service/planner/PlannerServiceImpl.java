@@ -7,6 +7,8 @@ import com.studycow.dto.plan.PlanCountByDateDto;
 import com.studycow.dto.plan.PlannerCreateDto;
 import com.studycow.dto.plan.PlannerGetDto;
 import com.studycow.dto.user.CustomUserDetails;
+import com.studycow.exception.CustomException;
+import com.studycow.exception.ErrorCode;
 import com.studycow.repository.planner.PlannerRepository;
 import com.studycow.repository.subjectcode.SubjectCodeRepository;
 import com.studycow.repository.user.UserRepository;
@@ -166,7 +168,7 @@ public class PlannerServiceImpl implements PlannerService {
     @Override
     public void deletePlan(int planId, CustomUserDetails customUser) {
         UserSubjectPlan plan = plannerRepository.findById((long)planId)
-                .orElseThrow(()->new EntityNotFoundException("해당 플래너가 존재하지 않습니다"));
+                .orElseThrow(()->new CustomException(ErrorCode.NOT_FOUND_PLANNER));
 
         int userId = customUser.getUser().getUserId();
 
@@ -176,6 +178,27 @@ public class PlannerServiceImpl implements PlannerService {
 
         plannerRepository.delete(plan);
     }
+
+    /**
+     * 플래너 미완료일때는 완료처리, 완료일때는 미완료 처리
+     * @param planId
+     * @param user
+     */
+    @Override
+    public void changePlanStatus(int planId, CustomUserDetails user){
+        UserSubjectPlan userSubjectPlan = plannerRepository.findById((long)planId)
+                .orElseThrow(()->new CustomException(ErrorCode.NOT_FOUND_PLANNER));
+
+        int nowStatus = userSubjectPlan.getPlanStatus();
+
+        if(nowStatus==1)nowStatus=0;
+        else nowStatus=1;
+
+        userSubjectPlan.setPlanStatus(nowStatus);
+
+        plannerRepository.save(userSubjectPlan);
+    }
+
 
     /**
      * 플래너 Entity > Dto 변환 메서드

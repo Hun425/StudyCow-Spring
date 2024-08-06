@@ -3,6 +3,8 @@ package com.studycow.service.user;
 import com.studycow.domain.User;
 import com.studycow.dto.user.CustomUserDetails;
 import com.studycow.dto.user.CustomUserInfoDto;
+import com.studycow.exception.CustomException;
+import com.studycow.exception.ErrorCode;
 import com.studycow.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -32,7 +34,7 @@ public class CustomUserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
         User user = userRepository.findById(Long.parseLong(id))
-                .orElseThrow(() -> new UsernameNotFoundException("해당하는 유저가 없습니다."));
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         CustomUserInfoDto dto  = modelMapper.map(user, CustomUserInfoDto.class);
         return new CustomUserDetails(dto);

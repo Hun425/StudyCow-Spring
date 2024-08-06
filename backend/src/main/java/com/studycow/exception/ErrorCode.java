@@ -26,7 +26,9 @@ public enum ErrorCode {
     BAD_REQUEST(HttpStatus.BAD_REQUEST,"잘못된 요청입니다."),
     DUPLICATE_RESOURCE(HttpStatus.CONFLICT,"중복된 요청입니다"),
     NOT_AUTHENTICAION(HttpStatus.UNAUTHORIZED,"접근 권한이 없습니다. 로그인해주세요"),
-    NOT_FOUND_GRADE(HttpStatus.NOT_FOUND,"해당 등급은 존재하지 않습니다");
+    NOT_FOUND_GRADE(HttpStatus.NOT_FOUND,"해당 등급은 존재하지 않습니다"),
+    NOT_FOUND_PLANNER(HttpStatus.NOT_FOUND,"해당 플래너가 존재하지 않습니다.");
+
     private HttpStatus status;
     private final String message;
 }

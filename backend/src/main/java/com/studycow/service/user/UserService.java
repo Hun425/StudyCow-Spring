@@ -17,7 +17,7 @@ import java.util.List;
 public interface UserService {
 
     /** 로그인 메서드 **/
-    LoginResponseDto login(LoginRequestDto loginRequestDto);
+    LoginResponseDto login(LoginRequestDto loginRequestDto) ;
 
     /** 회원가입 메서드 **/
     SignUpResponseDto register(RegisterRequestDto signUpRequestDto);

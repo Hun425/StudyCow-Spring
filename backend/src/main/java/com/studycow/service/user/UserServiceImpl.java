@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService  {
 
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     @Transactional
-    public LoginResponseDto login(LoginRequestDto loginRequestDto){
+    public LoginResponseDto login(LoginRequestDto loginRequestDto) {
         String userEmail = loginRequestDto.getUserEmail();
         String userPassword = loginRequestDto.getPassword();
 
@@ -55,7 +55,10 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(()->new CustomException(ErrorCode.WRONG_EMAIL));
 
         if(user ==null) throw new CustomException(ErrorCode.USER_NOT_FOUND);
-        if(!passwordEncoder.matches(userPassword,user.getUserPassword())) throw new CustomException(ErrorCode.WRONG_PASSWORD);
+        if(!passwordEncoder.matches(userPassword,user.getUserPassword())){
+            log.error("로그인 실패 비밀번호 오류");
+            throw new CustomException(ErrorCode.WRONG_PASSWORD);
+        }
 
         CustomUserInfoDto info = modelMapper.map(user, CustomUserInfoDto.class);
         String accessToken = jwtUtil.createAccessToken(info);
