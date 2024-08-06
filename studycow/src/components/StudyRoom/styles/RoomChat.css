@@ -50,19 +50,51 @@
   flex-grow: 1;
 }
 
-
 .sendButtonImg {
   width: 25px;
   height: 25px;
   margin-right: 10px;
 }
 
-
 .messageSendButton {
-
   background-color: rgba(0, 0, 0, 0); /* 완전 투명 배경 */
   border: none;
   margin: 5px;
   width: 30px;
   height: 30px;
+}
+
+/* Style for enter messages */
+.enter-message {
+  font-size: 15px;
+  padding: 3px;
+  padding-bottom: 1px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0); /* 완전 투명 배경 */
+  border-radius: 10px;
+  margin-bottom: 5px;
+  max-width: 70%;
+  word-wrap: break-word;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+
+.my-nickname {
+  font-size: 12px;
+  padding-bottom: 1px;
+  text-align: right;
+  max-width: 70%;
+  word-wrap: break-word;
+  margin-left: auto;
+}
+
+.other-nickname {
+  font-size: 12px;
+  padding-bottom: 1px;
+  text-align: left;
+  max-width: 70%;
+  word-wrap: break-word;
+  margin-right: auto;
 }

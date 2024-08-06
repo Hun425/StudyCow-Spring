@@ -15,7 +15,6 @@ function RoomChat() {
   const [messages, setMessages] = useState([]);
   const messageInputRef = useRef(null);
   const chatMessagesRef = useRef(null);
-  const [input, setInput] = useState('');
 
   // 연결
   const connect = () => {
@@ -117,9 +116,15 @@ function RoomChat() {
         {messages.map((message, index) => (
           <div
             key={index}
-            className={message.senderNickname === userInfo.userNickName ? 'my-message' : 'other-message'}
           >
-            {message.senderNickname || 'Unknown'}: {message.message}
+            {(message.type === 'TALK') && (
+              <div className={(message.senderNickname === userInfo.userNickName ? 'my-nickname' : 'other-nickname')}>
+                {message.senderNickname}
+              </div>
+            )}
+            <div className={message.type === 'ENTER' ? 'enter-message' : (message.senderNickname === userInfo.userNickName ? 'my-message' : 'other-message')}>
+             {message.message}
+            </div>
           </div>
         ))}
       </div>
@@ -129,7 +134,7 @@ function RoomChat() {
           id="message-input"
           ref={messageInputRef}
           className="form-control"
-          placeholder="Type a message..."
+          placeholder="채팅 입력하기"
           onKeyDown={handleKeyDown}
         />
         <button onClick={sendMessage} className='messageSendButton'>
