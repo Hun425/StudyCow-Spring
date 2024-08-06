@@ -1,20 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useOpenAiStore from "../../../stores/openAi"; // openAi 스토어 가져오기
-import usePlanStore from "../../../stores/plan"; // PlanStore 가져오기
 import "./styles/AIPlannerModal.css"; // 스타일 임포트
 
-const sub_code_dic = {
-  1: "국어",
-  2: "수학",
-  3: "영어",
-  4: "한국사",
-  5: "사회탐구",
-  6: "과학탐구",
-  7: "직업탐구",
-  8: "제2외국어/한문",
-};
-
-// Utility function to format time into hours and minutes
+// Utility function to format minutes into hours and minutes
 const formatTime = (minutes) => {
   const hours = Math.floor(minutes / 60);
   const remainingMinutes = minutes % 60;
@@ -25,70 +13,49 @@ const formatTime = (minutes) => {
 
 const AIPlannerModal = ({ show, onClose, analysis, plans }) => {
   const { registerPlans } = useOpenAiStore(); // AI 플래너 등록 함수 가져오기
-  const { getDatePlanRequest } = usePlanStore(); // 데이터 갱신 함수 가져오기
-  const [editPlan, setEditPlan] = useState(null);
-  const [updatedPlans, setUpdatedPlans] = useState(plans);
+  const [editingIndex, setEditingIndex] = useState(null);
+  const [editablePlans, setEditablePlans] = useState(plans);
 
-  // Handle register button click
+  // useEffect를 사용하여 plans가 변경될 때마다 editablePlans 업데이트
+  useEffect(() => {
+    console.log("Plans have been updated:", plans);
+    setEditablePlans(plans);
+  }, [plans]);
+
   const handleRegister = async () => {
-    const success = await registerPlans(updatedPlans); // 플래너 등록
+    const success = await registerPlans(editablePlans); // 플래너 등록
     if (success) {
       alert("플래너가 성공적으로 등록되었습니다.");
-      await getDatePlanRequest(updatedPlans[0].planDate); // 첫 번째 플랜 날짜 기준으로 데이터 갱신
       onClose(); // 모달 닫기
     } else {
       alert("플래너 등록에 실패했습니다.");
     }
   };
 
-  // Handle edit button click
   const handleEditClick = (index) => {
-    setEditPlan(index);
+    setEditingIndex(index);
   };
 
-  // Handle save button click
-  const handleSaveEdit = () => {
-    setEditPlan(null); // 수정 모달 닫기
+  const handleSaveClick = () => {
+    setEditingIndex(null);
   };
 
-  // Handle input change
-  const handleChange = (e, index, field) => {
-    const value = e.target.value;
-    const updatedPlanList = updatedPlans.map((plan, idx) =>
-      idx === index ? { ...plan, [field]: value } : plan
-    );
-    setUpdatedPlans(updatedPlanList);
-  };
-
-  // Handle time change for hours and minutes
-  const handleTimeChange = (e, index, type) => {
-    const value = e.target.value;
-    const updatedPlanList = updatedPlans.map((plan, idx) => {
-      if (idx === index) {
-        const currentMinutes = plan.planStudyTime;
-        const hours = Math.floor(currentMinutes / 60);
-        const minutes = currentMinutes % 60;
-        const newTime =
-          type === "hours"
-            ? value * 60 + minutes
-            : hours * 60 + parseInt(value);
-        return { ...plan, planStudyTime: newTime };
-      }
-      return plan;
-    });
-    setUpdatedPlans(updatedPlanList);
+  const handlePlanChange = (index, field, value) => {
+    const updatedPlans = [...editablePlans];
+    updatedPlans[index] = { ...updatedPlans[index], [field]: value };
+    setEditablePlans(updatedPlans);
   };
 
   if (!show) return null;
 
   return (
-    <div className="ai-planner-modal-overlay">
-      <div className="ai-planner-modal-content">
-        <h2>AI 플래너 분석 결과</h2>
-        <p>{analysis}</p> {/* AI 분석 결과 표시 */}
-        <div className="ai-planner-modal-content-body">
-          <table className="ai-planner-modal-table">
-            <thead>
+    <div className="ai-planner-modal__overlay">
+      <div className="ai-planner-modal__content">
+        <h2 className="ai-planner-modal__title">AI 플래너 분석 결과</h2>
+        <p className="ai-planner-modal__analysis">{analysis}</p>
+        <div className="ai-planner-modal__content-body">
+          <table className="ai-planner-modal__table">
+            <thead className="ai-planner-modal__table-head">
               <tr>
                 <th>날짜</th>
                 <th>과목</th>
@@ -97,111 +64,141 @@ const AIPlannerModal = ({ show, onClose, analysis, plans }) => {
                 <th>수정</th>
               </tr>
             </thead>
-            <tbody>
-              {updatedPlans.map((plan, index) => {
-                const hours = Math.floor(plan.planStudyTime / 60);
-                const minutes = plan.planStudyTime % 60;
-                return (
-                  <tr key={index}>
-                    <td className="plan-date">
-                      {editPlan === index ? (
+            <tbody className="ai-planner-modal__table-body">
+              {editablePlans.map((plan, index) => (
+                <tr key={index} className="ai-planner-modal__table-row">
+                  <td className="ai-planner-modal__table-cell">
+                    {editingIndex === index ? (
+                      <input
+                        type="date"
+                        value={plan.planDate}
+                        onChange={(e) =>
+                          handlePlanChange(index, "planDate", e.target.value)
+                        }
+                      />
+                    ) : (
+                      plan.planDate
+                    )}
+                  </td>
+                  <td className="ai-planner-modal__table-cell">
+                    {editingIndex === index ? (
+                      <select
+                        value={plan.subCode}
+                        onChange={(e) =>
+                          handlePlanChange(
+                            index,
+                            "subCode",
+                            Number(e.target.value)
+                          )
+                        }
+                      >
+                        {Object.entries({
+                          1: "국어",
+                          2: "수학",
+                          3: "영어",
+                          4: "한국사",
+                          5: "사회탐구",
+                          6: "과학탐구",
+                          7: "직업탐구",
+                          8: "제2외국어/한문",
+                        }).map(([key, value]) => (
+                          <option key={key} value={key}>
+                            {value}
+                          </option>
+                        ))}
+                      </select>
+                    ) : (
+                      {
+                        1: "국어",
+                        2: "수학",
+                        3: "영어",
+                        4: "한국사",
+                        5: "사회탐구",
+                        6: "과학탐구",
+                        7: "직업탐구",
+                        8: "제2외국어/한문",
+                      }[plan.subCode]
+                    )}
+                  </td>
+                  <td className="ai-planner-modal__table-cell">
+                    {editingIndex === index ? (
+                      <input
+                        type="text"
+                        value={plan.planContent}
+                        onChange={(e) =>
+                          handlePlanChange(index, "planContent", e.target.value)
+                        }
+                      />
+                    ) : (
+                      plan.planContent
+                    )}
+                  </td>
+                  <td className="ai-planner-modal__table-cell">
+                    {editingIndex === index ? (
+                      <>
                         <input
-                          type="date"
-                          value={plan.planDate}
-                          onChange={(e) => handleChange(e, index, "planDate")}
-                        />
-                      ) : (
-                        plan.planDate
-                      )}
-                    </td>
-                    <td className="plan-subject">
-                      {editPlan === index ? (
-                        <select
-                          value={plan.subCode}
-                          onChange={(e) => handleChange(e, index, "subCode")}
-                        >
-                          {Object.entries(sub_code_dic).map(([key, value]) => (
-                            <option key={key} value={key}>
-                              {value}
-                            </option>
-                          ))}
-                        </select>
-                      ) : (
-                        sub_code_dic[plan.subCode]
-                      )}
-                    </td>
-                    <td className="plan-content">
-                      {editPlan === index ? (
-                        <input
-                          type="text"
-                          value={plan.planContent}
+                          type="number"
+                          value={Math.floor(plan.planStudyTime / 60)}
                           onChange={(e) =>
-                            handleChange(e, index, "planContent")
+                            handlePlanChange(
+                              index,
+                              "planStudyTime",
+                              Number(e.target.value) * 60 +
+                                (plan.planStudyTime % 60)
+                            )
                           }
+                          style={{ width: "40px", marginRight: "5px" }}
                         />
-                      ) : (
-                        plan.planContent
-                      )}
-                    </td>
-                    <td className="plan-time">
-                      {editPlan === index ? (
-                        <>
-                          <input
-                            type="number"
-                            min="0"
-                            max="24"
-                            value={hours}
-                            onChange={(e) =>
-                              handleTimeChange(e, index, "hours")
-                            }
-                          />
-                          시간
-                          <input
-                            type="number"
-                            min="0"
-                            max="59"
-                            value={minutes}
-                            onChange={(e) =>
-                              handleTimeChange(e, index, "minutes")
-                            }
-                          />
-                          분
-                        </>
-                      ) : (
-                        formatTime(plan.planStudyTime)
-                      )}
-                    </td>
-                    <td>
-                      {editPlan === index ? (
-                        <button
-                          onClick={handleSaveEdit}
-                          className="save-button"
-                        >
-                          저장
-                        </button>
-                      ) : (
-                        <button
-                          onClick={() => handleEditClick(index)}
-                          className="edit-button"
-                        >
-                          수정
-                        </button>
-                      )}
-                    </td>
-                  </tr>
-                );
-              })}
+                        시간
+                        <input
+                          type="number"
+                          value={plan.planStudyTime % 60}
+                          onChange={(e) =>
+                            handlePlanChange(
+                              index,
+                              "planStudyTime",
+                              Math.floor(plan.planStudyTime / 60) * 60 +
+                                Number(e.target.value)
+                            )
+                          }
+                          style={{ width: "40px", marginLeft: "5px" }}
+                        />
+                        분
+                      </>
+                    ) : (
+                      formatTime(plan.planStudyTime)
+                    )}
+                  </td>
+                  <td className="ai-planner-modal__table-cell">
+                    {editingIndex === index ? (
+                      <button
+                        className="ai-planner-modal__save-button"
+                        onClick={handleSaveClick}
+                      >
+                        저장
+                      </button>
+                    ) : (
+                      <button
+                        className="ai-planner-modal__edit-button"
+                        onClick={() => handleEditClick(index)}
+                      >
+                        수정
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
-        <div className="ai-planner-modal-buttons">
+        <div className="ai-planner-modal__buttons">
           <button
             onClick={handleRegister}
-            className="ai-planner-modal-register-button"
+            className="ai-planner-modal__register-button"
           >
             등록
           </button>
-          <button onClick={onClose} className="ai-planner-modal-close-button">
+          <button onClick={onClose} className="ai-planner-modal__close-button">
             취소
           </button>
         </div>

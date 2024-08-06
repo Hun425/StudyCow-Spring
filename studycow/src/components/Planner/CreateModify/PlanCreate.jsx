@@ -157,32 +157,6 @@ const PlanCreate = ({ show, onClose }) => {
     onClose(); // 모달 닫기
   };
 
-  const handleAutoComplete = () => {
-    // 과목 코드는 1에서 8까지 랜덤으로 선택
-    const tempSubCode = Math.floor(Math.random() * 8) + 1;
-    const selectedSubject = sub_code_dic[tempSubCode];
-
-    // 선택된 과목 코드에 해당하는 세부 과목 리스트를 가져옴
-    const subSubjectArray = sub_subjects_dic[selectedSubject];
-    const randomSubSubjectIndex = Math.floor(
-      Math.random() * subSubjectArray.length
-    );
-    const tempSubSubject = subSubjectArray[randomSubSubjectIndex];
-
-    // 공부 시간은 1에서 9시간 사이에서 랜덤으로 선택
-    const tempTime = Math.floor(Math.random() * 9) + 1;
-    const tempMinutes = Math.floor(Math.random() * 6) * 10; // 0부터 50까지 10단위로 랜덤
-
-    setFormState((prevState) => ({
-      ...prevState,
-      selectedSubject,
-      selectedSubSubject: tempSubSubject,
-      selectedTime: tempTime,
-      selectedMinutes: tempMinutes,
-      content: `${tempSubSubject} ${tempTime}시간 ${tempMinutes}분 공부`,
-    }));
-  };
-
   const handleDateChange = (e) => {
     const newDate = e.target.value;
     setFormState((prevState) => ({ ...prevState, selectedDate: newDate }));
@@ -307,13 +281,6 @@ const PlanCreate = ({ show, onClose }) => {
           <div className="CreateModify-form-buttons">
             <button type="submit" className="CreateModify-register-button">
               등록
-            </button>
-            <button
-              type="button"
-              onClick={handleAutoComplete}
-              className="CreateModify-autocomplete-button"
-            >
-              자동완성
             </button>
             <button
               type="button"

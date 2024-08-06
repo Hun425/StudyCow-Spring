@@ -1,4 +1,4 @@
-.ai-planner-modal-overlay {
+.ai-planner-modal__overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -11,7 +11,7 @@
   z-index: 1000;
 }
 
-.ai-planner-modal-content {
+.ai-planner-modal__content {
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
@@ -20,61 +20,31 @@
   width: 90%;
 }
 
-.ai-planner-modal-content-body {
-  max-height: 400px; /* 최대 높이를 설정하여 스크롤 가능하게 */
-  overflow-y: auto; /* 수직 스크롤 활성화 */
+.ai-planner-modal__content-body {
+  max-height: 400px;
+  overflow-y: auto;
 }
 
-.ai-planner-modal-table {
+.ai-planner-modal__table {
   width: 100%;
-  border-collapse: collapse; /* 테두리 중첩 제거 */
+  border-collapse: collapse;
 }
 
-.ai-planner-modal-table th,
-.ai-planner-modal-table td {
+.ai-planner-modal__table th,
+.ai-planner-modal__table td {
   padding: 10px;
   text-align: center;
   border-bottom: 1px solid #ddd;
 }
 
-.ai-planner-modal-table th {
-  background-color: #f9f9f9; /* 테이블 헤더의 배경색 */
-  font-weight: bold;
-}
-
-.ai-planner-modal-table td {
-  vertical-align: middle; /* 세로 가운데 정렬 */
-}
-
-.ai-planner-modal-time-input {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.ai-planner-modal-time-input input {
-  width: 50px;
-  margin: 0 5px;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  text-align: center;
-}
-
-.ai-planner-modal-time-input span {
-  margin-left: 5px;
-  font-size: 0.9em;
-  color: #333;
-}
-
-.ai-planner-modal-buttons {
+.ai-planner-modal__buttons {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
 }
 
-.ai-planner-modal-register-button,
-.ai-planner-modal-close-button {
+.ai-planner-modal__register-button,
+.ai-planner-modal__close-button {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -82,26 +52,26 @@
   transition: background-color 0.3s ease;
 }
 
-.ai-planner-modal-register-button {
+.ai-planner-modal__register-button {
   background-color: #4caf50;
   color: white;
 }
 
-.ai-planner-modal-register-button:hover {
+.ai-planner-modal__register-button:hover {
   background-color: #45a049;
 }
 
-.ai-planner-modal-close-button {
+.ai-planner-modal__close-button {
   background-color: #f44336;
   color: white;
 }
 
-.ai-planner-modal-close-button:hover {
+.ai-planner-modal__close-button:hover {
   background-color: #d32f2f;
 }
 
-.edit-button,
-.save-button {
+.ai-planner-modal__edit-button,
+.ai-planner-modal__save-button {
   background-color: #2196f3;
   color: white;
   border: none;
@@ -111,7 +81,7 @@
   transition: background-color 0.3s ease;
 }
 
-.edit-button:hover,
-.save-button:hover {
+.ai-planner-modal__edit-button:hover,
+.ai-planner-modal__save-button:hover {
   background-color: #1976d2;
 }
