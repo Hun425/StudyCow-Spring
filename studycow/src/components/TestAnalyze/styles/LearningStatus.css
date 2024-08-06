@@ -1,0 +1,42 @@
+.learning-status-container {
+  width: 300px;
+  margin: 0px; /* Center the container */
+  padding: 20px;
+  background: linear-gradient(
+    to bottom,
+    #f7faff,
+    #dce7f3
+  ); /* Gradient background */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.learning-status-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.learning-status-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.learning-status-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+}
+
+.learning-status-label {
+  font-size: 16px;
+  color: #333;
+}
+
+.learning-status-value {
+  font-size: 16px;
+  font-weight: bold;
+  color: #555;
+}

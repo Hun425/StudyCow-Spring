@@ -6,7 +6,7 @@ const API_URL =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/studycow/";
 
 const useGradeStore = create((set) => ({
-  selectedSubject: 0,
+  selectedSubject: "", // ""이 아닌 null, 0을 사용할 경우 기본값('과목 선택')이 제대로 작동하지 않음
   subjectGrades: {}, // 변환된 데이터를 저장할 상태 변수
 
   // 선택된 과목을 설정하고, subjectGrades를 초기화하는 함수
