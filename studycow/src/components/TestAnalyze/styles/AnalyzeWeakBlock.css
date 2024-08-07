@@ -1,0 +1,22 @@
+.analyzeWeakBlock {
+  width: 480px;
+  height: 310px;
+}
+
+.weaknessList {
+  margin-top: 20px;
+}
+
+.weaknessItem {
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: solid 1px black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.weaknessItem p {
+  margin: 0px;
+}

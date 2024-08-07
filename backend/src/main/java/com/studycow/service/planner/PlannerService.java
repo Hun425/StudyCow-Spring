@@ -38,4 +38,7 @@ public interface PlannerService  {
 
     /** 플래너 삭제 **/
     void deletePlan(int planId, CustomUserDetails customUser);
+
+    /** 플래너 상태 변경 **/
+    void changePlanStatus(int planId, CustomUserDetails customUser);
 }

@@ -21,7 +21,6 @@ import java.util.Date;
  * @author 채기훈
  * @since JDK17
  */
-
 @Slf4j
 @Component
 public class JwtUtil {

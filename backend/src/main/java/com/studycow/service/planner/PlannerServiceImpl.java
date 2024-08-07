@@ -7,6 +7,8 @@ import com.studycow.dto.plan.PlanCountByDateDto;
 import com.studycow.dto.plan.PlannerCreateDto;
 import com.studycow.dto.plan.PlannerGetDto;
 import com.studycow.dto.user.CustomUserDetails;
+import com.studycow.exception.CustomException;
+import com.studycow.exception.ErrorCode;
 import com.studycow.repository.planner.PlannerRepository;
 import com.studycow.repository.subjectcode.SubjectCodeRepository;
 import com.studycow.repository.user.UserRepository;
@@ -29,7 +31,6 @@ import java.util.stream.Collectors;
  * @author 채기훈
  * @since JDK17
  */
-
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -49,10 +50,10 @@ public class PlannerServiceImpl implements PlannerService {
     public void createPlan(CustomUserDetails customUserDetails, PlannerCreateDto plannerCreateDto){
 
         User currentUser = userRepository.findById((long)customUserDetails.getUser().getUserId())
-                .orElseThrow(()->new EntityNotFoundException("해당 유저가 없습니다."));
+                .orElseThrow(()->new CustomException(ErrorCode.USER_NOT_FOUND));
 
         SubjectCode initSubject = subjectCodeRepository.findById(plannerCreateDto.getSubCode())
-                .orElseThrow(()->new EntityNotFoundException("과목 코드가 존재하지 않습니다."));
+                .orElseThrow(()->new CustomException(ErrorCode.NOT_FOUND_SUBJECT_CODE));
 
         UserSubjectPlan userSubjectPlan = new UserSubjectPlan();
 
@@ -73,7 +74,7 @@ public class PlannerServiceImpl implements PlannerService {
     @Override
     public List<PlannerGetDto> getPlansByDateForUser(int userId, LocalDate localDate){
         List<UserSubjectPlan> plans = plannerRepository.findByUserIdAndPlanDate((long)userId,localDate)
-                .orElseThrow(()->new EntityNotFoundException("해당하는 플래너 또는 유저가 없습니다."));
+                .orElseThrow(()->new CustomException(ErrorCode.USER_NOT_FOUND));
         return convertToDtoList(plans);
     }
 
@@ -86,10 +87,10 @@ public class PlannerServiceImpl implements PlannerService {
     @Override
     public List<PlannerGetDto> getPlansBySubjectForUser(int userId, int subjectId) {
         SubjectCode subjectCode = subjectCodeRepository.findById(subjectId)
-                .orElseThrow(()->new EntityNotFoundException("과목 코드가 없습니다"));
+                .orElseThrow(()->new CustomException(ErrorCode.NOT_FOUND_SUBJECT_CODE));
 
         List<UserSubjectPlan> plans = plannerRepository.findByUserIdAndSubCode((long)userId,subjectCode)
-                .orElseThrow(()->new EntityNotFoundException("해당 과목코드나 유저가 존재하지 않습니다."));
+                .orElseThrow(()->new CustomException(ErrorCode.NOT_FOUND_SUBJECT_CODE));
         return convertToDtoList(plans);
     }
 
@@ -102,7 +103,7 @@ public class PlannerServiceImpl implements PlannerService {
     @Override
     public PlannerGetDto getPlanByIdForUser(int userId, int planId) {
         UserSubjectPlan plan = plannerRepository.findByUserIdAndPlanId((long)userId,(long)planId)
-                .orElseThrow(()->new EntityNotFoundException("해당하는 플래너 또는 유저가 존재하지 않습니다."));
+                .orElseThrow(()->new CustomException(ErrorCode.NOT_FOUND_PLANNER));
         PlannerGetDto currentPlan = modelMapper.map(plan, PlannerGetDto.class);
 
         return currentPlan;
@@ -121,7 +122,7 @@ public class PlannerServiceImpl implements PlannerService {
         LocalDate startDate = yearMonth.atDay(1);
         LocalDate endDate = yearMonth.atEndOfMonth();
       List<PlanCountByDateDto> planCountByDateDto = plannerRepository.findPlanCountByMonth(startDate,endDate,userId)
-                .orElseThrow(()->new EntityNotFoundException("해당 조건의 플래너는 존재하지 않습니다."));
+                .orElseThrow(()->new CustomException(ErrorCode.INTERNAL_SERVER_ERROR));
         return planCountByDateDto;
     }
 
@@ -137,13 +138,13 @@ public class PlannerServiceImpl implements PlannerService {
         int userId = customUser.getUser().getUserId();
 
         UserSubjectPlan plan = plannerRepository.findById((long)planId)
-                .orElseThrow(()->new EntityNotFoundException("해당 플래너가 존재하지 않습니다."));
+                .orElseThrow(()->new CustomException(ErrorCode.NOT_FOUND_PLANNER));
 
         SubjectCode code = subjectCodeRepository.findById(plannerCreateDto.getSubCode())
-                .orElseThrow(()->new EntityNotFoundException("해당 과목 코드가 없습니다"));
+                .orElseThrow(()->new CustomException(ErrorCode.NOT_FOUND_SUBJECT_CODE));
 
         if(userId !=plan.getUser().getId()){
-            throw new EntityNotFoundException("자신이 작성한 플래너가 아닙니다!");
+            throw new CustomException(ErrorCode.NOT_AUTHENTICAION);
         }
 
 
@@ -166,7 +167,7 @@ public class PlannerServiceImpl implements PlannerService {
     @Override
     public void deletePlan(int planId, CustomUserDetails customUser) {
         UserSubjectPlan plan = plannerRepository.findById((long)planId)
-                .orElseThrow(()->new EntityNotFoundException("해당 플래너가 존재하지 않습니다"));
+                .orElseThrow(()->new CustomException(ErrorCode.NOT_FOUND_PLANNER));
 
         int userId = customUser.getUser().getUserId();
 
@@ -178,14 +179,37 @@ public class PlannerServiceImpl implements PlannerService {
     }
 
     /**
+     * 플래너 미완료일때는 완료처리, 완료일때는 미완료 처리
+     * @param planId
+     * @param user
+     */
+    @Override
+    public void changePlanStatus(int planId, CustomUserDetails user){
+        UserSubjectPlan userSubjectPlan = plannerRepository.findById((long)planId)
+                .orElseThrow(()->new CustomException(ErrorCode.NOT_FOUND_PLANNER));
+
+        int nowStatus = userSubjectPlan.getPlanStatus();
+
+        if(nowStatus==1)nowStatus=0;
+        else nowStatus=1;
+
+        userSubjectPlan.setPlanStatus(nowStatus);
+
+        plannerRepository.save(userSubjectPlan);
+    }
+
+
+    /**
      * 플래너 Entity > Dto 변환 메서드
      * @param plans
      * @return
      */
     private List<PlannerGetDto> convertToDtoList(List<UserSubjectPlan> plans){
-        return plans.stream()
-                .map(plan -> modelMapper.map(plan, PlannerGetDto.class))
-                .collect(Collectors.toList());
+
+            return plans.stream().map(plan ->
+                    modelMapper.map(plan, PlannerGetDto.class)
+            ).collect(Collectors.toList());
+
     }
 
 

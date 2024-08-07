@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
  * @author 채기훈
  * @since JDK17
  */
-
 @Component
 @RequiredArgsConstructor
 public class DataInitializer {

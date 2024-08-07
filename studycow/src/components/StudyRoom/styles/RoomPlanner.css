@@ -6,12 +6,12 @@
 }
 
 .singleTodayPlanBox {
-    width: 300px;
+    width: 270px;
     height: auto;
     max-height: 300px;
     overflow-y: auto;
     margin: 0;    /* 마진 0 */
-    padding: 20px;   /* 패딩 0 */
+    padding: 10px;   /* 패딩 0 */
     background-color: #f1c40f; /* 위쪽 붙이는 부분 색상 */
     border-radius: 10px 10px; /* 붙이는 부분 둥글게 */
     display: flex;

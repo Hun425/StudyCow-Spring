@@ -3,6 +3,13 @@ package com.studycow.dto.chat;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * <pre>
+ *     채팅방 메세지 전달을 위한 클래스
+ * </pre>
+ * @author 채기훈
+ * @since JDK17
+ */
 @Getter
 @Setter
 public class ChatMessage {

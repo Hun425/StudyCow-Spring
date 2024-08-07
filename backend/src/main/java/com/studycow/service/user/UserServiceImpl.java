@@ -4,6 +4,8 @@ import com.studycow.config.jwt.JwtUtil;
 import com.studycow.domain.User;
 import com.studycow.domain.UserGrade;
 import com.studycow.dto.user.*;
+import com.studycow.exception.CustomException;
+import com.studycow.exception.ErrorCode;
 import com.studycow.repository.user.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +31,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService  {
 
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
@@ -45,23 +47,24 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     @Transactional
-    public LoginResponseDto login(LoginRequestDto loginRequestDto){
+    public LoginResponseDto login(LoginRequestDto loginRequestDto) {
         String userEmail = loginRequestDto.getUserEmail();
         String userPassword = loginRequestDto.getPassword();
-        User user = userRepository.findByUserEmail(userEmail)
-                .orElseThrow(()->new EntityNotFoundException("해당 아이디를 가진 유저가 없습니다."));
 
-        if(user ==null || !passwordEncoder.matches(userPassword, user.getUserPassword())){
-            throw new BadCredentialsException("아이디 또는 비밀번호가 일치하지 않습니다.");
+        User user = userRepository.findByUserEmail(userEmail)
+                .orElseThrow(()->new CustomException(ErrorCode.WRONG_EMAIL));
+        if(user ==null) throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        if(!passwordEncoder.matches(userPassword,user.getUserPassword())){
+            log.error("로그인 실패 비밀번호 오류");
+            throw new CustomException(ErrorCode.WRONG_PASSWORD);
         }
 
-        CustomUserInfoDto info = modelMapper.map(user, CustomUserInfoDto.class);
+        UserGrade currentUserGrade = userGradeRepository.findById(user.getUserGrade().getGradeCode())
+                .orElseThrow(()->new CustomException(ErrorCode.NOT_FOUND_GRADE));
 
+        CustomUserInfoDto info = modelMapper.map(user, CustomUserInfoDto.class);
         String accessToken = jwtUtil.createAccessToken(info);
 
-
-        UserGrade currentUserGrade = userGradeRepository.findById(user.getUserGrade().getGradeCode())
-                .orElseThrow(()->new EntityNotFoundException("존재하지 않는 등급입니다."));
         UserGradeDto userGradeDto = new UserGradeDto();
 
         userGradeDto.setGradeCode(currentUserGrade.getGradeCode());
@@ -96,7 +99,7 @@ public class UserServiceImpl implements UserService {
 
         if(optionalUserGrade.isPresent()){
             signUpRequestDto.setUserGrade(optionalUserGrade.get());
-        }else throw new RuntimeException("존재하지 않는 등급입니다.");
+        }else throw new CustomException(ErrorCode.NOT_FOUND_GRADE);
 
         String password = signUpRequestDto.getUserPassword();
 
@@ -121,7 +124,7 @@ public class UserServiceImpl implements UserService {
      */
     @Transactional
     @Override
-    public UserInfoDto getUserInfo( Long userId){
+    public UserInfoDto getUserInfo(Long userId){
 
         Optional<User> user = userRepository.findById(userId);
 
@@ -172,7 +175,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserInfoDto> getUserInfoByNickName(String nickName){
         List<User> infos = userRepository.findByUserNicknameContainingIgnoreCase(nickName)
-                .orElseThrow(()->new EntityNotFoundException("오류 발생"));
+                .orElseThrow(()->new CustomException(ErrorCode.USER_NOT_FOUND));
 
         return infos.stream()
                 .map(user->modelMapper.map(user, UserInfoDto.class))

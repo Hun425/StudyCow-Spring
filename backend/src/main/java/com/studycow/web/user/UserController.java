@@ -44,11 +44,9 @@ public class UserController {
     public ResponseEntity<?> getUser(@RequestParam("id") Long id) {
 
         UserInfoDto userInfoDto = userService.getUserInfo(id);
-        if(userInfoDto == null) {
-            return new ResponseEntity<>("유저가 존재하지 않습니다",HttpStatus.NOT_FOUND);
-        }else{
+
             return new ResponseEntity<>(userInfoDto, HttpStatus.OK);
-        }
+
     }
 
     @Operation(summary = "회원 정보 수정", description = "회원의 기본정보를 수정합니다.")

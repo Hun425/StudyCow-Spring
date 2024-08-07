@@ -1,0 +1,22 @@
+.mainGradeContainer {
+  width: 550px;
+  height: 430px;
+}
+
+.mainGradeHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mainGradeHeader h3 {
+  margin: 0px;
+}
+
+.mainGradeSubjectSelect {
+  align-items: center;
+}
+
+.mainGradeSubjectSelect select {
+  width: 150px;
+}

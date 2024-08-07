@@ -30,7 +30,7 @@ public class ProblemCategory {
     @Column(name = "cat_code")
     private int code;
 
-    @Column(name = "cat_name", length = 30)
+    @Column(name = "cat_name", length = 50)
     private String name;
 
     @Column(name = "cat_status", nullable = false)

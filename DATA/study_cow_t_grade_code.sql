@@ -21,7 +21,16 @@
 
 LOCK TABLES `t_grade_code` WRITE;
 /*!40000 ALTER TABLE `t_grade_code` DISABLE KEYS */;
-INSERT INTO `t_grade_code` VALUES (1,1000,0,'브론즈'),(2,5000,1001,'실버'),(3,10000,5001,'골드'),(4,30000,10001,'플래티넘'),(5,999999999,30001,'다이아');
+
+INSERT INTO `t_grade_code` 
+VALUES 
+    (1, 1000, 0, '브론즈'),
+    (2, 5000, 1001, '실버'),
+    (3, 10000, 5001, '골드'),
+    (4, 30000, 10001, '플래티넘'),
+    (5, 999999999, 30001, '다이아')
+;
+
 /*!40000 ALTER TABLE `t_grade_code` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

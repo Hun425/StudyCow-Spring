@@ -41,14 +41,8 @@ public class AuthController {
             @Valid @RequestBody LoginRequestDto requestDto
     ){
 
-        try{
             LoginResponseDto responseDto = this.userService.login(requestDto);
             return new ResponseEntity<>(responseDto, HttpStatus.OK);
-        }catch(Exception e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
-        }
-
-
     }
 
     /**
@@ -68,13 +62,9 @@ public class AuthController {
     @Operation(summary = "회원가입", description = "회원의 기본정보를 받고 가입시켜 줍니다.")
     @PostMapping("register")
     public ResponseEntity<?> registerMember(@Valid @RequestBody RegisterRequestDto requestDto){
-        try{
-            SignUpResponseDto responseDto = userService.register(requestDto);
 
+            SignUpResponseDto responseDto = userService.register(requestDto);
             return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
-        }catch (Exception e){
-            return new ResponseEntity<>("회원가입 실패" + e.getMessage(),HttpStatus.BAD_REQUEST);
-        }
     }
 
 

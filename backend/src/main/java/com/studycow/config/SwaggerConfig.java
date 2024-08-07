@@ -11,6 +11,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * <pre>
+ *     운영서버와 배포서버의 설정 분할을 위한 SwaggerConfig
+ * </pre>
+ * @author 채기훈
+ * @since JDK17
+ */
 @Configuration
 public class SwaggerConfig {
 

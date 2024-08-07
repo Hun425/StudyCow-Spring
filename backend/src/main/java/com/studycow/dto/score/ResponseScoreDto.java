@@ -31,6 +31,8 @@ public class ResponseScoreDto {
     private Integer nowScore;
     /** 성적 등락 */
     private Integer diffScore;
+    /** 지금까지의 과목 학습 기간 */
+    private Integer sumStudyTime;
     /** 성적 목록 */
     private List<ScoreDto> scores;
     /** 유형별 오답 개수 */
@@ -47,6 +49,7 @@ public class ResponseScoreDto {
         this.nowScore = null;
         this.diffScore = null;
         this.detailStats = null;
+        this.sumStudyTime = null;
     }
 
     @Override

@@ -5,6 +5,13 @@ import lombok.Setter;
 
 import java.io.Serializable;
 
+/**
+ * <pre>
+ *     채팅방 클래스
+ * </pre>
+ * @author 채기훈
+ * @since JDK17
+ */
 @Getter
 @Setter
 public class ChatRoom implements Serializable {

@@ -1,6 +1,6 @@
+import React from "react";
 import useInfoStore from "../../stores/infos";
 import "./styles/TestAnalyze.css";
-import { useState } from "react";
 import GradeAnalyzeBox from "./GradeAnalyzeBox";
 import useGradeStore from "../../stores/grade";
 
@@ -36,8 +36,8 @@ const TestAnalyze = () => {
             value={selectedSubject}
             className="form-control ml-2"
           >
-            {/* disabled: 다른 과목 선택 후 '과목 선택'을 선택할 수 없도록 하는 역할
-            hidden: 다른 과목 선택 후 '과목 선택'이 목록에 표시되지 않게 하는 역할 */}
+            {/* disabled: 과목을 선택한 후 select list에 '과목 선택'을 선택할 수 없게 함
+            hidden: 과목을 선택한 후 select list에 '과목 선택'이 보이지 않게 함 */}
             <option value="" disabled hidden>
               과목 선택
             </option>
@@ -51,7 +51,7 @@ const TestAnalyze = () => {
       </div>
       <div className="analyzeBody">
         <div className="analyzeCowStatus">
-          <h1>욕군정환</h1>
+          <h1>캐릭터 부분</h1>
         </div>
         <GradeAnalyzeBox subject={selectedSubject} />
       </div>

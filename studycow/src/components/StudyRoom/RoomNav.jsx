@@ -1,19 +1,18 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbutton from './Navbar/Navbutton.jsx'
-import listButton from './Navbar/img/listButton.png'
-import exitButton from './Navbar/img/exitButton.png'
-import chatButton from './Navbar/img/chatButton.png'
-import lankingButton from './Navbar/img/lankingButton.png'
+import { IconButton, Tooltip } from '@mui/material';
+import { Chat } from '@mui/icons-material';
+import ListIcon from '@mui/icons-material/Checklist';
+import RankIcon from '@mui/icons-material/MilitaryTech';
+import ExitIcon from '@mui/icons-material/Close';
 import useStudyStore from "../../stores/study.js";
 import usePlanStore from "../../stores/plan.js";
-import Logo from '../../assets/logo.png'
-import "./styles/RoomNav.css"
-
+import Logo from '../../assets/logo.png';
+import "./styles/RoomNav.css";
 
 function RoomNav() {
   const navigate = useNavigate();
-  const {today, getTodayPlanRequest} = usePlanStore((state) => ({
+  const { today, getTodayPlanRequest } = usePlanStore((state) => ({
     today: state.today,
     getTodayPlanRequest: state.getTodayPlanRequest,
   }));
@@ -22,34 +21,47 @@ function RoomNav() {
   const toggleChat = useStudyStore((state) => state.toggleChat);
   const toggleList = useStudyStore((state) => state.toggleList);
   const toggleLank = useStudyStore((state) => state.toggleLank);
-  
-  
 
   useEffect(() => {
     getTodayPlanRequest(today);
     setNavigate(navigate);
   }, [navigate, setNavigate, today, getTodayPlanRequest]);
 
-  
-
   return (
-    <>
     <div className="StudyNavContainer">
       <div className="StudyNavLogoContainer">
-        <Navbutton image={Logo} onButtonClick={goStudyBack}/>
+        <Tooltip title="홈">
+          <IconButton onClick={goStudyBack}>
+            <img src={Logo} alt="Logo" style={{ height: '60px' }} />
+          </IconButton>
+        </Tooltip>
       </div>
       <div className="studyNavButtonContainer">
         <div className="utilButton">
-          <Navbutton image={chatButton} onButtonClick={toggleChat}/>
-          <Navbutton image={listButton} onButtonClick={toggleList}/>
-          <Navbutton image={lankingButton} onButtonClick={toggleLank}/>
-        </div>
-        <div className="exitButton" >
-          <Navbutton image={exitButton} onButtonClick={goStudyBack} />
+          <Tooltip title="랭킹">
+            <IconButton onClick={toggleLank}>
+                <RankIcon sx={{ color: '#C3C5C5', fontSize: '32px' }}/>
+            </IconButton>            
+          </Tooltip>
+          <Tooltip title="스터디플랜">
+            <IconButton onClick={toggleList} >
+              <ListIcon sx={{ color: '#C3C5C5', fontSize: '35px' }}/>
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="라이브챗">
+            <IconButton onClick={toggleChat} >
+              <Chat sx={{ color: '#C3C5C5', fontSize: '28px' }}/>
+            </IconButton>  
+          </Tooltip>
+          <Tooltip title="나가기">
+            <IconButton onClick={goStudyBack} >
+              <ExitIcon sx={{ color: '#C3C5C5', fontSize: '40px', marginRight: "10px" }}/>
+            </IconButton>            
+          </Tooltip>  
         </div>
       </div>
     </div>
-    </>
   );
 }
+
 export default RoomNav;

@@ -26,7 +26,7 @@ public class PlannerChatRequest {
             .append("당신은 학생들의 학습 데이터를 분석하고 개인화된 수능 학습 계획을 생성하는 AI 교육 전문가입니다. 주어진 학생의 최근 점수 데이터를 기반으로 수능 교육 과정에 대하여 효과적인 학습 계획을 수립해야 합니다. \n\n")
             .append("입력 데이터: \n");
 
-        // 학생의 최근 점수 데이터(5개)
+        // 학생의 최근 점수 데이터(10개)
         for(ScoreDto score : recentScores) {
             content.append(score.toJson()).append("\n");
         }

@@ -7,8 +7,10 @@ import jakarta.servlet.DispatcherType;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.http.auth.AUTH;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
@@ -41,17 +43,26 @@ import java.util.Arrays;
  * @author 채기훈
  * @since JDK17
  */
-
 @Configuration
 @EnableWebSecurity // HTTP 요청에 대한 인증 및 인가 구성
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig implements WebSocketMessageBrokerConfigurer {
 
+    private final AuthenticationEntryPoint authenticationEntryPoint;
     private static final String[] AUTH_WHITELIST = {
-            "/api/v1/user/**", "/swagger-ui/**", "/api-docs", "/swagger-ui-custom.html",
-            "/v3/api-docs/**", "/api-docs/**", "/swagger-ui.html", "/api/v1/auth/**",
-            "/login","/swagger-ui.html#/**","/studycow/**","/ws/**","/ws-stomp/**"
+            "/studycow/",
+            "/api/v1/auth/**",
+            "/studycow/api/v1/auth/**",
+            "/swagger-ui/**",
+            "/swagger-ui-custom.html",
+            "/v3/api-docs/**",
+            "/api-docs/**",
+            "/swagger-ui.html",
+            "/swagger-ui.html#/**",
+            "/ws/**",
+            "/ws-stomp/**",
+            "/error"
     };
 
 
@@ -66,14 +77,22 @@ public class SecurityConfig implements WebSocketMessageBrokerConfigurer {
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(new JwtAuthFilter(userDetailService, jwtUtil), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(exceptionHandling -> exceptionHandling
-                        .authenticationEntryPoint(authenticationEntryPoint())
-                        .accessDeniedHandler(accessDeniedHandler()))
+                        .authenticationEntryPoint(authenticationEntryPoint))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(AUTH_WHITELIST).permitAll()
-                        .requestMatchers("/ws/**").permitAll()
-                        .anyRequest().permitAll());
+                        .anyRequest().authenticated());
+
 
         return http.build();
+    }
+
+    private static AuthenticationEntryPoint getAuthenticationEntryPoint() {
+        return (request, response, authException) -> {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            response.getWriter().write("{\"error\": \"인증되지 않은 사용자입니다. 재 로그인 해주세요\"}");
+
+        };
     }
 
     @Bean
@@ -84,8 +103,8 @@ public class SecurityConfig implements WebSocketMessageBrokerConfigurer {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173","https://i11c202.p.ssafy.io","http://localhost:8080"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE","PATCH"));
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("*"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(false);
 
@@ -103,11 +122,6 @@ public class SecurityConfig implements WebSocketMessageBrokerConfigurer {
         return provider;
     }
 
-    @Bean
-    public AuthenticationEntryPoint authenticationEntryPoint() {
-        return (request, response, authException) ->
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
-    }
 
     @Bean
     public AccessDeniedHandler accessDeniedHandler() {

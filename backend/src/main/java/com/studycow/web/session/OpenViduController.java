@@ -85,7 +85,7 @@ public class OpenViduController {
 
             int userId = userDetails.getUser().getUserId();
             StudyRoomLogDto studyRoomLogDto = roomLogService.enterRoom(studyRoomId, userId);
-            studyRoomLogDto.setToken(connection.getToken());
+            //studyRoomLogDto.setToken(connection.getToken());
             //토큰 반환
             return ResponseEntity.ok(studyRoomLogDto);
         } catch (Exception e) {

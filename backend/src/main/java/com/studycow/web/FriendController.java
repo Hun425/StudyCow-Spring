@@ -121,7 +121,6 @@ public class FriendController {
         try {
             //사용자 정보 가져오기
             int userId = userDetails.getUser().getUserId();
-
             List<FriendRequestDto> friendRequestDtoList = friendService.listFriendRequestSent(userId, listOptionDto);
             return ResponseEntity.ok(friendRequestDtoList);
         } catch (Exception e) {

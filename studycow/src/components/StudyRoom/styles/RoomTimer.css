@@ -1,0 +1,49 @@
+.timerModalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5); /* 배경을 반투명으로 설정 */
+  }
+  
+  .timerModalContent {
+    width: 500px;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.5); /* 모달 배경을 반투명으로 설정 */
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .timerText {
+    color: white;
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+  
+  .timerButtonGroup {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .timerButton {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .timerButton:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+  }
+  

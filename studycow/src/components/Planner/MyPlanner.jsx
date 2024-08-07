@@ -36,7 +36,7 @@ const MyPlanner = () => {
       (key) => sub_code_dic[key] === selectedSubject
     );
     filterPlansBySubCode(foundCode);
-    const catPlanContent = document.querySelector(".catPlanContent");
+    const catPlanContent = document.querySelector(".MyPlanCatPlanContent");
     catPlanContent.scrollTop = 0;
   }, [selectedSubject, filterPlansBySubCode]);
 
@@ -58,23 +58,23 @@ const MyPlanner = () => {
 
   return (
     <>
-      <div className="datePlanContainer">
-        <div className="dateCalendar">
+      <div className="MyPlanDatePlanContainer">
+        <div className="MyPlanDateCalendar">
           <Calendar />
         </div>
-        <div className="datePlanbox">
-          <div className="datePlanDate">
-            <div className="emptyCase" />
-            <div className="dateCase">
+        <div className="MyPlanDatePlanbox">
+          <div className="MyPlanDatePlanDate">
+            <div className="MyPlanEmptyCase" />
+            <div className="MyPlanDateCase">
               <p>{date}</p>
             </div>
 
-            <div className="buttonContainer">
+            <div className="MyPlanButtonContainer">
               {/* 자동 생성 버튼 */}
-              <button className="buttonCase" onClick={handleOpenAutoCreate}>
-                <div className="autoButton">
+              <button onClick={handleOpenAutoCreate}>
+                <div className="MyPlanAutoButton">
                   <img
-                    className="iconImage"
+                    className="MyPlanIconImage"
                     src={autoButton} // 올바른 경로로 변경
                     alt="자동생성 버튼"
                   />
@@ -82,19 +82,23 @@ const MyPlanner = () => {
               </button>
 
               {/* 플래너 추가 버튼 (모달 열기) */}
-              <button className="buttonCase" onClick={handleOpenPlanCreate}>
-                <img className="addButton" src={addButton} alt="추가버튼" />
+              <button onClick={handleOpenPlanCreate}>
+                <img
+                  className="MyPlanAddButton"
+                  src={addButton}
+                  alt="추가버튼"
+                />
               </button>
             </div>
           </div>
-          <div className="datePlanContent">
-            <PlanList className="planListItem" />
+          <div className="MyPlanDatePlanContent">
+            <PlanList className="MyPlanPlanListItem" />
           </div>
         </div>
       </div>
-      <div className="catPlanContainer">
-        <div className="catPlanHeader">
-          <div className="catSelectbar">
+      <div className="MyPlanCatPlanContainer">
+        <div className="MyPlanCatPlanHeader">
+          <div className="MyPlanCatSelectbar">
             <select
               id="subject"
               name="subject"
@@ -113,11 +117,11 @@ const MyPlanner = () => {
             </select>
           </div>
         </div>
-        <div className="catPlanTitle">
+        <div className="MyPlanCatPlanTitle">
           <p>{subCode ? sub_code_dic[subCode] : "과목을 선택하세요"}</p>
         </div>
-        <div className="catPlanbox">
-          <div className="catPlanContent">
+        <div className="MyPlanCatPlanbox">
+          <div className="MyPlanCatPlanContent">
             <CatPlanList />
           </div>
         </div>

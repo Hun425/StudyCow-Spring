@@ -2,6 +2,8 @@ package com.studycow.service.score;
 
 import com.studycow.dto.common.SubjectCodeDto;
 import com.studycow.dto.score.*;
+import com.studycow.dto.target.RequestTargetDto;
+import com.studycow.dto.target.ScoreTargetDto;
 import jakarta.persistence.PersistenceException;
 
 import java.util.List;
@@ -28,21 +30,6 @@ public interface ScoreService {
 
     /** 단일 성적 삭제 */
     void deleteScore(int userId, Long scoreId) throws Exception;
-
-    /** 성적 목표 등록 */
-    void saveScoreTarget(RequestTargetDto requestTargetDto, int userId) throws Exception;
-
-    /** 성적 목표 조회 */
-    List<ScoreTargetDto> targetList(int userId, int myId) throws PersistenceException;
-
-    /** 성적 목표 삭제 */
-    void deleteTarget(int userId, Long targetId) throws Exception;
-
-    /** 성적 목표 수정 */
-    void modifyTarget(RequestTargetDto requestTargetDto, int userId, Long targetId) throws Exception;
-
-    /** 미설정 목표 과목 조회 */
-    List<SubjectCodeDto> subjectList(int userId) throws PersistenceException;
 
     /** 과목별 최근 5개 성적 조회 */
     List<ResponseScoreDto> recentScores(int userId) throws Exception;
