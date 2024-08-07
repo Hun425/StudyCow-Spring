@@ -23,8 +23,7 @@ import java.util.Optional;
  * @since JDK17
  */
 public interface PlannerRepository extends JpaRepository<UserSubjectPlan,Long>,
-        QuerydslPredicateExecutor<UserSubjectPlan>,
-        QuerydslBinderCustomizer<QUserSubjectPlan>, PlannerRepositoryCustom {
+        QuerydslPredicateExecutor<UserSubjectPlan>, PlannerRepositoryCustom {
 
 
     Optional<List<UserSubjectPlan>> findByUserIdAndPlanDate(Long userId, LocalDate planDate);
