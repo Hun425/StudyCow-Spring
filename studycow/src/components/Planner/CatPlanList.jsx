@@ -12,9 +12,7 @@ const CatPlanList = () => {
     subCode,
     deletePlan,
     getDatePlanRequest,
-    filterPlansBySubCode,
-    date,
-  } = usePlanStore(); // 필요한 함수와 상태 가져오기
+  } = usePlanStore(); // deletePlan 추가
 
   const sub_code_dic = {
     1: "국어",
@@ -30,17 +28,15 @@ const CatPlanList = () => {
   const [selectedPlanId, setSelectedPlanId] = useState(null); // State to store selected plan ID
   const [showModifyModal, setShowModifyModal] = useState(false); // State to manage modal visibility
 
-  // 선택한 날짜의 계획을 불러오고 필터링하는 useEffect
-  useEffect(() => {
-    const fetchData = async () => {
-      const success = await getDatePlanRequest(date);
-      if (success) {
-        filterPlansBySubCode(subCode);
-      }
-    };
+  // 현재 날짜 상태 및 계획을 불러옴
+  const { date } = usePlanStore((state) => ({ date: state.date }));
 
-    fetchData();
-  }, [date, subCode, getDatePlanRequest, filterPlansBySubCode]);
+  useEffect(() => {
+    // 현재 선택된 과목 코드를 기반으로 계획을 불러옴
+    if (subCode > 0) {
+      getDatePlanRequest(date);
+    }
+  }, [subCode, date, getDatePlanRequest]); // 의존성 배열에 date 추가
 
   const formatPlanStudyTime = (minutes) => {
     const hours = Math.floor(minutes / 60);
@@ -74,7 +70,8 @@ const CatPlanList = () => {
         const success = await deletePlan(planId); // deletePlan 호출
         if (success) {
           alert("플래너가 성공적으로 삭제되었습니다.");
-          window.location.reload(); // 새로고침하여 삭제된 데이터 반영
+          // 데이터 갱신
+          await getDatePlanRequest(date);
         } else {
           alert("플래너 삭제에 실패했습니다.");
         }
@@ -88,7 +85,7 @@ const CatPlanList = () => {
   return (
     <div className="singleSubPlanBox">
       {subPlans.length === 0 && subCode > 0 ? (
-        <p>해당 일자에 해당 과목에 등록된 플랜이 없습니다.</p>
+        <p>해당 과목에 등록된 플랜이 없습니다.</p>
       ) : (
         subPlans.map((plan) => (
           <div
@@ -108,7 +105,8 @@ const CatPlanList = () => {
                 {`${formatPlanStudyTime(plan.planStudyTime)}`}{" "}
               </span>
             </div>
-            <p className="singleSubPlanContentText">{`${plan.planContent}`}</p>
+            <p className="singleSubPlanContentText">{`${plan.planContent}`}</p>{" "}
+            {/* Display plan content */}
             <div className="singleSubButtonBox">
               <button
                 className="singleSubButtonCase"
@@ -135,6 +133,7 @@ const CatPlanList = () => {
         ))
       )}
 
+      {/* PlanModify modal */}
       {showModifyModal && selectedPlanId && (
         <PlanModify
           planId={selectedPlanId}

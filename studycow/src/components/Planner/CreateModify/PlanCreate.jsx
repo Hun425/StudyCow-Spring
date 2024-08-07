@@ -68,13 +68,15 @@ const PlanCreate = ({ show, onClose }) => {
     token: state.token,
   }));
 
-  const { createPlannerUrl, date, saveDate } = usePlanStore((state) => ({
-    createPlannerUrl: state.createPlannerUrl,
-    date: state.date,
-    saveDate: state.saveDate,
-  }));
+  const { createPlannerUrl, date, saveDate, setPlans, getDatePlanRequest } =
+    usePlanStore((state) => ({
+      createPlannerUrl: state.createPlannerUrl,
+      date: state.date,
+      saveDate: state.saveDate,
+      setPlans: state.setPlans,
+      getDatePlanRequest: state.getDatePlanRequest,
+    }));
 
-  // 기본 상태값 정의
   const initialState = {
     selectedSubject: "",
     selectedSubSubject: "",
@@ -86,7 +88,6 @@ const PlanCreate = ({ show, onClose }) => {
 
   const [formState, setFormState] = useState(initialState);
 
-  // 모달이 열릴 때마다 초기 상태 설정
   useEffect(() => {
     if (show) {
       setFormState({
@@ -100,12 +101,11 @@ const PlanCreate = ({ show, onClose }) => {
     }
   }, [show, date]);
 
-  // 선택된 과목이 변경될 때 세부 과목 업데이트
   const handleSubjectChange = (subject) => {
     setFormState((prevState) => ({
       ...prevState,
       selectedSubject: subject,
-      selectedSubSubject: "", // 과목 변경 시 세부 과목 초기화
+      selectedSubSubject: "",
     }));
   };
 
@@ -127,7 +127,7 @@ const PlanCreate = ({ show, onClose }) => {
       planDate: formState.selectedDate,
       planContent: formState.content,
       planStudyTime: totalMinutes,
-      planStatus: 0, // 기본값으로 설정
+      planStatus: 0,
     };
 
     try {
@@ -141,29 +141,42 @@ const PlanCreate = ({ show, onClose }) => {
       });
 
       if (response.ok) {
-        alert("플래너가 성공적으로 생성되었습니다.");
-        onClose(); // 모달 닫기
-        navigate("/plan", { replace: true }); // PlanPage로 이동
-        window.location.reload(); // 새로고침하여 데이터 보이도록 처리
+        const responseBody = await response.text();
+
+        if (responseBody.includes("등록 성공")) {
+          alert("플래너가 성공적으로 생성되었습니다.");
+
+          // 플래너 생성 후 데이터 갱신
+          const success = await getDatePlanRequest(formState.selectedDate);
+          if (success) {
+            // 상태 갱신: 현재 날짜에 맞게 plans를 다시 가져옴
+            setPlans((prevPlans) => [...prevPlans, data]);
+            // CatPlanList의 plans도 갱신할 필요가 있음
+          }
+
+          onClose();
+          window.location.reload(); // 이 부분은 제거
+          // navigate("/plan", { replace: true }); // 페이지 이동
+        }
       } else {
         alert("플래너 생성에 실패했습니다.");
       }
     } catch (error) {
       alert("플래너 생성 중 오류가 발생했습니다.");
+      console.error("플래너 생성 중 오류:", error);
     }
   };
 
   const handleCancel = () => {
-    onClose(); // 모달 닫기
+    onClose();
   };
 
   const handleDateChange = (e) => {
     const newDate = e.target.value;
     setFormState((prevState) => ({ ...prevState, selectedDate: newDate }));
-    saveDate(newDate); // 스토어에 새로운 날짜 저장
+    saveDate(newDate);
   };
 
-  // 모달이 보이지 않을 경우 아무것도 렌더링하지 않음
   if (!show) return null;
 
   return (
