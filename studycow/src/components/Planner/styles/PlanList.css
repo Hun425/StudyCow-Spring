@@ -1,7 +1,7 @@
 .singlePlanBox {
   width: 490px; /* 박스 크기 설정 */
-  margin: 0;    /* 마진 0 */
-  padding: 0;   /* 패딩 0 */
+  margin: 0; /* 마진 0 */
+  padding: 0; /* 패딩 0 */
 }
 
 .singlePlanBox p {
@@ -27,14 +27,15 @@
   font-size: 24px; /* 글자 크기 설정 */
 }
 
-.singlePlanContent label {
-  display: flex;
+/* .singlePlanContent label { } */
+/* label 관련 스타일 제거 */
+
+.singlePlanCheckboxContainer {
+  display: flex; /* 체크박스와 시간을 함께 정렬 */
   align-items: center;
-  margin: 0;
-  font-size: 24px; /* 글자 크기 설정 */
 }
 
-.singlePlanContent input[type="checkbox"] {
+.singlePlanCheckbox {
   margin-left: 10px; /* 체크박스 여백 */
   margin-right: 30px; /* 체크박스 여백 */
   width: 19px; /* 체크박스의 너비 */
@@ -43,14 +44,19 @@
   transform: scale(1.5); /* 1.5배 크기 조절 */
 }
 
-.singleButtonBox {
+.singlePlanStudyTime {
+  margin-left: 8px; /* 체크박스와 시간 텍스트 사이의 간격 */
+  font-size: 24px; /* 시간 텍스트 크기 */
+}
+
+.singlePlanButtonBox {
   margin-right: 10px;
   display: flex; /* 체크박스와 텍스트를 일렬로 정렬 */
   align-items: center; /* 세로 방향 중앙 정렬 */
   justify-content: space-between;
 }
 
-.singleButtonCase {
+.singlePlanButtonCase {
   width: 30px;
   height: 30px;
   background-color: transparent; /* 배경을 투명하게 설정 */
@@ -61,19 +67,19 @@
   align-items: center; /* 세로 중앙 정렬 */
 }
 
-.singleEditButton {
+.singlePlanEditButton {
   height: 23px;
   width: 23px;
 }
 
-.singleDeleteButton {
+.singlePlanDeleteButton {
   height: 26px !important;
   width: 27px !important;
   padding-bottom: 1px;
 }
 
 /* 완료된 플랜에 대한 스타일 */
-.singlePlanContent.completed::before {
+.singlePlanContentCompleted::before {
   content: "";
   position: absolute;
   left: 0;
@@ -84,8 +90,8 @@
   z-index: 1; /* 텍스트 위에 표시 */
 }
 
-.singlePlanContent.completed p,
-.singlePlanContent.completed label {
+.singlePlanContentCompleted p,
+.singlePlanContentCompleted .singlePlanCheckboxContainer {
   color: gray; /* 글자색 변경 (선택 사항) */
   position: relative;
   z-index: 2; /* 선 뒤에 표시 */

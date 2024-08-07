@@ -73,35 +73,40 @@ const CatPlanList = () => {
         subPlans.map((plan) => (
           <div
             key={plan.planId}
-            className={`singleSubPlanContent ${plan.planStatus === 1 ? "completed" : ""}`}
+            className={`singleSubPlanContent ${
+              plan.planStatus === 1 ? "completed" : ""
+            }`}
           >
-            <label>
+            <div className="singleSubPlanCheckboxContainer">
               <input
                 type="checkbox"
                 checked={plan.planStatus === 1}
                 onChange={() => handleCheckboxChange(plan.planId)}
+                className="singleSubPlanCheckbox"
               />
-              {`${formatPlanStudyTime(plan.planStudyTime)}`}{" "}
-              {/* Display study time */}
-            </label>
-            <p>{`${plan.planContent}`}</p> {/* Display plan content */}
-            <div className="singleButtonBox">
+              <span className="singleSubPlanStudyTime">
+                {`${formatPlanStudyTime(plan.planStudyTime)}`}{" "}
+              </span>
+            </div>
+            <p className="singleSubPlanContentText">{`${plan.planContent}`}</p>{" "}
+            {/* Display plan content */}
+            <div className="singleSubButtonBox">
               <button
-                className="singleButtonCase"
+                className="singleSubButtonCase"
                 onClick={() => handleEditClick(plan.planId)}
               >
                 <img
-                  className="singleEditButton"
+                  className="singleSubEditButton"
                   src={editButton}
                   alt="수정버튼"
                 />
               </button>
               <button
-                className="singleButtonCase"
+                className="singleSubButtonCase"
                 onClick={() => handleDeleteClick(plan.planId)} // 삭제 버튼에 클릭 핸들러 추가
               >
                 <img
-                  className="singleDeleteButton"
+                  className="singleSubDeleteButton"
                   src={deleteButton}
                   alt="삭제버튼"
                 />

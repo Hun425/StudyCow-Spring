@@ -79,34 +79,41 @@ const PlanList = () => {
         <p>플랜을 등록하세요.</p>
       ) : (
         plans.map((plan) => (
-          <div key={plan.planId} className={`singlePlanContent ${plan.planStatus === 1 ? 'completed' : ''}`}>
-            <label>
+          <div
+            key={plan.planId}
+            className={`singlePlanContent ${
+              plan.planStatus === 1 ? "singlePlanContentCompleted" : ""
+            }`}
+          >
+            <div className="singlePlanCheckboxContainer">
               <input
                 type="checkbox"
+                className="singlePlanCheckbox"
                 checked={plan.planStatus === 1}
                 onChange={() => handleCheckboxChange(plan.planId)} // 상태 변경 함수 사용
               />
-              {`${formatPlanStudyTime(plan.planStudyTime)}`}{" "}
-              {/* 입력된 시간 표시 */}
-            </label>
+              <span className="singlePlanStudyTime">
+                {`${formatPlanStudyTime(plan.planStudyTime)}`}{" "}
+              </span>
+            </div>
             <p>{`${sub_code_dic[`${plan.subCode}`]}`}</p> {/* 과목 표시 */}
-            <div className="singleButtonBox">
+            <div className="singlePlanButtonBox">
               <button
-                className="singleButtonCase"
+                className="singlePlanButtonCase"
                 onClick={() => handleEditClick(plan.planId)}
               >
                 <img
-                  className="singleEditButton"
+                  className="singlePlanEditButton"
                   src={editButton}
                   alt="수정버튼"
                 />
               </button>
               <button
-                className="singleButtonCase"
+                className="singlePlanButtonCase"
                 onClick={() => handleDeleteClick(plan.planId)} // 삭제 클릭 핸들러 추가
               >
                 <img
-                  className="singleDeleteButton"
+                  className="singlePlanDeleteButton"
                   src={deleteButton}
                   alt="삭제버튼"
                 />
