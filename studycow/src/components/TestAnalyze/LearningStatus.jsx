@@ -6,7 +6,8 @@ import "./styles/LearningStatus.css"; // CSS 파일 가져오기
 
 const LearningStatus = () => {
   // 학습 상태 스토어에서 상태와 함수를 가져오기
-  const { subjectInfo, fetchSubjectInfo, error } = useLearningStatusStore();
+  const { subjectInfo, fetchSubjectInfo, clearSubjectInfo, error } =
+    useLearningStatusStore();
 
   // 사용자 정보 스토어에서 로그인 상태와 사용자 정보를 가져오기
   const { isLogin, userInfo } = useInfoStore();
@@ -19,15 +20,24 @@ const LearningStatus = () => {
     if (isLogin && userInfo.userId !== 0 && selectedSubject) {
       // 로그인 상태 및 선택된 과목이 있을 때만 데이터 가져오기
       fetchSubjectInfo(selectedSubject);
+    } else {
+      // 선택된 과목이 없으면 정보를 초기화
+      clearSubjectInfo();
     }
-  }, [fetchSubjectInfo, selectedSubject, isLogin, userInfo.userId]);
+  }, [
+    fetchSubjectInfo,
+    selectedSubject,
+    isLogin,
+    userInfo.userId,
+    clearSubjectInfo,
+  ]);
 
   return (
     <div className="learning-status-container">
       <h1 className="learning-status-title">학습 현황</h1>
       {error && <p style={{ color: "red" }}>{error}</p>}{" "}
       {/* 오류 메시지 표시 */}
-      {subjectInfo && (
+      {selectedSubject && subjectInfo ? (
         <div className="learning-status-table">
           <div className="learning-status-row">
             <span className="learning-status-label">목표</span>
@@ -38,7 +48,6 @@ const LearningStatus = () => {
           <div className="learning-status-row">
             <span className="learning-status-label">플래너 계획 시간</span>
             <span className="learning-status-value">
-              {/* 추가할 데이터 */}
               {subjectInfo.plannerTime} 시간
             </span>
           </div>
@@ -55,6 +64,8 @@ const LearningStatus = () => {
             </span>
           </div>
         </div>
+      ) : (
+        <p>과목을 선택하세요.</p>
       )}
     </div>
   );
