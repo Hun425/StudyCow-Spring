@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import useOpenAiStore from "../../../stores/openAi"; // openAi 스토어 가져오기
+import useOpenAiStore from "../../../stores/openAi"; // OpenAI 스토어 가져오기
+import useSubjectStore from "../../../stores/subjectStore"; // Subject 스토어 가져오기
 import "./styles/AIPlannerModal.css"; // 스타일 임포트
 
-// Utility function to format minutes into hours and minutes
+// 분을 시간과 분으로 포맷하는 유틸리티 함수
 const formatTime = (minutes) => {
   const hours = Math.floor(minutes / 60);
   const remainingMinutes = minutes % 60;
@@ -13,12 +14,20 @@ const formatTime = (minutes) => {
 
 const AIPlannerModal = ({ show, onClose, analysis, plans }) => {
   const { registerPlans } = useOpenAiStore(); // AI 플래너 등록 함수 가져오기
+  const { subjects, fetchSubjects, problemTypes, fetchProblemTypes } =
+    useSubjectStore(); // Subject 스토어 사용
+
   const [editingIndex, setEditingIndex] = useState(null);
   const [editablePlans, setEditablePlans] = useState(plans);
 
-  // useEffect를 사용하여 plans가 변경될 때마다 editablePlans 업데이트
+  // 컴포넌트가 마운트될 때 과목 데이터 가져오기
   useEffect(() => {
-    console.log("Plans have been updated:", plans);
+    fetchSubjects();
+  }, [fetchSubjects]);
+
+  // plans가 변경될 때마다 editablePlans 업데이트
+  useEffect(() => {
+    console.log("플랜이 업데이트되었습니다:", plans);
     setEditablePlans(plans);
   }, [plans]);
 
@@ -34,6 +43,7 @@ const AIPlannerModal = ({ show, onClose, analysis, plans }) => {
 
   const handleEditClick = (index) => {
     setEditingIndex(index);
+    fetchProblemTypes(editablePlans[index].subCode); // 선택된 과목의 세부 과목 가져오기
   };
 
   const handleSaveClick = () => {
@@ -59,7 +69,7 @@ const AIPlannerModal = ({ show, onClose, analysis, plans }) => {
               <tr>
                 <th>날짜</th>
                 <th>과목</th>
-                <th>내용</th>
+                <th>세부 과목</th>
                 <th>시간</th>
                 <th>수정</th>
               </tr>
@@ -84,53 +94,48 @@ const AIPlannerModal = ({ show, onClose, analysis, plans }) => {
                     {editingIndex === index ? (
                       <select
                         value={plan.subCode}
-                        onChange={(e) =>
+                        onChange={(e) => {
                           handlePlanChange(
                             index,
                             "subCode",
                             Number(e.target.value)
-                          )
-                        }
+                          );
+                          fetchProblemTypes(Number(e.target.value)); // 세부 과목 업데이트
+                        }}
                       >
-                        {Object.entries({
-                          1: "국어",
-                          2: "수학",
-                          3: "영어",
-                          4: "한국사",
-                          5: "사회탐구",
-                          6: "과학탐구",
-                          7: "직업탐구",
-                          8: "제2외국어/한문",
-                        }).map(([key, value]) => (
-                          <option key={key} value={key}>
-                            {value}
+                        <option value="" disabled hidden>
+                          과목 선택
+                        </option>
+                        {subjects.map((subject) => (
+                          <option key={subject.subCode} value={subject.subCode}>
+                            {subject.subName}
                           </option>
                         ))}
                       </select>
                     ) : (
-                      {
-                        1: "국어",
-                        2: "수학",
-                        3: "영어",
-                        4: "한국사",
-                        5: "사회탐구",
-                        6: "과학탐구",
-                        7: "직업탐구",
-                        8: "제2외국어/한문",
-                      }[plan.subCode]
+                      subjects.find((s) => s.subCode === plan.subCode)?.subName
                     )}
                   </td>
                   <td className="ai-planner-modal__table-cell">
                     {editingIndex === index ? (
-                      <input
-                        type="text"
-                        value={plan.planContent}
+                      <select
+                        value={plan.catCode || ""}
                         onChange={(e) =>
-                          handlePlanChange(index, "planContent", e.target.value)
+                          handlePlanChange(index, "catCode", e.target.value)
                         }
-                      />
+                      >
+                        <option value="" disabled hidden>
+                          세부 과목 선택
+                        </option>
+                        {problemTypes.map((type) => (
+                          <option key={type.catCode} value={type.catCode}>
+                            {type.catName}
+                          </option>
+                        ))}
+                      </select>
                     ) : (
-                      plan.planContent
+                      problemTypes.find((p) => p.catCode === plan.catCode)
+                        ?.catName || "내용 없음"
                     )}
                   </td>
                   <td className="ai-planner-modal__table-cell">

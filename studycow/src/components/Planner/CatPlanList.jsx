@@ -2,35 +2,26 @@ import React, { useState, useEffect } from "react";
 import deleteButton from "./img/deleteButton.png";
 import editButton from "./img/editButton.png";
 import usePlanStore from "../../stores/plan.js";
+import useSubjectStore from "../../stores/subjectStore"; // Import the subject store
 import PlanModify from "./CreateModify/PlanModify"; // Import the PlanModify modal
 import "./styles/CatPlanList.css";
 
 const CatPlanList = () => {
   const {
     subPlans,
-    updateSubPlanStatus,
-    subCode,
-    deletePlan,
     getDatePlanRequest,
     changePlanStatus,
+    deletePlan,
     setSubPlans,
-  } = usePlanStore(); // 상태 관리 훅에서 필요한 함수와 상태 가져오기
+    subCode,
+  } = usePlanStore(); // Zustand store for plans
 
-  const sub_code_dic = {
-    1: "국어",
-    2: "수학",
-    3: "영어",
-    4: "한국사",
-    5: "사회탐구",
-    6: "과학탐구",
-    7: "직업탐구",
-    8: "제2외국어/한문",
-  };
+  const { subjects } = useSubjectStore(); // Zustand store for subjects
 
   const [selectedPlanId, setSelectedPlanId] = useState(null); // State to store selected plan ID
   const [showModifyModal, setShowModifyModal] = useState(false); // State to manage modal visibility
 
-  // 현재 날짜 상태 및 계획을 불러옴
+  // 현재 날짜 상태 가져오기
   const { date } = usePlanStore((state) => ({ date: state.date }));
 
   useEffect(() => {
@@ -38,7 +29,7 @@ const CatPlanList = () => {
     if (subCode > 0) {
       getDatePlanRequest(date);
     }
-  }, [subCode, date, getDatePlanRequest]); // 의존성 배열에 date 추가
+  }, [subCode, date, getDatePlanRequest]); // Dependency array includes subCode and date
 
   const formatPlanStudyTime = (minutes) => {
     const hours = Math.floor(minutes / 60);

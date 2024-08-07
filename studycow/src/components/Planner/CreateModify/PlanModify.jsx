@@ -2,64 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./styles/CreateModify.css";
 import useInfoStore from "../../../stores/infos";
 import usePlanStore from "../../../stores/plan";
-
-const sub_code_dic = {
-  1: "국어",
-  2: "수학",
-  3: "영어",
-  4: "한국사",
-  5: "사회탐구",
-  6: "과학탐구",
-  7: "직업탐구",
-  8: "제2외국어/한문",
-};
-
-const sub_subjects_dic = {
-  국어: ["독서", "문학", "화법과 작문", "언어와 매체"],
-  수학: ["수학1", "수학2", "미적분", "기하", "확률과 통계"],
-  영어: ["듣기", "읽기"],
-  한국사: ["한국사"],
-  사회탐구: [
-    "생활과 윤리",
-    "윤리와 사상",
-    "한국지리",
-    "세계지리",
-    "동아시아사",
-    "세계사",
-    "경제",
-    "정치와 법",
-    "사회 문화",
-  ],
-  과학탐구: [
-    "물리학1",
-    "물리학2",
-    "화학1",
-    "화학2",
-    "생명과학1",
-    "생명과학2",
-    "지구과학1",
-    "지구과학2",
-  ],
-  직업탐구: [
-    "농업 기초 기술",
-    "공업 일반",
-    "상업 경제",
-    "수산 해운 산업 기초",
-    "인간 발달",
-    "성공적인 직업생활",
-  ],
-  "제2외국어/한문": [
-    "독일어1",
-    "프랑스어1",
-    "스페인어1",
-    "중국어1",
-    "일본어1",
-    "러시아어1",
-    "아랍어1",
-    "베트남어1",
-    "한문1",
-  ],
-};
+import useSubjectStore from "../../../stores/subjectStore"; // subject store import
 
 const PlanModify = ({ planId, show, onClose }) => {
   const { token } = useInfoStore((state) => ({
@@ -70,8 +13,10 @@ const PlanModify = ({ planId, show, onClose }) => {
     modifyPlannerUrl: state.modifyPlannerUrl,
   }));
 
+  const { subjects, fetchSubjects, problemTypes, fetchProblemTypes } =
+    useSubjectStore();
+
   const [selectedSubject, setSelectedSubject] = useState("");
-  const [subSubjects, setSubSubjects] = useState([]);
   const [selectedSubSubject, setSelectedSubSubject] = useState("");
   const [selectedTime, setSelectedTime] = useState(1);
   const [selectedMinutes, setSelectedMinutes] = useState(0);
@@ -79,12 +24,14 @@ const PlanModify = ({ planId, show, onClose }) => {
   const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
 
   useEffect(() => {
+    fetchSubjects(); // 과목 데이터 가져오기
+  }, [fetchSubjects]);
+
+  useEffect(() => {
     if (selectedSubject) {
-      setSubSubjects(sub_subjects_dic[selectedSubject] || []);
-    } else {
-      setSubSubjects([]);
+      fetchProblemTypes(selectedSubject); // 세부 과목 데이터 가져오기
     }
-  }, [selectedSubject]);
+  }, [selectedSubject, fetchProblemTypes]);
 
   useEffect(() => {
     if (show && planId) {
@@ -98,8 +45,8 @@ const PlanModify = ({ planId, show, onClose }) => {
 
           if (response.ok) {
             const data = await response.json();
-            setSelectedSubject(sub_code_dic[data.subCode]);
-            setSelectedSubSubject(data.planContent);
+            setSelectedSubject(data.subCode);
+            setSelectedSubSubject(data.catCode);
             setSelectedTime(Math.floor(data.planStudyTime / 60));
             setSelectedMinutes(data.planStudyTime % 60);
             setContent(data.planContent);
@@ -119,18 +66,12 @@ const PlanModify = ({ planId, show, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const subCode = parseInt(
-      Object.keys(sub_code_dic).find(
-        (key) => sub_code_dic[key] === selectedSubject
-      ),
-      10
-    );
-
     const totalMinutes =
       parseInt(selectedTime, 10) * 60 + parseInt(selectedMinutes, 10);
 
     const data = {
-      subCode,
+      subCode: parseInt(selectedSubject, 10),
+      catCode: parseInt(selectedSubSubject, 10),
       planDate: date,
       planContent: content,
       planStudyTime: totalMinutes,
@@ -178,9 +119,28 @@ const PlanModify = ({ planId, show, onClose }) => {
               <option value="" disabled hidden>
                 과목 선택
               </option>
-              {Object.entries(sub_code_dic).map(([key, value]) => (
-                <option key={key} value={value}>
-                  {value}
+              {subjects.map((subject) => (
+                <option key={subject.subCode} value={subject.subCode}>
+                  {subject.subName}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="CreateModify-form-group">
+            <label htmlFor="subSubject">세부과목</label>
+            <select
+              id="subSubject"
+              name="subSubject"
+              disabled={!selectedSubject}
+              onChange={(e) => setSelectedSubSubject(e.target.value)}
+              value={selectedSubSubject}
+            >
+              <option value="" disabled hidden>
+                세부과목 선택
+              </option>
+              {problemTypes.map((problemType) => (
+                <option key={problemType.catCode} value={problemType.catCode}>
+                  {problemType.catName}
                 </option>
               ))}
             </select>

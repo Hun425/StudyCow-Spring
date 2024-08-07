@@ -3,22 +3,12 @@ import Calendar from "./Calendar.jsx";
 import PlanList from "./PlanList";
 import CatPlanList from "./CatPlanList.jsx";
 import usePlanStore from "../../stores/plan.js";
+import useSubjectStore from "../../stores/subjectStore"; // subject store import
 import addButton from "./img/createButton.png"; // 기존 추가 버튼 이미지
 import autoButton from "./img/autoAddButton.png"; // 자동 생성 버튼 이미지 경로
 import AutoCreate from "./CreateModify/AutoCreate.jsx"; // AutoCreate 모달 컴포넌트 불러오기
 import PlanCreate from "./CreateModify/PlanCreate"; // PlanCreate 모달 컴포넌트
-import "./styles/MyPlanner.css";
-
-const sub_code_dic = {
-  1: "국어",
-  2: "수학",
-  3: "영어",
-  4: "한국사",
-  5: "사회탐구",
-  6: "과학탐구",
-  7: "직업탐구",
-  8: "제2외국어/한문",
-};
+import "./styles/MyPlanner.css"; // 스타일 파일 import
 
 const MyPlanner = () => {
   const { date, subCode, filterPlansBySubCode } = usePlanStore((state) => ({
@@ -27,33 +17,47 @@ const MyPlanner = () => {
     filterPlansBySubCode: state.filterPlansBySubCode,
   }));
 
+  const { subjects, fetchSubjects } = useSubjectStore(); // subject store 상태와 함수 가져오기
+
   const [selectedSubject, setSelectedSubject] = useState("");
   const [showAutoCreate, setShowAutoCreate] = useState(false); // AutoCreate 모달 가시성 상태 관리
   const [showPlanCreate, setShowPlanCreate] = useState(false); // PlanCreate 모달 가시성 상태 관리
 
+  // 컴포넌트가 마운트될 때 과목 데이터를 가져옴
   useEffect(() => {
-    const foundCode = Object.keys(sub_code_dic).find(
-      (key) => sub_code_dic[key] === selectedSubject
-    );
+    fetchSubjects(); // 과목 데이터를 서버에서 가져옴
+  }, [fetchSubjects]);
+
+  // 선택된 과목에 따라 플랜 필터링
+  useEffect(() => {
+    const foundCode = subjects.find(
+      (subject) => subject.subName === selectedSubject
+    )?.subCode;
     filterPlansBySubCode(foundCode);
     const catPlanContent = document.querySelector(".MyPlanCatPlanContent");
-    catPlanContent.scrollTop = 0;
-  }, [selectedSubject, filterPlansBySubCode]);
+    if (catPlanContent) {
+      catPlanContent.scrollTop = 0; // 세부 과목 목록 스크롤 위치 초기화
+    }
+  }, [selectedSubject, filterPlansBySubCode, subjects]);
 
+  // AutoCreate 모달 열기
   const handleOpenAutoCreate = () => {
-    setShowAutoCreate(true); // AutoCreate 모달 열기
+    setShowAutoCreate(true);
   };
 
+  // AutoCreate 모달 닫기
   const handleCloseAutoCreate = () => {
-    setShowAutoCreate(false); // AutoCreate 모달 닫기
+    setShowAutoCreate(false);
   };
 
+  // PlanCreate 모달 열기
   const handleOpenPlanCreate = () => {
-    setShowPlanCreate(true); // PlanCreate 모달 열기
+    setShowPlanCreate(true);
   };
 
+  // PlanCreate 모달 닫기
   const handleClosePlanCreate = () => {
-    setShowPlanCreate(false); // PlanCreate 모달 닫기
+    setShowPlanCreate(false);
   };
 
   return (
@@ -109,16 +113,21 @@ const MyPlanner = () => {
               <option value="" disabled hidden>
                 과목 선택
               </option>
-              {Object.entries(sub_code_dic).map(([key, value]) => (
-                <option key={key} value={value}>
-                  {value}
+              {subjects.map((subject) => (
+                <option key={subject.subCode} value={subject.subName}>
+                  {subject.subName}
                 </option>
               ))}
             </select>
           </div>
         </div>
         <div className="MyPlanCatPlanTitle">
-          <p>{subCode ? sub_code_dic[subCode] : "과목을 선택하세요"}</p>
+          <p>
+            {subCode
+              ? subjects.find((s) => s.subCode === subCode)?.subName ||
+                "과목을 선택하세요"
+              : "과목을 선택하세요"}
+          </p>
         </div>
         <div className="MyPlanCatPlanbox">
           <div className="MyPlanCatPlanContent">

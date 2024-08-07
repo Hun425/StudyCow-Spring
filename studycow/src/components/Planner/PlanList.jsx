@@ -1,26 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./styles/PlanList.css";
 import deleteButton from "./img/deleteButton.png";
 import editButton from "./img/editButton.png";
 import usePlanStore from "../../stores/plan";
+import useSubjectStore from "../../stores/subjectStore"; // subject store import
 import PlanModify from "./CreateModify/PlanModify"; // PlanModify 모달 컴포넌트
 
 const PlanList = () => {
   const { plans, changePlanStatus, deletePlan, setPlans } = usePlanStore(); // changePlanStatus 가져오기
-
-  const sub_code_dic = {
-    1: "국어",
-    2: "수학",
-    3: "영어",
-    4: "한국사",
-    5: "사회탐구",
-    6: "과학탐구",
-    7: "직업탐구",
-    8: "제2외국어/한문",
-  };
+  const { subjects, fetchSubjects } = useSubjectStore(); // Subject store 상태와 함수 가져오기
 
   const [selectedPlanId, setSelectedPlanId] = useState(null); // 수정할 계획의 ID
   const [showModifyModal, setShowModifyModal] = useState(false); // 모달 가시성 상태
+
+  // 과목 데이터를 가져오는 useEffect
+  useEffect(() => {
+    fetchSubjects(); // 컴포넌트가 마운트될 때 과목 데이터 가져오기
+  }, [fetchSubjects]);
 
   // 상태 업데이트 핸들러를 changePlanStatus로 대체
   const handleCheckboxChange = async (planId) => {
@@ -74,6 +70,11 @@ const PlanList = () => {
     );
   };
 
+  const getSubjectName = (subCode) => {
+    const subject = subjects.find((s) => s.subCode === subCode);
+    return subject ? subject.subName : "알 수 없는 과목";
+  };
+
   return (
     <div className="singlePlanBox">
       {plans.length === 0 ? (
@@ -97,7 +98,7 @@ const PlanList = () => {
                 {`${formatPlanStudyTime(plan.planStudyTime)}`}{" "}
               </span>
             </div>
-            <p>{`${sub_code_dic[`${plan.subCode}`]}`}</p> {/* 과목 표시 */}
+            <p>{getSubjectName(plan.subCode)}</p> {/* 과목 표시 */}
             <div className="singlePlanButtonBox">
               <button
                 className="singlePlanButtonCase"

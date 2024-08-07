@@ -3,64 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./styles/CreateModify.css";
 import useInfoStore from "../../../stores/infos";
 import usePlanStore from "../../../stores/plan";
-
-const sub_code_dic = {
-  1: "국어",
-  2: "수학",
-  3: "영어",
-  4: "한국사",
-  5: "사회탐구",
-  6: "과학탐구",
-  7: "직업탐구",
-  8: "제2외국어/한문",
-};
-
-const sub_subjects_dic = {
-  국어: ["독서", "문학", "화법과 작문", "언어와 매체"],
-  수학: ["수학1", "수학2", "미적분", "기하", "확률과 통계"],
-  영어: ["듣기", "읽기"],
-  한국사: ["한국사"],
-  사회탐구: [
-    "생활과 윤리",
-    "윤리와 사상",
-    "한국지리",
-    "세계지리",
-    "동아시아사",
-    "세계사",
-    "경제",
-    "정치와 법",
-    "사회 문화",
-  ],
-  과학탐구: [
-    "물리학1",
-    "물리학2",
-    "화학1",
-    "화학2",
-    "생명과학1",
-    "생명과학2",
-    "지구과학1",
-    "지구과학2",
-  ],
-  직업탐구: [
-    "농업 기초 기술",
-    "공업 일반",
-    "상업 경제",
-    "수산 해운 산업 기초",
-    "인간 발달",
-    "성공적인 직업생활",
-  ],
-  "제2외국어/한문": [
-    "독일어1",
-    "프랑스어1",
-    "스페인어1",
-    "중국어1",
-    "일본어1",
-    "러시아어1",
-    "아랍어1",
-    "베트남어1",
-    "한문1",
-  ],
-};
+import useSubjectStore from "../../../stores/subjectStore"; // subject store import
 
 const PlanCreate = ({ show, onClose }) => {
   const navigate = useNavigate();
@@ -77,6 +20,9 @@ const PlanCreate = ({ show, onClose }) => {
       getDatePlanRequest: state.getDatePlanRequest,
     }));
 
+  const { subjects, fetchSubjects, problemTypes, fetchProblemTypes } =
+    useSubjectStore(); // 스토어 상태 및 함수
+
   const initialState = {
     selectedSubject: "",
     selectedSubSubject: "",
@@ -88,6 +34,19 @@ const PlanCreate = ({ show, onClose }) => {
 
   const [formState, setFormState] = useState(initialState);
 
+  // 과목 데이터 가져오기
+  useEffect(() => {
+    fetchSubjects(); // 컴포넌트가 마운트될 때 과목 데이터 가져오기
+  }, [fetchSubjects]);
+
+  // 선택된 과목이 바뀔 때마다 세부 과목 정보 가져오기
+  useEffect(() => {
+    if (formState.selectedSubject) {
+      fetchProblemTypes(formState.selectedSubject);
+    }
+  }, [formState.selectedSubject, fetchProblemTypes]);
+
+  // 모달이 열릴 때 초기 상태 설정
   useEffect(() => {
     if (show) {
       setFormState({
@@ -101,29 +60,27 @@ const PlanCreate = ({ show, onClose }) => {
     }
   }, [show, date]);
 
-  const handleSubjectChange = (subject) => {
+  // 과목 선택 핸들러
+  const handleSubjectChange = (subCode) => {
     setFormState((prevState) => ({
       ...prevState,
-      selectedSubject: subject,
+      selectedSubject: subCode,
       selectedSubSubject: "",
     }));
   };
 
+  // 플래너 제출 핸들러
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const subCode = parseInt(
-      Object.keys(sub_code_dic).find(
-        (key) => sub_code_dic[key] === formState.selectedSubject
-      ),
-      10
-    );
-
+    const subCode = parseInt(formState.selectedSubject, 10);
+    const catCode = parseInt(formState.selectedSubSubject, 10); // 세부 과목 코드
     const totalMinutes =
       formState.selectedTime * 60 + parseInt(formState.selectedMinutes, 10);
 
     const data = {
       subCode,
+      catCode,
       planDate: formState.selectedDate,
       planContent: formState.content,
       planStudyTime: totalMinutes,
@@ -151,11 +108,10 @@ const PlanCreate = ({ show, onClose }) => {
           if (success) {
             // 상태 갱신: 현재 날짜에 맞게 plans를 다시 가져옴
             setPlans((prevPlans) => [...prevPlans, data]);
-            // CatPlanList의 plans도 갱신할 필요가 있음
           }
 
           onClose();
-          window.location.reload(); // 이 부분은 제거
+          window.location.reload(); // 페이지 새로고침
           // navigate("/plan", { replace: true }); // 페이지 이동
         }
       } else {
@@ -167,16 +123,19 @@ const PlanCreate = ({ show, onClose }) => {
     }
   };
 
-  const handleCancel = () => {
-    onClose();
-  };
-
+  // 날짜 변경 핸들러
   const handleDateChange = (e) => {
     const newDate = e.target.value;
     setFormState((prevState) => ({ ...prevState, selectedDate: newDate }));
     saveDate(newDate);
   };
 
+  // 취소 핸들러
+  const handleCancel = () => {
+    onClose(); // 모달 닫기
+  };
+
+  // 모달이 보이지 않을 경우 아무것도 렌더링하지 않음
   if (!show) return null;
 
   return (
@@ -195,9 +154,9 @@ const PlanCreate = ({ show, onClose }) => {
               <option value="" disabled hidden>
                 과목 선택
               </option>
-              {Object.entries(sub_code_dic).map(([key, value]) => (
-                <option key={key} value={value}>
-                  {value}
+              {subjects.map((subject) => (
+                <option key={subject.subCode} value={subject.subCode}>
+                  {subject.subName}
                 </option>
               ))}
             </select>
@@ -219,13 +178,11 @@ const PlanCreate = ({ show, onClose }) => {
               <option value="" disabled hidden>
                 세부과목 선택
               </option>
-              {sub_subjects_dic[formState.selectedSubject]?.map(
-                (subSubject, index) => (
-                  <option key={index} value={subSubject}>
-                    {subSubject}
-                  </option>
-                )
-              )}
+              {problemTypes.map((problemType) => (
+                <option key={problemType.catCode} value={problemType.catCode}>
+                  {problemType.catName}
+                </option>
+              ))}
             </select>
           </div>
           <div className="CreateModify-form-group">
