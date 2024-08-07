@@ -437,7 +437,7 @@ public class ScoreRepositoryImpl implements ScoreRepository{
     }
 
     private int hasLimit(Integer limit) {
-        return (limit != null && limit <= 5) ? limit : 5;
+        return (limit != null && limit > 5) ? limit : 5;
     }
 
 }
