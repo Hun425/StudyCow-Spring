@@ -81,7 +81,7 @@ public class SecurityConfig implements WebSocketMessageBrokerConfigurer {
                         .authenticationEntryPoint(authenticationEntryPoint))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(AUTH_WHITELIST).permitAll()
-                        .anyRequest().permitAll());
+                        .anyRequest().authenticated());
 
 
         return http.build();

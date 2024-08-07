@@ -9,12 +9,14 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.support.MethodArgumentTypeMismatchException;
+
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import javax.naming.AuthenticationException;
 import java.nio.file.AccessDeniedException;
@@ -108,6 +110,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(response.getErrorCode()).body(response);
     }
 
+
+    @ExceptionHandler(InsufficientAuthenticationException.class)
+    protected ResponseEntity<ErrorResponse> handleInsufficientAuthenticationException(InsufficientAuthenticationException e) {
+        log.error(e.getMessage());
+        ErrorResponse response = new ErrorResponse(ErrorCode.LOGIN_REQUIRED);
+        return ResponseEntity.status(response.getErrorCode()).body(response);
+    }
 
     @ExceptionHandler(CustomException.class)
     protected ResponseEntity<ErrorResponse> handleCustomException(CustomException e) {

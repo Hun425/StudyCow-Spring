@@ -47,7 +47,7 @@ public class PlannerController {
     @Operation(summary = "플래너 일자별 조회", description = "요청한 날짜에 해당하는 플래너들의 목록을 반환합니다")
     @GetMapping("list/day")
     public ResponseEntity<List<PlannerGetDto>> listDayPlan(@AuthenticationPrincipal CustomUserDetails customUserDetails,
-                                                           @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @Valid LocalDate date) {
+                                                           @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         int userId = customUserDetails.getUser().getUserId();
         List<PlannerGetDto> plans = plannerService.getPlansByDateForUser(userId, date);
         return ResponseEntity.ok(plans);

@@ -206,18 +206,11 @@ public class PlannerServiceImpl implements PlannerService {
      * @return
      */
     private List<PlannerGetDto> convertToDtoList(List<UserSubjectPlan> plans){
-        try {
-            return plans.stream().map(plan -> {
-                try {
-                    return modelMapper.map(plan, PlannerGetDto.class);
-                } catch (Exception e) {
-                    throw new CustomException(ErrorCode.WRONG_REQUEST_MAPPING);
-                }
 
-            }).collect(Collectors.toList());
-        }catch (Exception e){
-            throw new CustomException(ErrorCode.WRONG_REQUEST_MAPPING);
-        }
+            return plans.stream().map(plan ->
+                    modelMapper.map(plan, PlannerGetDto.class)
+            ).collect(Collectors.toList());
+
     }
 
 

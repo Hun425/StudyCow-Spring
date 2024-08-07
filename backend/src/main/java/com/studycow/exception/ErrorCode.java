@@ -29,6 +29,7 @@ public enum ErrorCode {
     NOT_AUTHENTICAION(HttpStatus.UNAUTHORIZED,"접근 권한이 없습니다. 로그인해주세요"),
     NOT_FOUND_GRADE(HttpStatus.NOT_FOUND,"해당 등급은 존재하지 않습니다"),
     NOT_FOUND_PLANNER(HttpStatus.NOT_FOUND,"해당 플래너가 존재하지 않습니다."),
+    LOGIN_REQUIRED(HttpStatus.UNAUTHORIZED,"로그인이 필요한 서비스입니다."),
     NOT_FOUND_SUBJECT_CODE(HttpStatus.NOT_FOUND,"해당 과목코드가 존재하지 않습니다.");
 
     private HttpStatus status;
