@@ -1,154 +1,105 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import {
-	OpenVidu,
-	Session as OVSession,
-	Publisher,
-	Subscriber,
-} from 'openvidu-browser';
-import axios from 'axios';
-import Form from './RoomCam/Form';
-import Session from './RoomCam/Session';
+import React, { useEffect, useRef, useState } from "react";
+import { Grid, CircularProgress, Typography } from "@mui/material";
+import UserVideoComponent from "./RoomCam/UserVideoComponent";
+import useRoomStore from "../../stores/OpenVidu";
+import useInfoStore from "../../stores/infos.js";
+import "./styles/RoomCam.css";
 
-const roomId = '1';
+// RoomCam 컴포넌트
+function RoomCam({ roomId }) {
+  const { userInfo } = useInfoStore();
+  const userRef = useRef(null);
 
-function RoomCam() {
-	const [session, setSession] = useState('');
-	const [sessionId, setSessionId] = useState('');
-	const [subscriber, setSubscriber] = useState(null);
-	const [publisher, setPublisher] = useState(null);
-	const [OV, setOV] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-	const OPENVIDU_SERVER_URL = `http://localhost:8080/studycow`;
-	const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
+  const {
+    session,
+    publisher,
+    subscribers,
+    setMySessionId,
+    setMyUserName,
+    leaveSession,
+    joinSession
+  } = useRoomStore(state => ({
+    session: state.session,
+    publisher: state.publisher,
+    subscribers: state.subscribers,
+    setMySessionId: state.setMySessionId,
+    setMyUserName: state.setMyUserName,
+    leaveSession: state.leaveSession,
+    joinSession: state.joinSession
+  }));
 
-	const leaveSession = useCallback(() => {
-		if (session) session.disconnect();
+  useEffect(() => {
+    // 세션 ID와 유저 이름 설정
+    setMySessionId(roomId);
+    setMyUserName(userInfo.userNickName);
+  }, [setMySessionId, setMyUserName, roomId, userInfo]);
 
-		setOV(null);
-		setSession('');
-		setSessionId('');
-		setSubscriber(null);
-		setPublisher(null);
-	}, [session]);
+  useEffect(() => {
+    // 컴포넌트가 마운트되면 joinSession 호출
+    if (session === undefined) {
+      joinSession().then(() => setLoading(false));
+    } else {
+      setLoading(false);
+    }
+  }, [session, joinSession]);
 
-	const joinSession = () => {
-		const OVs = new OpenVidu();
-		setOV(OVs);
-		setSession(OVs.initSession());
-	};
+  useEffect(() => {
+    // 페이지를 닫거나 새로 고침할 때 leaveSession 호출
+    window.addEventListener("beforeunload", onbeforeunload);
 
-	useEffect(() => {
-		window.addEventListener('beforeunload', leaveSession);
+    return () => {
+      window.removeEventListener("beforeunload", onbeforeunload);
+    };
+  }, []);
 
-		return () => {
-			window.removeEventListener('beforeunload', leaveSession);
-		};
-	}, [leaveSession]);
+  const onbeforeunload = (e) => {
+    leaveSession();
+  };
 
-	const sessionIdChangeHandler = (event) => {
-		setSessionId(event.target.value);
-	};
+  // publisher와 publisher.stream이 정의되었는지 확인
+  useEffect(() => {
+    if (publisher && publisher.stream) {
+      console.log("Publisher stream:", publisher.stream);
+      // 필요시 publisher.stream의 메서드를 호출할 수 있습니다.
+      // 예: publisher.stream.getAudioTracks();
+    }
+  }, [publisher]);
 
-	useEffect(() => {
-		if (session === '') return;
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <CircularProgress />
+        <Typography variant="h6" align="center">Loading...</Typography>
+      </div>
+    );
+  }
 
-		session.on('streamDestroyed', (event) => {
-			if (subscriber && event.stream.streamId === subscriber.stream.streamId) {
-				setSubscriber(null);
-			}
-		});
-	}, [subscriber, session]);
-
-	useEffect(() => {
-		if (session === '') return;
-
-		session.on('streamCreated', (event) => {
-			const subscribers = session.subscribe(event.stream, '');
-			setSubscriber(subscribers);
-		});
-
-		const createSession = async (sessionIds) => {
-			try {
-				const data = JSON.stringify({ customSessionId: sessionIds });
-				const response = await axios.post(
-					`${OPENVIDU_SERVER_URL}/openvidu/connect/`+roomId,
-					data,
-					{
-						headers: {
-							Authorization: `Basic ${btoa(
-								`OPENVIDUAPP:${OPENVIDU_SERVER_SECRET}`
-							)}`,
-							'Content-Type': 'application/json',
-						},
-					}
-				);
-        console.log(response.data)
-
-				return response.data;
-			} catch (error) {
-				if (error.response?.status === 409) {
-					return sessionIds;
-				}
-
-				return '';
-			}
-		};
-
-		const getToken = async () => {
-			try {
-				const token = await createSession(sessionId);
-				return token;
-			} catch (error) {
-				throw new Error('Failed to get token.');
-			}
-		};
-
-		getToken()
-			.then((token) => {
-				session
-					.connect(token)
-					.then(() => {
-						if (OV) {
-							const publishers = OV.initPublisher(undefined, {
-								audioSource: undefined,
-								videoSource: undefined,
-								publishAudio: true,
-								publishVideo: true,
-								mirror: true,
-							});
-
-							setPublisher(publishers);
-							session
-								.publish(publishers)
-								.then(() => {})
-								.catch((e) => {console.log(e)});
-						}
-					})
-					.catch((e) => {console.log(e)});
-			})
-			.catch((e) => {console.log(e)});
-	}, [session, OV, sessionId, OPENVIDU_SERVER_URL]);
-
-	return (
-		<div>
-			<h1>진행화면</h1>
-			<>
-				{!session && (
-					<Form
-						joinSession={joinSession}
-						sessionId={sessionId}
-						sessionIdChangeHandler={sessionIdChangeHandler}
-					/>
-				)}
-				{session && (
-					<Session
-						publisher={publisher}
-						subscriber={subscriber}
-					/>
-				)}
-			</>
-		</div>
-	);
+  return (
+    <div className="video-session-container">
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={6}>
+          <div className="video-container">
+            {session !== undefined && (
+              <div className="video-stream-container" ref={userRef}>
+                {publisher !== undefined && (
+                  <div className="video-stream">
+                    <UserVideoComponent streamManager={publisher} />
+                  </div>
+                )}
+                {subscribers.map((sub) => (
+                  <div className="video-stream" key={sub.stream.streamId}>
+                    <UserVideoComponent streamManager={sub} />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </Grid>
+      </Grid>
+    </div>
+  );
 }
 
 export default RoomCam;

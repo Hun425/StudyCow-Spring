@@ -1,23 +1,49 @@
 .studyRoomHeader {
-    width: 1440px;
-    background-color: black;
+    width: 100%;
+    background-color: #262A2D;
     height: 70px;
     box-sizing: border-box;
     position: relative;
-    border-bottom: solid grey 0.1px;
-}
-
-.studyRoomMain {
-    width: 1440px;
-    background-color: black;
-    height: 703px;
+    border-bottom: solid #919497 0.1px;
+    z-index: 1000;
+  }
+  
+  .studyRoomMain {
+    display: flex;
+    width: 100%;
+    height: calc(100vh - 70px); /* Header height를 뺀 전체 높이 */
+  }
+  
+  .studyRoomSidebar {
+    width: 60px;
+    background-color: #262A2D;
+    height: calc(100vh - 70px);
     box-sizing: border-box;
-}
-
-.studyRoomSidebar {
-    width: 70px;
-    background-color: black;
-    height: 702.9px;
+    border-right: solid #919497 0.1px;
+  }
+  
+  .studyRoomCamContainer {
+    flex-grow: 1;
+    background-color: #333;
+  }
+  
+  .studyRoomCamContainer.shifted {
+    margin-right: 300px; /* studyRoomUtil이 표시될 때 오른쪽 여백 추가 */
+  }
+  
+  .studyRoomUtil {
+    width: 300px;
+    background-color: #262A2D;
+    height: calc(100vh - 70px);
     box-sizing: border-box;
-    border-right: solid grey 0.1px;
-}
+    position: absolute;
+    top: 70px; /* Header height */
+    right: 0;
+    border-left: solid #919497 0.1px;
+    overflow-y: auto; /* 내용이 길어질 경우 스크롤 가능 */
+  }
+  
+  .studyRoomUtilItem {
+    padding: 20px;
+  }
+  

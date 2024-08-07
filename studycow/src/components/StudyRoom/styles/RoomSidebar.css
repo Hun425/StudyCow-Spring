@@ -1,18 +1,22 @@
 .StudySideContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    height: 702.8px !important; /* 전체 화면 높이 */
-  }
-  
-  .studySideButtonContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .studySideSettingButtonContainer {
-    margin-top: auto; /* 설정 버튼을 컨테이너 하단에 배치 */
-  }
-  
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 702.8px; /* 전체 화면 높이 */
+  padding: 10px 0; /* 상하 패딩 추가 */
+  width: 60px; /* 사이드바 너비 추가 */
+}
+
+.studySideButtonContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px; /* 버튼 간의 간격 추가 */
+}
+
+.studySideSettingButtonContainer {
+  align-items: center;
+  margin-top: auto; /* 설정 버튼을 컨테이너 하단에 배치 */
+  padding: 10px; /* 설정 버튼의 패딩 추가 */
+}

@@ -49,17 +49,19 @@ const useTestStore = create((set, get) => ({
     },
     getToken: async (sessionId) => {
         try {
-            const response = await axios.post(
-                `${OPENVIDU_SERVER_URL}/openvidu/connect/${sessionId}`,
-                {}, // 세션 생성 요청 시 빈 객체를 보냅니다.
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Basic ${btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET)}`, // 인증 헤더 추가
-                    },
-                }
-            );
-            return response.data; // 토큰을 응답 데이터에서 반환합니다.
+            // const response = await axios.post(
+            //     `${OPENVIDU_SERVER_URL}/openvidu/connect/${sessionId}`,
+            //     {}, // 세션 생성 요청 시 빈 객체를 보냅니다.
+            //     {
+            //         headers: {
+            //             'Authorization': `Basic ${btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET)}`, // 인증 헤더 추가
+            //             'Content-Type': 'application/json',
+            //         },
+            //     }
+            // );
+            // console.log(response.data)
+            const token = "wss://13.125.238.202:8444?sessionId=5&token=tok_E8yiOXoKa6U3q0Dm"
+            return token;
         } catch (error) {
             console.error('Error fetching token', error);
             throw error; // 오류가 발생하면 예외를 던집니다.

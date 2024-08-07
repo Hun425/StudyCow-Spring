@@ -14,5 +14,9 @@
 
 body {
   font-family: "CustomFontGothic", sans-serif;
+  width: 1440px;
+  height: 773px;
+  overflow: y;
   margin: 0;
+  padding: 0;
 }

@@ -2,6 +2,16 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 1440px;
+    height: 70px;
+    background-color: #262A2D;
+    box-sizing: border-box;
+    border-bottom: solid #919497 0.1px;
+}
+
+.StudyNavLogoContainer {
+    display: flex;
+    align-items: center;
 }
 
 .studyNavButtonContainer {
@@ -10,11 +20,8 @@
     justify-content: center;
 }
 
-.utilButton, .exitButton {
+.utilButton {
     display: flex;
-    align-items: center; /* 수직 정렬 */
-  }
-.exitButton {
-margin-left: '25px'
+    align-items: center;
+    padding: 0;
 }
-  
