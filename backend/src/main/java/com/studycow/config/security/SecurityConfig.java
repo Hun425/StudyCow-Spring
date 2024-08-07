@@ -43,7 +43,6 @@ import java.util.Arrays;
  * @author 채기훈
  * @since JDK17
  */
-
 @Configuration
 @EnableWebSecurity // HTTP 요청에 대한 인증 및 인가 구성
 @EnableMethodSecurity

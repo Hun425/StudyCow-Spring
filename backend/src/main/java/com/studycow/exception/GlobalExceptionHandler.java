@@ -28,7 +28,7 @@ import java.util.Map;
 
 /**
  * <pre>
- *     전역 예외처리기 설정
+ *     전역 예외처리기 설정 클래스
  * </pre>
  * @author 채기훈
  * @since JDK17

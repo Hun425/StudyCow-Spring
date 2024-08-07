@@ -8,6 +8,13 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
+/**
+ * <pre>
+ *     Security 예외 처리를 GlobalException으로 일임하기 위한 구현체
+ * </pre>
+ * @author 채기훈
+ * @since JDK17
+ */
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     private final HandlerExceptionResolver handlerExceptionResolver;

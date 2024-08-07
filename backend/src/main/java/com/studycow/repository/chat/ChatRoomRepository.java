@@ -15,6 +15,13 @@ import org.springframework.stereotype.Repository;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * <pre>
+ *     채팅방 서비스 + 레포지토리
+ * </pre>
+ * @author 채기훈
+ * @since JDK17
+ */
 @RequiredArgsConstructor
 @Repository
 public class ChatRoomRepository {

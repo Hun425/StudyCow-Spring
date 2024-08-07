@@ -10,7 +10,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * @author 채기훈
  * @since JDK17
  */
-
 @Configuration
 public class PasswordEncoderConfig {
 

@@ -18,6 +18,13 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 
 import java.util.Collections;
 
+/**
+ * <pre>
+ *     웹 소켓 설정을 위한 클래스
+ * </pre>
+ * @author 채기훈
+ * @since JDK17
+ */
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {

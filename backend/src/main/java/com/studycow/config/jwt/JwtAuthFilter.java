@@ -21,7 +21,6 @@ import java.io.IOException;
  * @author 채기훈
  * @since JDK17
  */
-
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
 
