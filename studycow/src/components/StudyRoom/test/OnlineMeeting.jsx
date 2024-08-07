@@ -119,21 +119,6 @@ class OnlineMeeting extends Component {
     }
   }
 
-  onResults(results) {
-    const currentTime = Date.now();
-
-    if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
-      console.log("Hands detected:", results.multiHandLandmarks);
-      this.setState(prevState => ({
-        lastPoseDetectedTime: currentTime,
-        isTimerRunning: true,
-        timer: prevState.isTimerRunning ? prevState.timer + 1 : prevState.timer
-      }));
-    } else if (currentTime - this.state.lastPoseDetectedTime > 10000) {
-      console.log("No hands detected for 10 seconds, pausing timer");
-      this.setState({ isTimerRunning: false });
-    }
-  }
 
   onbeforeunload(event) {
     this.leaveSession();
