@@ -5,14 +5,19 @@ import useStudyStore from "../../stores/study";
 import { useEffect } from "react";
 
 const StudyList = () => {
-  const { rooms, fetchRooms } = useStudyStore((state) => ({
-    rooms: state.rooms,
-    fetchRooms: state.fetchRooms,
-  }));
+  const { rooms, recentRoom, fetchRooms, fetchRecentRoom } = useStudyStore(
+    (state) => ({
+      rooms: state.rooms,
+      recentRoom: state.recentRoom,
+      fetchRooms: state.fetchRooms,
+      fetchRecentRoom: state.fetchRecentRoom,
+    })
+  );
 
   useEffect(() => {
     fetchRooms();
-  }, [fetchRooms]);
+    fetchRecentRoom();
+  }, [fetchRooms, fetchRecentRoom]);
 
   return (
     <div className="studyListContainer">
@@ -26,7 +31,13 @@ const StudyList = () => {
       </div>
       <div className="recentStudyRoom">
         <p className="recentEnterTitle">최근 입장한 스터디룸</p>
-        <StudyRoomItem />
+        <StudyRoomItem
+          roomId={recentRoom.id}
+          title={recentRoom.roomTitle}
+          thumb={recentRoom.roomThumb}
+          maxPerson={recentRoom.roomMaxPerson}
+          nowPerson={recentRoom.roomNowPerson}
+        />
       </div>
       <div className="studyRoomList">
         <p className="studyListTitle">스터디룸 목록</p>
