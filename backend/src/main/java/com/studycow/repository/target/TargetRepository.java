@@ -33,7 +33,4 @@ public interface TargetRepository {
 
     /** 목표 미설정 과목 조회 */
     List<SubjectCodeDto> subjectList(int userId) throws PersistenceException;
-
-    /** 최근 성적 조회 전 성적 목표 조회 */
-    List<ResponseScoreDto> targetList(int userId) throws PersistenceException;
 }

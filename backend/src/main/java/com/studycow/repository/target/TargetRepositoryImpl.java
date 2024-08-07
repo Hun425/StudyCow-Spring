@@ -192,34 +192,4 @@ public class TargetRepositoryImpl implements TargetRepository {
                 .orderBy(subjectCode.code.asc())
                 .fetch();
     }
-
-    /**
-     * 성적 조회 전 과목 목표 조회
-     * @param userId
-     * @return
-     * @throws PersistenceException
-     */
-    @Override
-    public List<ResponseScoreDto> targetList(int userId) throws PersistenceException {
-        try{
-            User user = em.find(User.class, userId);
-
-            return queryFactory
-                    .select(Projections.constructor(ResponseScoreDto.class,
-                            userScoreTarget.subjectCode.code,
-                            userScoreTarget.subjectCode.name,
-                            userScoreTarget.targetScore,
-                            userScoreTarget.targetGrade,
-                            userScoreTarget.subjectCode.maxScore
-                    ))
-                    .from(userScoreTarget)
-                    .where(userScoreTarget.user.id.eq(user.getId()))
-                    .fetch();
-
-        }catch(IllegalStateException e) {
-            throw e;
-        } catch(Exception e) {
-            throw new PersistenceException("성적 조회 중 에러 발생", e);
-        }
-    }
 }
