@@ -1,5 +1,5 @@
 import "./styles/GradeAnalyzeBox.css";
-import RecentGradeGraph from "./RecendGradeGraph";
+import RecentGradeGraph from "./RecentGradeGraph";
 import LearningStatus from "./LearningStatus";
 import AnalyzeWeakBlock from "./AnalyzeWeakBlock";
 import AnalyzeWeakGraph from "./AnalyzeWeakGraph";
