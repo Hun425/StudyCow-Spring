@@ -52,7 +52,7 @@ const TestAnalyze = () => {
       </div>
       <div className="analyzeBody">
         <div className="analyzeCowStatus">
-          <h1>욕군정환</h1>
+          <h1>캐릭터 부분</h1>
         </div>
         <GradeAnalyzeBox subject={selectedSubject} />
       </div>

@@ -1,10 +1,13 @@
 .selectedSubjectBox {
   width: 1000px;
-  height: 700px;
-  background-color: aquamarine;
 }
 
 .upsidePartBox {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.downsidePartBox {
   display: flex;
   justify-content: space-evenly;
 }

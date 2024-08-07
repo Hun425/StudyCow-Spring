@@ -1,6 +1,8 @@
 import "./styles/GradeAnalyzeBox.css";
 import RecentGradeGraph from "./RecendGradeGraph";
-import LearningStatus from "./LearningStatus"; // Import LearningStatus component
+import LearningStatus from "./LearningStatus";
+import AnalyzeWeakBlock from "./AnalyzeWeakBlock";
+import AnalyzeWeakGraph from "./AnalyzeWeakGraph";
 
 const GradeAnalyzeBox = () => {
   return (
@@ -8,6 +10,10 @@ const GradeAnalyzeBox = () => {
       <div className="upsidePartBox">
         <RecentGradeGraph />
         <LearningStatus />
+      </div>
+      <div className="downsidePartBox">
+        <AnalyzeWeakBlock />
+        <AnalyzeWeakGraph />
       </div>
     </div>
   );
