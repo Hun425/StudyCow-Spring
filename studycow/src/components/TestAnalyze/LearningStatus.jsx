@@ -46,9 +46,9 @@ const LearningStatus = () => {
             </span>
           </div>
           <div className="learning-status-row">
-            <span className="learning-status-label">플래너 계획 시간</span>
+            <span className="learning-status-label">플래너 학습 시간</span>
             <span className="learning-status-value">
-              {subjectInfo.plannerTime} 시간
+              {subjectInfo.sumStudyTime} 분
             </span>
           </div>
           <div className="learning-status-row">

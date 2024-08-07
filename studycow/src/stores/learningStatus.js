@@ -15,7 +15,7 @@ const LearningStatusStore = create(
       error: null, // 오류 메시지를 저장할 상태
 
       // 과목 정보를 가져오는 함수
-      fetchSubjectInfo: async (limit = 10) => {
+      fetchSubjectInfo: async (limit = 5) => {
         const { token, userInfo } = useInfoStore.getState();
         const userId = userInfo.userId;
 
@@ -46,7 +46,8 @@ const LearningStatusStore = create(
           // GET 요청을 통해 과목 데이터 가져오기
           const response = await axios.get(url, {
             headers,
-            params: { limit },
+            // params: { limit },
+            // 위의 params에 리미트 값으로 과목 코드를 가져오는 원인 미상의 버그가 발생
           });
 
           // 요청이 성공하면 데이터를 상태로 설정
