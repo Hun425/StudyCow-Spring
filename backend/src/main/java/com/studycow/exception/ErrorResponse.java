@@ -24,7 +24,6 @@ public class ErrorResponse {
     private String errorMessage;
     private List<FieldError> validationErrors;
 
-
     @Getter
     @Setter
     @NoArgsConstructor
@@ -38,6 +37,7 @@ public class ErrorResponse {
         this.errorMessage = errorCode.getMessage();
         this.validationErrors = validationErrors;
     }
+
     public ErrorResponse(ErrorCode errorCode) {
         this.errorCode = errorCode.getStatus();
         this.errorMessage = errorCode.getMessage();
