@@ -53,19 +53,18 @@ public class UserServiceImpl implements UserService  {
 
         User user = userRepository.findByUserEmail(userEmail)
                 .orElseThrow(()->new CustomException(ErrorCode.WRONG_EMAIL));
-
         if(user ==null) throw new CustomException(ErrorCode.USER_NOT_FOUND);
         if(!passwordEncoder.matches(userPassword,user.getUserPassword())){
             log.error("로그인 실패 비밀번호 오류");
             throw new CustomException(ErrorCode.WRONG_PASSWORD);
         }
 
+        UserGrade currentUserGrade = userGradeRepository.findById(user.getUserGrade().getGradeCode())
+                .orElseThrow(()->new CustomException(ErrorCode.NOT_FOUND_GRADE));
+
         CustomUserInfoDto info = modelMapper.map(user, CustomUserInfoDto.class);
         String accessToken = jwtUtil.createAccessToken(info);
 
-
-        UserGrade currentUserGrade = userGradeRepository.findById(user.getUserGrade().getGradeCode())
-                .orElseThrow(()->new CustomException(ErrorCode.NOT_FOUND_GRADE));
         UserGradeDto userGradeDto = new UserGradeDto();
 
         userGradeDto.setGradeCode(currentUserGrade.getGradeCode());

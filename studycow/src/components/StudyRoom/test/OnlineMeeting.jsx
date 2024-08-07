@@ -1,29 +1,32 @@
 import React, { Component } from "react";
 import { OpenVidu } from "openvidu-browser";
 import axios from "axios";
-import UserVideoComponent from "./UserVideoComponent";
+import { Hands } from '@mediapipe/hands';
+import { Camera } from '@mediapipe/camera_utils';
+import UserVideoComponent from "./UserVideoComponent.jsx";
 import "./OnlineMeeting.css";
 
-// 로컬 미디어 서버 주소
 const OPENVIDU_SERVER_URL = "https://i11c202.p.ssafy.io:8444";
 const OPENVIDU_SERVER_SECRET = "1emdgkrhthajrwk";
 
 class OnlineMeeting extends Component {
   constructor(props) {
     super(props);
-    this.userRef = React.createRef();
-
     this.state = {
       mySessionId: "SessionA",
       myUserName: "Participant" + Math.floor(Math.random() * 100),
       session: undefined,
       mainStreamManager: undefined,
-      publisher: undefined, // 로컬 웹캠 스트림
-      subscribers: [], // 다른 사용자의 활성 스트림
+      publisher: undefined,
+      subscribers: [],
       isMike: true,
       isCamera: true,
       isSpeaker: true,
       isChat: false,
+      timer: 0,
+      isTimerRunning: false,
+      lastPoseDetectedTime: Date.now(),
+      isHandsAvailable: false,
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -31,36 +34,128 @@ class OnlineMeeting extends Component {
     this.handleMainVideoStream = this.handleMainVideoStream.bind(this);
     this.onbeforeunload = this.onbeforeunload.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
+    this.detectHands = this.detectHands.bind(this);
+    this.handleChangeSessionId = this.handleChangeSessionId.bind(this);
+    this.handleChangeUserName = this.handleChangeUserName.bind(this);
+    this.handleJoinSession = this.handleJoinSession.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     window.addEventListener("beforeunload", this.onbeforeunload);
+
+    const hands = new Hands({
+      locateFile: (file) => {
+        return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
+      }
+    });
+
+    hands.setOptions({
+      maxNumHands: 2,
+      modelComplexity: 1,
+      minDetectionConfidence: 0.5,
+      minTrackingConfidence: 0.5
+    });
+
+    hands.onResults(this.onResults.bind(this));
+
+    this.hands = hands;
+
+    this.interval = setInterval(() => {
+      if (this.state.isHandsAvailable && this.state.publisher) {
+        this.detectHands();
+      }
+      console.log("Timer state:", this.state.isTimerRunning, "Current time:", this.state.timer);
+    }, 1000);
   }
 
   componentWillUnmount() {
     window.removeEventListener("beforeunload", this.onbeforeunload);
+    clearInterval(this.interval);
   }
 
-  onbeforeunload(e) {
+  async detectHands() {
+    if (this.state.publisher && this.state.publisher.videos && this.state.publisher.videos[0]) {
+      const video = this.state.publisher.videos[0].video;
+
+      if (!video) {
+        console.log('Video element is not available yet');
+        return;
+      }
+
+      if (video.readyState !== 4) {
+        console.log('Video is not ready yet. ReadyState:', video.readyState);
+        return;
+      }
+
+      try {
+        this.hands.send({ image: video });
+      } catch (error) {
+        console.error('Error sending video to Mediapipe Hands:', error);
+      }
+    } else {
+      console.log("Video reference is not available");
+    }
+  }
+
+  onResults(results) {
+    const currentTime = Date.now();
+    console.log("Mediapipe Hands results received:", results);
+
+    if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
+      console.log("Hands detected:", results.multiHandLandmarks);
+      this.setState(prevState => ({
+        lastPoseDetectedTime: currentTime,
+        isTimerRunning: true,
+        timer: prevState.isTimerRunning ? prevState.timer + 1 : prevState.timer
+      }));
+    } else {
+      const timeSinceLastPose = currentTime - this.state.lastPoseDetectedTime;
+      console.log("No hands detected. Time since last pose:", timeSinceLastPose, "ms");
+
+      if (timeSinceLastPose > 10000) {
+        console.log("No hands detected for 10 seconds, pausing timer");
+        this.setState({ isTimerRunning: false });
+      }
+    }
+  }
+
+  onResults(results) {
+    const currentTime = Date.now();
+
+    if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
+      console.log("Hands detected:", results.multiHandLandmarks);
+      this.setState(prevState => ({
+        lastPoseDetectedTime: currentTime,
+        isTimerRunning: true,
+        timer: prevState.isTimerRunning ? prevState.timer + 1 : prevState.timer
+      }));
+    } else if (currentTime - this.state.lastPoseDetectedTime > 10000) {
+      console.log("No hands detected for 10 seconds, pausing timer");
+      this.setState({ isTimerRunning: false });
+    }
+  }
+
+  onbeforeunload(event) {
     this.leaveSession();
   }
 
-  leaveSession() {
-    const mySession = this.state.session;
+  handleChangeSessionId(e) {
+    this.setState({ mySessionId: e.target.value });
+  }
 
-    if (mySession) {
-      mySession.disconnect();
+  handleChangeUserName(e) {
+    this.setState({ myUserName: e.target.value });
+  }
+
+  handleJoinSession(e) {
+    e.preventDefault();
+    this.joinSession();
+  }
+
+  handleMainVideoStream(stream) {
+    if (this.state.mainStreamManager !== stream) {
+      this.setState({ mainStreamManager: stream });
     }
-
-    this.OV = null;
-    this.setState({
-      session: undefined,
-      subscribers: [],
-      mySessionId: undefined,
-      myUserName: undefined,
-      mainStreamManager: undefined,
-      publisher: undefined,
-    });
   }
 
   deleteSubscriber(streamManager) {
@@ -72,12 +167,6 @@ class OnlineMeeting extends Component {
     }
   }
 
-  handleMainVideoStream(stream) {
-    if (this.state.mainStreamManager !== stream) {
-      this.setState({ mainStreamManager: stream });
-    }
-  }
-
   handleToggle(kind) {
     if (this.state.publisher) {
       switch (kind) {
@@ -86,292 +175,209 @@ class OnlineMeeting extends Component {
             this.state.publisher.publishVideo(this.state.isCamera);
           });
           break;
-
         case "speaker":
           this.setState({ isSpeaker: !this.state.isSpeaker }, () => {
-            this.state.subscribers.forEach((s) =>
-              s.subscribeToAudio(this.state.isSpeaker)
-          );
-        });
-        break;
-
-      case "mike":
-        this.setState({ isMike: !this.state.isMike }, () => {
-          this.state.publisher.publishAudio(this.state.isMike);
-        });
-        break;
+            this.state.subscribers.forEach((s) => s.subscribeToAudio(this.state.isSpeaker));
+          });
+          break;
+        case "mike":
+          this.setState({ isMike: !this.state.isMike }, () => {
+            this.state.publisher.publishAudio(this.state.isMike);
+          });
+          break;
+      }
     }
   }
-}
 
-joinSession() {
-  this.OV = new OpenVidu(); // OpenVidu 객체를 얻음
-
-  this.OV.setAdvancedConfiguration({
-    publisherSpeakingEventsOptions: {
-      interval: 50,
-      threshold: -75,
-    },
-  });
-
-  this.setState(
-    {
-      session: this.OV.initSession(),
-    },
-    () => {
-      let mySession = this.state.session;
-
-      // Session 객체가 각각 새로운 stream에 대해 구독 후, subscribers 상태값 업뎃
-      mySession.on("streamCreated", (e) => {
-        let subscriber = mySession.subscribe(e.stream, undefined);
-        var subscribers = this.state.subscribers;
-        subscribers.push(subscriber);
-
-        this.setState({ subscribers });
-      });
-
-      // 사용자가 화상회의를 떠나면 Session 객체에서 소멸된 stream을 받아와 subscribers 상태값 업뎃
-      mySession.on("streamDestroyed", (e) => {
-        this.deleteSubscriber(e.stream.streamManager);
-      });
-
-      // 서버 측에서 비동기식 오류 발생 시 Session 객체에 의해 트리거되는 이벤트
-      mySession.on("exception", (exception) => {
-        console.warn(exception);
-      });
-
-      // 발언자 감지
-      mySession.on("publisherStartSpeaking", (event) => {
-        for (let i = 0; i < this.userRef.current.children.length; i++) {
-          if (
-            JSON.parse(event.connection.data).clientData ===
-            this.userRef.current.children[i].innerText
-          ) {
-            this.userRef.current.children[i].style.borderStyle = "solid";
-            this.userRef.current.children[i].style.borderColor = "#1773EA";
-          }
-        }
-      });
-
-      mySession.on("publisherStopSpeaking", (event) => {
-        for (let i = 0; i < this.userRef.current.children.length; i++) {
-          if (
-            JSON.parse(event.connection.data).clientData ===
-            this.userRef.current.children[i].innerText
-          ) {
-            this.userRef.current.children[i].style.borderStyle = "none";
-          }
-        }
-      });
-
-      this.getToken().then((token) => {
-        mySession
-          .connect(token, {
-            clientData: this.state.myUserName,
-          })
-          .then(() => {
-            let publisher = this.OV.initPublisher(undefined, {
-              audioSource: undefined,
-              videoSource: undefined,
-              publishAudio: true,
-              publishVideo: true,
-              resolution: "640x480",
-              frameRate: 30,
-              insertMode: "APPEND",
-              mirror: "false",
-            });
-
-            mySession.publish(publisher);
-
-            this.setState({ mainStreamManager: publisher, publisher });
-          })
-          .catch((error) => {
-            console.log("세션 연결 오류", error.code, error.message);
+  joinSession() {
+    this.OV = new OpenVidu();
+    this.setState(
+        { session: this.OV.initSession() },
+        () => {
+          var mySession = this.state.session;
+          mySession.on("streamCreated", (event) => {
+            var subscriber = mySession.subscribe(event.stream, undefined);
+            var subscribers = this.state.subscribers;
+            subscribers.push(subscriber);
+            this.setState({ subscribers: subscribers });
           });
-      });
+
+          mySession.on("streamDestroyed", (event) => {
+            this.deleteSubscriber(event.stream.streamManager);
+          });
+
+          mySession.on("exception", (exception) => {
+            console.warn(exception);
+          });
+
+          this.getToken().then((token) => {
+            mySession
+                .connect(token, { clientData: this.state.myUserName })
+                .then(async () => {
+                  let publisher = await this.OV.initPublisherAsync(undefined, {
+                    audioSource: undefined,
+                    videoSource: undefined,
+                    publishAudio: true,
+                    publishVideo: true,
+                    resolution: "640x480",
+                    frameRate: 30,
+                    insertMode: "APPEND",
+                    mirror: false,
+                  });
+
+                  mySession.publish(publisher);
+                  this.setState({
+                    mainStreamManager: publisher,
+                    publisher: publisher,
+                    isHandsAvailable: true,
+                  }, () => {
+                    console.log("Publisher set in state");
+                  });
+                })
+                .catch((error) => {
+                  console.log("There was an error connecting to the session:", error.code, error.message);
+                });
+          });
+        }
+    );
+  }
+
+  leaveSession() {
+    const mySession = this.state.session;
+    if (mySession) {
+      mySession.disconnect();
     }
-  );
-}
 
-getToken() {
-  return this.createSession(this.state.mySessionId).then((sessionId) =>
-    this.createToken(sessionId)
-  );
-}
+    this.OV = null;
+    this.setState({
+      session: undefined,
+      subscribers: [],
+      mySessionId: "SessionA",
+      myUserName: "Participant" + Math.floor(Math.random() * 100),
+      mainStreamManager: undefined,
+      publisher: undefined,
+      timer: 0,
+      isTimerRunning: false,
+    });
+  }
 
-createSession(sessionId) {
-  return new Promise((resolve, reject) => {
-    let data = JSON.stringify({ customSessionId: sessionId });
+  render() {
+    const { mySessionId, myUserName } = this.state;
 
-    axios
-      .post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions", data, {
-        headers: {
-          Authorization: `Basic ${btoa(
-            `OPENVIDUAPP:${OPENVIDU_SERVER_SECRET}`
-          )}`,
-          "Content-Type": "application/json",
-        },
-      })
-      .then((res) => {
-        resolve(res.data.id);
-      })
-      .catch((res) => {
-        let error = Object.assign({}, res);
-
-        if (error?.response?.status === 409) {
-          resolve(sessionId);
-        } else if (
-          window.confirm(
-            'No connection to OpenVidu Server. This may be a certificate error at "' +
-              OPENVIDU_SERVER_URL +
-              '"\n\nClick OK to navigate and accept it. If no certifica' +
-              "te warning is shown, then check that your OpenVidu Server is up and running at" +
-              ' "' +
-              OPENVIDU_SERVER_URL +
-              '"'
-          )
-        ) {
-          window.location.assign(OPENVIDU_SERVER_URL + "/accept-certificate");
-        }
-      });
-  });
-}
-
-createToken(sessionId) {
-  return new Promise((resolve, reject) => {
-    let data = {};
-
-    axios
-      .post(
-        `${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${sessionId}/connection`,
-        data,
-        {
-          headers: {
-            Authorization: `Basic ${btoa(
-              `OPENVIDUAPP:${OPENVIDU_SERVER_SECRET}`
-            )}`,
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((res) => {
-        resolve(res.data.token);
-      })
-      .catch((error) => reject(error));
-  });
-}
-
-render() {
-  return (
-    <div className="container">
-      <div className="header">
-        <p className="study-title">Java Study</p>
-      </div>
-      <div className="middle">
-        {this.state.session === undefined ? (
-          <div
-            style={{
-              position: "absolute",
-              right: "0",
-              left: "0",
-              width: "300px",
-              margin: "auto",
-              height: "300px",
-            }}
-            id="join"
-          >
+    return (
+        <div className="container">
+          <div className="header">
+            <h1>Online Meeting</h1>
+            <div className="timer-container">
+              <h2>Study Timer</h2>
+              <p className="timer-value">
+                {Math.floor(this.state.timer / 60)}:{(this.state.timer % 60).toString().padStart(2, '0')}
+              </p>
+              <p className="timer-status">
+                Status: {this.state.isTimerRunning ? "Running" : "Paused"}
+              </p>
+            </div>
             <div>
-              <h1 style={{ color: "white" }}>Join a video session</h1>
-              <form
-                style={{ display: "flex", justifyContent: "center" }}
-                className="form-group"
-                onSubmit={this.joinSession}
-              >
-                <p className="text-center">
-                  <input
-                    className="btn btn-lg btn-success"
-                    name="commit"
-                    type="submit"
-                    value="JOIN"
-                  />
-                </p>
-              </form>
+              <p>Hands Available: {this.state.isHandsAvailable ? "Yes" : "No"}</p>
+              <p>Timer Running: {this.state.isTimerRunning ? "Yes" : "No"}</p>
+              <p>Current Time: {this.state.timer} seconds</p>
             </div>
           </div>
-        ) : null}
-        <div className="left">
-          <div className="video-container">
-            {this.state.session !== undefined ? (
-              <div
-                className={`stream-container-wrapper ${
-                  this.state.isChat ? "primary" : ""
-                }`}
-                ref={this.userRef}
-              >
-                {this.state.publisher !== undefined ? (
-                  <div
-                    className="stream-container"
-                    key={this.state.publisher.stream.streamId}
-                  >
-                    <UserVideoComponent
-                      streamManager={this.state.publisher}
+
+          <div className="main-content">
+            {this.state.session === undefined ? (
+                <div id="join">
+                  <div id="join-dialog">
+                    <h1>Join a video session</h1>
+                    <form className="form-group" onSubmit={this.handleJoinSession}>
+                      <p>
+                        <label>Participant: </label>
+                        <input
+                            className="form-control"
+                            type="text"
+                            id="userName"
+                            value={myUserName}
+                            onChange={this.handleChangeUserName}
+                            required
+                        />
+                      </p>
+                      <p>
+                        <label>Session: </label>
+                        <input
+                            className="form-control"
+                            type="text"
+                            id="sessionId"
+                            value={mySessionId}
+                            onChange={this.handleChangeSessionId}
+                            required
+                        />
+                      </p>
+                      <p className="text-center">
+                        <button className="btn btn-lg btn-success" type="submit">
+                          JOIN
+                        </button>
+                      </p>
+                    </form>
+                  </div>
+                </div>
+            ) : (
+                <div id="session">
+                  <div id="session-header">
+                    <h1 id="session-title">{mySessionId}</h1>
+                    <input
+                        className="btn btn-large btn-danger"
+                        type="button"
+                        id="buttonLeaveSession"
+                        onClick={this.leaveSession}
+                        value="Leave session"
                     />
                   </div>
-                ) : null}
-                {this.state.subscribers.map((sub) => (
-                  <div
-                    className="stream-container"
-                    key={sub.stream.streamId}
-                  >
-                    <UserVideoComponent streamManager={sub} />
+
+                  <div id="video-container">
+                    {this.state.publisher !== undefined ? (
+                        <div className="stream-container" onClick={() => this.handleMainVideoStream(this.state.publisher)}>
+                          <UserVideoComponent streamManager={this.state.publisher} />
+                        </div>
+                    ) : (
+                        <p>Waiting for video stream...</p>
+                    )}
+                    {this.state.subscribers.map((sub, i) => (
+                        <div key={i} className="stream-container" onClick={() => this.handleMainVideoStream(sub)}>
+                          <UserVideoComponent streamManager={sub} />
+                        </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            ) : null}
+                </div>
+            )}
           </div>
         </div>
-        <div
-          className={`right ${this.state.isChat ? "primary" : ""}`}
-        >
-          <div className="chat">
-            <span>채팅자리</span>
-          </div>
-        </div>
-      </div>
-      <div className="bottom">
-        <div className="bottom-box">
-          <div
-            className={`icon ${!this.state.isCamera ? "primary" : ""}`}
-            onClick={() => this.handleToggle("camera")}
-          >
-            {this.state.isCamera ? "🎥" : "🚫🎥"}
-          </div>
-          <div
-            className={`icon ${!this.state.isMike ? "primary" : ""}`}
-            onClick={() => this.handleToggle("mike")}
-          >
-            {this.state.isMike ? "🎤" : "🚫🎤"}
-          </div>
-          <div
-            className={`icon ${!this.state.isSpeaker ? "primary" : ""}`}
-            onClick={() => this.handleToggle("speaker")}
-          >
-            {this.state.isSpeaker ? "🎧" : "🚫🎧"}
-          </div>
-          <div className="icon primary" onClick={this.leaveSession}>
-            🚪
-          </div>
-        </div>
-        <div
-          className="chat-icon-box"
-          onClick={() => this.setState({ isChat: !this.state.isChat })}
-        >
-          💬
-        </div>
-      </div>
-    </div>
-  );
-}
+    );
+  }
+
+  async getToken() {
+    const sessionId = await this.createSession(this.state.mySessionId);
+    return await this.createToken(sessionId);
+  }
+
+  async createSession(sessionId) {
+    const response = await axios.post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions", { customSessionId: sessionId }, {
+      headers: {
+        Authorization: "Basic " + btoa("OPENVIDUAPP:" + OPENVIDU_SERVER_SECRET),
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data.id;
+  }
+
+  async createToken(sessionId) {
+    const response = await axios.post(OPENVIDU_SERVER_URL + "/openvidu/api/sessions/" + sessionId + "/connection", {}, {
+      headers: {
+        Authorization: "Basic " + btoa("OPENVIDUAPP:" + OPENVIDU_SERVER_SECRET),
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data.token;
+  }
 }
 
 export default OnlineMeeting;
