@@ -52,4 +52,7 @@ public interface ScoreRepository {
 
     /** 특정기간동안 틀린 유형 */
     List<ScoreDetailStatsDto> statsDetail(int userId, int subCode, LocalDate startDate, LocalDate endDate) throws PersistenceException;
-}
+
+    /** 플래너 기반 학습한 시간 (planner 임시작성) */
+    Integer planStudyTime(int userId, int subCode) throws PersistenceException;
+;}

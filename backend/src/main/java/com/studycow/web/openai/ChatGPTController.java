@@ -10,6 +10,7 @@ import com.studycow.dto.user.CustomUserDetails;
 import com.studycow.service.score.ScoreService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -54,10 +55,21 @@ public class ChatGPTController {
         return chatGPTResponse.getChoices().get(0).getMessage().getContent();
     }
 
-    public String scoreAdvice(ResponseScoreDto responseScoreDto) {
-        ScoreChatRequest request = new ScoreChatRequest(model, responseScoreDto.toString());
-        ChatGPTResponse chatGPTResponse =  template.postForObject(apiURL, request, ChatGPTResponse.class);
-        return chatGPTResponse.getChoices().get(0).getMessage().getContent();
+    @Operation(
+            summary = "성적 조언 생성",
+            description = "chatGPT를 이용하여 불러온 성적에 대한 조언 생성. 오남용 금지")
+    @PostMapping("/advice-score")
+    public ResponseEntity<?> scoreAdvice(
+            @RequestBody @Valid ResponseScoreDto responseScoreDto) {
+        try {
+            ScoreChatRequest request = new ScoreChatRequest(model, responseScoreDto.toString());
+            ChatGPTResponse chatGPTResponse = template.postForObject(apiURL, request, ChatGPTResponse.class);
+            responseScoreDto.setAdvice(chatGPTResponse.getChoices().get(0).getMessage().getContent());
+
+            return ResponseEntity.ok(responseScoreDto);
+        }catch (Exception e){
+            return new ResponseEntity<>("성적 조언생성 실패 : " + e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
 
