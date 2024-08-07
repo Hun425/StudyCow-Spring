@@ -12,7 +12,9 @@ const CatPlanList = () => {
     subCode,
     deletePlan,
     getDatePlanRequest,
-  } = usePlanStore(); // deletePlan 추가
+    changePlanStatus,
+    setSubPlans,
+  } = usePlanStore(); // 상태 관리 훅에서 필요한 함수와 상태 가져오기
 
   const sub_code_dic = {
     1: "국어",
@@ -48,8 +50,24 @@ const CatPlanList = () => {
     );
   };
 
-  const handleCheckboxChange = (planId) => {
-    updateSubPlanStatus(planId); // Update the plan status in the store
+  const handleCheckboxChange = async (planId) => {
+    try {
+      const success = await changePlanStatus(planId); // 상태 변경 요청
+      if (success) {
+        // 성공적으로 상태가 변경되었으면 새로운 subPlans로 상태 업데이트
+        const updatedPlans = subPlans.map((plan) =>
+          plan.planId === planId
+            ? { ...plan, planStatus: plan.planStatus === 0 ? 1 : 0 }
+            : plan
+        );
+        setSubPlans(updatedPlans); // subPlans 상태 갱신
+      } else {
+        alert("플랜 상태 변경에 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("플랜 상태 변경 중 오류가 발생했습니다:", error);
+      alert("플랜 상태 변경 중 오류가 발생했습니다.");
+    }
   };
 
   const handleEditClick = (planId) => {
