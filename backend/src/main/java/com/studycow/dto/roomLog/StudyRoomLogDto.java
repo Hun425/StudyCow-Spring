@@ -33,7 +33,7 @@ public class StudyRoomLogDto {
     /** 방 랭킹 정보 */
     private List<SessionRankDto> rankDto;
     /** connection 토큰 */
-    private String token;
+    //private String token;
 
     public StudyRoomLogDto(Long logId, int userId, Long roomId,
                            LocalDate studyDate, Integer studyTime, Integer roomStudyTime,
@@ -47,6 +47,6 @@ public class StudyRoomLogDto {
         this.inDate = inDate;
         this.outDate = outDate;
         this.rankDto = null;
-        this.token = null;
+        //this.token = null;
     }
 }
