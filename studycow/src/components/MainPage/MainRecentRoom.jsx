@@ -13,6 +13,10 @@ const MainRecentRoom = () => {
     fetchRecentRoom();
   }, [fetchRecentRoom]);
 
+  if (!recentRoom) {
+    return <div>로딩 중...</div>; // 또는 다른 로딩 상태 표시
+  }
+
   return (
     <div className="mainRecentRoomContainer">
       <h3>최근 입장한 방</h3>
