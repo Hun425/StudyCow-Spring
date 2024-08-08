@@ -100,27 +100,6 @@ const useStudyStore = create(
       },
 
       // 사이드바 버튼 함수
-      // 캠 켜기/끄기 함수
-      showCam: false,
-      setCam: () =>
-        set((state) => {
-          const newState = !state.showCam;
-          return { showCam: newState };
-        }),
-      // 소리 켜기/끄기 함수
-      soundOn: false,
-      setSound: () =>
-        set((state) => {
-          const newState = !state.soundOn;
-          return { soundOn: newState };
-        }),
-      // 마이크 켜기/끄기 함수
-      micOn: false,
-      setMic: () =>
-        set((state) => {
-          const newState = !state.micOn;
-          return { micOn: newState };
-        }),
       // bgm 켜기/끄기 함수
       bgmOn: false,
       setBgm: () =>
@@ -160,10 +139,13 @@ const useStudyStore = create(
       setRankInfo: (data) => set({ rankInfo: data }),
       setMyStudyTime: (data) => set({ myStudyTime: data }),
 
+      myRankInfo: [],
+      setMyRankInfo: (data) => set({ myRankInfo: data }),
+
       // 방 입장 함수
       registerRoom: async (rId) => {
-        const { token } = useInfoStore.getState(); // 토큰은 여전히 useInfoStore에서 가져옵니다.
-
+        const { token, userInfo } = useInfoStore.getState(); // userNickName을 가져옵니다.
+      
         try {
           const response = await axios.post(
             `${API_URL}roomLog/enter/${rId}`,
@@ -174,19 +156,25 @@ const useStudyStore = create(
               },
             }
           );
-
-          // 응답 코드가 200일 경우
+      
           if (response.status === 200) {
             const data = response.data;
             console.log("방 입장 성공", data);
-
-            // 응답 데이터에서 필요한 정보를 추출
+      
             const { logId, studyTime, rankDto } = data;
-            // 상태 업데이트 또는 다른 처리를 수행합니다.
-            // 예를 들어:
-            useStudyStore.getState().setLogId(logId);
-            useStudyStore.getState().setMyStudyTime(studyTime);
-            useStudyStore.getState().setRankInfo(rankDto);
+      
+            // 상태 업데이트
+            const studyStore = useStudyStore.getState();
+            studyStore.setLogId(logId);
+            studyStore.setMyStudyTime(studyTime);
+            studyStore.setRankInfo(rankDto);
+      
+            // userNickName과 같은 닉네임을 가진 유저를 rankDto에서 필터링
+            const myRankInfo = rankDto.filter(rank => rank.nickName === userInfo.userNickName);
+      
+            // 필터링한 결과를 myRankInfo에 저장
+            studyStore.setMyRankInfo(myRankInfo);
+      
           } else {
             console.error(`응답 코드 오류: ${response.status}`);
           }
@@ -252,6 +240,7 @@ const useStudyStore = create(
         logId: state.logId,
         rankInfo: state.rankInfo,
         setMyStudyTime: state.setMyStudyTime,
+        myRankInfo: state.myRankInfo,
       }),
     }
   )

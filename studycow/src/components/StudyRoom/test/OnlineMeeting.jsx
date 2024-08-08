@@ -13,27 +13,31 @@ class OnlineMeeting extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      // 세션 ID와 참여자 이름 설정
       mySessionId: `SessionA-${Date.now()}`,
       myUserName: "Participant" + Math.floor(Math.random() * 100),
       session: undefined,
       mainStreamManager: undefined,
       publisher: undefined,
       subscribers: [],
+      // 마이크, 카메라, 스피커, 채팅 상태 설정
       isMike: true,
       isCamera: true,
       isSpeaker: true,
       isChat: false,
+      // 타이머 관련 상태 설정
       timer: 0,
       isTimerRunning: false,
       lastPoseDetectedTime: Date.now(),
       isHandsAvailable: false,
     };
 
+    // 메서드 바인딩
     this.joinSession = this.joinSession.bind(this);
     this.leaveSession = this.leaveSession.bind(this);
     this.handleMainVideoStream = this.handleMainVideoStream.bind(this);
     this.onbeforeunload = this.onbeforeunload.bind(this);
-    this.handleToggle = this.handleToggle.bind(this);  // 이 줄을 수정했습니다
+    this.handleToggle = this.handleToggle.bind(this);
     this.detectHands = this.detectHands.bind(this);
     this.handleChangeSessionId = this.handleChangeSessionId.bind(this);
     this.handleChangeUserName = this.handleChangeUserName.bind(this);
@@ -41,8 +45,10 @@ class OnlineMeeting extends Component {
   }
 
   async componentDidMount() {
+    // 페이지 종료 시 세션 종료 이벤트 등록
     window.addEventListener("beforeunload", this.onbeforeunload);
 
+    // Mediapipe Hands 모델 설정
     const hands = new Hands({
       locateFile: (file) => {
         return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
@@ -56,10 +62,12 @@ class OnlineMeeting extends Component {
       minTrackingConfidence: 0.5
     });
 
+    // Mediapipe Hands 결과 처리 함수 바인딩
     hands.onResults(this.onResults.bind(this));
 
     this.hands = hands;
 
+    // 1초마다 손 동작 감지 함수 실행
     this.interval = setInterval(() => {
       if (this.state.isHandsAvailable && this.state.publisher) {
         this.detectHands();
@@ -69,11 +77,13 @@ class OnlineMeeting extends Component {
   }
 
   componentWillUnmount() {
+    // 페이지 종료 시 이벤트 리스너 제거 및 타이머 중지
     window.removeEventListener("beforeunload", this.onbeforeunload);
     clearInterval(this.interval);
   }
 
   async detectHands() {
+    // 퍼블리셔의 비디오 요소에 손 동작 감지 수행
     if (this.state.publisher && this.state.publisher.videos && this.state.publisher.videos[0]) {
       const video = this.state.publisher.videos[0].video;
 
@@ -101,6 +111,7 @@ class OnlineMeeting extends Component {
     const currentTime = Date.now();
     console.log("Mediapipe Hands results received:", results);
 
+    // 손 동작이 감지되면 타이머 실행, 감지되지 않으면 일정 시간 후 타이머 중지
     if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
       console.log("Hands detected:", results.multiHandLandmarks);
       this.setState(prevState => ({
@@ -120,29 +131,35 @@ class OnlineMeeting extends Component {
   }
 
   onbeforeunload(event) {
+    // 페이지 종료 시 세션 종료
     this.leaveSession();
   }
 
   handleChangeSessionId(e) {
+    // 세션 ID 변경 핸들러
     this.setState({ mySessionId: e.target.value });
   }
 
   handleChangeUserName(e) {
+    // 참여자 이름 변경 핸들러
     this.setState({ myUserName: e.target.value });
   }
 
   handleJoinSession(e) {
+    // 세션 참여 핸들러
     e.preventDefault();
     this.joinSession();
   }
 
   handleMainVideoStream(stream) {
+    // 메인 비디오 스트림 변경 핸들러
     if (this.state.mainStreamManager !== stream) {
       this.setState({ mainStreamManager: stream });
     }
   }
 
   deleteSubscriber(streamManager) {
+    // 구독자 제거 함수
     let subscribers = this.state.subscribers;
     let index = subscribers.indexOf(streamManager, 0);
     if (index > -1) {
@@ -152,6 +169,7 @@ class OnlineMeeting extends Component {
   }
 
   handleToggle(kind) {
+    // 마이크, 카메라, 스피커 상태 변경 핸들러
     if (this.state.publisher) {
       switch (kind) {
         case "camera":
@@ -174,6 +192,7 @@ class OnlineMeeting extends Component {
   }
 
   joinSession() {
+    // 세션 참여 로직
     this.OV = new OpenVidu();
     this.setState(
         { session: this.OV.initSession() },
@@ -227,6 +246,7 @@ class OnlineMeeting extends Component {
   }
 
   leaveSession() {
+    // 세션 종료 로직
     const mySession = this.state.session;
     if (mySession) {
       mySession.disconnect();
@@ -338,17 +358,20 @@ class OnlineMeeting extends Component {
     );
   }
 
+
   async getToken() {
+    // 세션 토큰 받기 함수
     try {
       const sessionId = await this.createSession(this.state.mySessionId);
       return await this.createToken(sessionId);
     } catch (error) {
       console.error("Error in getToken:", error);
-      // 사용자에게 오류 메시지를 표시하거나 다른 처리를 할 수 있습니다.
+      // 오류 처리
     }
   }
 
   async createSession(sessionId) {
+    // 세션 생성 함수
     try {
       const response = await axios.post(
           OPENVIDU_SERVER_URL + "/openvidu/api/sessions",
@@ -373,6 +396,7 @@ class OnlineMeeting extends Component {
   }
 
   async createToken(sessionId) {
+    // 토큰 생성 함수
     const response = await axios.post(
         OPENVIDU_SERVER_URL + "/openvidu/api/sessions/" + sessionId + "/connection",
         {},

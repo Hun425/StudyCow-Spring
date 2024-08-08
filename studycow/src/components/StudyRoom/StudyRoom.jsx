@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import React, { useEffect } from "react";
 import RoomNav from './RoomNav.jsx';
 import RoomSidebar from "./RoomSidebar.jsx";
 import RoomChat from "./RoomChat.jsx";
@@ -8,17 +7,9 @@ import RoomPlanner from "./RoomPlanner.jsx";
 import "./styles/StudyRoom.css";
 import useStudyStore from "../../stores/study.js";
 import { useParams } from "react-router-dom";
-
-
 import StudyRoomLeaderBoard from "./StudyRoomLeaderBoard.jsx";
-
-
-
-import StudyRoomLeaderBoard from "./StudyRoomLeaderBoard.jsx";
-
 
 function StudyRoom() {
-  const { showChat, showList, showLank, registerRoom } = useStudyStore();
   const { showChat, showList, showLank, registerRoom } = useStudyStore();
 
   // URL에서 roomId 추출
@@ -55,7 +46,6 @@ function StudyRoom() {
             )}
             {showLank && (
               <div className="studyRoomUtilItem">
-                <StudyRoomLeaderBoard />
                 <StudyRoomLeaderBoard />
               </div>
             )}
