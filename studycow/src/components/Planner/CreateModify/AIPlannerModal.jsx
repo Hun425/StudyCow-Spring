@@ -36,6 +36,7 @@ const AIPlannerModal = ({ show, onClose, analysis, plans }) => {
     if (success) {
       alert("플래너가 성공적으로 등록되었습니다.");
       onClose(); // 모달 닫기
+      window.location.href = "/plan"; // PlanPage로 이동
     } else {
       alert("플래너 등록에 실패했습니다.");
     }
@@ -69,7 +70,7 @@ const AIPlannerModal = ({ show, onClose, analysis, plans }) => {
               <tr>
                 <th>날짜</th>
                 <th>과목</th>
-                <th>세부 과목</th>
+                <th>내용</th>
                 <th>시간</th>
                 <th>수정</th>
               </tr>
@@ -106,36 +107,28 @@ const AIPlannerModal = ({ show, onClose, analysis, plans }) => {
                         <option value="" disabled hidden>
                           과목 선택
                         </option>
-                        {subjects.map((subject) => (
+                        {(subjects || []).map((subject) => (
                           <option key={subject.subCode} value={subject.subCode}>
                             {subject.subName}
                           </option>
                         ))}
                       </select>
                     ) : (
-                      subjects.find((s) => s.subCode === plan.subCode)?.subName
+                      subjects.find((s) => s.subCode === plan.subCode)
+                        ?.subName || "과목 없음"
                     )}
                   </td>
                   <td className="ai-planner-modal__table-cell">
                     {editingIndex === index ? (
-                      <select
-                        value={plan.catCode || ""}
+                      <input
+                        type="text"
+                        value={plan.planContent || ""}
                         onChange={(e) =>
-                          handlePlanChange(index, "catCode", e.target.value)
+                          handlePlanChange(index, "planContent", e.target.value)
                         }
-                      >
-                        <option value="" disabled hidden>
-                          세부 과목 선택
-                        </option>
-                        {problemTypes.map((type) => (
-                          <option key={type.catCode} value={type.catCode}>
-                            {type.catName}
-                          </option>
-                        ))}
-                      </select>
+                      />
                     ) : (
-                      problemTypes.find((p) => p.catCode === plan.catCode)
-                        ?.catName || "내용 없음"
+                      plan.planContent || "내용 없음"
                     )}
                   </td>
                   <td className="ai-planner-modal__table-cell">

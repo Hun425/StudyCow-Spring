@@ -16,13 +16,16 @@
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  max-width: 1000px;
+  max-width: 90%;
   width: 90%;
+  max-height: 90vh; /* 최대 높이를 설정하여 화면에서 벗어나지 않도록 함 */
+  overflow-y: auto; /* 내용이 넘칠 경우 스크롤 가능하게 설정 */
 }
 
 .ai-planner-modal__content-body {
-  max-height: 400px;
+  max-height: 60vh; /* 컨텐츠 바디의 최대 높이 설정 */
   overflow-y: auto;
+  margin-top: 20px; /* 컨텐츠 바디와 제목 사이 여백 추가 */
 }
 
 .ai-planner-modal__table {
@@ -35,6 +38,7 @@
   padding: 10px;
   text-align: center;
   border-bottom: 1px solid #ddd;
+  word-wrap: break-word; /* 긴 텍스트를 다음 줄로 넘김 */
 }
 
 .ai-planner-modal__buttons {
