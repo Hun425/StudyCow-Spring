@@ -2,10 +2,6 @@ import { Route, Routes } from "react-router-dom";
 
 // 메인페이지
 import MainPage from "../views/MainPage.jsx";
-// 비로그인
-import Main_Unlogin from "../components/MainPage/Main_Unlogin.jsx";
-// 로그인
-import Main_Login from "../components/MainPage/Main_Login.jsx";
 
 // 로그인/회원가입페이지
 import SignPage from "../views/SignPage.jsx";
@@ -30,8 +26,6 @@ import StudyPage from "../views/StudyPage.jsx";
 import StudyList from "../components/StudyList/StudyList.jsx";
 import StudyCreate from "../components/StudyCreate/StudyCreate.jsx";
 import StudyRoom from "../components/StudyRoom/StudyRoom.jsx";
-// import Test from "../components/StudyRoom/Test.jsx";
-import OnlineMeeting from "../components/StudyRoom/test/OnlineMeeting.jsx";
 
 // 성적 등록
 import ScoreRegist from "../components/ScoreRegist/ScoreRegist.jsx";

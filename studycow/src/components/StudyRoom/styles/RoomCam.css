@@ -4,38 +4,31 @@
   width: 100%;
   height: 100%;
   overflow: hidden; /* 비디오 컨테이너가 넘치지 않도록 숨김 */
-  display: grid; /* 그리드 레이아웃을 사용 */
-  gap: 10px; /* 비디오 스트림 사이의 간격 */
+  position: relative; /* 비디오 스트림들이 위치할 기준 컨테이너 */
+  display: flex; /* 비디오 스트림들을 플렉스 컨테이너로 정렬 */
+  flex-wrap: wrap; /* 비디오 스트림들이 줄바꿈되도록 설정 */
+  align-items: center; /* 비디오 스트림들을 가운데 정렬 */
+  justify-content: center; /* 비디오 스트림들을 가운데 정렬 */
 }
 
-/* 비디오 스트림이 1개일 때 */
-.video-session-container.one {
-  grid-template-columns: 1fr; /* 1개의 열 */
-  grid-template-rows: 1fr; /* 1개의 행 */
+.video-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* 비디오 스트림이 넘치지 않도록 */
+  display: flex; /* 비디오 스트림을 정렬하기 위한 설정 */
+  flex-wrap: wrap; /* 여러 비디오 스트림이 있을 때 자동 줄바꿈 */
+  align-items: center; /* 비디오 스트림들을 가운데 정렬 */
+  justify-content: center; /* 비디오 스트림들을 가운데 정렬 */
 }
 
 /* 비디오 스트림이 2개일 때 */
-.video-session-container.two {
+.video-stream-container {
+  display: grid; /* 그리드 레이아웃을 사용 */
   grid-template-columns: repeat(2, 1fr); /* 2개의 열 */
   grid-template-rows: repeat(1, 1fr); /* 1개의 행 */
-}
-
-/* 비디오 스트림이 3~4개일 때 */
-.video-session-container.three-four {
-  grid-template-columns: repeat(2, 1fr); /* 2개의 열 */
-  grid-template-rows: repeat(2, 1fr); /* 2개의 행 */
-}
-
-/* 비디오 스트림이 5~6개일 때 */
-.video-session-container.five-six {
-  grid-template-columns: repeat(3, 1fr); /* 3개의 열 */
-  grid-template-rows: repeat(2, 1fr); /* 2개의 행 */
-}
-
-/* 비디오 스트림이 7~8개일 때 */
-.video-session-container.seven-eight {
-  grid-template-columns: repeat(4, 1fr); /* 4개의 열 */
-  grid-template-rows: repeat(2, 1fr); /* 2개의 행 */
+  gap: 10px; /* 비디오 스트림 사이의 간격 */
+  width: 100%;
+  height: 100%;
 }
 
 /* 각 비디오 스트림의 스타일 */
@@ -45,4 +38,11 @@
   max-width: 100%; /* 비디오 스트림이 컨테이너를 넘지 않도록 최대 너비 설정 */
   max-height: 100%; /* 비디오 스트림이 컨테이너를 넘지 않도록 최대 높이 설정 */
   box-sizing: border-box; /* 패딩 및 테두리를 포함하여 크기 계산 */
+}
+
+/* 비디오 스트림이 5개 이상일 때 */
+.video-stream-container.five-or-more {
+  grid-template-columns: repeat(2, 1fr); /* 2개의 열 */
+  grid-template-rows: repeat(3, 1fr); /* 2개의 행 */
+  gap: 10px; /* 비디오 스트림 사이의 간격 */
 }
