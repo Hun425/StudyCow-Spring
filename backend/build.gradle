@@ -87,7 +87,6 @@ dependencies {
 
 	// 테스트 시, H2 DB 사용
 	testImplementation 'com.h2database:h2'
-	implementation 'com.h2database:h2'
 	// OpenVidu Java Client
 	implementation 'io.openvidu:openvidu-java-client:2.30.0'
 
