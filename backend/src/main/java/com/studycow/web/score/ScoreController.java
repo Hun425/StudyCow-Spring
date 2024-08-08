@@ -35,7 +35,6 @@ import java.util.List;
 public class ScoreController {
 
     private final ScoreService scoreService;
-    private final ChatGPTController gptController;
 
     @Operation(summary = "과목별 성적 조회", description = "등록한 과목별 성적을 조회합니다.")
     @GetMapping("/{userId}/list/{subCode}")
@@ -44,21 +43,15 @@ public class ScoreController {
             @PathVariable int subCode,
             @RequestParam(value = "limit", required = false) Integer limitCnt,
             @AuthenticationPrincipal CustomUserDetails userDetails
-    ) {
-        try {
-            int myId = userDetails.getUser().getUserId();
-            ResponseScoreDto responseScoreDto = scoreService.listScores(userId, subCode, myId, limitCnt);
-            if(myId == userId){
-                //responseScoreDto.setAdvice(gptController.scoreAdvice(responseScoreDto));
-                responseScoreDto.setAdvice("성적을 분석해 줄수 있어요. 한번 해보실래요?");
-            }else{
-                responseScoreDto.setAdvice("공부 추천은 내 주인에게만 해줄 수 있어요.");
-            }
-            return ResponseEntity.ok(responseScoreDto);
-        } catch(Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    ) throws Exception {
+        int myId = userDetails.getUser().getUserId();
+        ResponseScoreDto responseScoreDto = scoreService.listScores(userId, subCode, myId, limitCnt);
+        if(myId == userId){
+            responseScoreDto.setAdvice("성적을 분석해 줄수 있어요. 한번 해보실래요?");
+        }else{
+            responseScoreDto.setAdvice("공부 추천은 내 주인에게만 해줄 수 있어요.");
         }
+        return ResponseEntity.ok(responseScoreDto);
     }
 
     @Operation(summary = "성적 단일 조회", description = "선택한 성적의 상세 정보를 조회합니다.")
@@ -66,32 +59,22 @@ public class ScoreController {
     public ResponseEntity<?> scoreDetail(
             @PathVariable int userId,
             @PathVariable Long scoreId,
-            @AuthenticationPrincipal CustomUserDetails userDetails) {
-        try {
-            int myId = userDetails.getUser().getUserId();
-            ScoreDto scoreDto = scoreService.scoreDetail(scoreId, userId, myId);
-            return ResponseEntity.ok(scoreDto);
-        } catch(Exception e) {
-            //e.printStackTrace();
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+            @AuthenticationPrincipal CustomUserDetails userDetails
+    ) throws Exception {
+        int myId = userDetails.getUser().getUserId();
+        ScoreDto scoreDto = scoreService.scoreDetail(scoreId, userId, myId);
+        return ResponseEntity.ok(scoreDto);
     }
 
     @Operation(summary = "성적 등록", description="성적을 등록합니다.")
     @PostMapping("/regist")
-    public ResponseEntity<?> registScore(
+    public ResponseEntity<?> registScore (
             @RequestBody @Valid RequestScoreDto requestScoreDto,
             @AuthenticationPrincipal CustomUserDetails userDetails
-    ) {
-        try {
-            int userId = userDetails.getUser().getUserId();
-            scoreService.saveScore(requestScoreDto, userId);
-            return new ResponseEntity<>("성적 등록 성공", HttpStatus.OK);
-
-        } catch(Exception e) {
-            //e.printStackTrace();
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+    ) throws Exception {
+        int userId = userDetails.getUser().getUserId();
+        scoreService.saveScore(requestScoreDto, userId);
+        return new ResponseEntity<>("성적 등록 성공", HttpStatus.OK);
     }
 
     @Operation(summary = "성적 수정", description="성적을 수정합니다.")
@@ -100,15 +83,10 @@ public class ScoreController {
             @RequestBody @Valid RequestScoreDto requestScoreDto,
             @PathVariable Long scoreId,
             @AuthenticationPrincipal CustomUserDetails userDetails
-    ) {
-        try {
+    ) throws Exception{
             int userId = userDetails.getUser().getUserId();
             scoreService.modifyScore(requestScoreDto, userId, scoreId);
             return new ResponseEntity<>("성적 수정 성공", HttpStatus.OK);
-        } catch(Exception e) {
-            //e.printStackTrace();
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
     }
 
     @Operation(summary = "성적 삭제", description="성적을 삭제합니다.")
@@ -116,16 +94,10 @@ public class ScoreController {
     public ResponseEntity<?> deleteScore(
             @PathVariable Long scoreId,
             @AuthenticationPrincipal CustomUserDetails userDetails
-    ) {
-        try {
+    ) throws Exception{
             int userId = userDetails.getUser().getUserId();
             scoreService.deleteScore(userId, scoreId);
             return new ResponseEntity<>("성적 삭제 성공", HttpStatus.OK);
-
-        } catch(Exception e) {
-            //e.printStackTrace();
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
     }
 
     /*@Operation(summary = "과목 목표별 최근 5개 성적 조회", description = "과목별 최근 5개 성적을 조회합니다.")
