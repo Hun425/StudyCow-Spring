@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import axios from "axios";
 import useInfoStore from "./infos";
-import useRoomStore from"./OpenVidu";
+import useRoomStore from "./OpenVidu";
 
 const API_URL =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/studycow/";
@@ -93,14 +93,11 @@ const useStudyStore = create(
       goStudyBack: () => {
         const { navigate } = useStudyStore.getState();
         if (navigate) {
-          navigate('/study');  // 이전 페이지로 리다이렉트
-          window.location.reload();  // 새로고침
-          setTimeout(() => {
-            
-          }, 50);  // 100ms 후에 새로고침 실행
+          navigate("/study"); // 이전 페이지로 리다이렉트
+          window.location.reload(); // 새로고침
+          setTimeout(() => {}, 50); // 100ms 후에 새로고침 실행
         }
       },
-
 
       // 사이드바 버튼 함수
       // 캠 켜기/끄기 함수
@@ -155,7 +152,6 @@ const useStudyStore = create(
         }
       },
 
-
       // 방 입장 시 정보
       rogId: 0,
       rankInfo: [],
@@ -167,30 +163,30 @@ const useStudyStore = create(
       // 방 입장 함수
       registerRoom: async (rId) => {
         const { token } = useInfoStore.getState(); // 토큰은 여전히 useInfoStore에서 가져옵니다.
-      
+
         try {
           const response = await axios.post(
             `${API_URL}roomLog/enter/${rId}`,
-            {},            {
+            {},
+            {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
             }
           );
-      
+
           // 응답 코드가 200일 경우
           if (response.status === 200) {
             const data = response.data;
             console.log("방 입장 성공", data);
-      
+
             // 응답 데이터에서 필요한 정보를 추출
-            const { logId, studyTime , rankDto } = data;
+            const { logId, studyTime, rankDto } = data;
             // 상태 업데이트 또는 다른 처리를 수행합니다.
             // 예를 들어:
             useStudyStore.getState().setLogId(logId);
             useStudyStore.getState().setMyStudyTime(studyTime);
             useStudyStore.getState().setRankInfo(rankDto);
-      
           } else {
             console.error(`응답 코드 오류: ${response.status}`);
           }
@@ -199,24 +195,53 @@ const useStudyStore = create(
             // 서버가 상태 코드를 응답했을 때
             switch (error.response.status) {
               case 400:
-                console.error("잘못된 요청입니다. 요청을 확인해 주세요.", error.response.data);
+                console.error(
+                  "잘못된 요청입니다. 요청을 확인해 주세요.",
+                  error.response.data
+                );
                 break;
               case 500:
-                console.error("서버 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.", error.response.data);
+                console.error(
+                  "서버 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.",
+                  error.response.data
+                );
                 break;
               default:
-                console.error(`알 수 없는 오류가 발생했습니다. 상태 코드: ${error.response.status}`, error.response.data);
+                console.error(
+                  `알 수 없는 오류가 발생했습니다. 상태 코드: ${error.response.status}`,
+                  error.response.data
+                );
             }
           } else if (error.request) {
             // 요청이 전송되었으나 응답을 받지 못했을 때
-            console.error("응답을 받지 못했습니다. 네트워크를 확인해 주세요.", error.request);
+            console.error(
+              "응답을 받지 못했습니다. 네트워크를 확인해 주세요.",
+              error.request
+            );
           } else {
             // 다른 오류
             console.error("요청 중 오류가 발생했습니다.", error.message);
           }
         }
       },
-      
+
+      // 방 상세 정보 조회
+      roomDetailInfo: {},
+      fetchRoomDetailInfo: async (roomId) => {
+        const { token } = useInfoStore.getState();
+
+        try {
+          const response = await axios.get(API_URL + `room/${roomId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          console.log(response.data);
+          set({ roomDetailInfo: response.data });
+        } catch (error) {
+          console.log(error);
+        }
+      },
     }),
     {
       name: "study-storage",

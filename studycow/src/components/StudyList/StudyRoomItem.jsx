@@ -1,13 +1,17 @@
 import "./styles/StudyRoomItem.css";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import StudyEnterModal from "../StudyEnter/StudyEnterModal";
 
 const StudyRoomItem = ({ roomId, title, thumb, maxPerson, nowPerson }) => {
-  // 이동 - 방 접속
-  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const goRoom = (roomNum) => {
-    navigate(`/study/room/${roomNum}`);
-  }
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <div
@@ -18,12 +22,14 @@ const StudyRoomItem = ({ roomId, title, thumb, maxPerson, nowPerson }) => {
       <p className="studyRoomCount">
         {nowPerson}/{maxPerson}
       </p>
-      <button 
-        className="studyRoomEnterBtn" 
-        onClick={() => goRoom(roomId)}
-      >
+      <button className="openEnterModalBtn" onClick={openModal}>
         입장하기
       </button>
+      <StudyEnterModal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        roomId={roomId}
+      />
     </div>
   );
 };
