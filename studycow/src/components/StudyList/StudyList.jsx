@@ -31,28 +31,40 @@ const StudyList = () => {
       </div>
       <div className="recentStudyRoom">
         <p className="recentEnterTitle">최근 입장한 스터디룸</p>
-        <StudyRoomItem
-          roomId={recentRoom.id}
-          title={recentRoom.roomTitle}
-          thumb={recentRoom.roomThumb}
-          maxPerson={recentRoom.roomMaxPerson}
-          nowPerson={recentRoom.roomNowPerson}
-        />
+        {recentRoom ? (
+          <StudyRoomItem
+            roomId={recentRoom.id}
+            title={recentRoom.roomTitle}
+            thumb={recentRoom.roomThumb}
+            maxPerson={recentRoom.roomMaxPerson}
+            nowPerson={recentRoom.roomNowPerson}
+          />
+        ) : (
+          <div>
+            <p>최근 접속한 방이 없소!</p>
+          </div>
+        )}
       </div>
       <div className="studyRoomList">
         <p className="studyListTitle">스터디룸 목록</p>
-        <div className="studyRoomGrid">
-          {rooms.map((room) => (
-            <StudyRoomItem
-              key={room.id}
-              roomId={room.id}
-              title={room.title}
-              thumb={room.thumb}
-              maxPerson={room.maxPerson}
-              nowPerson={room.nowPerson}
-            />
-          ))}
-        </div>
+        {rooms && rooms.length > 0 ? (
+          <div className="studyRoomGrid">
+            {rooms.map((room) => (
+              <StudyRoomItem
+                key={room.id}
+                roomId={room.id}
+                title={room.title}
+                thumb={room.thumb}
+                maxPerson={room.maxPerson}
+                nowPerson={room.nowPerson}
+              />
+            ))}
+          </div>
+        ) : (
+          <div>
+            <p>만들어진 방이 없소!</p>
+          </div>
+        )}
       </div>
     </div>
   );
