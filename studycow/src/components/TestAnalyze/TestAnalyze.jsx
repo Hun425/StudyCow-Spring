@@ -1,23 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useInfoStore from "../../stores/infos";
 import "./styles/TestAnalyze.css";
 import GradeAnalyzeBox from "./GradeAnalyzeBox";
 import useGradeStore from "../../stores/grade";
-
-const sub_code_dic = {
-  1: "국어",
-  2: "수학",
-  3: "영어",
-  4: "한국사",
-  5: "사회탐구",
-  6: "과학탐구",
-  7: "직업탐구",
-  8: "제2외국어/한문",
-};
+import useSubjectStore from "../../stores/subjectStore";
 
 const TestAnalyze = () => {
   const { userInfo } = useInfoStore();
   const { selectedSubject, setSelectedSubject } = useGradeStore();
+  const { subjects, fetchSubjects } = useSubjectStore();
+
+  useEffect(() => {
+    fetchSubjects();
+  }, [fetchSubjects]);
 
   const handleSubjectChange = (e) => {
     const key = e.target.value;
@@ -41,9 +36,9 @@ const TestAnalyze = () => {
             <option value="" disabled hidden>
               과목 선택
             </option>
-            {Object.entries(sub_code_dic).map(([key, value]) => (
-              <option key={key} value={key}>
-                {value}
+            {subjects.map((subject) => (
+              <option key={subject.subCode} value={subject.subCode}>
+                {subject.subName}
               </option>
             ))}
           </select>
