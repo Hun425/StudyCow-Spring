@@ -42,6 +42,8 @@ public enum ErrorCode {
 
     //파일 관리 오류 코드
     IO_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "파일 또는 입출력 처리 중 오류가 발생했습니다."),
+    NO_FILE(HttpStatus.NOT_FOUND, "업로드할 파일이 없습니다."),
+    INVALID_FILE_LINK(HttpStatus.BAD_REQUEST, "올바르지 않은 파일 링크입니다."),
 
     //스터디룸 오류 코드
     NOT_FOUND_ROOM(HttpStatus.NOT_FOUND,"해당 스터디룸이 존재하지 않습니다."),

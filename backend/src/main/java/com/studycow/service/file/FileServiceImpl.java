@@ -1,9 +1,10 @@
 package com.studycow.service.file;
 
 import com.google.cloud.storage.Blob;
-import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
+import com.studycow.exception.CustomException;
+import com.studycow.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -39,7 +40,7 @@ public class FileServiceImpl implements FileService {
     @Override
     public String uploadFile(MultipartFile file) throws IOException {
         if (file == null) {
-            throw new RuntimeException("업로드할 파일이 없습니다.");
+            throw new CustomException(ErrorCode.NO_FILE);
         }
 
         String uuid = UUID.randomUUID().toString(); // Google Cloud Storage에 저장될 파일 이름
@@ -71,8 +72,6 @@ public class FileServiceImpl implements FileService {
 
         Blob blob = storage.get(bucketName, fileName);
 
-        System.out.println(fileLink.isBlank() + "," + fileName  + ", "+ blob);
-
         // 파일 삭제
         if (!fileLink.isBlank() && fileName != null && blob != null) {
             Storage.BlobSourceOption precondition =
@@ -80,7 +79,7 @@ public class FileServiceImpl implements FileService {
 
             storage.delete(bucketName, fileName, precondition);
         } else {
-            throw new RuntimeException("올바르지 않은 파일 링크입니다.");
+            throw new CustomException(ErrorCode.INVALID_FILE_LINK);
         }
     }
 
