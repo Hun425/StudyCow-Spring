@@ -2,6 +2,7 @@ import "./styles/StudyRoomLeaderBoard.css";
 import React, { useState, useEffect } from 'react';
 import { Container, Typography, Paper, Box, Avatar } from '@mui/material';
 import { keyframes } from '@emotion/react';
+import useStudyStore from "../../stores/study";
 
 import firstPlaceImg from "./img/firstRankImg.png"
 import secondPlaceImg from "./img/secondRankImg.png"
@@ -16,8 +17,8 @@ const slide = keyframes`
 
 const leaderboardData = [
   { rank: 1, userId: 1, userName: '김철수', studyTime: 120 },
-  { rank: 2, userId: 2, userName: '이영희', studyTime: 115 },
-  { rank: 3, userId: 3, userName: '박민수', studyTime: 110 }
+  // { rank: 2, userId: 2, userName: '이영희', studyTime: 115 },
+  // { rank: 3, userId: 3, userName: '박민수', studyTime: 110 }
 ];
 
 const formatStudyTime = (minutes) => {
@@ -31,6 +32,8 @@ const formatStudyTime = (minutes) => {
 };
 
 const StudyRoomLeaderBoard = () => {
+  const {rankInfo} = useStudyStore();
+
   const [index, setIndex] = useState(0);
   const displayCount = Math.min(3, leaderboardData.length);
 
@@ -57,44 +60,78 @@ const getAvatarImage = (rank) => {
 
   return (
     <Container className="studyRoomRankLeaderboard">
-      <Paper className='studyRoomRankTitlePaper'>
-        <Typography variant="body2">
-          공부 시간 랭킹
-        </Typography>
-      </Paper>
-      <Paper elevation={3} className="studyRoomRankPaper">
-        <Box className="studyRoomRankContent">
-          <Box
-            style={{
-              animation: `${slide} ${displayCount * 3}s infinite`,
-              transform: `translateY(-${index * 100}%)`,
-            }}
-            className="studyRoomRankSliding"
-          >
-            {leaderboardData.slice(0, displayCount).map(data => (
-              <Box key={data.rank}>
-                <Avatar src={getAvatarImage(data.rank)} alt={data.userName} />
-                <Typography variant="body2">
-                  {data.userName}
-                </Typography>
-                <Typography variant="body2">
-                  {formatStudyTime(data.studyTime)}
-                </Typography>
-              </Box>
-            ))}
-          </Box>
+    <Paper elevation={3} className='studyRoomRankTitlePaper'>
+      <Box className="studyRoomRankContent">
+        <Box
+          style={{
+            animation: `${slide} ${displayCount * 3}s infinite`,
+            transform: `translateY(-${index * 100}%)`,
+          }}
+          className="studyRoomRankSliding"
+        >
+          {rankInfo.slice(0, displayCount).map(data => (
+            <Box key={data.rank}>
+              <Avatar src={getAvatarImage(data.rank)} alt={data.userName} />
+              <Typography variant="body2">
+                {data.userName}
+              </Typography>
+              <Typography variant="body2">
+                {formatStudyTime(data.studyTime)}
+              </Typography>
+            </Box>
+          ))}
         </Box>
-      </Paper>
-      <Paper elevation={3} className="studyRoomRankinfoPaper">
-        <Avatar src={myPlaceImg} alt="기본이미지" />
-        <Typography variant="body2">
-          {leaderboardData[0].userName}
-        </Typography>
-        <Typography variant="body2">
-          {formatStudyTime(leaderboardData[0].studyTime)}
-        </Typography>
-      </Paper>
-    </Container>
+      </Box>
+    </Paper>
+    <Paper elevation={3} className="studyRoomRankinfoPaper">
+      <Avatar src={myPlaceImg} alt="기본이미지" />
+      <Typography variant="body2">
+        {rankInfo[0].userName}
+      </Typography>
+      <Typography variant="body2">
+        {formatStudyTime(rankInfo[0].studyTime)}
+      </Typography>
+    </Paper>
+  </Container>
+    // <Container className="studyRoomRankLeaderboard">
+    //   <Paper className='studyRoomRankTitlePaper'>
+    //     <Typography variant="body2">
+    //       공부 시간 랭킹
+    //     </Typography>
+    //   </Paper>
+    //   <Paper elevation={3} className="studyRoomRankPaper">
+    //     <Box className="studyRoomRankContent">
+    //       <Box
+    //         style={{
+    //           animation: `${slide} ${displayCount * 3}s infinite`,
+    //           transform: `translateY(-${index * 100}%)`,
+    //         }}
+    //         className="studyRoomRankSliding"
+    //       >
+    //         {rankInfo.slice(0, displayCount).map(data => (
+    //           <Box key={data.rank}>
+    //             <Avatar src={getAvatarImage(data.rank)} alt={data.userName} />
+    //             <Typography variant="body2">
+    //               {data.userName}
+    //             </Typography>
+    //             <Typography variant="body2">
+    //               {formatStudyTime(data.studyTime)}
+    //             </Typography>
+    //           </Box>
+    //         ))}
+    //       </Box>
+    //     </Box>
+    //   </Paper>
+    //   <Paper elevation={3} className="studyRoomRankinfoPaper">
+    //     <Avatar src={myPlaceImg} alt="기본이미지" />
+    //     <Typography variant="body2">
+    //       {rankInfo[0].userName}
+    //     </Typography>
+    //     <Typography variant="body2">
+    //       {formatStudyTime(rankInfo[0].studyTime)}
+    //     </Typography>
+    //   </Paper>
+    // </Container>
   );
 };
 

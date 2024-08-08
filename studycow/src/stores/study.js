@@ -153,10 +153,10 @@ const useStudyStore = create(
       },
 
       // 방 입장 시 정보
-      rogId: 0,
+      logId: 0,
       rankInfo: [],
       myStudyTime: 0,
-      setRogId: (data) => set({ rogId: data }),
+      setLogId: (data) => set({ logId: data }),
       setRankInfo: (data) => set({ rankInfo: data }),
       setMyStudyTime: (data) => set({ myStudyTime: data }),
 
@@ -249,6 +249,9 @@ const useStudyStore = create(
         studyRoomData: state.studyRoomData,
         rooms: state.rooms,
         recentRoom: state.recentRoom,
+        logId: state.logId,
+        rankInfo: state.rankInfo,
+        setMyStudyTime: state.setMyStudyTime,
       }),
     }
   )

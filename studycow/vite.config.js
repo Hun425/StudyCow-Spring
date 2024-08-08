@@ -15,7 +15,7 @@ export default defineConfig({
       },
       // WebSocket 요청을 스프링 부트 서버로 프록시합니다.
       '/studycow/ws-stomp': {
-        target: 'https://i11c202.p.ssafy.io', // 스프링 부트 서버의 URL
+        target: 'http://localhost:8080', // 스프링 부트 서버의 URL
         changeOrigin: true,
         ws: true, // WebSocket 요청을 프록시합니다.
       },

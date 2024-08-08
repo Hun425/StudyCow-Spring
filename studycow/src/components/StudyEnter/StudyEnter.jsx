@@ -1,15 +1,27 @@
 import "./styles/StudyEnter.css";
 import { useEffect } from "react";
 import RoomDetailInfoBox from "./RoomDetailInfoBox";
+import { useNavigate } from 'react-router-dom';
 import useStudyStore from "../../stores/study";
 import Webcam from "react-webcam";
 
 const StudyEnter = ({ roomId, onRequestClose }) => {
-  const { roomDetailInfo, fetchRoomDetailInfo } = useStudyStore();
+  const { roomDetailInfo, fetchRoomDetailInfo, registerRoom } = useStudyStore();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchRoomDetailInfo(roomId);
   }, [roomId, fetchRoomDetailInfo]);
+
+
+  const handleClick = () => {
+    // registerRoom 함수를 호출
+    registerRoom(roomId);
+    // 라우팅
+    navigate(`room/${roomId}`);
+  };
+
 
   return (
     <div>
@@ -53,7 +65,7 @@ const StudyEnter = ({ roomId, onRequestClose }) => {
             />
           </div>
         </div>
-        <button className="enterRoomPageBtn">입장하기</button>
+        <button className="enterRoomPageBtn" onClick={handleClick}>입장하기</button>
       </div>
     </div>
   );

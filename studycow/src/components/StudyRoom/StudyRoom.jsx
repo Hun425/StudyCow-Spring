@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import React, { useEffect } from "react";
 import RoomNav from './RoomNav.jsx';
 import RoomSidebar from "./RoomSidebar.jsx";
 import RoomChat from "./RoomChat.jsx";
@@ -12,13 +13,19 @@ import { useParams } from "react-router-dom";
 import StudyRoomLeaderBoard from "./StudyRoomLeaderBoard.jsx";
 
 
+
+import StudyRoomLeaderBoard from "./StudyRoomLeaderBoard.jsx";
+
+
 function StudyRoom() {
+  const { showChat, showList, showLank, registerRoom } = useStudyStore();
   const { showChat, showList, showLank, registerRoom } = useStudyStore();
 
   // URL에서 roomId 추출
   const { roomId } = useParams();
 
   useEffect(() => {
+    console.log(roomId)
         // 컴포넌트가 마운트될 때 registerRoom 함수 호출
     const fetchData = async () => {
       await registerRoom(roomId);
@@ -48,6 +55,7 @@ function StudyRoom() {
             )}
             {showLank && (
               <div className="studyRoomUtilItem">
+                <StudyRoomLeaderBoard />
                 <StudyRoomLeaderBoard />
               </div>
             )}

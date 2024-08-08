@@ -42,11 +42,11 @@ export default class UserVideoComponent extends Component {
         return (
             <div className="streamingContainer">
                 {this.props.streamManager !== undefined ? (
-                    <div className="streamcomponent">
+                    <div className="streamingComponent">
                         <OpenViduVideoComponent streamManager={this.props.streamManager} />
                         <div className='streamInfoContainer'>
-                            <p className='streamName'>{this.getNicknameTag()}</p>
-                            <p className='streamTime'>{this.formatTime(this.state.timer)}</p>
+                            <p className='streamInfoName'>{this.getNicknameTag()}</p>
+                            <p className='streamInfoTime'>{this.formatTime(this.state.timer)}</p>
                         </div>
                     </div>
                 ) : null}
