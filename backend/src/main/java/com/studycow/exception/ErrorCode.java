@@ -37,6 +37,8 @@ public enum ErrorCode {
     NOT_FOUND_SCORE_ID(HttpStatus.NOT_FOUND, "해당 성적이 존재하지 않습니다."),
     NOT_FOUND_CATEGORY_CODE(HttpStatus.NOT_FOUND,"해당 문제유형이 존재하지 않습니다."),
     NOT_MATCH_SUBJECT_CATEGORY(HttpStatus.BAD_REQUEST,"문제유형이 과목과 부합하지 않습니다."),
+    NOT_FOUND_TARGET_ID(HttpStatus.NOT_FOUND,"해당 문제유형이 존재하지 않습니다."),
+    BAD_TARGET_SCORE(HttpStatus.BAD_REQUEST,"목표성적을 잘못 입력하였습니다.");
 
     //파일 관리 오류 코드
     IO_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "파일 또는 입출력 처리 중 오류가 발생했습니다."),
