@@ -7,6 +7,7 @@ pipeline {
         GPT_API_KEY = credentials('gpt-api-key-id')
         VITE_API_BASE_URL = 'https://i11c202.p.ssafy.io/studycow/'
         SPRING_PROFILES_ACTIVE = 'prod'
+        OPENVIDU_SECRET = credentials('openvidu-secret-id')
     }
     stages {
         stage('Checkout') {
@@ -56,6 +57,7 @@ pipeline {
                         -p 8080:8080 \
                         -e SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE} \
                         -e GPT_API_KEY=${GPT_API_KEY} \
+                        -e OPENVIDU_SECRET=${OPENVIDU_SECRET} \
                         backend:${BUILD_NUMBER}
                     """
                 }

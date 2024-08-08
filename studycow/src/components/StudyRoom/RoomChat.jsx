@@ -18,7 +18,8 @@ function RoomChat({ roomId }) {
 
   // 연결
   const connect = () => {
-    const socket = new SockJS(`${window.location.protocol}//${window.location.host}/studycow/ws-stomp`);
+    const protocol = window.location.protocol === 'https:' ? 'https:' : 'http:';
+    const socket = new SockJS(`${protocol}//${window.location.host}/studycow/ws-stomp`);
     
     stompClient = new Client({
       webSocketFactory: () => socket,
@@ -36,11 +37,9 @@ function RoomChat({ roomId }) {
         alert('웹소켓 서버 접속 불가');
       }
     });
-
     stompClient.connectHeaders = {
       'Authorization': 'Bearer ' + token
     };
-
     stompClient.activate();
   };
 

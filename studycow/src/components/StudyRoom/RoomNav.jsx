@@ -30,11 +30,9 @@ function RoomNav() {
   return (
     <div className="StudyNavContainer">
       <div className="StudyNavLogoContainer">
-        <Tooltip title="홈">
-          <IconButton onClick={goStudyBack}>
-            <img src={Logo} alt="Logo" style={{ height: '60px' }} />
-          </IconButton>
-        </Tooltip>
+        <IconButton>
+          <img src={Logo} alt="Logo" style={{ height: '60px' }} />
+        </IconButton>
       </div>
       <div className="studyNavButtonContainer">
         <div className="utilButton">
