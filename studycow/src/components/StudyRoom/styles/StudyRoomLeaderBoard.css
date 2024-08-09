@@ -102,6 +102,7 @@
   }
 
   .studyRoomRankUserNick {
+    text-align: center;
     width: 150px;
     overflow: hidden;
     text-overflow: ellipsis;

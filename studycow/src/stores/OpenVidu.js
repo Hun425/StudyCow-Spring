@@ -1,4 +1,3 @@
-// src/stores/useRoomStore.js
 import { create } from 'zustand';
 import { OpenVidu } from 'openvidu-browser';
 import axios from 'axios';
