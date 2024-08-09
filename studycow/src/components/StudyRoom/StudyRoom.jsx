@@ -1,15 +1,28 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import RoomNav from './RoomNav.jsx';
 import RoomSidebar from "./RoomSidebar.jsx";
 import RoomChat from "./RoomChat.jsx";
 import RoomCam from "./RoomCam";
 import RoomPlanner from "./RoomPlanner.jsx";
 import "./styles/StudyRoom.css";
+import useInfoStore from "../../stores/infos.js";
 import useStudyStore from "../../stores/study.js";
 import { useParams } from "react-router-dom";
+import StudyRoomLeaderBoard from "./StudyRoomLeaderBoard.jsx";
 
 function StudyRoom() {
-  const { showChat, showList, showLank } = useStudyStore();
+  const { showChat, showList, showLank, rankInfo } = useStudyStore();
+  const {userInfo} = useInfoStore();
+
+  const [myRankInfo, setMyRankInfo] = useState(null);
+
+  useEffect(() => {
+    const filteredRankInfo = rankInfo.find(
+      (rank) => rank.userName === userInfo.userNickName
+    );
+    console.log(filteredRankInfo)
+    setMyRankInfo(filteredRankInfo);
+  }, [rankInfo, userInfo]);
 
   // URL에서 roomId 추출
   const { roomId } = useParams();
@@ -35,7 +48,7 @@ function StudyRoom() {
             )}
             {showLank && (
               <div className="studyRoomUtilItem">
-                {/* Lank content */}
+                <StudyRoomLeaderBoard myRankInfo={myRankInfo} />
               </div>
             )}
             {showChat && (

@@ -1,13 +1,21 @@
 package com.studycow.service.score;
 
+import com.studycow.domain.ProblemCategory;
+import com.studycow.domain.SubjectCode;
+import com.studycow.domain.User;
 import com.studycow.dto.common.SubjectCodeDto;
 import com.studycow.dto.score.*;
 import com.studycow.dto.target.RequestTargetDto;
 import com.studycow.dto.target.ScoreTargetDto;
+import com.studycow.exception.CustomException;
+import com.studycow.exception.ErrorCode;
 import com.studycow.repository.common.CommonRepository;
 import com.studycow.repository.planner.PlannerRepository;
 import com.studycow.repository.planner.PlannerRepositoryCustom;
+import com.studycow.repository.problemcategory.ProblemCategoryRepository;
 import com.studycow.repository.score.ScoreRepository;
+import com.studycow.repository.subjectcode.SubjectCodeRepository;
+import com.studycow.repository.user.UserRepository;
 import jakarta.persistence.PersistenceException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +38,9 @@ import java.util.List;
 public class ScoreServiceImpl implements ScoreService{
     private final ScoreRepository scoreRepository;
     private final PlannerRepositoryCustom plannerRepository;
+    private final UserRepository userRepository;
+    private final SubjectCodeRepository subjectCodeRepository;
+    private final ProblemCategoryRepository problemCategoryRepository;
     private final CommonRepository commonRepository;
 
     /**
@@ -40,11 +51,23 @@ public class ScoreServiceImpl implements ScoreService{
      */
     @Override
     public ResponseScoreDto listScores(int userId, int subCode, int myId, Integer limitCnt) throws Exception {
+        //유저 확인
+        User user = userRepository.findById((long) userId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+        //로그인 유저와 조회되는 유저 확인 및 조회되는 유저의 공개여부
+        if(user.getId() != myId && user.getUserPublic() == 0)
+            throw new CustomException(ErrorCode.USER_PRIVATE);
+        //과목코드 확인
+        SubjectCode subjectCode = subjectCodeRepository.findById(subCode)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_SUBJECT_CODE));
+
         // 과목의 목표 조회
-        ResponseScoreDto responseScoreDto = scoreRepository.subTarget(userId, subCode, myId);
+        ResponseScoreDto responseScoreDto = scoreRepository.subTarget(
+                user.getId(), subjectCode.getCode());
 
         // 과목별 성적 리스트
-        responseScoreDto.setScores(scoreRepository.listScores(userId, subCode, myId, limitCnt));
+        responseScoreDto.setScores(scoreRepository.listScores(
+                user.getId(), subjectCode.getCode(), limitCnt));
 
         // 오답 유형 리스트 조회
         for(ScoreDto scores : responseScoreDto.getScores()){
@@ -54,10 +77,10 @@ public class ScoreServiceImpl implements ScoreService{
             if(scoreDetailDtoList != null && !scoreDetailDtoList.isEmpty())
                 scores.setScoreDetails(scoreDetailDtoList);
         }
+        // 해당 과목의 총 공부시간
+        responseScoreDto.setSumStudyTime(
+                plannerRepository.planStudyTime(user.getId(), subjectCode.getCode()));
 
-        // 해당 과목에 대한 총 학습시간
-        //responseScoreDto.setSumStudyTime(scoreRepository.planStudyTime(userId, subCode));
-        responseScoreDto.setSumStudyTime(plannerRepository.planStudyTime(userId,subCode));
         int scoreSize = responseScoreDto.getScores().size();
 
         if(scoreSize > 0) {
@@ -66,8 +89,8 @@ public class ScoreServiceImpl implements ScoreService{
             // 오답유형 통계
             responseScoreDto.setDetailStats(
                     scoreRepository.statsDetail(
-                            userId,
-                            subCode,
+                            user.getId(),
+                            subjectCode.getCode(),
                             responseScoreDto.getScores().get(scoreSize - 1).getTestDate(),
                             responseScoreDto.getScores().get(0).getTestDate()
                     )
@@ -88,8 +111,15 @@ public class ScoreServiceImpl implements ScoreService{
      */
     @Override
     public ScoreDto scoreDetail(Long scoreId, int userId, int myId) throws Exception {
-        ScoreDto scoreDto = scoreRepository.scoreDetail(scoreId, userId, myId);
-
+        // 유저 확인
+        User user = userRepository.findById((long) userId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+        //로그인 유저와 조회되는 유저 확인 및 조회되는 유저의 공개여부
+        if(user.getId() != myId && user.getUserPublic() == 0)
+            throw new CustomException(ErrorCode.USER_PRIVATE);
+        //단일 성적 조회
+        ScoreDto scoreDto = scoreRepository.scoreDetail(scoreId, userId);
+        //성적의 오답유형 조회
         List<ScoreDetailDto> scoreDetailDtoList = scoreRepository.listScoreDetails(scoreId);
         if(scoreDetailDtoList != null && !scoreDetailDtoList.isEmpty())
             scoreDto.setScoreDetails(scoreDetailDtoList);
@@ -105,14 +135,29 @@ public class ScoreServiceImpl implements ScoreService{
     @Override
     @Transactional
     public void saveScore(RequestScoreDto requestScoreDto, int userId) throws Exception {
+        // 유저 확인
+        User user = userRepository.findById((long) userId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+        // 과목 코드 확인
+        SubjectCode subjectCode = subjectCodeRepository.findById(requestScoreDto.getSubCode())
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_SUBJECT_CODE));
+
         //성적 등록 후 scoreId를 return
-        Long scoreId = scoreRepository.saveScore(requestScoreDto, userId);
+        Long scoreId = scoreRepository.saveScore(requestScoreDto, user, subjectCode);
         log.info("return scoreId : {}", scoreId);
 
+        // 오답유형 존재 시
         if(requestScoreDto.getScoreDetails() != null
                 && !requestScoreDto.getScoreDetails().isEmpty()) {
             for (RequestDetailDto details : requestScoreDto.getScoreDetails()) {
-                scoreRepository.saveScoreDetails(details, scoreId);
+                //오답유형 확인
+                ProblemCategory problemCategory = problemCategoryRepository.findById(details.getCatCode())
+                                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_CATEGORY_CODE));
+                //오답유형과 과목 일치 확인
+                if(problemCategory.getSubjectCode().getCode() != subjectCode.getCode())
+                    throw new CustomException(ErrorCode.NOT_MATCH_SUBJECT_CATEGORY);
+                //오답유형 등록
+                scoreRepository.saveScoreDetails(details, scoreId, problemCategory);
             }
         }
     }
@@ -126,11 +171,26 @@ public class ScoreServiceImpl implements ScoreService{
     @Override
     @Transactional
     public void modifyScore(RequestScoreDto requestScoreDto, int userId, Long scoreId) throws Exception {
-        scoreRepository.modifyScore(requestScoreDto, userId, scoreId);
+        //유저 확인
+        User user = userRepository.findById((long) userId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+        //과목코드 확인
+        SubjectCode subjectCode = subjectCodeRepository.findById(requestScoreDto.getSubCode())
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_SUBJECT_CODE));
+        //성적의 오답유형 삭제 및 성적 수정
+        scoreRepository.modifyScore(requestScoreDto, user, scoreId);
 
+        //성적 상세유형 재등록
         if(requestScoreDto.getScoreDetails() != null && !requestScoreDto.getScoreDetails().isEmpty()) {
             for (RequestDetailDto details : requestScoreDto.getScoreDetails()) {
-                scoreRepository.saveScoreDetails(details, scoreId);
+                //오답유형코드 확인
+                ProblemCategory problemCategory = problemCategoryRepository.findById(details.getCatCode())
+                        .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_CATEGORY_CODE));
+                //과목과 오답유형 확인
+                if(problemCategory.getSubjectCode().getCode() != subjectCode.getCode())
+                    throw new CustomException(ErrorCode.NOT_MATCH_SUBJECT_CATEGORY);
+                //오답유형 등록
+                scoreRepository.saveScoreDetails(details, scoreId, problemCategory);
             }
         }
     }
@@ -143,7 +203,11 @@ public class ScoreServiceImpl implements ScoreService{
     @Override
     @Transactional
     public void deleteScore(int userId, Long scoreId) throws Exception {
-        scoreRepository.deleteScore(userId, scoreId);
+        //유저 확인
+        User user = userRepository.findById((long) userId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+        //성적 및 오답유형 삭제
+        scoreRepository.deleteScore(user, scoreId);
     }
 
     /**
@@ -159,7 +223,7 @@ public class ScoreServiceImpl implements ScoreService{
         // 과목 목표별 성적 리스트
         for(ResponseScoreDto responseScoreDto : responseScoreDtoList) {
             responseScoreDto.setScores(scoreRepository.listScores(userId,
-                    responseScoreDto.getSubCode(), userId, 5));
+                    responseScoreDto.getSubCode(), 5));
 
             // 오답 유형 리스트 조회
             for (ScoreDto scores : responseScoreDto.getScores()) {
@@ -183,19 +247,22 @@ public class ScoreServiceImpl implements ScoreService{
      */
     @Override
     public List<ScoreDto> recentUserScore(int userId) throws Exception {
-            // 최근 10개 성적
-            List<ScoreDto> recentScoreList = scoreRepository.listScores(userId, null, userId, 10);
+        //유저 확인
+        User user = userRepository.findById((long) userId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+        // 최근 10개 성적
+        List<ScoreDto> recentScoreList = scoreRepository.listScores(userId, null, 10);
 
-            // 오답 유형 리스트 조회
-            for (ScoreDto score : recentScoreList) {
-                Long scoreId = score.getScoreId();
+        // 오답 유형 리스트 조회
+        for (ScoreDto score : recentScoreList) {
+            Long scoreId = score.getScoreId();
 
-                List<ScoreDetailDto> scoreDetailDtoList = scoreRepository.listScoreDetails(scoreId);
-                if (scoreDetailDtoList != null && !scoreDetailDtoList.isEmpty()) {
-                    score.setScoreDetails(scoreDetailDtoList);
-                }
+            List<ScoreDetailDto> scoreDetailDtoList = scoreRepository.listScoreDetails(scoreId);
+            if (scoreDetailDtoList != null && !scoreDetailDtoList.isEmpty()) {
+                score.setScoreDetails(scoreDetailDtoList);
             }
-            return recentScoreList;
+        }
+        return recentScoreList;
     }
 
     /**

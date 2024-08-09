@@ -2,56 +2,67 @@ import React, { useState, useEffect } from "react";
 import deleteButton from "./img/deleteButton.png";
 import editButton from "./img/editButton.png";
 import usePlanStore from "../../stores/plan.js";
-import useSubjectStore from "../../stores/subjectStore"; // Import the subject store
+import useSubjectStore from "../../stores/subjectStore"; // subject store import
 import PlanModify from "./CreateModify/PlanModify"; // Import the PlanModify modal
 import "./styles/CatPlanList.css";
 
 const CatPlanList = () => {
   const {
+    plans,
     subPlans,
-    getDatePlanRequest,
     changePlanStatus,
     deletePlan,
+    getSubjectPlans, // 과목별 플랜을 가져오는 함수
     setSubPlans,
     subCode,
-  } = usePlanStore(); // Zustand store for plans
+    date,
+  } = usePlanStore();
 
-  const { subjects } = useSubjectStore(); // Zustand store for subjects
+  const { subjects } = useSubjectStore();
 
-  const [selectedPlanId, setSelectedPlanId] = useState(null); // State to store selected plan ID
-  const [showModifyModal, setShowModifyModal] = useState(false); // State to manage modal visibility
+  const [selectedPlanId, setSelectedPlanId] = useState(null);
+  const [showModifyModal, setShowModifyModal] = useState(false);
 
-  // 현재 날짜 상태 가져오기
-  const { date } = usePlanStore((state) => ({ date: state.date }));
+  const getSubjectName = (subCode) => {
+    const subject = subjects.find((s) => s.subCode === subCode);
+    return subject ? subject.subName : "알 수 없는 과목";
+  };
+
+  const fetchPlans = async () => {
+    if (!subCode) {
+      return;
+    }
+    const plans = await getSubjectPlans(subCode);
+    if (plans) {
+      const filteredPlans = plans.filter((plan) => plan.planDate === date); // 날짜로 필터링
+      setSubPlans(filteredPlans);
+    } else {
+      setSubPlans([]);
+    }
+  };
 
   useEffect(() => {
-    // 현재 선택된 과목 코드를 기반으로 계획을 불러옴
-    if (subCode > 0) {
-      getDatePlanRequest(date);
-    }
-  }, [subCode, date, getDatePlanRequest]); // Dependency array includes subCode and date
+    fetchPlans();
+  }, [subCode, date]); // date와 subCode가 변경될 때마다 fetchPlans 호출
 
   const formatPlanStudyTime = (minutes) => {
     const hours = Math.floor(minutes / 60);
     const remainingMinutes = minutes % 60;
-    return (
-      String(hours).padStart(2, "0") +
-      ":" +
-      String(remainingMinutes).padStart(2, "0")
-    );
+    return `${String(hours).padStart(2, "0")}:${String(
+      remainingMinutes
+    ).padStart(2, "0")}`;
   };
 
   const handleCheckboxChange = async (planId) => {
     try {
-      const success = await changePlanStatus(planId); // 상태 변경 요청
+      const success = await changePlanStatus(planId);
       if (success) {
-        // 성공적으로 상태가 변경되었으면 새로운 subPlans로 상태 업데이트
         const updatedPlans = subPlans.map((plan) =>
           plan.planId === planId
             ? { ...plan, planStatus: plan.planStatus === 0 ? 1 : 0 }
             : plan
         );
-        setSubPlans(updatedPlans); // subPlans 상태 갱신
+        setSubPlans(updatedPlans);
       } else {
         alert("플랜 상태 변경에 실패했습니다.");
       }
@@ -62,25 +73,26 @@ const CatPlanList = () => {
   };
 
   const handleEditClick = (planId) => {
-    setSelectedPlanId(planId); // Set the selected plan ID
-    setShowModifyModal(true); // Open the PlanModify modal
+    setSelectedPlanId(planId);
+    setShowModifyModal(true);
   };
 
   const handleCloseModifyModal = () => {
-    setShowModifyModal(false); // Close the PlanModify modal
-    setSelectedPlanId(null); // Clear the selected plan ID
+    setShowModifyModal(false);
+    setSelectedPlanId(null);
   };
 
   const handleDeleteClick = async (planId) => {
-    // 플래너 삭제 핸들러
     const confirmed = window.confirm("정말로 삭제하시겠습니까?");
     if (confirmed) {
       try {
-        const success = await deletePlan(planId); // deletePlan 호출
+        const success = await deletePlan(planId);
         if (success) {
           alert("플래너가 성공적으로 삭제되었습니다.");
-          // 데이터 갱신
-          await getDatePlanRequest(date);
+          const filteredPlans = subPlans.filter(
+            (plan) => plan.planId !== planId
+          );
+          setSubPlans(filteredPlans);
         } else {
           alert("플래너 삭제에 실패했습니다.");
         }
@@ -93,9 +105,10 @@ const CatPlanList = () => {
 
   return (
     <div className="singleSubPlanBox">
-      {subPlans.length === 0 && subCode > 0 ? (
+      {Array.isArray(subPlans) && subPlans.length === 0 && subCode > 0 ? (
         <p>해당 과목에 등록된 플랜이 없습니다.</p>
       ) : (
+        Array.isArray(subPlans) &&
         subPlans.map((plan) => (
           <div
             key={plan.planId}
@@ -111,11 +124,11 @@ const CatPlanList = () => {
                 className="singleSubPlanCheckbox"
               />
               <span className="singleSubPlanStudyTime">
+                {`${plan.planDate}`}{" "}
                 {`${formatPlanStudyTime(plan.planStudyTime)}`}{" "}
               </span>
             </div>
             <p className="singleSubPlanContentText">{`${plan.planContent}`}</p>{" "}
-            {/* Display plan content */}
             <div className="singleSubButtonBox">
               <button
                 className="singleSubButtonCase"
@@ -129,7 +142,7 @@ const CatPlanList = () => {
               </button>
               <button
                 className="singleSubButtonCase"
-                onClick={() => handleDeleteClick(plan.planId)} // 삭제 버튼에 클릭 핸들러 추가
+                onClick={() => handleDeleteClick(plan.planId)}
               >
                 <img
                   className="singleSubDeleteButton"
@@ -142,7 +155,6 @@ const CatPlanList = () => {
         ))
       )}
 
-      {/* PlanModify modal */}
       {showModifyModal && selectedPlanId && (
         <PlanModify
           planId={selectedPlanId}

@@ -1,5 +1,6 @@
 package com.studycow.exception;
 
+import com.fasterxml.jackson.databind.JsonMappingException;
 import jakarta.persistence.PersistenceException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
@@ -11,6 +12,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -44,8 +46,8 @@ public class GlobalExceptionHandler {
     /**
      * 전역 예외 처리
      *
-     * @param e
-     * @return ResponseEntity
+     * @param e Exception
+     * @return ResponseEntity<ErrorResponse>
      */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(java.lang.Exception.class)
@@ -56,19 +58,17 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(response.getErrorCode()).body(response);
     }
 
-
     /**
      * <pre>
-     * 메서드 값 검증 예외처리 - @valid 바인딩 에러
+     * 메서드 값 검증 예외처리 - @Valid 바인딩 에러
      * 주로 @RequestBody , @RequestPart 어노테이션에서 발생
      * </pre>
      *
-     * @param e
-     * @return ResponseEntity
+     * @param e MethodArgumentNotValidException
+     * @return ResponseEntity<ErrorResponse>
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<com.studycow.exception.ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-
 
         List<com.studycow.exception.ErrorResponse.FieldError> errors = new ArrayList<>();
         for (FieldError fieldError : e.getFieldErrors()) {
@@ -77,7 +77,9 @@ public class GlobalExceptionHandler {
             error.setField(fieldError.getField());
             error.setMessage(fieldError.getDefaultMessage());
 
-            if(fieldError.getDefaultMessage().contains("Failed to convert property value of type 'java.lang.String' to required type 'java.time.LocalDate'")) {
+            // 날짜 형식 관련 에러 처리
+            if (fieldError.getDefaultMessage() != null &&
+                    fieldError.getDefaultMessage().contains("Failed to convert property value of type 'java.lang.String' to required type 'java.time.LocalDate'")) {
                 error.setMessage("잘못된 날짜 형식입니다. 'YYYY-MM-DD' 형식으로 입력해 주세요.");
             }
 
@@ -95,11 +97,18 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(response.getErrorCode()).body(response);
     }
 
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    protected ResponseEntity<ErrorResponse> handleJsonMappingException(HttpMessageNotReadableException e) {
+        ErrorResponse response = new ErrorResponse(ErrorCode.WRONG_REQUEST_MAPPING);
+
+        return ResponseEntity.status(response.getErrorCode()).body(response);
+    }
+
     /**
      * 비로그인 사용자 예외처리
      *
-     * @param e
-     * @return
+     * @param e AccessDeniedException
+     * @return ResponseEntity<ErrorResponse>
      */
     @ExceptionHandler(AccessDeniedException.class)
     protected ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException e) {
@@ -111,8 +120,8 @@ public class GlobalExceptionHandler {
     /**
      * 시큐리티에서 인가 처리 대신해서 사용
      *
-     * @param e
-     * @return
+     * @param e AuthenticationException
+     * @return ResponseEntity<ErrorResponse>
      */
     @ExceptionHandler(AuthenticationException.class)
     protected ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException e) {
@@ -121,7 +130,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(response.getErrorCode()).body(response);
     }
 
-
     @ExceptionHandler(InsufficientAuthenticationException.class)
     protected ResponseEntity<ErrorResponse> handleInsufficientAuthenticationException(InsufficientAuthenticationException e) {
         log.error(e.getMessage());
@@ -129,51 +137,54 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(response.getErrorCode()).body(response);
     }
 
-
     /**
      * IOException 처리
      *
-     * @param ex IOException
-     * @return
+     * @param e IOException
+     * @return ResponseEntity<ErrorResponse>
      */
     @ExceptionHandler(IOException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<String> handleIOException(IOException ex) {
-        // IOException 처리 로직
-        return new ResponseEntity<>("IOException 발생: " + ex.getMessage(), HttpStatus.BAD_REQUEST);
+    protected ResponseEntity<ErrorResponse> handleIOException(IOException e) {
+        log.error(e.getMessage());
+        ErrorResponse response = new ErrorResponse(ErrorCode.IO_EXCEPTION);
+        return ResponseEntity.status(response.getErrorCode()).body(response);
     }
 
     /**
      * JPA 표준 예외 처리
      *
-     * @param ex PersistenceException
-     * @return
+     * @param e PersistenceException
+     * @return ResponseEntity<ErrorResponse>
      */
     @ExceptionHandler(PersistenceException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<String> handlePersistenceException(PersistenceException ex) {
-        // 필요에 따라 로깅 처리 추가
-        return new ResponseEntity<>("데이터베이스 오류가 발생했습니다: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    protected ResponseEntity<ErrorResponse> handlePersistenceException(PersistenceException e) {
+        log.error(e.getMessage());
+        ErrorResponse response = new ErrorResponse(ErrorCode.DATABASE_ERROR);
+        return ResponseEntity.status(response.getErrorCode()).body(response);
     }
 
     /**
      * 날짜 형식 예외 처리
      *
-     * @param ex DateTimeParseException
-     * @return
+     * @param e DateTimeParseException
+     * @return ResponseEntity<ErrorResponse>
      */
     @ExceptionHandler(DateTimeParseException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<String> handleDateTimeParseException(DateTimeParseException ex) {
-        return ResponseEntity.badRequest().body("잘못된 날짜 형식입니다: " + ex.getMessage());
+    protected ResponseEntity<ErrorResponse> handleDateTimeParseException(DateTimeParseException e) {
+        log.error(e.getMessage());
+        ErrorResponse errorResponse = new ErrorResponse(ErrorCode.WRONG_DATE_FORMAT);
+        return ResponseEntity.status(errorResponse.getErrorCode()).body(errorResponse);
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex) {
-        return ResponseEntity.badRequest().body(ex.getMessage());
-    }
-
+    /**
+     * 커스텀 예외 처리
+     *
+     * @param e CustomException
+     * @return ResponseEntity<ErrorResponse>
+     */
     @ExceptionHandler(CustomException.class)
     protected ResponseEntity<ErrorResponse> handleCustomException(CustomException e) {
         log.error(e.getMessage());
@@ -181,6 +192,5 @@ public class GlobalExceptionHandler {
         ErrorResponse response = new ErrorResponse(errorCode);
         return ResponseEntity.status(response.getErrorCode()).body(response);
     }
-
 
 }

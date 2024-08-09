@@ -10,6 +10,8 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.studycow.domain.*;
 import com.studycow.dto.friend.FriendDto;
 import com.studycow.dto.listoption.ListOptionDto;
+import com.studycow.exception.CustomException;
+import com.studycow.exception.ErrorCode;
 import com.studycow.util.QueryDslUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -50,7 +52,7 @@ public class FriendRepositoryImpl implements FriendRepository {
      *
      * @param userId 내 회원 ID
      * @return FriendDto 리스트
-     * @throws PersistenceException : JPA 표준 예외
+     * @throws PersistenceException JPA 표준 예외
      */
     @Override
     public List<FriendDto> listFriends(int userId, ListOptionDto option) throws PersistenceException {
@@ -94,7 +96,7 @@ public class FriendRepositoryImpl implements FriendRepository {
      * </pre>
      *
      * @param friendRequestId 요청 id 번호
-     * @throws PersistenceException
+     * @throws PersistenceException JPA 표준 예외
      */
     @Override
     public void deleteFriendRequest(int friendRequestId) throws PersistenceException {
@@ -108,11 +110,15 @@ public class FriendRepositoryImpl implements FriendRepository {
      * 친구 관계 승인/저장 및 요청 삭제
      *
      * @param friendRequestId 요청 id 번호
-     * @throws PersistenceException
+     * @throws PersistenceException JPA 표준 예외
      */
     @Override
-    public void acceptFriendRequest(int friendRequestId) throws PersistenceException {
+    public void acceptFriendRequest(int friendRequestId, int userId) throws PersistenceException {
         FriendRequest friendRequest = em.find(FriendRequest.class, friendRequestId);
+
+        if (userId != friendRequest.getId()) {
+            throw new CustomException(ErrorCode.UNAUTHORIZED_ACCEPT_FRIEND);
+        }
 
         // @CreationTimestamp이므로 friendDate null
         // 친구 관계 저장
@@ -128,7 +134,7 @@ public class FriendRepositoryImpl implements FriendRepository {
      *
      * @param fromUserId 보내는 회원 번호
      * @param toUserId   받는 회원 번호
-     * @throws PersistenceException
+     * @throws PersistenceException JPA 표준 예외
      */
     @Override
     public void saveFriendRequest(int fromUserId, int toUserId) throws PersistenceException {
@@ -143,7 +149,7 @@ public class FriendRepositoryImpl implements FriendRepository {
      * 받은 친구 요청 목록 조회
      *
      * @return FriendRequest 리스트
-     * @throws PersistenceException
+     * @throws PersistenceException JPA 표준 예외
      */
     @Override
     public List<FriendRequest> listFriendRequestReceived(int userId, ListOptionDto option) throws PersistenceException {
@@ -160,7 +166,7 @@ public class FriendRepositoryImpl implements FriendRepository {
      * 보낸 친구 요청 목록 조회
      *
      * @return FriendRequest 리스트
-     * @throws PersistenceException
+     * @throws PersistenceException JPA 표준 예외
      */
     @Override
     public List<FriendRequest> listFriendRequestSent(int userId, ListOptionDto option) throws PersistenceException {
@@ -176,19 +182,89 @@ public class FriendRepositoryImpl implements FriendRepository {
     /**
      * 친구 삭제
      *
-     * @param friendUserId
-     * @param userId
+     * @param friendUserId 친구 회원 고유번호
+     * @param userId       회원 고유 번호
+     * @throws PersistenceException JPA 표준 예외
      */
     @Override
     public void deleteFriend(int friendUserId, int userId) throws PersistenceException {
-        StringBuilder jpql = new StringBuilder();
-
         queryFactory
                 .delete(friend)
-                .where(friend.user1.id.eq(friendUserId).or(friend.user1.id.eq(userId)),
-                        friend.user1.id.eq(friendUserId).or(friend.user1.id.eq(userId)))
+                .where(
+                        (friend.user1.id.eq(friendUserId).and(friend.user2.id.eq(userId)))
+                                .or(friend.user1.id.eq(userId).and(friend.user2.id.eq(friendUserId)))
+                )
                 .execute();
     }
+
+    /**
+     * 친구관계 존재 여부
+     *
+     * @param userId1 회원1
+     * @param userId2 회원2
+     * @return boolean
+     * @throws PersistenceException JPA 표준 예외
+     */
+    @Override
+    public boolean existsFriend(int userId1, int userId2) throws PersistenceException {
+        Friend friendFound = queryFactory
+                .selectFrom(friend)
+                .where(
+                        (friend.user1.id.eq(userId1).and(friend.user2.id.eq(userId2)))
+                                .or(friend.user2.id.eq(userId1).and(friend.user1.id.eq(userId2)))
+                )
+                .fetchOne();
+
+        // 친구 관계 존재하면 true 반환
+        return friendFound != null;
+    }
+
+    /**
+     * 친구 요청 존재 여부
+     *
+     * @param fromUserId 보내는 회원
+     * @param toUserId   받는 회원
+     * @return boolean
+     * @throws PersistenceException JPA 표준 예외
+     */
+    @Override
+    public boolean existsFriendRequest(int fromUserId, int toUserId) throws PersistenceException {
+        FriendRequest friendRequestFound = queryFactory
+                .selectFrom(friendRequest)
+                .where(friendRequest.fromUser.id.eq(fromUserId).and(friendRequest.toUser.id.eq(toUserId)))
+                .fetchOne();
+
+        // 친구 요청 존재하면 true 반환
+        return friendRequestFound != null;
+    }
+
+    /**
+     * 친구 요청 존재 여부(요청번호로 조회)
+     *
+     * @param friendRequestId 요청 번호
+     * @return boolean
+     * @throws PersistenceException JPA 표준 예외
+     */
+    @Override
+    public boolean existsFriendRequestById(int friendRequestId) throws PersistenceException {
+        FriendRequest friendRequestFound = em.find(FriendRequest.class, friendRequestId);
+
+        // 친구 요청 존재하면 true 반환
+        return friendRequestFound != null;
+    }
+
+    /**
+     * 친구 요청 승인 권한 검증(받은 유저인지)
+     *
+     * @param friendRequestId 친구 요청 고유번호
+     * @param userId          회원 고유 번호
+     * @return boolean
+     */
+    public boolean isToUser(int friendRequestId, int userId) throws PersistenceException {
+        // 친구 요청을 받는 회원이라면 true 반환
+        return em.find(FriendRequest.class, friendRequestId).getToUser().getId() == userId;
+    }
+
 
     /**
      * 검색 동적 쿼리를 위한 BooleanExpression
@@ -208,9 +284,9 @@ public class FriendRepositoryImpl implements FriendRepository {
     /**
      * 정렬을 동적으로 구현
      *
-     * @param option 검색 및 정렬 조건
-     * @param parent 정렬 대상 엔터티
-     * @param defaultParent 기본 정렬 대상 엔터티
+     * @param option           검색 및 정렬 조건
+     * @param parent           정렬 대상 엔터티
+     * @param defaultParent    기본 정렬 대상 엔터티
      * @param defaultFieldName 기본 정렬 대상 칼럼
      * @return OrderSpecifier[] 정렬 조건 배열
      */
@@ -221,9 +297,9 @@ public class FriendRepositoryImpl implements FriendRepository {
         //정렬 기준 및 정렬 방향
         String sortKey = option.getSortKey();
         Order direction;
-        if(option.getIsDESC() == null) {
+        if (option.getIsDESC() == null) {
             direction = Order.ASC;
-        } else if(option.getIsDESC()) {
+        } else if (option.getIsDESC()) {
             direction = Order.DESC;
         } else {
             direction = Order.ASC;
@@ -234,9 +310,9 @@ public class FriendRepositoryImpl implements FriendRepository {
 
         // 정렬 기준이 null이 아니라면
         if (sortKey != null && !sortKey.isBlank()) {
-                orderSpecifierList.add(QueryDslUtil.getSortedColumn(direction, parent, sortKey));
+            orderSpecifierList.add(QueryDslUtil.getSortedColumn(direction, parent, sortKey));
         } else {
-                orderSpecifierList.add(QueryDslUtil.getSortedColumn(direction, defaultParent, defaultFieldName));
+            orderSpecifierList.add(QueryDslUtil.getSortedColumn(direction, defaultParent, defaultFieldName));
         }
 
         return orderSpecifierList.toArray(new OrderSpecifier[orderSpecifierList.size()]);

@@ -91,7 +91,7 @@ public class StudyRoomServiceImpl implements StudyRoomService {
         // 수정하고자 하는 방 조회
         StudyRoomDto studyRoomFound = studyRoomRepository.getStudyRoomInfo(studyRoomId);
 
-        // 방장만 수정 하능
+        // 방장만 수정 가능
         if (studyRoomFound.getUserId() != userId) {
             throw new CustomException(ErrorCode.UNAUTHORIZED_ROOM_UPDATE);
         }

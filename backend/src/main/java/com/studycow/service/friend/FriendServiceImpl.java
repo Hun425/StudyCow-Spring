@@ -4,7 +4,10 @@ import com.studycow.domain.FriendRequest;
 import com.studycow.dto.friend.FriendDto;
 import com.studycow.dto.friend.FriendRequestDto;
 import com.studycow.dto.listoption.ListOptionDto;
+import com.studycow.exception.CustomException;
+import com.studycow.exception.ErrorCode;
 import com.studycow.repository.friend.FriendRepository;
+import com.studycow.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,11 +23,12 @@ import java.util.List;
  * @author 박봉균
  * @since JDK17
  */
-@Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
+@Service
 public class FriendServiceImpl implements FriendService {
     private final FriendRepository friendRepository;
+    private final UserRepository userRepository;
 
     /**
      * 친구 맺은 목록 조회
@@ -44,11 +48,21 @@ public class FriendServiceImpl implements FriendService {
      * @param friendRequestId 친구 요청 번호
      * @throws Exception
      */
-    @Override
     @Transactional
-    public void acceptFriendRequest(int friendRequestId) throws Exception {
-        //친구 관계 저장 및 요청 삭제
-        friendRepository.acceptFriendRequest(friendRequestId);
+    @Override
+    public void acceptFriendRequest(int friendRequestId, int userId) throws Exception {
+        // 친구 요청 존재 여부 검증
+        if(!friendRepository.existsFriendRequestById(friendRequestId)) {
+            throw new CustomException(ErrorCode.NOT_FOUND_FRIEND_REQUEST);
+        }
+
+        // 승인 권한 검증
+        if(!friendRepository.isToUser(friendRequestId, userId)) {
+            throw new CustomException(ErrorCode.UNAUTHORIZED_ACCEPT_FRIEND);
+        }
+
+        // 친구 관계 저장 및 요청 삭제
+        friendRepository.acceptFriendRequest(friendRequestId, userId);
     }
 
     /**
@@ -57,9 +71,14 @@ public class FriendServiceImpl implements FriendService {
      * @param friendRequestId 친구 요청 번호
      * @throws Exception
      */
-    @Override
     @Transactional
+    @Override
     public void deleteFriendRequest(int friendRequestId) throws Exception {
+        // 친구 요청 존재 여부 검증
+        if(!friendRepository.existsFriendRequestById(friendRequestId)) {
+            throw new CustomException(ErrorCode.NOT_FOUND_FRIEND_REQUEST);
+        }
+
         friendRepository.deleteFriendRequest(friendRequestId);
     }
 
@@ -70,9 +89,30 @@ public class FriendServiceImpl implements FriendService {
      * @param toUserId   받는 회원 번호
      * @throws Exception
      */
-    @Override
     @Transactional
+    @Override
     public void saveFriendRequest(int fromUserId, int toUserId) throws Exception {
+        // 요청 검증
+        if(fromUserId == toUserId) {
+            throw new CustomException(ErrorCode.SAME_FROM_TO);
+        }
+
+        // 요청 회원 검증
+        userRepository.findById((long) fromUserId)
+                .orElseThrow(() -> new CustomException(ErrorCode.FROM_USER_NOT_FOUND));
+        // 받는 회원 검증
+        userRepository.findById((long) toUserId)
+                .orElseThrow(() -> new CustomException(ErrorCode.TO_USER_NOT_FOUND));
+        //친구 관계 존재 여부 검증
+        if(friendRepository.existsFriend(fromUserId,toUserId)) {
+            throw new CustomException(ErrorCode.DUPLICATE_FRIEND);
+        }
+        //친구 요청 중복 검증
+        if(friendRepository.existsFriendRequest(fromUserId, toUserId)) {
+            throw new CustomException(ErrorCode.DUPLICATE_FRIEND_REQUEST);
+        }
+
+        // 요청 전송
         friendRepository.saveFriendRequest(fromUserId, toUserId);
     }
 
@@ -129,9 +169,14 @@ public class FriendServiceImpl implements FriendService {
      * @param userId
      * @throws Exception
      */
-    @Override
     @Transactional
+    @Override
     public void deleteFriend(int friendUserId, int userId) throws Exception {
+        //친구 관계 존재 여부 검증
+        if(friendRepository.existsFriend(friendUserId,userId)) {
+            throw new CustomException(ErrorCode.NOT_FOUND_FRIEND);
+        }
+
         friendRepository.deleteFriend(friendUserId, userId);
     }
 

@@ -4,7 +4,7 @@ import "./styles/Calendar.css";
 
 const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState(new Date());
+
   const { date, saveDate, getDatePlanRequest } = usePlanStore((state) => ({
     date: state.date,
     saveDate: state.saveDate,
@@ -12,7 +12,9 @@ const Calendar = () => {
   }));
 
   useEffect(() => {
-    getDatePlanRequest(date);
+    if (date) {
+      getDatePlanRequest(date);
+    }
   }, [date, getDatePlanRequest]);
 
   const daysInMonth = new Date(
@@ -20,6 +22,7 @@ const Calendar = () => {
     currentDate.getMonth() + 1,
     0
   ).getDate();
+
   const firstDayOfMonth = new Date(
     currentDate.getFullYear(),
     currentDate.getMonth(),
@@ -41,19 +44,14 @@ const Calendar = () => {
   };
 
   const handleDateClick = (day) => {
-    setSelectedDate(
-      new Date(currentDate.getFullYear(), currentDate.getMonth(), day)
+    const selectedDate = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      day
     );
-    saveDate(
-      formatDate(
-        new Date(currentDate.getFullYear(), currentDate.getMonth(), day)
-      )
-    );
-    getDatePlanRequest(
-      formatDate(
-        new Date(currentDate.getFullYear(), currentDate.getMonth(), day)
-      )
-    );
+    const formattedDate = formatDate(selectedDate);
+    saveDate(formattedDate);
+    getDatePlanRequest(formattedDate);
   };
 
   const isToday = (day) => {
@@ -65,20 +63,19 @@ const Calendar = () => {
     );
   };
 
-  // 날짜를 'yyyy-mm-dd' 포맷으로 변환하는 함수
   const formatDate = (date) => {
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0"); // 월은 0부터 시작하므로 1을 더함
+    const month = String(date.getMonth() + 1).padStart(2, "0");
     const day = String(date.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   };
 
   const getDayStyles = (day) => {
     const isSelected =
-      selectedDate &&
-      selectedDate.getDate() === day &&
-      selectedDate.getMonth() === currentDate.getMonth() &&
-      selectedDate.getFullYear() === currentDate.getFullYear();
+      date ===
+      formatDate(
+        new Date(currentDate.getFullYear(), currentDate.getMonth(), day)
+      );
 
     return {
       "--day-bg-color": isSelected ? "#BBD0E9" : "#f8f8f8",
@@ -92,7 +89,11 @@ const Calendar = () => {
     <>
       <div className="Calendar">
         <div className="calendarHeader">
-          <button className="calendarButton" onClick={handlePrevMonth}>
+          <button
+            className="calendarButton"
+            onClick={handlePrevMonth}
+            aria-label="Previous month"
+          >
             &lsaquo;
           </button>
           <div className="MonthYear">
@@ -101,7 +102,11 @@ const Calendar = () => {
               year: "numeric",
             })}
           </div>
-          <button className="calendarButton" onClick={handleNextMonth}>
+          <button
+            className="calendarButton"
+            onClick={handleNextMonth}
+            aria-label="Next month"
+          >
             &rsaquo;
           </button>
         </div>
@@ -122,6 +127,18 @@ const Calendar = () => {
                 key={day}
                 style={getDayStyles(day)}
                 onClick={() => handleDateClick(day)}
+                tabIndex={0}
+                role="button"
+                aria-pressed={
+                  date ===
+                  formatDate(
+                    new Date(
+                      currentDate.getFullYear(),
+                      currentDate.getMonth(),
+                      day
+                    )
+                  )
+                }
               >
                 {day}
               </div>

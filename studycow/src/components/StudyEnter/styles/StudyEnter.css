@@ -1,0 +1,63 @@
+.studyEnterPageContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.studyEnterPageContainer h1 {
+  margin-bottom: 20px;
+}
+
+.studyEnterPageHeader {
+  padding: 0px 50px;
+}
+
+.roomDetailInfoListUpside {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.roomDetailInfoListDownside {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.studyEnterPageBody {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 20px;
+}
+
+.roomDetailInfoContent {
+  width: 500px;
+  padding: 20px;
+}
+
+.studyEnterPageBody h2 {
+  margin-bottom: 10px;
+}
+
+.cameraTestArea {
+  width: 500px;
+  padding: 20px;
+}
+
+.roomWebcamTest {
+  width: 450px;
+  height: 280px;
+  border-radius: 15px;
+  background-color: black;
+}
+
+.enterRoomPageBtn {
+  width: 180px;
+  height: 50px;
+  align-self: center;
+  font-size: 30px;
+  color: #ffffff;
+  font-family: "CustomFontGothic", sans-serif;
+  cursor: pointer;
+  border-radius: 25px;
+  background: #494949;
+}

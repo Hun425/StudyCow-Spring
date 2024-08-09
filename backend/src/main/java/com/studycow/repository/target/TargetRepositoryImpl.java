@@ -9,6 +9,8 @@ import com.studycow.dto.common.SubjectCodeDto;
 import com.studycow.dto.score.*;
 import com.studycow.dto.target.RequestTargetDto;
 import com.studycow.dto.target.ScoreTargetDto;
+import com.studycow.exception.CustomException;
+import com.studycow.exception.ErrorCode;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
@@ -46,14 +48,11 @@ public class TargetRepositoryImpl implements TargetRepository {
      *      페이지에서 입력한 목표 성적을 입력한다
      * </pre>
      * @param requestTargetDto : 목표 성적 정보
-     * @param userId : 유저 id
      * @throws PersistenceException : JPA 표준 예외
      */
     @Override
-    public void saveScoreTarget(RequestTargetDto requestTargetDto, int userId) throws PersistenceException {
+    public void saveScoreTarget(RequestTargetDto requestTargetDto, User user, SubjectCode subjectCode) throws PersistenceException {
         try {
-            User user = em.find(User.class, userId);
-            SubjectCode subjectCode = em.find(SubjectCode.class, requestTargetDto.getSubCode());
             int targetScore = requestTargetDto.getTargetScore();
             int targetGrade = requestTargetDto.getTargetGrade();
 
@@ -75,13 +74,8 @@ public class TargetRepositoryImpl implements TargetRepository {
      * @throws PersistenceException : JPA 표준 예외
      */
     @Override
-    public List<ScoreTargetDto> targetList(int userId, int myId) throws PersistenceException {
+    public List<ScoreTargetDto> targetList(int userId) throws PersistenceException {
         try{
-            User user = em.find(User.class, userId);
-
-            if(user.getId() != myId && user.getUserPublic() == 0){
-                throw new IllegalStateException("비공개 유저입니다.");
-            }
             return queryFactory
                     .select(Projections.constructor(ScoreTargetDto.class,
                             userScoreTarget.id,
@@ -94,8 +88,6 @@ public class TargetRepositoryImpl implements TargetRepository {
                     .where(userScoreTarget.user.id.eq(userId))
                     .orderBy(userScoreTarget.subjectCode.code.asc())
                     .fetch();
-        }catch(IllegalStateException e) {
-            throw e;
         }catch(Exception e){
             throw new PersistenceException("목표 조회 중 에러 발생", e);
         }
@@ -109,21 +101,21 @@ public class TargetRepositoryImpl implements TargetRepository {
      * @throws PersistenceException : JPA 표준 예외
      */
     @Override
-    public void deleteScoreTarget(int userId, Long targetId) throws PersistenceException {
+    public void deleteScoreTarget(User user, Long targetId) throws PersistenceException {
         try{
             UserScoreTarget ut = em.find(UserScoreTarget.class, targetId);
             if(ut != null) {
-                if (ut.getUser().getId() != userId) {
-                    throw new IllegalStateException("권한이 없습니다.");
+                if (ut.getUser() != user) {
+                    throw new CustomException(ErrorCode.NOT_AUTHENTICAION);
                 }
                 queryFactory
                         .delete(userScoreTarget)
                         .where(userScoreTarget.id.eq(targetId))
                         .execute();
             }else{
-                throw new EntityNotFoundException("해당 목표를 찾을 수 없습니다.");
+                throw new CustomException(ErrorCode.NOT_FOUND_TARGET_ID);
             }
-        }catch(EntityNotFoundException | IllegalStateException e) {
+        }catch(CustomException e) {
             throw e;
         }catch(Exception e){
             throw new PersistenceException("목표 삭제 중 에러 발생", e);
@@ -135,18 +127,19 @@ public class TargetRepositoryImpl implements TargetRepository {
      *      등록된 성적 목표를 수정한다
      * </pre>
      * @param requestTargetDto : 성적 목표 정보
-     * @param userId : 유저id
      * @throws PersistenceException : JPA 표준 예외
      */
     @Override
-    public void modifyScoreTarget(RequestTargetDto requestTargetDto, int userId, Long targetId) throws PersistenceException {
+    public void modifyScoreTarget(RequestTargetDto requestTargetDto, User user,
+                                  SubjectCode subjectCode,Long targetId)
+            throws PersistenceException {
         try {
             UserScoreTarget ut = em.find(UserScoreTarget.class, targetId);
             if(ut != null) {
-                if (ut.getUser().getId() != userId) {
-                    throw new IllegalStateException("권한이 없습니다.");
+                if (ut.getUser() != user) {
+                    throw new CustomException(ErrorCode.NOT_AUTHENTICAION);
                 }
-                SubjectCode subjectCode = em.find(SubjectCode.class, requestTargetDto.getSubCode());
+
                 Integer targetScore = requestTargetDto.getTargetScore();
                 Integer targetGrade = requestTargetDto.getTargetGrade();
 
@@ -158,9 +151,9 @@ public class TargetRepositoryImpl implements TargetRepository {
                         .where(userScoreTarget.id.eq(ut.getId()))
                         .execute();
             }else{
-                throw new EntityNotFoundException("해당 목표를 찾을 수 없습니다.");
+                throw new CustomException(ErrorCode.NOT_FOUND_TARGET_ID);
             }
-        }catch(EntityNotFoundException | IllegalStateException e) {
+        }catch(CustomException e) {
             throw e;
         } catch(Exception e) {
             throw new PersistenceException("목표 수정 중 에러 발생", e);

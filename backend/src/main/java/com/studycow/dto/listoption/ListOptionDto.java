@@ -12,7 +12,7 @@ import lombok.Setter;
  * </pre>
  *
  * @author 박봉균
- * @since JDK17
+ * @since JDK17(Eclipse Temurin)
  */
 @Getter
 @Setter

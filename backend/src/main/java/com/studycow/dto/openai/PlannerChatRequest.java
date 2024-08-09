@@ -8,6 +8,13 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * Planer Prompt Engineering
+ *
+ * @author 박봉균
+ * @since JDK17(Eclipse Temurin)
+ */
 @Data
 public class PlannerChatRequest {
     private String model;
@@ -404,7 +411,6 @@ public class PlannerChatRequest {
                 .append("| 298 | 21 | 대기의 운동과 대기 대순환                                        |\n")
                 .append("| 299 | 21 | 행성의 운동                                                      |\n")
                 .append("| 300 | 21 | 우리은하와 우주의 구조                                           | \n\n");
-
 //           .append("t_category DB DUMP SQL은 다음과 같습니다. \n")
 //                .append("```INSERT INTO `t_subject_code` VALUES (1,100,1,'2024-07-22 09:47:26.000000','국어'),(2,100,1,'2024-07-22 09:47:26.000000','수학'),(3,100,1,'2024-07-22 09:47:26.000000','영어'),(4,50,1,'2024-07-22 09:47:26.000000','한국사'),(5,50,1,'2024-07-22 09:47:26.000000','사회탐구'),(6,50,1,'2024-07-22 09:47:26.000000','과학탐구'),(7,50,1,'2024-07-22 09:47:26.000000','직업탐구'),(8,50,1,'2024-07-22 09:47:26.000000','제2외국어/한문');``` \n\n")
 

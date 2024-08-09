@@ -126,25 +126,7 @@ const PlanModify = ({ planId, show, onClose }) => {
               ))}
             </select>
           </div>
-          <div className="CreateModify-form-group">
-            <label htmlFor="subSubject">세부과목</label>
-            <select
-              id="subSubject"
-              name="subSubject"
-              disabled={!selectedSubject}
-              onChange={(e) => setSelectedSubSubject(e.target.value)}
-              value={selectedSubSubject}
-            >
-              <option value="" disabled hidden>
-                세부과목 선택
-              </option>
-              {problemTypes.map((problemType) => (
-                <option key={problemType.catCode} value={problemType.catCode}>
-                  {problemType.catName}
-                </option>
-              ))}
-            </select>
-          </div>
+
           <div className="CreateModify-form-group">
             <label htmlFor="date">날짜</label>
             <input

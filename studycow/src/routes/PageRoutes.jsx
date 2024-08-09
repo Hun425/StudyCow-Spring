@@ -26,6 +26,10 @@ import StudyPage from "../views/StudyPage.jsx";
 import StudyList from "../components/StudyList/StudyList.jsx";
 import StudyCreate from "../components/StudyCreate/StudyCreate.jsx";
 import StudyRoom from "../components/StudyRoom/StudyRoom.jsx";
+import StudyEnter from "../components/StudyEnter/StudyEnter.jsx";
+
+// 손 인식 AI 테스트
+import Test from "../components/StudyRoom/test/OnlineMeeting.jsx";
 
 // 성적 등록
 import ScoreRegist from "../components/ScoreRegist/ScoreRegist.jsx";
@@ -53,8 +57,10 @@ const PageRoutes = () => (
     <Route path="/study" element={<StudyPage />}>
       <Route path="" element={<StudyList />} />
       <Route path="create" element={<StudyCreate />} />
+      <Route path="enter" element={<StudyEnter />} />
     </Route>
     <Route path="/study/room/:roomId" element={<StudyRoom />} />
+    <Route path="/studytest" element={<Test />} />
 
     {/* 플랜 */}
     <Route path="/plan" element={<PlanPage />}>

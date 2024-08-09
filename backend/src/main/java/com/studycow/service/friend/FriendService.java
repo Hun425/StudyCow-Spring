@@ -22,7 +22,7 @@ public interface FriendService {
     void deleteFriendRequest(int friendRequestId) throws Exception;
 
     /** 친구 요청 승인 */
-    void acceptFriendRequest(int friendRequestId) throws Exception;
+    void acceptFriendRequest(int friendRequestId, int userId) throws Exception;
 
     /** 친구 요청 저장 */
     void saveFriendRequest(int fromUserId, int toUserId) throws Exception;
@@ -35,4 +35,5 @@ public interface FriendService {
 
     /** 친구 삭제 */
     void deleteFriend(int friendUserId, int userId) throws Exception;
+
 }

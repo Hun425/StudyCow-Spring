@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PlannerGetDto {
+
     private int planId;
     private int userId;
     private int subCode;

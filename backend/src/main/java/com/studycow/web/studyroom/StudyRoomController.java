@@ -125,11 +125,10 @@ public class StudyRoomController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/rank")
     public ResponseEntity<?> rankRoomUser(
-            @AuthenticationPrincipal CustomUserDetails userDetails,
             @RequestParam(value = "date", required = false) LocalDate date,
             @RequestParam(value = "limit", required = false) Integer limit
     ) throws Exception {
-            //int userId = userDetails.getUser().getUserId();
+
             log.info("date : {}, limit : {}", date, limit);
             RankDto rankDto = studyRoomService.getRanks(date, limit);
             return ResponseEntity.ok(rankDto);

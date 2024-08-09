@@ -26,7 +26,7 @@ const PlanCreate = ({ show, onClose }) => {
   const initialState = {
     selectedSubject: "",
     selectedSubSubject: "",
-    selectedTime: 1,
+    selectedTime: 0,
     selectedMinutes: 0,
     content: "",
     selectedDate: date,
@@ -49,14 +49,10 @@ const PlanCreate = ({ show, onClose }) => {
   // 모달이 열릴 때 초기 상태 설정
   useEffect(() => {
     if (show) {
-      setFormState({
-        selectedSubject: "",
-        selectedSubSubject: "",
-        selectedTime: 1,
-        selectedMinutes: 0,
-        content: "",
+      setFormState((prevState) => ({
+        ...prevState,
         selectedDate: date,
-      });
+      }));
     }
   }, [show, date]);
 
@@ -162,30 +158,6 @@ const PlanCreate = ({ show, onClose }) => {
             </select>
           </div>
           <div className="CreateModify-form-group">
-            <label htmlFor="subSubject">세부과목</label>
-            <select
-              id="subSubject"
-              name="subSubject"
-              disabled={!formState.selectedSubject}
-              onChange={(e) =>
-                setFormState((prevState) => ({
-                  ...prevState,
-                  selectedSubSubject: e.target.value,
-                }))
-              }
-              value={formState.selectedSubSubject}
-            >
-              <option value="" disabled hidden>
-                세부과목 선택
-              </option>
-              {problemTypes.map((problemType) => (
-                <option key={problemType.catCode} value={problemType.catCode}>
-                  {problemType.catName}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="CreateModify-form-group">
             <label htmlFor="date">날짜</label>
             <input
               type="date"
@@ -201,8 +173,8 @@ const PlanCreate = ({ show, onClose }) => {
               type="range"
               id="estimatedHours"
               name="estimatedHours"
-              min="1"
-              max="9"
+              min="0"
+              max="24"
               value={formState.selectedTime}
               onChange={(e) =>
                 setFormState((prevState) => ({

@@ -6,8 +6,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,28 +30,21 @@ public class FileController {
     @Operation(
             summary = "파일 업로드",
             description = "Google Cloud Storage 버킷에 파일을 업로드하고 링크를 반환합니다.<br>링크로 어디서나 파일에 접근할 수 있습니다.")
+    @ResponseStatus(HttpStatus.OK)
     @PostMapping("/upload")
-
-    public ResponseEntity<?> uploadFile(MultipartFile file) {
-        try {
+    public ResponseEntity<?> uploadFile(MultipartFile file) throws Exception {
             String fileLink = fileService.uploadFile(file);
             return new ResponseEntity<>(fileLink, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("파일 업로드 실패 : " + e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
     }
 
     @Operation(
             summary = "파일 삭제",
             description = "Google Cloud Storage 버킷에 있는 파일을 삭제합니다.<br>링크를 쿼리 파라미터로 전달하여 삭제 요청할 수 있습니다.<br>{'fileLink': 'string'} 전달")
+    @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteFile(@RequestBody Map<String, String> requestBody) {
-        try {
+    public ResponseEntity<?> deleteFile(@RequestBody Map<String, String> requestBody) throws Exception {
             fileService.deleteFile(requestBody.get("fileLink"));
             return new ResponseEntity<>("파일 삭제 성공", HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("파일 삭제 실패 : " + e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
     }
 
 }

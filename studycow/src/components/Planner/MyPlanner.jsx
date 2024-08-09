@@ -11,11 +11,15 @@ import PlanCreate from "./CreateModify/PlanCreate"; // PlanCreate 모달 컴포�
 import "./styles/MyPlanner.css"; // 스타일 파일 import
 
 const MyPlanner = () => {
-  const { date, subCode, filterPlansBySubCode } = usePlanStore((state) => ({
-    date: state.date,
-    subCode: state.subCode,
-    filterPlansBySubCode: state.filterPlansBySubCode,
-  }));
+  // usePlanStore에서 date, subCode, filterPlansBySubCode, saveDate를 가져옵니다.
+  const { date, subCode, filterPlansBySubCode, saveDate } = usePlanStore(
+    (state) => ({
+      date: state.date,
+      subCode: state.subCode,
+      filterPlansBySubCode: state.filterPlansBySubCode,
+      saveDate: state.saveDate,
+    })
+  );
 
   const { subjects, fetchSubjects } = useSubjectStore(); // subject store 상태와 함수 가져오기
 
@@ -27,6 +31,17 @@ const MyPlanner = () => {
   useEffect(() => {
     fetchSubjects(); // 과목 데이터를 서버에서 가져옴
   }, [fetchSubjects]);
+
+  // 페이지가 로드될 때 date 상태를 항상 오늘 날짜로 설정
+  useEffect(() => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0"); // 월은 0부터 시작하므로 1을 더함
+    const day = String(today.getDate()).padStart(2, "0");
+    const formattedToday = `${year}-${month}-${day}`;
+
+    saveDate(formattedToday); // 오늘 날짜로 설정
+  }, [saveDate]); // 페이지가 로드될 때마다 실행
 
   // 선택된 과목에 따라 플랜 필터링
   useEffect(() => {
@@ -70,7 +85,7 @@ const MyPlanner = () => {
           <div className="MyPlanDatePlanDate">
             <div className="MyPlanEmptyCase" />
             <div className="MyPlanDateCase">
-              <p>{date}</p>
+              <p>{date}</p> {/* 전역 상태의 날짜를 표시 */}
             </div>
 
             <div className="MyPlanButtonContainer">

@@ -23,7 +23,7 @@ public interface FriendRepository {
     void deleteFriendRequest(int friendRequestId) throws PersistenceException;
 
     /** 친구 관계 승인/저장 */
-    void acceptFriendRequest(int friendRequestId) throws PersistenceException;
+    void acceptFriendRequest(int friendRequestId, int userId) throws PersistenceException;
 
     /** 친구 요청 전송 */
     void saveFriendRequest(int fromUserId, int toUserId) throws PersistenceException;
@@ -36,4 +36,16 @@ public interface FriendRepository {
 
     /** 친구 삭제 */
     void deleteFriend(int friendUserId, int userId) throws PersistenceException;
+
+    /** 친구 관계 존재 여부 */
+    boolean existsFriend(int fromUserId, int toUserId) throws PersistenceException;
+
+    /** 친구 요청 존재 여부 */
+    boolean existsFriendRequest(int fromUserId, int toUserId) throws PersistenceException;
+
+    /** 친구 요청 존재 여부(요청번호로 조회) */
+    boolean existsFriendRequestById(int friendRequestId) throws PersistenceException;
+
+    /** 친구 요청 승인 권한 검증(받은 유저인지) */
+    boolean isToUser(int friendRequestId, int userId) throws PersistenceException;
 }

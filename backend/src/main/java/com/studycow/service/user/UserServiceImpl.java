@@ -100,7 +100,9 @@ public class UserServiceImpl implements UserService  {
         if(optionalUserGrade.isPresent()){
             signUpRequestDto.setUserGrade(optionalUserGrade.get());
         }else throw new CustomException(ErrorCode.NOT_FOUND_GRADE);
-
+        if(userRepository.findByUserEmail(signUpRequestDto.getUserEmail()).isPresent()){
+            throw new CustomException(ErrorCode.WRONG_EMAIL);
+        }
         String password = signUpRequestDto.getUserPassword();
 
         signUpRequestDto.setUserPassword(passwordEncoder.encode(password));

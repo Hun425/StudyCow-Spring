@@ -3,13 +3,14 @@ package com.studycow;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
-//@SpringBootTest
-@WebMvcTest
+@SpringBootTest
+@ActiveProfiles("test")
 class StudycowApplicationTests {
 
-//	@Test
-//	void contextLoads() {
-//	}
+	@Test
+	void contextLoads() {
+	}
 
 }
