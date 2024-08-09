@@ -158,13 +158,14 @@ const useStudyStore = create(
             const data = response.data;
             console.log("방 입장 성공", data);
 
-            const { logId, studyTime, rankDto } = data;
+            const { logId, rankDto, studyTime } = data;
 
             // 상태 업데이트
             const studyStore = useStudyStore.getState();
             studyStore.setLogId(logId);
             studyStore.setMyStudyTime(studyTime);
             studyStore.setRankInfo(rankDto);
+            
           } else {
             console.error(`응답 코드 오류: ${response.status}`);
           }
@@ -221,6 +222,7 @@ const useStudyStore = create(
         }
       },
 
+      // 리스트 랭킹 정보 업데이트
       yesterdayRankInfo: [],
       fetchYesterdayRankInfo: async () => {
         const { token } = useInfoStore.getState();
@@ -237,6 +239,153 @@ const useStudyStore = create(
           console.log(error);
         }
       },
+
+
+      // 방 퇴장 함수
+      exitRoom: async () => {
+        const studyStore = useStudyStore.getState();
+
+        const logId = studyStore.logId;
+        const myStudyTime = studyStore.myStudyTime;
+
+        const { token } = useInfoStore.getState(); // userNickName을 가져옵니다.
+        const data = {
+          "logId": logId,
+          "studyTime": myStudyTime,
+          "token": ""
+        }
+
+        try {
+          const response = await axios.patch(
+            `${API_URL}roomLog/exit`,
+            data,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          if (response.status === 200) {
+            console.log("방 퇴장 성공", response.data);
+            // 상태 업데이트(초기화)
+            studyStore.setLogId(0);
+            studyStore.setRankInfo([]);
+            studyStore.setMyStudyTime(0);
+
+          } else {
+            console.error(`응답 코드 오류: ${response.status}`);
+          }
+        } catch (error) {
+          if (error.response) {
+            // 서버가 상태 코드를 응답했을 때
+            switch (error.response.status) {
+              case 400:
+                console.error(
+                  "잘못된 요청입니다. 요청을 확인해 주세요.",
+                  error.response.data
+                );
+                break;
+              case 500:
+                console.error(
+                  "서버 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.",
+                  error.response.data
+                );
+                break;
+              default:
+                console.error(
+                  `알 수 없는 오류가 발생했습니다. 상태 코드: ${error.response.status}`,
+                  error.response.data
+                );
+            }
+          } else if (error.request) {
+            // 요청이 전송되었으나 응답을 받지 못했을 때
+            console.error(
+              "응답을 받지 못했습니다. 네트워크를 확인해 주세요.",
+              error.request
+            );
+          } else {
+            // 다른 오류
+            console.error("요청 중 오류가 발생했습니다.", error.message);
+          }
+        }
+      },
+
+      // 방 점수 갱신 함수
+      updateStudyTime: async () => {
+        const studyStore = useStudyStore.getState();
+
+        const logId = studyStore.logId;
+        const myStudyTime = studyStore.myStudyTime;
+
+        const { token } = useInfoStore.getState(); // userNickName을 가져옵니다.
+        const data = {
+          "logId": logId,
+          "studyTime": myStudyTime,
+          "token": ""
+        }
+
+        try {
+          const response = await axios.patch(
+            `${API_URL}roomLog/record`,
+            data,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          if (response.status === 200) {
+            console.log("방 시간 갱신 성공", response.data);
+
+
+            const data = response.data;
+            const { studyTime, rankDto } = data;
+            
+            // 상태 업데이트(초기화)
+            studyStore.setMyStudyTime(studyTime);
+            studyStore.setRankInfo(rankDto);
+
+          } else {
+            console.error(`응답 코드 오류: ${response.status}`);
+          }
+        } catch (error) {
+          if (error.response) {
+            // 서버가 상태 코드를 응답했을 때
+            switch (error.response.status) {
+              case 400:
+                console.error(
+                  "잘못된 요청입니다. 요청을 확인해 주세요.",
+                  error.response.data
+                );
+                break;
+              case 500:
+                console.error(
+                  "서버 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.",
+                  error.response.data
+                );
+                break;
+              default:
+                console.error(
+                  `알 수 없는 오류가 발생했습니다. 상태 코드: ${error.response.status}`,
+                  error.response.data
+                );
+            }
+          } else if (error.request) {
+            // 요청이 전송되었으나 응답을 받지 못했을 때
+            console.error(
+              "응답을 받지 못했습니다. 네트워크를 확인해 주세요.",
+              error.request
+            );
+          } else {
+            // 다른 오류
+            console.error("요청 중 오류가 발생했습니다.", error.message);
+          }
+        }
+      },
+
+      
     }),
     {
       name: "study-storage",

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import OpenViduVideoComponent from './OvVideo';
 import useInfoStore from '../../../stores/infos';
+import useStudyStore from "../../../stores/study.js";
 import './UserVideo.css';
 
 export default class UserVideoComponent extends Component {
@@ -18,6 +19,7 @@ export default class UserVideoComponent extends Component {
 
     componentDidMount() {
         const { userInfo } = useInfoStore.getState();
+        const {updateStudyTime, setMyStudyTime, myStudyTime} = useStudyStore.getState();
         const nickname = this.getNicknameTag();
 
         // 자신의 캠인지 확인
