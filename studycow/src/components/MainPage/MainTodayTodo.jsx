@@ -1,25 +1,25 @@
-import React from "react";
+import { useEffect } from "react";
 import "./styles/MainTodayTodo.css";
-
-const sub_code_dic = {
-  1: "국어",
-  2: "수학",
-  3: "영어",
-  4: "한국사",
-  5: "사회탐구",
-  6: "과학탐구",
-  7: "직업탐구",
-  8: "제2외국어/한문",
-};
+import useSubjectStore from "../../stores/subjectStore";
 
 const MainTodayTodo = ({ todayPlans }) => {
+  const { subjects, fetchSubjects } = useSubjectStore();
+
+  useEffect(() => {
+    fetchSubjects();
+  }, [fetchSubjects]);
+
   return (
     <div className="mainTodayTodoList">
       {todayPlans.length > 0 ? (
         todayPlans.map((plan) => {
           const hours = Math.floor(plan.planStudyTime / 60);
           const minutes = plan.planStudyTime % 60;
-          const subjectName = sub_code_dic[plan.subCode];
+          // subjects 배열에서 plan.subCode와 일치하는 subName을 찾는다
+          const subject = subjects.find(
+            (subject) => subject.subCode === plan.subCode
+          );
+          const subjectName = subject ? subject.subName : "알 수 없는 과목";
           return (
             <div key={plan.planId} className="mainTodayTodoItem">
               <p>

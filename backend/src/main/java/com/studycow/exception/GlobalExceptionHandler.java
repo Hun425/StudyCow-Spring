@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.TypeMismatchException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -72,10 +73,15 @@ public class GlobalExceptionHandler {
 
         List<com.studycow.exception.ErrorResponse.FieldError> errors = new ArrayList<>();
         for (FieldError fieldError : e.getFieldErrors()) {
+
             log.error("name: {}, message: {}", fieldError.getField(), fieldError.getDefaultMessage());
             com.studycow.exception.ErrorResponse.FieldError error = new com.studycow.exception.ErrorResponse.FieldError();
             error.setField(fieldError.getField());
             error.setMessage(fieldError.getDefaultMessage());
+
+            if(fieldError.isBindingFailure()) {
+                error.setMessage(ErrorCode.WRONG_REQUEST_MAPPING.getMessage());
+            }
 
             // 날짜 형식 관련 에러 처리
             if (fieldError.getDefaultMessage() != null &&
@@ -83,10 +89,19 @@ public class GlobalExceptionHandler {
                 error.setMessage("잘못된 날짜 형식입니다. 'YYYY-MM-DD' 형식으로 입력해 주세요.");
             }
 
+
+
             errors.add(error);
         }
 
         com.studycow.exception.ErrorResponse response = new com.studycow.exception.ErrorResponse(ErrorCode.BAD_REQUEST, errors);
+        return ResponseEntity.status(response.getErrorCode()).body(response);
+    }
+
+    @ExceptionHandler(TypeMismatchException.class)
+    protected ResponseEntity<ErrorResponse> handleTypeMismatchException(TypeMismatchException e) {
+        ErrorResponse response = new ErrorResponse(ErrorCode.WRONG_REQUEST_MAPPING);
+
         return ResponseEntity.status(response.getErrorCode()).body(response);
     }
 
