@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { Container, Typography, Paper, Box, Avatar } from '@mui/material';
 import { keyframes } from '@emotion/react';
 import useStudyStore from "../../stores/study";
-
 import firstPlaceImg from "./img/firstRankImg.png"
 import secondPlaceImg from "./img/secondRankImg.png"
 import thirdPlaceImg from "./img/thirdRankImg.png"
@@ -15,11 +14,6 @@ const slide = keyframes`
   100% { transform: translateY(-100%); }
 `;
 
-// const rankInfo = [
-//   { rank: 1, userId: 1, userName: '김철수', studyTime: 120 },
-//   { rank: 2, userId: 2, userName: '이영희', studyTime: 115 },
-//   { rank: 3, userId: 3, userName: '박민수', studyTime: 110 }
-// ];
 
 const formatStudyTime = (minutes) => {
   const hours = Math.floor(minutes / 60);
@@ -31,13 +25,15 @@ const formatStudyTime = (minutes) => {
   );
 };
 
-const StudyRoomLeaderBoard = () => {
+const StudyRoomLeaderBoard = ({myRankInfo}) => {
   const {rankInfo} = useStudyStore();
 
   const [index, setIndex] = useState(0);
   const displayCount = Math.min(3, rankInfo.length);
 
+
   useEffect(() => {
+    console.log("넘어온 랭크 데이터: "+ myRankInfo.userName)
     const interval = setInterval(() => {
       setIndex(prevIndex => (prevIndex + 1) % displayCount);
     }, 3000); // 3초마다 슬라이딩
@@ -77,7 +73,7 @@ const getAvatarImage = (rank) => {
             {rankInfo.slice(0, displayCount).map(data => (
               <Box key={data.rank}>
                 <Avatar src={getAvatarImage(data.rank)} alt={data.userName} />
-                <Typography variant="body2">
+                <Typography variant="body2" className="studyRoomRankUserNick">
                   {data.userName}
                 </Typography>
                 <Typography variant="body2">
@@ -89,13 +85,15 @@ const getAvatarImage = (rank) => {
         </Box>
       </Paper>
       <Paper elevation={3} className="studyRoomRankinfoPaper">
-        <Avatar src={myPlaceImg} alt="기본이미지" />
-        <Typography variant="body2">
-          {rankInfo[0].userName}
-        </Typography>
-        <Typography variant="body2">
-          {formatStudyTime(rankInfo[0].studyTime)}
-        </Typography>
+        <Box className="studyRoomRankinfoContent">
+          <Avatar src={myPlaceImg} alt="기본이미지" />
+          <Typography variant="body2" className="studyRoomRankUserNick">
+            {myRankInfo.userName}
+          </Typography>
+          <Typography variant="body2">
+            {formatStudyTime(myRankInfo.studyTime)}
+          </Typography>
+        </Box>
       </Paper>
     </Container>
   );

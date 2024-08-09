@@ -139,12 +139,9 @@ const useStudyStore = create(
       setRankInfo: (data) => set({ rankInfo: data }),
       setMyStudyTime: (data) => set({ myStudyTime: data }),
 
-      myRankInfo: [],
-      setMyRankInfo: (data) => set({ myRankInfo: data }),
-
       // 방 입장 함수
       registerRoom: async (rId) => {
-        const { token, userInfo } = useInfoStore.getState(); // userNickName을 가져옵니다.
+        const { token } = useInfoStore.getState(); // userNickName을 가져옵니다.
       
         try {
           const response = await axios.post(
@@ -168,12 +165,6 @@ const useStudyStore = create(
             studyStore.setLogId(logId);
             studyStore.setMyStudyTime(studyTime);
             studyStore.setRankInfo(rankDto);
-      
-            // userNickName과 같은 닉네임을 가진 유저를 rankDto에서 필터링
-            const myRankInfo = rankDto.filter(rank => rank.nickName === userInfo.userNickName);
-      
-            // 필터링한 결과를 myRankInfo에 저장
-            studyStore.setMyRankInfo(myRankInfo);
       
           } else {
             console.error(`응답 코드 오류: ${response.status}`);
@@ -240,7 +231,6 @@ const useStudyStore = create(
         logId: state.logId,
         rankInfo: state.rankInfo,
         setMyStudyTime: state.setMyStudyTime,
-        myRankInfo: state.myRankInfo,
       }),
     }
   )

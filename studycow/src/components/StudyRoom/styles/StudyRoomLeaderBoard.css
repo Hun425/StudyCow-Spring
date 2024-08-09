@@ -71,23 +71,40 @@
   
   .studyRoomRankinfoPaper {
     background-color: #e7e3e3 !important;
-    padding: 10px; /* 여백 조정 */
+    padding: 5px; /* 여백 조정 */
     height: 35%; /* Paper의 높이를 전체 컨테이너 높이의 20%로 설정 */
     display: flex;
     align-items: center; /* 수직 정렬 */
     justify-content: space-between; /* 가로 방향으로 space-between 정렬 */
     width: 100%; /* Paper의 너비를 전체 컨테이너 너비와 맞춤 */
   }
+
+  .studyRoomRankinfoContent {
+    background-color: #e7e3e3;
+    flex: 0 0 100%;
+    display: flex;
+    overflow: hidden;
+    align-items: center; /* 수직 중앙 정렬 */
+    justify-content: space-between; /* 가로 방향으로 space-between 정렬 */
+    padding: 5px; /* 내부 패딩 조정 */
+  }
   
-  .studyRoomRankinfoPaper .MuiAvatar-root {
+  .studyRoomRankinfoContent .MuiAvatar-root {
     margin-right: 8px; /* 아바타와 텍스트 간의 간격 */
     width: 24px;
     height: 24px;
   }
   
-  .studyRoomRankinfoPaper .MuiTypography-body2 {
+  .studyRoomRankinfoContent .MuiTypography-body2 {
     white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */
     font-size: 20px; /* 폰트 크기 설정 */
     font-family: "CustomFontGothic", sans-serif;
+  }
+
+  .studyRoomRankUserNick {
+    width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   
