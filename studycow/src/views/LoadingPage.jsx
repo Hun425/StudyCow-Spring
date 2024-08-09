@@ -4,9 +4,10 @@ import "../styles/LoadingPage.css";
 
 const LoadingPage = () => {
   const [dots, setDots] = useState("");
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    const dotInterval = setInterval(() => {
       setDots((prevDots) => {
         if (prevDots.length < 3) {
           return prevDots + ".";
@@ -14,14 +15,29 @@ const LoadingPage = () => {
           return "";
         }
       });
-    }, 500); // 0.5초마다 상태 업데이트
+    }, 500);
 
-    return () => clearInterval(interval); // 컴포넌트 언마운트 시 인터벌 정리
+    const progressInterval = setInterval(() => {
+      setProgress((prevProgress) => {
+        if (prevProgress < 100) {
+          return prevProgress + 100 / 3000;
+        } else {
+          clearInterval(progressInterval);
+          return 100;
+        }
+      });
+    }, 10);
+
+    return () => {
+      clearInterval(dotInterval);
+      clearInterval(progressInterval);
+    };
   }, []);
 
   return (
     <div className="LoadingPage">
       <img src={cowDribbble} alt="Loading GIF" />
+      <progress value={progress} max="100" className="loading-bar"></progress>
       <h1>열심히 가고있소{dots}</h1>
     </div>
   );

@@ -1,20 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useOpenAiStore from "../../../stores/openAi"; // openAi 스토어 가져오기
+import usePlanStore from "../../../stores/plan"; // usePlanStore 임포트
 import AIPlannerModal from "./AIPlannerModal"; // AIPlannerModal 컴포넌트 임포트
 import LoadingPage from "../../../views/LoadingPage"; // 로딩 페이지 임포트
 import "./styles/AutoCreate.css"; // 스타일 임포트
 
 const AutoCreate = ({ show, onClose }) => {
+  const { date } = usePlanStore((state) => ({
+    date: state.date,
+  }));
+
   const { generatePlanner } = useOpenAiStore(); // AI 플래너 생성 함수 가져오기
-  const [startDay, setStartDay] = useState(
-    new Date().toISOString().slice(0, 10)
-  );
+  const [startDay, setStartDay] = useState(date); // date로 초기화
   const [studyTime, setStudyTime] = useState(300);
 
   const [aiPlans, setAiPlans] = useState([]); // AI 플래너 계획 저장 상태
   const [analysis, setAnalysis] = useState(""); // AI 분석 결과 저장 상태
   const [showAIPlannerModal, setShowAIPlannerModal] = useState(false); // AIPlannerModal 표시 여부 상태
   const [loading, setLoading] = useState(false); // 로딩 상태
+
+  useEffect(() => {
+    setStartDay(date); // date가 변경될 때마다 startDay 업데이트
+  }, [date]);
 
   const handleCreate = async () => {
     setLoading(true); // 로딩 시작
