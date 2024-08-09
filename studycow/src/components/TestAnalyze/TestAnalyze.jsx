@@ -1,38 +1,61 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import useInfoStore from "../../stores/infos";
 import "./styles/TestAnalyze.css";
 import GradeAnalyzeBox from "./GradeAnalyzeBox";
 import useGradeStore from "../../stores/grade";
 import useSubjectStore from "../../stores/subjectStore";
+import ScoreRegist from "../ScoreRegist/ScoreRegist"; // ScoreRegist 컴포넌트 가져오기
 
 const TestAnalyze = () => {
   const { userInfo } = useInfoStore();
   const { selectedSubject, setSelectedSubject } = useGradeStore();
   const { subjects, fetchSubjects } = useSubjectStore();
 
+  const [showScoreRegistModal, setShowScoreRegistModal] = useState(false); // 모달을 열고 닫는 상태
+
   useEffect(() => {
     fetchSubjects();
   }, [fetchSubjects]);
 
-  const handleSubjectChange = (e) => {
-    const key = e.target.value;
-    setSelectedSubject(key);
-    console.log(key); // selectedSubject 변경 시 콘솔에 출력
+  const handleSubjectChange = (subjectCode) => {
+    // 이미 선택된 과목이 다시 선택되었을 때 처리
+    if (selectedSubject === subjectCode) {
+      setSelectedSubject(""); // 일시적으로 선택을 해제
+      setTimeout(() => setSelectedSubject(subjectCode), 0); // 바로 다시 선택된 과목으로 설정
+    } else {
+      setSelectedSubject(subjectCode);
+    }
+    console.log(subjectCode); // selectedSubject 변경 시 콘솔에 출력
+  };
+
+  const openModal = () => {
+    setShowScoreRegistModal(true);
+  };
+
+  const closeModal = () => {
+    setShowScoreRegistModal(false);
+  };
+
+  const handleScoreSubmit = (registeredSubjectCode) => {
+    closeModal(); // 모달을 닫고
+    handleSubjectChange(registeredSubjectCode); // 방금 등록한 과목으로 새로고침
   };
 
   return (
     <div className="analyzeTotalContainer">
       <div className="analyzeHeader">
         <h1>{userInfo.userNickName}님 어서오세요</h1>
+
+        {/* 성적 등록 버튼 */}
+        <button onClick={openModal}>성적 등록</button>
+
         <div className="gradeSubjectSelect">
           <select
             name="subject"
-            onChange={handleSubjectChange}
+            onChange={(e) => handleSubjectChange(e.target.value)}
             value={selectedSubject}
             className="form-control ml-2"
           >
-            {/* disabled: 과목을 선택한 후 select list에 '과목 선택'을 선택할 수 없게 함
-            hidden: 과목을 선택한 후 select list에 '과목 선택'이 보이지 않게 함 */}
             <option value="" disabled hidden>
               과목 선택
             </option>
@@ -50,6 +73,18 @@ const TestAnalyze = () => {
         </div>
         <GradeAnalyzeBox subject={selectedSubject} />
       </div>
+
+      {/* 모달 영역 */}
+      {showScoreRegistModal && (
+        <div className="analyzeModal-overlay">
+          <div className="analyzeModal-content">
+            <ScoreRegist
+              onCancel={closeModal}
+              onSubmit={handleScoreSubmit} // onSubmit으로 handleScoreSubmit을 전달
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
