@@ -18,7 +18,7 @@
 
 /* 차트 내부 폰트 스타일 전역 설정 (선택 사항) */
 .subject-grade-graph canvas {
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
 }
 
 /* 반응형 디자인을 위한 미디어 쿼리 */
