@@ -23,9 +23,20 @@
   }
   
   .studyRoomCamContainer {
+    display: flex; /* Flex 컨테이너로 설정 */
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
     flex-grow: 1;
     background-color: #333;
+    position: relative; /* 위치 기준 설정 */
+    overflow: hidden; /* 내용이 컨테이너를 넘지 않도록 */
   }
+
+  /* 만약 RoomCam 컴포넌트가 특정 크기를 가질 경우 */
+.studyRoomCamContainer > .video-session-container {
+  width: 100%; /* RoomCam의 너비 설정 (필요에 따라 조정) */
+  height: auto; /* RoomCam의 높이 자동 조정 */
+}
   
   .studyRoomCamContainer.shifted {
     margin-right: 300px; /* studyRoomUtil이 표시될 때 오른쪽 여백 추가 */
