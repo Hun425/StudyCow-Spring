@@ -58,14 +58,6 @@ function RoomCam({ roomId }) {
     }
   }, [session, joinSession]);
 
-  useEffect(() => {
-    // 페이지를 닫거나 새로 고침할 때 leaveSession 호출
-    window.addEventListener("beforeunload", onbeforeunload);
-
-    return () => {
-      window.removeEventListener("beforeunload", onbeforeunload);
-    };
-  }, []);
 
   const onbeforeunload = (e) => {
     leaveSession();

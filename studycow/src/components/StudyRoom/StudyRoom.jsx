@@ -17,6 +17,15 @@ function StudyRoom() {
   const [myRankInfo, setMyRankInfo] = useState(null);
 
   useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      // 페이지를 떠나기 전에 새로고침
+      event.preventDefault();
+      event.returnValue = '';
+      window.location.reload();
+    };
+  }, []);
+
+  useEffect(() => {
     const filteredRankInfo = rankInfo.find(
       (rank) => rank.userName === userInfo.userNickName
     );

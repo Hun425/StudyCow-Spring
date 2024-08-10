@@ -91,14 +91,19 @@ const useStudyStore = create(
         }),
 
       // 뒤로가기 함수
-      goStudyBack: () => {
+      goStudyBack: async () => {
         const studyStore = useStudyStore.getState();
         const { navigate } = useStudyStore.getState();
         if (navigate) {
-          studyStore.exitRoom();
-          navigate("/study"); // 이전 페이지로 리다이렉트
-          window.location.reload(); // 새로고침
-          setTimeout(() => {}, 50); // 100ms 후에 새로고침 실행
+          try {
+            await studyStore.exitRoom(); // API 호출이 끝날 때까지 기다림
+            navigate("/study"); // 이전 페이지로 리다이렉트
+            window.location.reload(); // 새로고침
+            setTimeout(() => {}, 50); // 50ms 후에 새로고침 실행
+          } catch (error) {
+            console.error("퇴장 중 오류 발생:", error);
+            // 오류 처리 로직 추가 가능
+          }
         }
       },
 
@@ -163,13 +168,13 @@ const useStudyStore = create(
             const data = response.data;
             console.log("방 입장 성공", data);
 
-            const { logId, rankDto, studyTime } = data;
+            const { logId, rankDto, roomStudyTime } = data;
 
             // 상태 업데이트
             const studyStore = useStudyStore.getState();
             studyStore.setLogId(logId);
-            studyStore.setMyStudyTime(studyTime);
-            studyStore.setMyStudyTimeSec(studyTime*60);
+            studyStore.setMyStudyTime(roomStudyTime);
+            studyStore.setMyStudyTimeSec(roomStudyTime*60);
             studyStore.setRankInfo(rankDto);
             
           } else {
@@ -350,9 +355,8 @@ const useStudyStore = create(
 
 
             const data = response.data;
-            const { studyTime, rankDto } = data;
-
-            studyStore.setMyStudyTime(studyTime);
+            const { rankDto } = data;
+            
             studyStore.setRankInfo(rankDto);
 
           } else {
