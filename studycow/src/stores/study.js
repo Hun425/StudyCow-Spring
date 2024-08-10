@@ -3,6 +3,7 @@ import { persist } from "zustand/middleware";
 import axios from "axios";
 import useInfoStore from "./infos";
 import useRoomStore from "./OpenVidu";
+import { data } from "@tensorflow/tfjs";
 
 const API_URL =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/studycow/";
@@ -91,8 +92,10 @@ const useStudyStore = create(
 
       // 뒤로가기 함수
       goStudyBack: () => {
+        const studyStore = useStudyStore.getState();
         const { navigate } = useStudyStore.getState();
         if (navigate) {
+          studyStore.exitRoom();
           navigate("/study"); // 이전 페이지로 리다이렉트
           window.location.reload(); // 새로고침
           setTimeout(() => {}, 50); // 100ms 후에 새로고침 실행
@@ -135,6 +138,8 @@ const useStudyStore = create(
       logId: 0,
       rankInfo: [],
       myStudyTime: 0,
+      myStudyTimeSec: 0,
+      setMyStudyTimeSec: (data) => set({myStudyTimeSec: data}),
       setLogId: (data) => set({ logId: data }),
       setRankInfo: (data) => set({ rankInfo: data }),
       setMyStudyTime: (data) => set({ myStudyTime: data }),
@@ -164,6 +169,7 @@ const useStudyStore = create(
             const studyStore = useStudyStore.getState();
             studyStore.setLogId(logId);
             studyStore.setMyStudyTime(studyTime);
+            studyStore.setMyStudyTimeSec(studyTime*60);
             studyStore.setRankInfo(rankDto);
             
           } else {
@@ -247,11 +253,12 @@ const useStudyStore = create(
 
         const logId = studyStore.logId;
         const myStudyTime = studyStore.myStudyTime;
+        const myStudyTimeSec = studyStore.myStudyTimeSec;
 
         const { token } = useInfoStore.getState(); // userNickName을 가져옵니다.
         const data = {
           "logId": logId,
-          "studyTime": myStudyTime,
+          "studyTime": (myStudyTimeSec / 60) - myStudyTime,
           "token": ""
         }
 
@@ -272,7 +279,7 @@ const useStudyStore = create(
             studyStore.setLogId(0);
             studyStore.setRankInfo([]);
             studyStore.setMyStudyTime(0);
-
+            studyStore.setMyStudyTimeSec(0);
           } else {
             console.error(`응답 코드 오류: ${response.status}`);
           }
@@ -317,11 +324,13 @@ const useStudyStore = create(
 
         const logId = studyStore.logId;
         const myStudyTime = studyStore.myStudyTime;
+        const myStudyTimeSec = studyStore.myStudyTimeSec;
 
         const { token } = useInfoStore.getState(); // userNickName을 가져옵니다.
         const data = {
           "logId": logId,
-          "studyTime": myStudyTime,
+          "studyTime": (myStudyTimeSec / 60) - myStudyTime
+          ,
           "token": ""
         }
 
@@ -342,8 +351,7 @@ const useStudyStore = create(
 
             const data = response.data;
             const { studyTime, rankDto } = data;
-            
-            // 상태 업데이트(초기화)
+
             studyStore.setMyStudyTime(studyTime);
             studyStore.setRankInfo(rankDto);
 
