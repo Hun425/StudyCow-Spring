@@ -116,7 +116,7 @@ public class FriendRepositoryImpl implements FriendRepository {
     public void acceptFriendRequest(int friendRequestId, int userId) throws PersistenceException {
         FriendRequest friendRequest = em.find(FriendRequest.class, friendRequestId);
 
-        if (userId != friendRequest.getId()) {
+        if (userId != friendRequest.getToUser().getId()) {
             throw new CustomException(ErrorCode.UNAUTHORIZED_ACCEPT_FRIEND);
         }
 
@@ -143,6 +143,17 @@ public class FriendRepositoryImpl implements FriendRepository {
 
         FriendRequest friendRequest = new FriendRequest(fromUser, toUser);
         em.persist(friendRequest);
+    }
+
+    /**
+     * 최근 저장된 친구 요청 번호
+     */
+    @Override
+    public int recentFriendRequestId() throws Exception {
+        return queryFactory
+                .select(friendRequest.id.max())
+                .from(friendRequest)
+                .fetchOne();
     }
 
     /**

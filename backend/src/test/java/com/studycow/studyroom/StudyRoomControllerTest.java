@@ -12,7 +12,7 @@ import com.studycow.dto.user.CustomUserInfoDto;
 import com.studycow.dto.user.RegisterRequestDto;
 import com.studycow.service.file.FileService;
 import com.studycow.service.studyroom.StudyRoomService;
-import com.studycow.service.user.UserGradeRepository;
+import com.studycow.repository.user.UserGradeRepository;
 import com.studycow.service.user.UserService;
 import com.studycow.web.studyroom.StudyRoomController;
 import org.junit.jupiter.api.BeforeEach;
