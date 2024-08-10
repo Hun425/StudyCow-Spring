@@ -1,8 +1,10 @@
 package com.studycow.web.file;
 
+import com.studycow.dto.file.FileDeleteRequestDto;
 import com.studycow.service.file.FileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,8 +35,8 @@ public class FileController {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/upload")
     public ResponseEntity<?> uploadFile(MultipartFile file) throws Exception {
-            String fileLink = fileService.uploadFile(file);
-            return new ResponseEntity<>(fileLink, HttpStatus.OK);
+        String fileLink = fileService.uploadFile(file);
+        return new ResponseEntity<>(fileLink, HttpStatus.OK);
     }
 
     @Operation(
@@ -42,9 +44,9 @@ public class FileController {
             description = "Google Cloud Storage 버킷에 있는 파일을 삭제합니다.<br>링크를 쿼리 파라미터로 전달하여 삭제 요청할 수 있습니다.<br>{'fileLink': 'string'} 전달")
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteFile(@RequestBody Map<String, String> requestBody) throws Exception {
-            fileService.deleteFile(requestBody.get("fileLink"));
-            return new ResponseEntity<>("파일 삭제 성공", HttpStatus.OK);
+    public ResponseEntity<?> deleteFile(@RequestBody @Valid FileDeleteRequestDto fileDeleteRequestDto) throws Exception {
+        fileService.deleteFile(fileDeleteRequestDto.getFileLink());
+        return new ResponseEntity<>("파일 삭제 성공", HttpStatus.OK);
     }
 
 }
