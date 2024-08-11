@@ -1,93 +1,90 @@
 import React, { useState, useEffect } from "react";
 import "./styles/ScoreRegist.css";
 import useScoreStore from "../../stores/scoreRegist";
-import useSubjectStore from "../../stores/subjectStore"; // subject store import
+import useSubjectStore from "../../stores/subjectStore"; 
+import useInfoStore from "../../stores/infos"; 
+import useGradeStore from "../../stores/grade"; 
 
 const ScoreRegist = ({ onCancel, onSubmit }) => {
-  // onSubmit prop 추가
-  const { updateScore, submitScore } = useScoreStore(); // 상태 관리 및 서버 전송 함수
-  const { subjects, fetchSubjects, problemTypes, fetchProblemTypes } =
-    useSubjectStore(); // 스토어 상태 및 함수
+  const { updateScore, submitScore } = useScoreStore(); 
+  const { subjects, fetchSubjects, problemTypes, fetchProblemTypes } = useSubjectStore();
+  const { fetchSelectedSubjectGrade, subjectGrades } = useGradeStore(); 
+  const { userInfo } = useInfoStore(); 
 
   const [subjectCode, setSubjectCode] = useState("");
-  const [testDate, setTestDate] = useState(""); // 초기 값은 빈 문자열로 설정
+  const [testDate, setTestDate] = useState(""); 
   const [testScore, setTestScore] = useState("");
   const [testGrade, setTestGrade] = useState("");
   const [wrongs, setWrongs] = useState([{ catCode: "", wrongCnt: "" }]);
-  const [errorMessage, setErrorMessage] = useState(""); // 오류 메시지 상태
+  const [errorMessage, setErrorMessage] = useState(""); 
 
   const grades = Array.from({ length: 9 }, (_, i) => `${i + 1}등급`);
 
-  // 과목 데이터 가져오기
   useEffect(() => {
-    fetchSubjects(); // 컴포넌트가 마운트될 때 과목 데이터 가져오기
+    fetchSubjects(); 
 
-    // 오늘 날짜를 YYYY-MM-DD 형식으로 포맷팅
     const today = new Date();
     const formattedDate = today.toISOString().split("T")[0];
-
-    // testDate를 오늘 날짜로 설정
     setTestDate(formattedDate);
-    updateScore("testDate", formattedDate); // 상태 업데이트
+    updateScore("testDate", formattedDate); 
   }, [fetchSubjects, updateScore]);
 
-  // 선택된 과목이 바뀔 때마다 세부 과목 정보 가져오기
   useEffect(() => {
     if (subjectCode) {
       fetchProblemTypes(subjectCode);
+      fetchSelectedSubjectGrade(userInfo.userId, subjectCode); // 성적 정보 가져오기
     }
-  }, [subjectCode, fetchProblemTypes]);
+  }, [subjectCode, fetchProblemTypes, fetchSelectedSubjectGrade, userInfo.userId]);
 
-  // 핸들러 함수들
   const handleSubjectChange = (e) => {
     const code = e.target.value;
     setSubjectCode(code);
-    updateScore("subCode", parseInt(code, 10)); // 상태 업데이트
+    updateScore("subCode", parseInt(code, 10)); 
   };
 
   const handleDateChange = (e) => {
     const date = e.target.value;
     setTestDate(date);
-    updateScore("testDate", date); // 상태 업데이트
+    updateScore("testDate", date); 
   };
 
-  // 점수는 0 이상 100 이하만 입력 가능
   const handleScoreChange = (e) => {
     const value = parseInt(e.target.value, 10);
-    const validValue = Math.max(0, Math.min(100, isNaN(value) ? 0 : value)); // 0에서 100 사이로 제한
+    const validValue = Math.max(0, Math.min(100, isNaN(value) ? 0 : value)); 
     setTestScore(validValue);
-    updateScore("testScore", validValue); // 상태 업데이트
+    updateScore("testScore", validValue); 
   };
 
   const handleGradeChange = (e) => {
     const grade = e.target.value;
     setTestGrade(grade);
-    updateScore("testGrade", parseInt(grade, 10)); // 상태 업데이트
+    updateScore("testGrade", parseInt(grade, 10)); 
   };
 
   const handleWrongChange = (index, field, value) => {
     const newWrongs = [...wrongs];
     if (field === "wrongCnt") {
       const parsedValue = parseInt(value, 10);
-      const validValue = Math.max(0, isNaN(parsedValue) ? 0 : parsedValue); // 0 이상의 값으로 제한
+      const validValue = Math.max(0, isNaN(parsedValue) ? 0 : parsedValue); 
       newWrongs[index][field] = validValue;
     } else if (field === "catCode") {
-      newWrongs[index][field] = parseInt(value, 10); // catCode로 변환
+      newWrongs[index][field] = parseInt(value, 10); 
+      newWrongs[index]["wrongCnt"] = "";
     }
     setWrongs(newWrongs);
-    updateScore("scoreDetails", newWrongs); // 상태 업데이트: "scoreDetails"로 변경
+    updateScore("scoreDetails", newWrongs); 
   };
 
   const addWrongForm = () => {
     const newWrongs = [...wrongs, { catCode: "", wrongCnt: "" }];
     setWrongs(newWrongs);
-    updateScore("scoreDetails", newWrongs); // 상태 업데이트: "scoreDetails"로 변경
+    updateScore("scoreDetails", newWrongs); 
   };
 
   const removeWrongForm = (index) => {
     const newWrongs = wrongs.filter((_, i) => i !== index);
     setWrongs(newWrongs);
-    updateScore("scoreDetails", newWrongs); // 상태 업데이트: "scoreDetails"로 변경
+    updateScore("scoreDetails", newWrongs); 
   };
 
   const validateForm = () => {
@@ -108,39 +105,51 @@ const ScoreRegist = ({ onCancel, onSubmit }) => {
       return false;
     }
 
-    // 오답 데이터 검증
     for (const wrong of wrongs) {
-      if (wrong.catCode !== "" && wrong.wrongCnt <= 0) {
+      if (wrong.catCode === "" && wrong.wrongCnt === "") {
+        continue;
+      }
+      if (wrong.catCode !== "" && (wrong.wrongCnt === "" || wrong.wrongCnt <= 0)) {
         setErrorMessage("오답 개수는 0 이상이어야 합니다.");
         return false;
       }
-      if (wrong.catCode === "" && wrong.wrongCnt >= 0) {
-        setErrorMessage(" 오답 유형을 선택해야 합니다.");
+      if (wrong.catCode === "" && wrong.wrongCnt > 0) {
+        setErrorMessage("오답 유형을 선택해야 합니다.");
         return false;
       }
     }
 
-    setErrorMessage(""); // 모든 필드가 유효하면 오류 메시지 초기화
     return true;
   };
-
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!validateForm()) {
-      return; // 유효성 검사를 통과하지 못하면 폼을 제출하지 않음
+      return; 
     }
 
-    // 실제 데이터 전송 호출
+    // 중복 성적 검증
+    const existingScores = Object.values(subjectGrades);
+    for (const score of existingScores) {
+      if (score.testDate === testDate) {
+        setErrorMessage("이미 동일한 날짜에 등록된 성적이 있습니다.");
+        return;
+      }
+    }
+
+    const filteredWrongs = wrongs.filter(
+      (wrong) => wrong.catCode !== "" || wrong.wrongCnt !== ""
+    );
+
+    updateScore("scoreDetails", filteredWrongs);
+
     submitScore();
-    onSubmit(subjectCode); // 성적 등록 후 상위 컴포넌트에 등록된 과목 코드 전달
+    onSubmit(subjectCode); 
   };
 
   return (
     <div className="ScoreRegist-container">
-      {/* 성적 등록 */}
       <div className="ScoreRegist-register">
         <h3>성적 등록</h3>
         {errorMessage && <p className="ScoreRegist-error">{errorMessage}</p>}
@@ -198,7 +207,6 @@ const ScoreRegist = ({ onCancel, onSubmit }) => {
         </div>
       </div>
 
-      {/* 오답 등록 */}
       <div className="ScoreRegist-mistake-register">
         <h3>오답 등록(선택사항)</h3>
         {wrongs.map((wrong, index) => (
@@ -209,7 +217,7 @@ const ScoreRegist = ({ onCancel, onSubmit }) => {
               onChange={(e) =>
                 handleWrongChange(index, "catCode", e.target.value)
               }
-              disabled={!subjectCode} // 과목이 선택되지 않으면 비활성화
+              disabled={!subjectCode} 
               required
             >
               <option value="" disabled hidden>
@@ -230,7 +238,7 @@ const ScoreRegist = ({ onCancel, onSubmit }) => {
                 handleWrongChange(index, "wrongCnt", e.target.value)
               }
               placeholder="오답 개수"
-              disabled={!subjectCode} // 과목이 선택되지 않으면 비활성화
+              disabled={!wrong.catCode} 
               required
             />
             <button
@@ -246,7 +254,6 @@ const ScoreRegist = ({ onCancel, onSubmit }) => {
         </button>
       </div>
 
-      {/* 버튼들 */}
       <div className="ScoreRegist-button-group">
         <button className="ScoreRegist-register-btn" onClick={handleSubmit}>
           등록하기
