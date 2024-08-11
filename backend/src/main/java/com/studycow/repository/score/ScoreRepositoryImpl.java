@@ -152,6 +152,17 @@ public class ScoreRepositoryImpl implements ScoreRepository{
     public Long saveScore(RequestScoreDto requestScoreDto, User user, SubjectCode subjectCode) throws PersistenceException {
         try {
             LocalDate testDate = requestScoreDto.getTestDate();
+
+            int scoreCnt = queryFactory
+                    .selectFrom(userSubjectScore)
+                    .where(userSubjectScore.user.eq(user)
+                            .and(userSubjectScore.subjectCode.eq(subjectCode))
+                            .and(userSubjectScore.testDate.eq(testDate)))
+                    .fetch().size();
+
+            if(scoreCnt > 0){
+                throw new CustomException(ErrorCode.DUPLICATE_SCORE);
+            }
             int testScore = requestScoreDto.getTestScore();
             int testGrade = requestScoreDto.getTestGrade();
             LocalDateTime updateDate = LocalDateTime.now();
@@ -164,6 +175,8 @@ public class ScoreRepositoryImpl implements ScoreRepository{
             em.flush();
 
             return userSubjectScore.getId();
+        }catch(CustomException e) {
+            throw e;
         }catch(Exception e){
             throw new PersistenceException("성적 등록 중 에러 발생", e);
         }

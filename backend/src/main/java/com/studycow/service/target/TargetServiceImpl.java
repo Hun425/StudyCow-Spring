@@ -61,7 +61,7 @@ public class TargetServiceImpl implements TargetService {
      * @throws Exception
      */
     @Override
-    public List<ScoreTargetDto> targetList(int userId, int myId) throws PersistenceException {
+    public List<ScoreTargetDto> targetList(int userId, int myId) throws Exception {
         //유저 확인
         User user = userRepository.findById((long) userId)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
@@ -115,7 +115,7 @@ public class TargetServiceImpl implements TargetService {
      * @throws Exception
      */
     @Override
-    public List<SubjectCodeDto> subjectList(int userId) throws PersistenceException {
+    public List<SubjectCodeDto> subjectList(int userId) throws Exception {
         //유저 확인
         User user = userRepository.findById((long) userId)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));

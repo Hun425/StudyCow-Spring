@@ -23,7 +23,7 @@ public interface TargetService {
     void saveScoreTarget(RequestTargetDto requestTargetDto, int userId) throws Exception;
 
     /** 성적 목표 조회 */
-    List<ScoreTargetDto> targetList(int userId, int myId) throws PersistenceException;
+    List<ScoreTargetDto> targetList(int userId, int myId) throws Exception;
 
     /** 성적 목표 삭제 */
     void deleteTarget(int userId, Long targetId) throws Exception;
@@ -32,5 +32,5 @@ public interface TargetService {
     void modifyTarget(RequestTargetDto requestTargetDto, int userId, Long targetId) throws Exception;
 
     /** 미설정 목표 과목 조회 */
-    List<SubjectCodeDto> subjectList(int userId) throws PersistenceException;
+    List<SubjectCodeDto> subjectList(int userId) throws Exception;
 }

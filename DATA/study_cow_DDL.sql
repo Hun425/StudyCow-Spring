@@ -299,6 +299,7 @@ CREATE TABLE `t_score` (
   `score_id` bigint NOT NULL AUTO_INCREMENT,
   `score_update_date` datetime(6) NOT NULL,
   PRIMARY KEY (`score_id`),
+  UNIQUE KEY `uni_user_sub_date` (`user_id`,`sub_code`,`test_date`),
   KEY `idx_testDate` (`test_date`),
   KEY `FKj4evgn8pqk1ihsgekdn01vhe0` (`sub_code`),
   KEY `FKa7ixqwd04f1a6p7mmxuhrx6ms` (`user_id`),
