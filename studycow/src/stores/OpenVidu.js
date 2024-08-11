@@ -106,6 +106,17 @@ const useRoomStore = create((set) => ({
         clientData: state.myUserName
       });
 
+      // 카메라 장치 확인
+      try {
+        await navigator.mediaDevices.getUserMedia({ video: true });
+      } catch (error) {
+        alert("카메라 장치를 찾을 수 없습니다.", error);
+        console.error("카메라 장치를 찾을 수 없습니다.", error);
+        // 카메라가 없는 경우 빈 문자열로 리디렉션
+        window.location.href = "/study";
+        return;
+      }
+
       const publisher = await OV.initPublisherAsync(undefined, {
         audioSource: true, // or specific device id
         videoSource: true, // or specific device id

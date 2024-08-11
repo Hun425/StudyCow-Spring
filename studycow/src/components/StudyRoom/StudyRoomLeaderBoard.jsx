@@ -33,7 +33,6 @@ const StudyRoomLeaderBoard = ({myRankInfo}) => {
 
 
   useEffect(() => {
-    console.log("넘어온 랭크 데이터: "+ myRankInfo.userName)
     const interval = setInterval(() => {
       setIndex(prevIndex => (prevIndex + 1) % displayCount);
     }, 3000); // 3초마다 슬라이딩
@@ -61,40 +60,48 @@ const getAvatarImage = (rank) => {
           공부 시간 랭킹
         </Typography>
       </Paper>
-      <Paper elevation={3} className='studyRoomRankPaper'>
-        <Box className="studyRoomRankContent">
-          <Box
-            style={{
-              animation: `${slide} ${displayCount * 3}s infinite`,
-              transform: `translateY(-${index * 100}%)`,
-            }}
-            className="studyRoomRankSliding"
-          >
-            {rankInfo.slice(0, displayCount).map(data => (
-              <Box key={data.rank}>
-                <Avatar src={getAvatarImage(data.rank)} alt={data.userName} />
-                <Typography variant="body2" className="studyRoomRankUserNick">
-                  {data.userName}
-                </Typography>
-                <Typography variant="body2">
-                  {formatStudyTime(data.studyTime)}
-                </Typography>
+      {rankInfo.length === 0 ? (
+        <Typography variant="body2" className="studyRoomRankNoData">
+          현재 랭킹을 조회할 수 없습니다.
+        </Typography>
+      ) : (
+        <>
+          <Paper elevation={3} className='studyRoomRankPaper'>
+            <Box className="studyRoomRankContent">
+              <Box
+                style={{
+                  animation: `${slide} ${displayCount * 3}s infinite`,
+                  transform: `translateY(-${index * 100}%)`,
+                }}
+                className="studyRoomRankSliding"
+              >
+                {rankInfo.slice(0, displayCount).map(data => (
+                  <Box key={data.rank}>
+                    <Avatar src={getAvatarImage(data.rank)} alt={data.userName} />
+                    <Typography variant="body2" className="studyRoomRankUserNick">
+                      {data.userName}
+                    </Typography>
+                    <Typography variant="body2">
+                      {formatStudyTime(data.studyTime)}
+                    </Typography>
+                  </Box>
+                ))}
               </Box>
-            ))}
-          </Box>
-        </Box>
-      </Paper>
-      <Paper elevation={3} className="studyRoomRankinfoPaper">
-        <Box className="studyRoomRankinfoContent">
-          <Avatar src={myPlaceImg} alt="기본이미지" />
-          <Typography variant="body2" className="studyRoomRankUserNick">
-            {myRankInfo.userName}
-          </Typography>
-          <Typography variant="body2">
-            {formatStudyTime(myRankInfo.studyTime)}
-          </Typography>
-        </Box>
-      </Paper>
+            </Box>
+          </Paper>
+          <Paper elevation={3} className="studyRoomRankinfoPaper">
+            <Box className="studyRoomRankinfoContent">
+              <Avatar src={myPlaceImg} alt="기본이미지" />
+              <Typography variant="body2" className="studyRoomRankUserNick">
+                {myRankInfo.userName}
+              </Typography>
+              <Typography variant="body2">
+                {formatStudyTime(myRankInfo.studyTime)}
+              </Typography>
+            </Box>
+          </Paper>
+        </>
+      )}
     </Container>
   );
 };
