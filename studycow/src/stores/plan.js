@@ -10,13 +10,18 @@ const API_URL =
 // 현재 날짜를 YYYY-MM-DD 형식으로 반환하는 함수
 const getCurrentDate = () => {
   const today = new Date();
-  const options = { timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit' };
-  const formatter = new Intl.DateTimeFormat('ko-KR', options);
+  const options = {
+    timeZone: "Asia/Seoul",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  };
+  const formatter = new Intl.DateTimeFormat("ko-KR", options);
   const parts = formatter.formatToParts(today);
-  
-  const year = parts.find(part => part.type === 'year').value;
-  const month = parts.find(part => part.type === 'month').value;
-  const day = parts.find(part => part.type === 'day').value;
+
+  const year = parts.find((part) => part.type === "year").value;
+  const month = parts.find((part) => part.type === "month").value;
+  const day = parts.find((part) => part.type === "day").value;
 
   return `${year}-${month}-${day}`;
 };
@@ -139,9 +144,8 @@ const usePlanStore = create(
 
       saveDate: (day) => set({ date: day }),
 
-      getTodayPlanRequest: async () => {
-        const { today } = get();
-        console.log("오늘은: "+today)
+      getTodayPlanRequest: async (today) => {
+        console.log("오늘은: " + today);
         const { token } = useInfoStore.getState();
         const headers = {
           Authorization: `Bearer ${token}`,

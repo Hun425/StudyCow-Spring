@@ -108,4 +108,18 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+
+  .studyRoomRankNoData {
+    background-color: #e7e3e3 !important;
+    padding: calc(10 / 1440 * 100vw); /* 여백 조정 */
+    height: 70%; /* Paper의 높이를 전체 컨테이너 높이의 35%로 설정 */
+    display: flex;
+    text-align: center;
+    align-items: center; /* 수직 정렬 */
+    justify-content: center; /* 가로 방향으로 space-between 정렬 */
+    width: 100%; /* Paper의 너비를 전체 컨테이너 너비와 맞춤 */
+    font-family: "CustomFontGothic", sans-serif !important;
+    font-size: calc(17 / 1440 * 100vw) !important; /* 폰트 크기 설정 */
+    border-radius: 10px 10px; /* 붙이는 부분 둥글게 */
+  }
   
