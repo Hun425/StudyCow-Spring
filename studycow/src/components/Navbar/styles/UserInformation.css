@@ -20,6 +20,7 @@ div .profileImg {
   justify-content: space-around;
   height: calc(75 / 1440 * 100vw);
   width: calc(250 / 1440 * 100vw);
+  border-color: rgba(0, 0, 0, 0);
   border-width: 0.1vw ; /* 너무 작은 단위의 계산 보정 */
   border-style: solid;
 }

@@ -1,29 +1,35 @@
 .Logo {
-    display: flex;
-    justify-content: flex-start;
-    padding-top: 15px;
-    width: 350px;
-    color: white;
+  display: flex;
+  justify-content: flex-start;
+  padding-top: calc(15 / 1440 * 100vw); /* 화면 너비에 비례하여 패딩 설정 */
+  width: calc(350 / 1440 * 100vw); /* 화면 너비에 비례하여 너비 설정 */
+  color: white;
 }
+
 .LogoImg {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration-line: none;
-    color: black;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none; /* 'text-decoration-line' 대신 'text-decoration' 사용 */
+  color: black;
+}
+
+.LogoImgSize {
+  width: calc(60 / 1440 * 100vw); /* 화면 너비에 비례하여 너비 설정 */
+  height: calc(60 / 1440 * 100vw); /* 화면 너비에 비례하여 높이 설정 */
+}
 
 .LogoItem {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    width: 200px;
-    height: 60px;
-    text-decoration-line: none;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: calc(200 / 1440 * 100vw); /* 화면 너비에 비례하여 너비 설정 */
+  height: calc(60 / 1440 * 100vw); /* 화면 너비에 비례하여 높이 설정 */
+  text-decoration: none; /* 'text-decoration-line' 대신 'text-decoration' 사용 */
+}
 
 .LogoItem a {
-    padding-top: 7.5px;
-    font-size: 30px;
-    text-decoration-line: none;
+  padding-top: calc(7.5 / 1440 * 100vw); /* 화면 너비에 비례하여 패딩 설정 */
+  font-size: calc(30 / 1440 * 100vw); /* 화면 너비에 비례하여 폰트 크기 설정 */
+  text-decoration: none; /* 'text-decoration-line' 대신 'text-decoration' 사용 */
 }

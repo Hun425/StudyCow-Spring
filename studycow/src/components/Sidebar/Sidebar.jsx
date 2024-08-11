@@ -23,8 +23,6 @@ function Sidebar() {
         </div>
         <div className="SidebarUserInfo">
           <img
-            width="120px"
-            height="120px"
             className="profileSideImg"
             src={userInfo.userThumb}
             alt="프로필이미지"
@@ -35,9 +33,9 @@ function Sidebar() {
           </div>
         </div>
         <div className="SidebarContent">
-          <Link to="">회원정보 수정</Link>
-          <Link to="friends">친구 관리</Link>
-          <Link to="grade">회원등급 정보</Link>
+          <Link className="SidebarContentItem" to="">회원정보 수정</Link>
+          <Link className="SidebarContentItem" to="friends">친구 관리</Link>
+          <Link className="SidebarContentItem" to="grade">회원등급 정보</Link>
           <hr />
         </div>
         <div className="SidebarFooter">
