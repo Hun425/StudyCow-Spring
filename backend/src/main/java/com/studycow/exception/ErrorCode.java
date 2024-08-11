@@ -34,11 +34,15 @@ public enum ErrorCode {
     LOGIN_REQUIRED(HttpStatus.UNAUTHORIZED,"로그인이 필요한 서비스입니다."),
     NOT_FOUND_SUBJECT_CODE(HttpStatus.NOT_FOUND,"해당 과목코드가 존재하지 않습니다."),
     USER_PRIVATE(HttpStatus.UNAUTHORIZED, "비공개 유저입니다."),
+
+    //성적, 과목, 문제유형 오류코드
     NOT_FOUND_SCORE_ID(HttpStatus.NOT_FOUND, "해당 성적이 존재하지 않습니다."),
     NOT_FOUND_CATEGORY_CODE(HttpStatus.NOT_FOUND,"해당 문제유형이 존재하지 않습니다."),
     NOT_MATCH_SUBJECT_CATEGORY(HttpStatus.BAD_REQUEST,"문제유형이 과목과 부합하지 않습니다."),
     NOT_FOUND_TARGET_ID(HttpStatus.NOT_FOUND,"해당 문제유형이 존재하지 않습니다."),
     BAD_TARGET_SCORE(HttpStatus.BAD_REQUEST,"목표성적을 잘못 입력하였습니다."),
+    DUPLICATE_SCORE(HttpStatus.BAD_REQUEST,"이미 해당 과목 및 날짜에 대한 성적이 있습니다."),
+    DUPLICATE_TARGET(HttpStatus.BAD_REQUEST,"이미 해당 과목에 대한 목표가 있습니다."),
 
     //파일 관리 오류 코드
     IO_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "파일 또는 입출력 처리 중 오류가 발생했습니다."),

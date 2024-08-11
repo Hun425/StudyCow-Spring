@@ -53,6 +53,17 @@ public class TargetRepositoryImpl implements TargetRepository {
     @Override
     public void saveScoreTarget(RequestTargetDto requestTargetDto, User user, SubjectCode subjectCode) throws PersistenceException {
         try {
+
+            int targetCnt = queryFactory
+                    .selectFrom(userScoreTarget)
+                    .where(userScoreTarget.user.eq(user)
+                            .and(userScoreTarget.subjectCode.eq(subjectCode)))
+                    .fetch().size();
+
+            if(targetCnt > 0){
+                throw new CustomException(ErrorCode.DUPLICATE_TARGET);
+            }
+
             int targetScore = requestTargetDto.getTargetScore();
             int targetGrade = requestTargetDto.getTargetGrade();
 

@@ -36,7 +36,10 @@ const useGradeStore = create((set) => ({
       const grades = response.data.scores.reduce((acc, score) => {
         acc[score.testDate] = {
           scoreId: score.scoreId,
+          subCode: score.subCode, // 과목 코드 추가
           testScore: score.testScore,
+          testGrade: score.testGrade, // 등급 추가
+          testDate: score.testDate, // 시험 일자 추가
           scoreDetails: score.scoreDetails,
         };
         return acc;

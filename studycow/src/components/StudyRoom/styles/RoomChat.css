@@ -4,9 +4,9 @@
   right: 0;
   padding: 0;
   margin: 0;
-  width: 300px;
-  height: calc((100vh - 70px)/2);
-  border: 1px solid #ddd;
+  width: calc(300 / 1440 * 100vw); /* 사이드바 너비를 화면 너비에 비례하여 설정 */
+  height: calc((100vh - calc(70 / 1440 * 100vw)) / 2 - calc(10 / 1440 * 100vw)); /* 전체 화면 높이에 비례한 높이 */
+  border: calc(1 / 1440 * 100vw) solid #ddd; /* 테두리 두께를 화면 너비에 비례하여 설정 */
   background-color: #f8f9fa;
   display: flex;
   flex-direction: column;
@@ -17,22 +17,25 @@
 .chat-messages {
   flex-grow: 1;
   overflow-y: auto;
-  padding: 16px;
+  padding: calc(16 / 1440 * 100vw); /* 패딩을 화면 너비에 비례하여 설정 */
   background-color: #f4f4f4;
-  font-family: "CustomFontGothic", sans-serif; /* 폰트 적용 */
 }
 
 /* 내 메시지와 상대 메시지 스타일 */
 .my-nickname, .other-nickname {
-  font-weight: bold;
-  margin-bottom: 4px;
+  font-weight: 900 !important;
+  font-size: calc(15 / 1440 * 100vw) !important;
+  margin-bottom: calc(4 / 1440 * 100vw); /* 마진을 화면 너비에 비례하여 설정 */
+  font-family: "PretendardRegular", sans-serif !important; /* 폰트 적용 */
 }
 
 .my-message, .other-message {
-  padding: 8px;
-  border-radius: 4px;
-  margin-bottom: 4px;
-  font-family: "CustomFontGothic", sans-serif; /* 폰트 적용 */
+  padding: calc(8 / 1440 * 100vw); /* 패딩을 화면 너비에 비례하여 설정 */
+  border-radius: calc(4 / 1440 * 100vw); /* 테두리 반경을 화면 너비에 비례하여 설정 */
+  margin-bottom: calc(4 / 1440 * 100vw); /* 마진을 화면 너비에 비례하여 설정 */
+  font-weight: 600 !important;
+  font-size: calc(13 / 1440 * 100vw) !important;
+  font-family: "PretendardRegular", sans-serif !important; /* 폰트 적용 */
 }
 
 .my-nickname, .my-message {
@@ -56,26 +59,35 @@
 .enter-message {
   font-style: italic;
   color: #888;
-  margin-bottom: 8px;
+  margin-bottom: calc(8 / 1440 * 100vw); /* 마진을 화면 너비에 비례하여 설정 */
+  font-weight: 600 !important;
+  font-size: calc(14 / 1440 * 100vw) !important;
+  font-family: "PretendardRegular", sans-serif !important; /* 폰트 적용 */
 }
 
 /* chat-input-container 스타일 */
 .chat-input-container {
   display: flex;
   align-items: center;
-  padding: 8px;
+  padding: calc(8 / 1440 * 100vw); /* 패딩을 화면 너비에 비례하여 설정 */
+  height: calc(56 / 1440 * 100vw);
 }
 
 .chat-input-container .MuiTextField-root {
-  margin-right: 8px;
+  margin-right: calc(8 / 1440 * 100vw); /* 마진을 화면 너비에 비례하여 설정 */
 }
 
+.css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input {
+  height: calc(24 / 1440 * 100vw) !important;
+}
 .messageSendButton {
   background-color: transparent;
   border: none;
 }
 
-.sendButtonImg {
-  width: 24px;
-  height: 24px;
+
+
+.roomMessageSendIcon {
+  width: calc(24 / 1440 * 100vw) !important; /* 아이콘 너비를 화면 너비에 비례하여 설정 */
+  height: calc(24 / 1440 * 100vw) !important; /* 아이콘 높이를 화면 너비에 비례하여 설정 */  
 }

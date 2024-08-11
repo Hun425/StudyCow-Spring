@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import OpenViduVideoComponent from './OvVideo';
 import useInfoStore from '../../../stores/infos';
+import useStudyStore from "../../../stores/study.js";
 import './UserVideo.css';
 
 export default class UserVideoComponent extends Component {
@@ -18,18 +19,32 @@ export default class UserVideoComponent extends Component {
 
     componentDidMount() {
         const { userInfo } = useInfoStore.getState();
+        const { updateStudyTime, setMyStudyTimeSec, myStudyTimeSec } = useStudyStore.getState();
         const nickname = this.getNicknameTag();
+
+        // 타이머를 스터디스토어의 myStudyTimeSec으로 초기화
+        this.setState({ timer: myStudyTimeSec });
 
         // 자신의 캠인지 확인
         if (nickname === userInfo.userNickName) {
             // 타이머 시작
             this.timerInterval = setInterval(() => {
                 if (this.state.handDetected) {
-                    this.setState(prevState => ({
-                        timer: prevState.timer + 1
-                    }));
+                    this.setState(prevState => {
+                        const newTimer = prevState.timer + 1;
+                        
+                        // 1초마다 타이머 업데이트
+                        setMyStudyTimeSec(newTimer);
+
+                        // 1분마다 updateStudyTime() 호출
+                        if (newTimer % 60 === 0) {
+                            updateStudyTime();
+                        }
+
+                        return { timer: newTimer };
+                    });
                 }
-            }, 1000); // 1초마다 타이머 업데이트
+            }, 1000);
 
             // MediaPipe Hands 초기화
             this.hands = new window.Hands({

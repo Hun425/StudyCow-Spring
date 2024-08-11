@@ -1,13 +1,11 @@
 package com.studycow.user;
 
 import com.studycow.config.jwt.JwtUtil;
-import com.studycow.domain.User;
 import com.studycow.domain.UserGrade;
 import com.studycow.dto.user.*;
 import com.studycow.exception.CustomException;
-import com.studycow.exception.ErrorCode;
 import com.studycow.repository.user.UserRepository;
-import com.studycow.service.user.UserGradeRepository;
+import com.studycow.repository.user.UserGradeRepository;
 import com.studycow.service.user.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,10 +15,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * <pre>
+ *   회원 로직 통합 테스트
+ * </pre>
+ * @author 채기훈
+ * @since JDK17
+ */
 @SpringBootTest
 @ActiveProfiles("test")
 @Transactional

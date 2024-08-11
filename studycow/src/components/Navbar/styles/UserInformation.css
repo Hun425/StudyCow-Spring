@@ -1,67 +1,64 @@
 div .profileImg {
-  object-fit: auto;
+  object-fit: cover; /* 'auto' 대신 'cover'를 사용하여 이미지 비율을 유지하면서 잘 맞추도록 */
   object-position: center;
-  width: 65px;
-  height: 65px;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  width: calc(65 / 1440 * 100vw); /* px 단위를 제거하고 계산 간소화 */
+  height: calc(65 / 1440 * 100vw);
+  box-shadow: 0 calc(4 / 1440 * 100vw) calc(4 / 1440 * 100vw) rgba(0, 0, 0, 0.25);
   border-color: rgba(0, 0, 0, 1);
   border-style: solid;
-  border-width: 0.1px;
+  border-width: 0.1vw ; /* 너무 작은 단위의 계산 보정 */
   border-radius: 50%;
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
 }
 
-.userInfoOpen {
-  font-size: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  height: 75px;
-  width: 250px;
-  border: solid 0.1px;
-}
+.userInfoOpen,
 .userInfoClose {
-  font-size: 15px;
+  font-size: calc(15 / 1440 * 100vw);
   display: flex;
   align-items: center;
   justify-content: space-around;
-  height: 75px;
-  width: 250px;
+  height: calc(75 / 1440 * 100vw);
+  width: calc(250 / 1440 * 100vw);
+  border-color: rgba(0, 0, 0, 0);
+  border-width: 0.1vw ; /* 너무 작은 단위의 계산 보정 */
+  border-style: solid;
 }
 
 .userInfoDetail {
   margin: 0;
   z-index: 2;
-  height: 175px;
-  width: 250px;
+  height: calc(175 / 1440 * 100vw);
+  width: calc(250 / 1440 * 100vw);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  border: solid 0.1px;
+  border-width: 0.1vw ; /* 너무 작은 단위의 계산 보정 */
+  border-style: solid;
   background-color: white;
 }
 
 .userInfoDetail p {
   z-index: 2;
-  font-size: 16px;
+  font-size: calc(16 / 1440 * 100vw);
   margin: 0;
-  padding-top: 10px;
-  padding-bottom: 5px;
-  padding-left: 10px;
+  padding-top: calc(10 / 1440 * 100vw);
+  padding-bottom: calc(5 / 1440 * 100vw);
+  padding-left: calc(10 / 1440 * 100vw);
   background-color: white;
 }
 
 .userInfoItem {
   margin: 0;
   z-index: 2;
-  font-size: 16px;
-  height: 75px;
-  width: 250px;
+  font-size: calc(16 / 1440 * 100vw) !important;
+  height: calc(75 / 1440 * 100vw);
+  width: calc(250 / 1440 * 100vw);
   display: flex;
   align-items: center;
   justify-content: center;
-  border: solid 0.1px;
+  border-width: 0.1vw ; /* 너무 작은 단위의 계산 보정 */
+  border-style: solid;
   background-color: white;
   text-decoration-line: none;
   color: black;
@@ -71,16 +68,14 @@ div .profileImg {
   margin: 0;
   z-index: 2;
   position: absolute !important;
-  top: 12.5px;
-  right: 50px;
+  top: calc(12.5 / 1440 * 100vw);
+  right: calc(30 / 1440 * 100vw);
   display: inline-block;
   font-family: "CustomFont", sans-serif;
 }
 
-.upImg {
-  width: 30px;
-}
-
+.upImg,
 .downImg {
-  width: 30px;
+  width: calc(30 / 1440 * 100vw);
+  height: calc(30 / 1440 * 100vw);
 }

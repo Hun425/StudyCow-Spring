@@ -1,6 +1,6 @@
 .Sidebar {
     position: sticky;
-    top: 0px;
+    top: 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,32 +9,32 @@
 }
 
 .SidebarLogo a {
-    text-decoration-line: none;
+    text-decoration: none; /* 'text-decoration-line' 대신 'text-decoration' 사용 */
 }
 
 .SidebarContent {
-    padding-top: 20px;
+    padding-top: calc(20 / 1440 * 100vw);
     display: flex;
     justify-content: start;
     align-items: start;
     flex-direction: column;
-    width: 317px;
+    width: calc(317 / 1440 * 100vw);
 }
 
-.SidebarContent a {
+.SidebarContentItem {
     color: white;
-    margin-top: 30px;
-    font-size: 22px;
+    margin-top: calc(30 / 1440 * 100vw);
+    font-size: 1.528vw !important;
     font-weight: 100;
-    text-decoration-line: none;
+    text-decoration: none; /* 'text-decoration-line' 대신 'text-decoration' 사용 */
 }
 
 .SidebarContent hr {
     color: white;
-    margin-top: 50px;
-    margin-bottom: 50px;
-    width: 317px;
-    border: 1px solid #ddd; 
+    margin-top: calc(50 / 1440 * 100vw);
+    margin-bottom: calc(50 / 1440 * 100vw);
+    width: calc(317 / 1440 * 100vw);
+    border: 1px solid #ddd;
 }
 
 .SidebarUserInfo {
@@ -42,72 +42,79 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 240px;
-    padding-top: 50px;
-    width: 317px;
+    height: calc(240 / 1440 * 100vw);
+    padding-top: calc(50 / 1440 * 100vw);
+    width: calc(317 / 1440 * 100vw);
 }
+
 .SidbarUserInfoContent {
     display: flex;
     justify-content: start;
     align-items: center;
     flex-direction: column;
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
+
 .SidbarUserInfoContent p {
-    font-size: 24px;
+    font-size: 1.667vw;
     margin-bottom: 1px;
 }
+
 .SidbarUserInfoContent a {
     color: #595959 !important;
-    font-size: 15px;
+    font-size: 1.041vw;
 }
 
-
 .profileSideImg {
-    object-fit: auto;
+    object-fit: cover; /* 'auto' 대신 'cover'를 사용하여 이미지 비율 유지 */
     object-position: center;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 calc(4 / 1440 * 100vw) calc(4 / 1440 * 100vw) rgba(0, 0, 0, 0.25);
     border-color: rgba(0, 0, 0, 0.1);
     border-style: solid;
-    border-width: 1px;
+    border-width: calc(1 / 1440 * 100vw);
     border-radius: 50%;
-    margin-bottom: 20px;
+    margin-bottom: calc(20 / 1440 * 100vw);
+    height: calc(120 / 1440 * 100vw);
+    width: calc(120 / 1440 * 100vw);
     background-color: #f8f8f8;
-  }
+}
 
 .SidebarFooter {
-display: flex;
-justify-content: center;
-align-items: center;
-flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .SidebarFooter a {
-    text-decoration-line: none;
+    text-decoration: none; /* 'text-decoration-line' 대신 'text-decoration' 사용 */
     color: #595959;
 }
-
 
 .SidebarFooterLogo {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
-    padding-top: 15px;
-    width: 350px;
+    padding-top: calc(15 / 1440 * 100vw);
+    width: calc(350 / 1440 * 100vw);
     color: white;
+}
+
+.SidebarFooterItem a{
+    font-size: 1.041vw;
 }
 
 .SidebarFooterLogo .LogoItem {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 30px;
-    text-decoration-line: none;
-  }
+    height: calc(30 / 1440 * 100vw);
+    text-decoration: none; /* 'text-decoration-line' 대신 'text-decoration' 사용 */
+}
 
 .SidebarFooterLogo .LogoItem a {
-    font-size: 18px;
+    font-size: 1.25vw;
     color: white;
-    text-decoration-line: none;
+    text-decoration: none; /* 'text-decoration-line' 대신 'text-decoration' 사용 */
 }

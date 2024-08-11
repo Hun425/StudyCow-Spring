@@ -1,18 +1,18 @@
 .todayPlanTitle {
   display: flex;
-  align-content: center;
+  align-items: center;
   justify-content: center;
-  font-size: 20px;
+  font-size: calc(20 / 1440 * 100vw); /* 화면 너비에 비례한 폰트 크기 */
 }
 
 .singleTodayPlanBox {
-  width: 280px;
-  height: 162px;
+  width: calc(280 / 1440 * 100vw); /* 컨테이너의 너비 설정 */
+  height: calc((100vh - calc(70 / 1440 * 100vw)) / 4 - calc(10 / 1440 * 100vw)); /* 전체 화면 높이에 비례한 높이 */
   overflow-y: auto;
-  margin: 0;    /* 마진 0 */
-  padding: 10px;   /* 패딩 0 */
-  background-color: #f1c40f; /* 위쪽 붙이는 부분 색상 */
-  border-radius: 10px 10px; /* 붙이는 부분 둥글게 */
+  margin: 0;
+  padding: calc(10 / 1440 * 100vw); /* 화면 너비에 비례한 패딩 */
+  background-color: #f1c40f; /* 배경 색상 */
+  border-radius: calc(10 / 1440 * 100vw); /* 화면 너비에 비례한 둥글기 */
   display: flex;
   align-content: center;
   justify-content: flex-start;
@@ -21,92 +21,91 @@
 
 /* 기본 스크롤바 숨기기 */
 .singleTodayPlanBox::-webkit-scrollbar {
-  width: 0; /* 스크롤바 너비 0으로 숨기기 */
+  width: calc(0 / 1440 * 100vw); /* 화면 너비에 비례한 스크롤바 너비 */
 }
 
 /* 호버 시 스크롤바 나타내기 */
 .singleTodayPlanBox:hover::-webkit-scrollbar {
-  width: 10px; /* 스크롤바 너비 10px */
+  width: calc(10 / 1440 * 100vw); /* 화면 너비에 비례한 스크롤바 너비 */
 }
 
 .singleTodayPlanBox::-webkit-scrollbar-track {
   background: #f1f1f1; /* 스크롤바 트랙 색상 */
-  border-radius: 10px; /* 트랙 둥글게 */
+  border-radius: calc(10 / 1440 * 100vw); /* 화면 너비에 비례한 둥글기 */
 }
 
 .singleTodayPlanBox::-webkit-scrollbar-thumb {
   background: #888; /* 스크롤바 색상 */
-  border-radius: 10px; /* 스크롤바 둥글게 */
+  border-radius: calc(10 / 1440 * 100vw); /* 화면 너비에 비례한 둥글기 */
 }
 
 .singleTodayPlanBox:hover::-webkit-scrollbar-thumb {
-  background: #555; /* 스크롤바 호버 색상 */
+  background: #555; /* 호버 시 스크롤바 색상 */
 }
 
-  
-  .singleTodayPlanContent {
-    width: 240px;
-    display: flex; /* 체크박스와 텍스트를 일렬로 정렬 */
-    align-items: center; /* 세로 방향 중앙 정렬 */
-    justify-content: flex-start;
-    border-bottom: 1px solid red; /* 빨간 밑줄 */
-    padding-top: 10px;   
-  }
-  
-  .singleTodayPlanContent label {
-    display: flex;
-    align-items: center;
-    margin: 0;
-    padding: 0;
-    font-size: 14px; /* 글자 크기 설정 */
-  }
-  
-  .singleTodayPlanContent input[type="checkbox"] {
-    margin-left: 10px; /* 체크박스 여백 */
-    margin-right: 0px; /* 체크박스 여백 */
-    width: 19px; /* 체크박스의 너비 */
-    height: 19px; /* 체크박스의 높이 */
-    /* transform 속성을 사용하여 체크박스의 크기를 비율로 조절 */
-    transform: scale(1); /* 1.5배 크기 조절 */
-  }
-  
-  .singleTodayPlanContent p {
-    display: flex;
-    align-items: center;
-    margin: 0;
-    font-size: 14px; /* 글자 크기 설정 */
-    padding-left: 10px;
-  }
+.singleTodayPlanContent {
+  width: calc(240 / 1440 * 100vw); /* 화면 너비에 비례한 너비 */
+  display: flex; /* 체크박스와 텍스트를 일렬로 정렬 */
+  align-items: center; /* 세로 방향 중앙 정렬 */
+  justify-content: flex-start;
+  border-bottom: calc(1 / 1440 * 100vw) solid red; /* 화면 너비에 비례한 밑줄 두께 */
+  padding-top: calc(10 / 1440 * 100vw); /* 화면 너비에 비례한 패딩 */
+  position: relative; /* 절대 위치 설정을 위해 relative 추가 */
+}
 
+.singleTodayPlanContent label {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  font-size: calc(14 / 1440 * 100vw); /* 화면 너비에 비례한 폰트 크기 */
+}
+
+.singleTodayPlanContent input[type="checkbox"] {
+  margin-left: calc(10 / 1440 * 100vw); /* 화면 너비에 비례한 체크박스 여백 */
+  margin-right: 0px; /* 체크박스 여백 */
+  width: calc(19 / 1440 * 100vw); /* 화면 너비에 비례한 체크박스 너비 */
+  height: calc(19 / 1440 * 100vw); /* 화면 너비에 비례한 체크박스 높이 */
+  transform: scale(1); /* 체크박스 크기 조절 */
+}
+
+.singleTodayPlanContent p {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  font-size: calc(14 / 1440 * 100vw); /* 화면 너비에 비례한 폰트 크기 */
+  padding-left: calc(10 / 1440 * 100vw); /* 화면 너비에 비례한 패딩 */
+}
 
 /* 완료된 플랜에 대한 스타일 */
 .singleTodayPlanContent.completed::before {
-content: "";
-position: absolute;
-left: 0;
-right: 0;
-top: 50%; /* 텍스트 중앙에 위치 */
-height: 2px; /* 선의 두께 */
-z-index: 1; /* 텍스트 위에 표시 */
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%; /* 텍스트 중앙에 위치 */
+  height: calc(2 / 1440 * 100vw); /* 화면 너비에 비례한 선의 두께 */
+  z-index: 1; /* 텍스트 위에 표시 */
 }
 
 .singleTodayPlanContent.completed p,
 .singleTodayPlanContent.completed label {
-position: relative;
-z-index: 2; /* 선 뒤에 표시 */
+  position: relative;
+  z-index: 2; /* 선 뒤에 표시 */
 }
 
 .singleTodayPlanContent.completed p {
-text-decoration:line-through red;
+  text-decoration: line-through red; /* 완료된 항목에 대해 텍스트에 선 긋기 */
 }
 
 .EmptyPlan {
-font-size: 50px;
+  font-size: calc(50 / 1440 * 100vw); /* 화면 너비에 비례한 폰트 크기 */
 }
 
 .singleTodayPlanNoContent {
   text-align: center;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  height: 100%; /* 높이 100%로 설정 */
+  font-size: calc(20 / 1440 * 100vw); /* 화면 너비에 비례한 폰트 크기 */
 }

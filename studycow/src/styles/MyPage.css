@@ -17,11 +17,12 @@
   
   .MyPageSidebar {
     z-index: 2;
-    width: 395px;
+    width: calc(395 / 1440 * 100vw); /* 화면 너비에 비례하여 너비 설정 */
     position: relative;
     background-color: #7092BE;
     box-sizing: border-box;
-    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+    height: 200vh;
+    box-shadow: rgb(38, 57, 77) 0 calc(20 / 1440 * 100vw) calc(30 / 1440 * 100vw) -10px;
   }
   
   .MyPageContent {

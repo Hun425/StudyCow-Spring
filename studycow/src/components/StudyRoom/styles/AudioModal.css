@@ -1,0 +1,55 @@
+.audioModalContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  background-color: #f5f5f5;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  outline: none;
+}
+
+.audioModalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background-color: #B4C8BB;
+  color: white;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.audioModalContent {
+  padding: 24px;
+}
+
+.audioModalSelectContainer,
+.audioModalSliderContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.audioModalSelectContainer svg,
+.audioModalSliderContainer svg {
+  margin-right: 12px;
+  color: #B4C8BB;
+}
+
+.audioModalSelectContainer .MuiTypography-root,
+.audioModalSliderContainer .MuiTypography-root {
+  min-width: 100px;
+  margin-right: 12px;
+}
+
+.audioModalSelectContainer .MuiFormControl-root,
+.audioModalSliderContainer .MuiSlider-root {
+  flex-grow: 1;
+}
+
+.MuiSelect-select,
+.MuiSlider-root {
+  color: #B4C8BB;
+}

@@ -12,10 +12,17 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "PretendardRegular";
+  src: url("../assets/font/Pretendard-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   font-family: "CustomFontGothic", sans-serif;
-  width: 1440px;
-  height: 773px;
+  width: 100vw;
+  height: 100vh;
   overflow: y;
   margin: 0;
   padding: 0;

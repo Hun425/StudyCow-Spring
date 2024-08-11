@@ -3,20 +3,67 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  height: 702.8px; /* 전체 화면 높이 */
-  padding: 10px 0; /* 상하 패딩 추가 */
-  width: 60px; /* 사이드바 너비 추가 */
+  height: calc(100vh - calc(70 / 1440 * 100vw)); /* 화면 너비에 비례한 높이 */
+  padding: calc(10 / 1440 * 100vw) 0; /* 상하 패딩을 화면 너비에 비례하여 설정 */
+  width: calc(60 / 1440 * 100vw); /* 화면 너비에 비례한 사이드바 너비 */
 }
 
 .studySideButtonContainer {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: 10px; /* 버튼 간의 간격 추가 */
+  gap: calc(10 / 1440 * 100vw); /* 버튼 간의 간격을 화면 너비에 비례하여 설정 */
 }
 
 .studySideSettingButtonContainer {
+  justify-content: center;
   align-items: center;
-  margin-top: auto; /* 설정 버튼을 컨테이너 하단에 배치 */
-  padding: 10px; /* 설정 버튼의 패딩 추가 */
+  padding: calc(10 / 1440 * 100vw); /* 설정 버튼의 패딩을 화면 너비에 비례하여 설정 */
+}
+
+/* 아이콘 스타일 */
+.studySideCameraIcon {
+  color: #39FF14; /* 카메라 켜짐 상태 색상 */
+  font-size: calc(40 / 1440 * 100vw) !important; /* 화면 너비에 비례한 폰트 크기 */
+}
+
+.studySideCameraOffIcon {
+  color: #FF5733; /* 카메라 꺼짐 상태 색상 */
+  font-size: calc(40 / 1440 * 100vw) !important; /* 화면 너비에 비례한 폰트 크기 */
+}
+
+.studySideSpeakerIcon {
+  color: #39FF14; /* 스피커 켜짐 상태 색상 */
+  font-size: calc(40 / 1440 * 100vw) !important; /* 화면 너비에 비례한 폰트 크기 */
+}
+
+.studySideSpeakerOffIcon {
+  color: #FF5733; /* 스피커 꺼짐 상태 색상 */
+  font-size: calc(40 / 1440 * 100vw) !important; /* 화면 너비에 비례한 폰트 크기 */
+}
+
+.studySideMicIcon {
+  color: #39FF14; /* 마이크 켜짐 상태 색상 */
+  font-size: calc(40 / 1440 * 100vw) !important; /* 화면 너비에 비례한 폰트 크기 */
+}
+
+.studySideMicOffIcon {
+  color: #FF5733; /* 마이크 꺼짐 상태 색상 */
+  font-size: calc(40 / 1440 * 100vw) !important; /* 화면 너비에 비례한 폰트 크기 */
+}
+
+.studySideMusicIcon {
+  color: #39FF14; /* 음악 켜짐 상태 색상 */
+  font-size: calc(40 / 1440 * 100vw) !important; /* 화면 너비에 비례한 폰트 크기 */
+}
+
+.studySideMusicOffIcon {
+  color: #FF5733; /* 음악 꺼짐 상태 색상 */
+  font-size: calc(40 / 1440 * 100vw) !important; /* 화면 너비에 비례한 폰트 크기 */
+}
+
+.studySideSettingsIcon {
+  color: #C3C5C5;
+  font-size: calc(40 / 1440 * 100vw) !important; /* 화면 너비에 비례한 폰트 크기 */
 }

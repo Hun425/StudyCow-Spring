@@ -20,8 +20,8 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "t_score", indexes =
-@Index(name = "idx_testDate", columnList = "test_date"))
+@Table(name = "t_score", uniqueConstraints =
+@UniqueConstraint(name = "UNI_USER_SUB_DATE", columnNames = {"user_id", "sub_code", "test_date"}))
 @Data
 public class UserSubjectScore {
 

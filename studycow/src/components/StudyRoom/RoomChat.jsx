@@ -89,6 +89,7 @@ function RoomChat({ roomId }) {
     connect();
     return () => {
       if (stompClient) {
+        sendChatMessage('LEAVE');
         stompClient.deactivate();
       }
     };
@@ -119,7 +120,7 @@ function RoomChat({ roomId }) {
             )}
             <Typography
               variant="body2"
-              className={message.type === 'ENTER' ? 'enter-message' : (message.senderNickname === userInfo.userNickName ? 'my-message' : 'other-message')}
+              className={message.type === 'ENTER' || message.type === 'LEAVE' ? 'enter-message' : (message.senderNickname === userInfo.userNickName ? 'my-message' : 'other-message')}
             >
               {message.message}
             </Typography>
@@ -128,6 +129,7 @@ function RoomChat({ roomId }) {
       </div>
       <div className="chat-input-container">
         <TextField
+          className='roomInputItem'
           fullWidth
           inputRef={messageInputRef}
           placeholder="채팅 입력하기"
@@ -136,7 +138,7 @@ function RoomChat({ roomId }) {
           size="small"
         />
         <IconButton onClick={sendMessage}>
-          <SendIcon />
+          <SendIcon className='roomMessageSendIcon'/>
         </IconButton>
       </div>
     </Paper>

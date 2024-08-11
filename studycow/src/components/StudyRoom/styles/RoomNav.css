@@ -2,11 +2,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 1440px;
-    height: 70px;
+    width: 100%;
+    height: calc(70 / 1440 * 100vw); /* 화면 너비에 비례한 높이 */
     background-color: #262A2D;
     box-sizing: border-box;
-    border-bottom: solid #919497 0.1px;
+    border-bottom: solid #919497 calc(0.1 / 1440 * 100vw); /* 화면 너비에 비례한 테두리 두께 */
 }
 
 .StudyNavLogoContainer {
@@ -23,5 +23,36 @@
 .utilButton {
     display: flex;
     align-items: center;
-    padding: 0;
+    padding: 0; /* 버튼의 패딩 설정 */
+}
+
+.studyNavLogoImage {
+    height: calc(60 / 1440 * 100vw); /* 화면 너비에 비례한 높이 */
+}
+
+.studyNavRankIcon {
+    color: #C3C5C5;
+    font-size: calc(32 / 1440 * 100vw) !important; /* 화면 너비에 비례한 폰트 크기 */
+}
+
+.studyNavPlanIcon {
+    color: #C3C5C5;
+    font-size: calc(35 / 1440 * 100vw) !important; /* 화면 너비에 비례한 폰트 크기 */
+}
+
+.studyNavChatIcon {
+    color: #C3C5C5;
+    font-size: calc(28 / 1440 * 100vw) !important; /* 화면 너비에 비례한 폰트 크기 */
+}
+
+.studyNavExitIcon {
+    color: #C3C5C5;
+    font-size: calc(40 / 1440 * 100vw) !important; /* 화면 너비에 비례한 폰트 크기 */
+    margin-left: calc(5 / 1440 * 100vw) !important; /* 화면 너비에 비례한 마진 */
+}
+
+
+.studyNavLogoImg {
+    height: calc(60 / 1440 * 100vw);
+    width: calc(60 / 1440 * 100vw);
 }

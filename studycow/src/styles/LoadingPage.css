@@ -12,7 +12,6 @@
   align-items: center;
   flex-direction: column;
   z-index: 2000;
-
   width: 600px; /* 가로 크기 */
   height: 400px; /* 세로 크기 */
 }
@@ -39,4 +38,23 @@
   50% {
     opacity: 0.5;
   }
+}
+
+/* 로딩 바 스타일 */
+.loading-bar {
+  width: 100%; /* 로딩 바의 너비를 컨테이너에 맞게 설정 */
+  height: 20px; /* 로딩 바의 높이 설정 */
+  margin: 20px 0; /* 로딩 바의 위아래 여백 설정 */
+  border-radius: 5px; /* 로딩 바 모서리 둥글게 */
+  background-color: #e0e0e0; /* 로딩 바의 배경색 */
+}
+
+.loading-bar::-webkit-progress-bar {
+  border-radius: 5px;
+  background-color: #e0e0e0; /* 기본 배경색 */
+}
+
+.loading-bar::-webkit-progress-value {
+  border-radius: 5px;
+  background-color: #06714c; /* 로딩 바의 진행 색상 */
 }

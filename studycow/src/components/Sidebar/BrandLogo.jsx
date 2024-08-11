@@ -6,7 +6,7 @@ function brandLogo() {
     <>
     <div className="Logo">
       <div className="LogoImg">
-        <img width="60px" src={Logo} alt="로고" />
+        <img className="LogoImgSize" src={Logo} alt="로고" />
       </div>
       <div className="LogoItem">
         <a>My Page</a>
