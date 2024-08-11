@@ -1,12 +1,10 @@
 import React, { useEffect } from "react";
 import { IconButton, Tooltip } from '@mui/material';
 import { Settings, VolumeUp, VolumeOff, Videocam, VideocamOff, MusicNote, MusicOff, Mic, MicOff } from '@mui/icons-material';
-import useStudyStore from "../../stores/study.js";
 import useRoomStore from "../../stores/OpenVidu.js";
 import './styles/RoomSidebar.css';
 
-function RoomSidebar() {
-  // 룸 상태관리
+function RoomSidebar({ bgmOn, onOpenAudioModal, onOpenSettingsModal }) {
   const {
     isMike, 
     isCamera, 
@@ -27,11 +25,6 @@ function RoomSidebar() {
     subscribers: state.subscribers,
   }));
 
-  // bgm 온오프
-  const bgmOn = useStudyStore((state) => state.bgmOn);
-  const setBgm = useStudyStore((state) => state.setBgm);
-
-  // 상태 변화에 따른 OpenVidu 설정 업데이트
   useEffect(() => {
     if (publisher) {
       publisher.publishVideo(isCamera);
@@ -63,15 +56,15 @@ function RoomSidebar() {
             {isMike ? <Mic className="studySideMicIcon"/> : <MicOff className="studySideMicOffIcon"/>}
           </IconButton>
         </Tooltip>
-        <Tooltip title={bgmOn ? "음악 끄기" : "음악 켜기"}>
-          <IconButton onClick={setBgm}>
+        <Tooltip title="배경음악 설정">
+          <IconButton onClick={onOpenAudioModal}>
             {bgmOn ? <MusicNote className="studySideMusicIcon"/> : <MusicOff className="studySideMusicOffIcon"/>}
           </IconButton>
         </Tooltip>
       </div>
       <div className="studySideSettingButtonContainer">
-        <Tooltip title="설정">
-          <IconButton onClick={() => { /* 설정 버튼 클릭 핸들러 */ }}>
+        <Tooltip title="설정 변경">
+          <IconButton onClick={onOpenSettingsModal}>
             <Settings className="studySideSettingsIcon"/>
           </IconButton>
         </Tooltip>
