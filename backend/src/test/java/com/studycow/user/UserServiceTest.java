@@ -17,6 +17,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * <pre>
+ *   회원 로직 통합 테스트
+ * </pre>
+ * @author 채기훈
+ * @since JDK17
+ */
 @SpringBootTest
 @ActiveProfiles("test")
 @Transactional
