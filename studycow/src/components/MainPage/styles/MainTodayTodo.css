@@ -1,5 +1,7 @@
 .mainTodayTodoList {
   padding: 0px 20px;
+  overflow-y: auto; /* 세로 스크롤바 추가 */
+  padding-right: 10px; /* 스크롤바 공간 확보 */
 }
 
 .mainTodayTodoItem {
@@ -17,4 +19,20 @@
 
 .mainTodayTodoNone {
   font-size: 25px;
+}
+
+/* 웹킷 기반 브라우저용 스크롤바 숨김 */
+.mainTodayTodoList::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+/* Firefox용 스크롤바 숨김 */
+.mainTodayTodoList {
+  scrollbar-width: none;
+}
+
+/* IE and Edge용 스크롤바 숨김 */
+.mainTodayTodoList {
+  -ms-overflow-style: none;
 }

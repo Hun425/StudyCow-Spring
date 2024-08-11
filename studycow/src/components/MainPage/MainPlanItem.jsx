@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import MainTodayTodo from "./MainTodayTodo";
 
 // 현재 날짜를 YYYY-MM-DD 형식으로 반환하는 함수
-const getCurrentDate = () => {
+const getTodayDate = () => {
   const today = new Date();
   const year = today.getFullYear();
   const month = String(today.getMonth() + 1).padStart(2, "0");
@@ -19,7 +19,7 @@ const MainPlanItem = () => {
     getTodayPlanRequest: state.getTodayPlanRequest,
   }));
 
-  const today = getCurrentDate();
+  const today = getTodayDate();
 
   const navigate = useNavigate();
   function goPlanner() {

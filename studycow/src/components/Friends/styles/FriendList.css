@@ -4,4 +4,22 @@
   background: linear-gradient(to bottom, #dee5f0, #ffffff);
   border: solid 1px black;
   border-radius: 5px;
+  overflow-y: auto; /* 세로 스크롤바 추가 */
+  padding-right: 10px; /* 스크롤바 공간 확보 */
+}
+
+/* 웹킷 기반 브라우저용 스크롤바 숨김 */
+.friendListBox::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+/* Firefox용 스크롤바 숨김 */
+.friendListBox {
+  scrollbar-width: none;
+}
+
+/* IE and Edge용 스크롤바 숨김 */
+.friendListBox {
+  -ms-overflow-style: none;
 }
