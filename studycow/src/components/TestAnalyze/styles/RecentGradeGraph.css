@@ -2,7 +2,7 @@
   /* 그래프 컨테이너의 너비, 높이 설정 */
   width: 100%;
   height: auto;
-  min-height: 300px;
+  min-height: 400px;
   /* 그래프 상하 여백 추가 */
   margin-top: 20px;
   /* 그래프 컨테이너에 테두리 추가 */

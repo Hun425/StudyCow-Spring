@@ -2,6 +2,10 @@
 .analyzeTotalContainer {
   margin-bottom: 30px;
   padding: 0px 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 /* 헤더 스타일 */
@@ -9,6 +13,7 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
+  width: 93%;
 }
 
 /* 과목 선택 스타일 */
@@ -22,15 +27,21 @@
 
 /* 캐릭터 상태 스타일 */
 .analyzeCowStatus {
-  width: 320px;
-  height: 460px;
+  width: 20%;
+  height: auto;
+  max-height: 460px;
   background-color: violet;
 }
 
 /* 본문 스타일 */
 .analyzeBody {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.analyzeGradeStatus {
+  width: 70%;
 }
 
 /* 모달 오버레이 스타일 */

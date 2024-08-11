@@ -71,7 +71,9 @@ const TestAnalyze = () => {
         <div className="analyzeCowStatus">
           <h1>캐릭터 부분</h1>
         </div>
-        <GradeAnalyzeBox subject={selectedSubject} />
+        <div className="analyzeGradeStatus">
+          <GradeAnalyzeBox subject={selectedSubject} />
+        </div>
       </div>
 
       {/* 모달 영역 */}

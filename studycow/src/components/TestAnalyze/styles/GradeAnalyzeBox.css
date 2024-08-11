@@ -1,13 +1,25 @@
 .selectedSubjectBox {
-  width: 1000px;
+  width: 100%;
 }
 
 .upsidePartBox {
   display: flex;
   justify-content: space-evenly;
+  width: 100%;
 }
 
 .downsidePartBox {
   display: flex;
   justify-content: space-evenly;
+  width: 100%;
+  margin-top: 30px;
+}
+
+.recentGradeChangeGraph {
+  width: 65%;
+  height: auto;
+}
+
+.recentGradeChangeGraph h3 {
+  text-align: center;
 }
