@@ -6,10 +6,11 @@
 }
 
 .singleTodayPlanBox {
-  width: calc(280 / 1440 * 100vw); /* 화면 너비에 비례한 너비 */
-  height: calc(162 / 1440 * 100vw); /* 화면 너비에 비례한 높이 */
+  width: calc(295 / 1440 * 100vw); /* 컨테이너의 너비 설정 */
+  height: calc((100vh - calc(70 / 1440 * 100vw)) / 4 - calc(7.5 / 1440 * 100vw)); /* 전체 화면 높이에 비례한 높이 */
   overflow-y: auto;
-  margin: 0; /* 마진 0 */
+  margin-top: calc(5 / 1440 * 100vw);
+  margin-bottom: calc(2.5 / 1440 * 100vw);
   padding: calc(10 / 1440 * 100vw); /* 화면 너비에 비례한 패딩 */
   background-color: #f1c40f; /* 배경 색상 */
   border-radius: calc(10 / 1440 * 100vw); /* 화면 너비에 비례한 둥글기 */
@@ -44,7 +45,7 @@
 }
 
 .singleTodayPlanContent {
-  width: calc(240 / 1440 * 100vw); /* 화면 너비에 비례한 너비 */
+  width: calc(250 / 1440 * 100vw); /* 화면 너비에 비례한 너비 */
   display: flex; /* 체크박스와 텍스트를 일렬로 정렬 */
   align-items: center; /* 세로 방향 중앙 정렬 */
   justify-content: flex-start;
