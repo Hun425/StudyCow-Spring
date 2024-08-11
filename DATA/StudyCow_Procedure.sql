@@ -34,7 +34,7 @@ BEGIN
 
 	INSERT INTO t_proc_room_study(room_id, proc_date, sum_room_time)
     SELECT room_id, proc_date, sum_room_time FROM temp_room_study
-    ON DUPLICATE KEY UPDATE sum_room_time = VALUES(temp_room_study);
+    ON DUPLICATE KEY UPDATE sum_room_time = VALUES(sum_room_time);
     
     DROP TEMPORARY TABLE temp_room_study;
 END //
