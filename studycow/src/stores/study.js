@@ -3,6 +3,7 @@ import { persist } from "zustand/middleware";
 import axios from "axios";
 import useInfoStore from "./infos";
 import useRoomStore from "./OpenVidu";
+import { data } from "@tensorflow/tfjs";
 
 const API_URL =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/studycow/";
@@ -90,12 +91,19 @@ const useStudyStore = create(
         }),
 
       // 뒤로가기 함수
-      goStudyBack: () => {
+      goStudyBack: async () => {
+        const studyStore = useStudyStore.getState();
         const { navigate } = useStudyStore.getState();
         if (navigate) {
-          navigate("/study"); // 이전 페이지로 리다이렉트
-          window.location.reload(); // 새로고침
-          setTimeout(() => {}, 50); // 100ms 후에 새로고침 실행
+          try {
+            await studyStore.exitRoom(); // API 호출이 끝날 때까지 기다림
+            navigate("/study"); // 이전 페이지로 리다이렉트
+            window.location.reload(); // 새로고침
+            setTimeout(() => {}, 50); // 50ms 후에 새로고침 실행
+          } catch (error) {
+            console.error("퇴장 중 오류 발생:", error);
+            // 오류 처리 로직 추가 가능
+          }
         }
       },
 
@@ -135,6 +143,8 @@ const useStudyStore = create(
       logId: 0,
       rankInfo: [],
       myStudyTime: 0,
+      myStudyTimeSec: 0,
+      setMyStudyTimeSec: (data) => set({myStudyTimeSec: data}),
       setLogId: (data) => set({ logId: data }),
       setRankInfo: (data) => set({ rankInfo: data }),
       setMyStudyTime: (data) => set({ myStudyTime: data }),
@@ -142,7 +152,7 @@ const useStudyStore = create(
       // 방 입장 함수
       registerRoom: async (rId) => {
         const { token } = useInfoStore.getState(); // userNickName을 가져옵니다.
-      
+
         try {
           const response = await axios.post(
             `${API_URL}roomLog/enter/${rId}`,
@@ -153,19 +163,20 @@ const useStudyStore = create(
               },
             }
           );
-      
+
           if (response.status === 200) {
             const data = response.data;
             console.log("방 입장 성공", data);
-      
-            const { logId, studyTime, rankDto } = data;
-      
+
+            const { logId, rankDto, roomStudyTime } = data;
+
             // 상태 업데이트
             const studyStore = useStudyStore.getState();
             studyStore.setLogId(logId);
-            studyStore.setMyStudyTime(studyTime);
+            studyStore.setMyStudyTime(roomStudyTime);
+            studyStore.setMyStudyTimeSec(roomStudyTime*60);
             studyStore.setRankInfo(rankDto);
-      
+            
           } else {
             console.error(`응답 코드 오류: ${response.status}`);
           }
@@ -221,6 +232,172 @@ const useStudyStore = create(
           console.log(error);
         }
       },
+
+      // 리스트 랭킹 정보 업데이트
+      yesterdayRankInfo: [],
+      fetchYesterdayRankInfo: async () => {
+        const { token } = useInfoStore.getState();
+
+        try {
+          const response = await axios.get(API_URL + `room/rank`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          console.log(response.data);
+          set({ yesterdayRankInfo: response.data });
+        } catch (error) {
+          console.log(error);
+        }
+      },
+
+
+      // 방 퇴장 함수
+      exitRoom: async () => {
+        const studyStore = useStudyStore.getState();
+
+        const logId = studyStore.logId;
+        const myStudyTime = studyStore.myStudyTime;
+        const myStudyTimeSec = studyStore.myStudyTimeSec;
+
+        const { token } = useInfoStore.getState(); // userNickName을 가져옵니다.
+        const data = {
+          "logId": logId,
+          "studyTime": (myStudyTimeSec / 60) - myStudyTime,
+          "token": ""
+        }
+
+        try {
+          const response = await axios.patch(
+            `${API_URL}roomLog/exit`,
+            data,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          if (response.status === 200) {
+            console.log("방 퇴장 성공", response.data);
+            // 상태 업데이트(초기화)
+            studyStore.setLogId(0);
+            studyStore.setRankInfo([]);
+            studyStore.setMyStudyTime(0);
+            studyStore.setMyStudyTimeSec(0);
+          } else {
+            console.error(`응답 코드 오류: ${response.status}`);
+          }
+        } catch (error) {
+          if (error.response) {
+            // 서버가 상태 코드를 응답했을 때
+            switch (error.response.status) {
+              case 400:
+                console.error(
+                  "잘못된 요청입니다. 요청을 확인해 주세요.",
+                  error.response.data
+                );
+                break;
+              case 500:
+                console.error(
+                  "서버 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.",
+                  error.response.data
+                );
+                break;
+              default:
+                console.error(
+                  `알 수 없는 오류가 발생했습니다. 상태 코드: ${error.response.status}`,
+                  error.response.data
+                );
+            }
+          } else if (error.request) {
+            // 요청이 전송되었으나 응답을 받지 못했을 때
+            console.error(
+              "응답을 받지 못했습니다. 네트워크를 확인해 주세요.",
+              error.request
+            );
+          } else {
+            // 다른 오류
+            console.error("요청 중 오류가 발생했습니다.", error.message);
+          }
+        }
+      },
+
+      // 방 점수 갱신 함수
+      updateStudyTime: async () => {
+        const studyStore = useStudyStore.getState();
+
+        const logId = studyStore.logId;
+        const myStudyTime = studyStore.myStudyTime;
+        const myStudyTimeSec = studyStore.myStudyTimeSec;
+
+        const { token } = useInfoStore.getState(); // userNickName을 가져옵니다.
+        const data = {
+          "logId": logId,
+          "studyTime": (myStudyTimeSec / 60) - myStudyTime
+          ,
+          "token": ""
+        }
+
+        try {
+          const response = await axios.patch(
+            `${API_URL}roomLog/record`,
+            data,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          if (response.status === 200) {
+            console.log("방 시간 갱신 성공", response.data);
+
+
+            const data = response.data;
+            const { rankDto } = data;
+            
+            studyStore.setRankInfo(rankDto);
+
+          } else {
+            console.error(`응답 코드 오류: ${response.status}`);
+          }
+        } catch (error) {
+          if (error.response) {
+            // 서버가 상태 코드를 응답했을 때
+            switch (error.response.status) {
+              case 400:
+                console.error(
+                  "잘못된 요청입니다. 요청을 확인해 주세요.",
+                  error.response.data
+                );
+                break;
+              case 500:
+                console.error(
+                  "서버 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.",
+                  error.response.data
+                );
+                break;
+              default:
+                console.error(
+                  `알 수 없는 오류가 발생했습니다. 상태 코드: ${error.response.status}`,
+                  error.response.data
+                );
+            }
+          } else if (error.request) {
+            // 요청이 전송되었으나 응답을 받지 못했을 때
+            console.error(
+              "응답을 받지 못했습니다. 네트워크를 확인해 주세요.",
+              error.request
+            );
+          } else {
+            // 다른 오류
+            console.error("요청 중 오류가 발생했습니다.", error.message);
+          }
+        }
+      },
+
+      
     }),
     {
       name: "study-storage",

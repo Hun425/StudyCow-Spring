@@ -30,6 +30,19 @@ function RoomCam({ roomId }) {
     joinSession: state.joinSession
   }));
 
+
+  const getGridStyle = () => {
+    const numberOfSubscribers = subscribers.length;
+
+    if (numberOfSubscribers >= 1 && numberOfSubscribers <= 3) {
+      return { gridTemplateColumns: 'repeat(2, 1fr)' }; // 2개의 열
+    } else if (numberOfSubscribers >= 4 && numberOfSubscribers <= 5) {
+      return { gridTemplateColumns: 'repeat(3, 1fr)' }; // 3개의 열
+    } else {
+      return { gridTemplateColumns: 'repeat(1, 1fr)' }; // 기본값 (1개의 열)
+    }
+  };
+
   useEffect(() => {
     // 세션 ID와 유저 이름 설정
     setMySessionId(roomId);
@@ -45,14 +58,6 @@ function RoomCam({ roomId }) {
     }
   }, [session, joinSession]);
 
-  useEffect(() => {
-    // 페이지를 닫거나 새로 고침할 때 leaveSession 호출
-    window.addEventListener("beforeunload", onbeforeunload);
-
-    return () => {
-      window.removeEventListener("beforeunload", onbeforeunload);
-    };
-  }, []);
 
   const onbeforeunload = (e) => {
     leaveSession();
@@ -79,10 +84,10 @@ function RoomCam({ roomId }) {
   return (
     <div className="video-session-container">
       <Grid container spacing={2}>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={8}>
           <div className="video-container">
             {session !== undefined && (
-              <div className="video-stream-container" ref={userRef}>
+              <div className="video-stream-container" ref={userRef} style={getGridStyle()}>
                 {publisher !== undefined && (
                   <div className="video-stream">
                     <UserVideoComponent streamManager={publisher} />

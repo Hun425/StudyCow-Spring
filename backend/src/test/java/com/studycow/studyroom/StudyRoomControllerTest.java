@@ -12,7 +12,7 @@ import com.studycow.dto.user.CustomUserInfoDto;
 import com.studycow.dto.user.RegisterRequestDto;
 import com.studycow.service.file.FileService;
 import com.studycow.service.studyroom.StudyRoomService;
-import com.studycow.service.user.UserGradeRepository;
+import com.studycow.repository.user.UserGradeRepository;
 import com.studycow.service.user.UserService;
 import com.studycow.web.studyroom.StudyRoomController;
 import org.junit.jupiter.api.BeforeEach;
@@ -87,7 +87,7 @@ class StudyRoomControllerTest {
      * @throws Exception
      */
     @Test
-    void createStudyRoomTest() throws Exception {
+    void testCreateStudyRoom() throws Exception {
         /* --- GIVEN --- */
         // 스터디룸 요청 DTO 객체
         StudyRoomRequestDto requestDto = new StudyRoomRequestDto();
@@ -121,7 +121,7 @@ class StudyRoomControllerTest {
      * @throws Exception
      */
     @Test
-    void getStudyRoomInfoTest() throws Exception {
+    void testGetStudyRoomInfo() throws Exception {
         /* --- GIVEN --- */
         // 스터디룸 DTO 객체
         Long studyRoomId = 1L;
@@ -149,7 +149,7 @@ class StudyRoomControllerTest {
      * @throws Exception
      */
     @Test
-    void listStudyRoomTest() throws Exception {
+    void testListStudyRoom() throws Exception {
         /* --- GIVEN --- */
         // 정렬 조건 DTO 객체
         ListOptionDto listOptionDto = new ListOptionDto();
@@ -186,7 +186,7 @@ class StudyRoomControllerTest {
      * @throws Exception
      */
     @Test
-    void updateStudyRoomTest() throws Exception {
+    void testUpdateStudyRoom() throws Exception {
         /* --- GIVEN --- */
         // 스터디룸 생성
         StudyRoomDto createStudyRoomDto = new StudyRoomDto();
@@ -230,7 +230,7 @@ class StudyRoomControllerTest {
      * @throws Exception
      */
     @Test
-    void recentRoomTest() throws Exception {
+    void testRecentRoom() throws Exception {
         /* --- GIVEN --- */
         // 스터디룸 DTO 객체 리스트
         int userId = 1;
@@ -264,7 +264,7 @@ class StudyRoomControllerTest {
      * @throws Exception
      */
     @Test
-    void rankRoomUserTest() throws Exception {
+    void testRankRoomUser() throws Exception {
         /* --- GIVEN --- */
         LocalDate date = LocalDate.now();
         Integer limit = 10;

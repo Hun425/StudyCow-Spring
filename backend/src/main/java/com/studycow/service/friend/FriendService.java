@@ -27,6 +27,9 @@ public interface FriendService {
     /** 친구 요청 저장 */
     void saveFriendRequest(int fromUserId, int toUserId) throws Exception;
 
+    /** 최근 저장된 친구 요청 번호 */
+    int recentFriendRequestId() throws Exception;
+
     /** 받은 친구 요청 목록 조회 */
     List<FriendRequestDto> listFriendRequestReceived(int userId, ListOptionDto listOptionDto) throws Exception;
 

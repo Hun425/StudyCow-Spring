@@ -1,4 +1,4 @@
-package com.studycow.service.user;
+package com.studycow.repository.user;
 
 import com.studycow.domain.UserGrade;
 import org.springframework.data.jpa.repository.JpaRepository;

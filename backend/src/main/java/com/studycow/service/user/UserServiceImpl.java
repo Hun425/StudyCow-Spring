@@ -6,16 +6,14 @@ import com.studycow.domain.UserGrade;
 import com.studycow.dto.user.*;
 import com.studycow.exception.CustomException;
 import com.studycow.exception.ErrorCode;
+import com.studycow.repository.user.UserGradeRepository;
 import com.studycow.repository.user.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.List;
 import java.util.Optional;

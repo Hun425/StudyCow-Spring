@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "studycow",
+  "private_key_id": "7e95dffd67ffb4cbedf2d889d123111d71c366b9",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC4QKvptYRVJfzV\nXPoHJYQeuRHTkNzO9Fz7qFNly05GnTL/moWrWqgc4g56nfXRXlcD3JmM+fhXgiqv\nRQitBI6R84yTR6i/S6wp2Zbyu7TZC65WYO00+gKqbnGfA/xxNHk3t2opivjXgT7S\nECcBi4QyVGHhhVys9I0Lvc1oZCBrSm6wnNfIe7lL+oiQ6GUbHdiyE6gtNpa7stcN\nas6m4legGwZpUk4Bo0opPEG2HjyxeSss6aNcIFkXJO3HE1W+PZKvIuKF2z51jXLp\nVzo2z1f58KAF/hO5Vtky2DFbBvGqfH4GgM1Y5adrc3PvbOjTSpEDsyY1ehgJ5lqj\n6AXtaHl7AgMBAAECggEAMIyV39B87ITEcKH9nal0fTXtrQ4EKKH56DOruexOlUux\nlukr5IFQP8AO6Z86mO7fRby4Vw28sq4xOhqaFSDYwjtm5J3iqHkzhZl4bUApgHFU\nAB2tEyL3VdohJTHDMD8P268AEa81L2+2UlqANKeC71INsoNV7prHmXrrJ2EOq8Yu\n9r9Ah11XSVvsyjfO6j5pdOuzln+P3oIumxtkdrs5FfqSG1UFc8Iwfe3bfAyzWZ1G\n9mr/caVWkCX+KQwQata+8Vt9rLuttG9Yr7FlrhN6QVVAQA8zGG2dkUZEbFbUW+sh\nSG7k9Vqfs67efGkQqLb4mWAJurzp5yM7e1SNpJHoeQKBgQD6OxTpSDELQeNCnonv\nhz4Q3/UvyYmlLUjH5RFbIDhe4yOBjqlZyjytrEG+QwPdWpn4SY5oCjCBho6HGIT/\nwEAk1HmHTAoeD+BojmjpbSPowk2Tx82IDfJpuJ///TLalnuTkcZMeoFFlLvg11UG\n2I0H66Ue/BLoZB470O7BwyR8EwKBgQC8gCwB0skcIccRypmukgJAm3r2GYUxcxtB\nxa8MRTIFO3xclZcDC1rHCISi5OblLAEhnzNTYsQg3ZnUFHrR2pJFq5oBQkqX7y53\nLNjfoaIeoDH+WuIv+/+XM6gOlC3uo+CUieF22djdxL25bTVcTv6YrU7CNhSJVCev\nmdxwqNhp+QKBgQCKJhA3cunQw0GKyChzG4GCo4KkLWpWzRd/dNIOM02r5U72+iI5\nNlQlthJdznXVwW18DHAYtHdvKzCJGVpkMGm5a6zkq3ByhGVqlCULqnvGx285BXhN\ngxWwlIOROuLWl3oGUNbf5kp0ddb8HSYOL4Q9OTXiU1zE/HFMqN8IDoqYDQKBgQCV\nKwCoOLv5TSmRhLh1EwpBQkjd83gZl7NcKynJFgDtbxOM2Lv2JsghdTYxCd9GP7pt\nduRQ+nmmYHbZA5Pl+YeDJrbqhCEvdpFYsd61qdz3S2IEnLsdqderOa+mSdDHZlvU\ncABB40bgyE4zLJ7re3+yJoOK4O0Dd9sn9SQi6xrHUQKBgE79HKihvB9fsYlGlxSp\nRVOfAVnVf8tNTOs1like4L4MmiXqQ+0nLacaubwnZLzvoASYGE57E14ojL9uGpZ+\nx0mC1QN3KHVfIAjHXTei6YVdzTCaBwPZpC/j7l28WFJxblhXVOj1Xl275Zd5bAlw\ntsbnaWv6W8AQn4gvDGGkYRPH\n-----END PRIVATE KEY-----\n",
+  "client_email": "springboot-storage-access@studycow.iam.gserviceaccount.com",
+  "client_id": "111582943956561428505",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/springboot-storage-access%40studycow.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

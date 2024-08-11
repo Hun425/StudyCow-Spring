@@ -1,9 +1,10 @@
 import Logo from "./img/logo.png";
+import "./styles/BrandLogo.css"
 
 function brandLogo() {
   return (
     <>
-      <img width="80px" src={Logo} alt="로고" />
+      <img className="brandLogo" src={Logo} alt="로고" />
     </>
   );
 }

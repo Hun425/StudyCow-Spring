@@ -117,6 +117,16 @@ public class FriendServiceImpl implements FriendService {
     }
 
     /**
+     * 최근 저장된 friendRequest 조회
+     *
+     * @return
+     */
+    @Override
+    public int recentFriendRequestId() throws Exception {
+        return friendRepository.recentFriendRequestId();
+    }
+
+    /**
      * 받은 친구 요청 목록 조회
      *
      * @return FriendRequestDto 리스트
@@ -173,7 +183,7 @@ public class FriendServiceImpl implements FriendService {
     @Override
     public void deleteFriend(int friendUserId, int userId) throws Exception {
         //친구 관계 존재 여부 검증
-        if(friendRepository.existsFriend(friendUserId,userId)) {
+        if(!friendRepository.existsFriend(friendUserId,userId)) {
             throw new CustomException(ErrorCode.NOT_FOUND_FRIEND);
         }
 

@@ -1,5 +1,4 @@
-import React from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./styles/RecentGradeGraph.css";
 import useInfoStore from "../../stores/infos";
 import useGradeStore from "../../stores/grade";
@@ -14,6 +13,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import ScoreChange from "./ScoreChange"; // 모달로 띄울 컴포넌트
 
 // Chart.js에 필요한 컴포넌트들을 등록
 ChartJS.register(
@@ -31,12 +31,16 @@ const RecentGradeGraph = () => {
     userId: state.userInfo.userId,
   }));
 
-  const { selectedSubject, subjectGrades, fetchSelectedSubjectGrade } =
+  const { selectedSubject, subjectGrades, fetchSelectedSubjectGrade, setSelectedSubject } =
     useGradeStore((state) => ({
       selectedSubject: state.selectedSubject,
       subjectGrades: state.subjectGrades,
       fetchSelectedSubjectGrade: state.fetchSelectedSubjectGrade,
+      setSelectedSubject: state.setSelectedSubject,
     }));
+
+  const [showModal, setShowModal] = useState(false);
+  const [modalData, setModalData] = useState(null);
 
   useEffect(() => {
     if (selectedSubject) {
@@ -62,6 +66,16 @@ const RecentGradeGraph = () => {
     ],
   };
 
+  // 차트 클릭 이벤트 핸들러
+  const handleChartClick = (event, elements) => {
+    if (elements.length > 0) {
+      const dataIndex = elements[0].index;
+      const clickedData = graphData[dataIndex][1]; // 클릭한 데이터의 세부 정보 가져오기
+      setModalData(clickedData); // 모달에 표시할 데이터 설정
+      setShowModal(true); // 모달 열기
+    }
+  };
+
   // Chart.js 옵션 설정
   const options = {
     responsive: true, // 반응형 차트 설정
@@ -70,7 +84,6 @@ const RecentGradeGraph = () => {
       legend: {
         position: "top", // 범례 위치 설정
         labels: {
-          // 범례의 폰트 설정
           font: {
             size: 14,
             weight: "bold",
@@ -81,14 +94,12 @@ const RecentGradeGraph = () => {
         display: true,
         text: "최근 성적 변화 그래프",
         font: {
-          // 제목의 폰트 설정
           size: 18,
           weight: "bold",
         },
       },
       tooltip: {
         callbacks: {
-          // 기본 label 생성 (점수 표시)
           label: function (context) {
             let label = context.dataset.label || "";
             if (label) {
@@ -99,12 +110,10 @@ const RecentGradeGraph = () => {
             }
             return label;
           },
-          // 세부 점수 정보 표시
           afterLabel: function (context) {
             const dataIndex = context.dataIndex;
             const gradeInfo = graphData[dataIndex][1];
             if (gradeInfo.scoreDetails) {
-              // scoreDetails 배열의 각 항목에 대해 문자열 생성
               return gradeInfo.scoreDetails.map(
                 (detail) => `${detail.catName}: ${detail.wrongCnt}개 틀림`
               );
@@ -120,13 +129,11 @@ const RecentGradeGraph = () => {
           display: true,
           text: "날짜",
           font: {
-            // X축 제목의 폰트 설정
             size: 14,
             weight: "bold",
           },
         },
         ticks: {
-          // X축 눈금 레이블의 폰트 설정
           font: {
             size: 12,
           },
@@ -137,25 +144,43 @@ const RecentGradeGraph = () => {
           display: true,
           text: "점수",
           font: {
-            // Y축 제목의 폰트 설정
             size: 14,
             weight: "bold",
           },
         },
         ticks: {
-          // Y축 눈금 레이블의 폰트 설정
           font: {
             size: 12,
           },
         },
       },
     },
+    onClick: handleChartClick, // 클릭 이벤트 핸들러 추가
   };
 
-  // 차트 렌더링
+  const handleScoreChange = () => {
+    // 성적이 변경된 후 과목 선택을 새로고침하여 데이터를 다시 불러옴
+    setSelectedSubject("");
+    setTimeout(() => setSelectedSubject(selectedSubject), 0);
+  };
+
   return (
     <div className="subject-grade-graph">
       <Line options={options} data={data} />
+
+      {/* 모달 영역 */}
+      {showModal && (
+        <div className="ScoreChangeModal-overlay">
+          <div className="ScoreChangeModal-content">
+            <ScoreChange
+              onClose={() => setShowModal(false)}
+              initialData={modalData} // 클릭한 데이터를 initialData로 전달
+              subjectGrades={subjectGrades} // subjectGrades를 ScoreChange에 전달
+              onScoreChange={handleScoreChange} // 부모 컴포넌트에 변경 신호를 보내기 위한 함수 전달
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
