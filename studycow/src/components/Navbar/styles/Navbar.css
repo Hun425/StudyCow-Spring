@@ -1,12 +1,12 @@
 .navContainer {
   z-index: 2;
   position: absolute;
-  top: 0px;
+  top: 0;
   width: 100%;
-  height: 100px;
+  height: calc(100 / 1440 * 100vw);
   display: flex;
   justify-content: center;
-  padding: 10px;
+  padding: calc(10 / 1440 * 100vw);
   box-sizing: border-box;
   background-color: white;
   font-family: "CustomFont", sans-serif;
@@ -17,35 +17,35 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 150px;
-  height: 75px;
-  text-decoration-line: none;
+  width: calc(150 / 1440 * 100vw);
+  height: calc(75 / 1440 * 100vw);
+  text-decoration: none; /* 'text-decoration-line' 대신 'text-decoration' 사용 */
   color: black;
 }
 
 .navItem p {
-  font-size: 30px;
-  margin: 0%;
+  font-size: calc(30 / 1440 * 100vw);
+  margin: 0;
 }
 
 .loginItem {
-  text-decoration-line: none;
+  text-decoration: none;
   color: black;
 }
 
 .loginItem p {
-  font-size: 20px;
-  margin: 0%;
+  font-size: calc(20 / 1440 * 100vw);
+  margin: 0;
 }
 
 .navBackground {
   z-index: 2;
-  width: 1440px;
+  width: 100vw;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: white;
-  padding: 10px;
+  padding: calc(10 / 1440 * 100vw);
   box-sizing: border-box;
 }
 
@@ -57,13 +57,11 @@
 }
 
 .leftContainer {
-  z-index: 2;
   justify-content: flex-start;
-  font-size: 30px;
+  font-size: calc(30 / 1440 * 100vw);
 }
 
 .rightContainer {
-  z-index: 2;
   justify-content: flex-end;
-  font-size: 20px;
+  font-size: calc(20 / 1440 * 100vw);
 }
