@@ -31,29 +31,29 @@ function RoomNav() {
     <div className="StudyNavContainer">
       <div className="StudyNavLogoContainer">
         <IconButton>
-          <img src={Logo} alt="Logo" style={{ height: '60px' }} />
+          <img className="studyNavLogoImg" src={Logo} alt="Logo" />
         </IconButton>
       </div>
       <div className="studyNavButtonContainer">
         <div className="utilButton">
           <Tooltip title="랭킹">
             <IconButton onClick={toggleLank}>
-                <RankIcon sx={{ color: '#C3C5C5', fontSize: '32px' }}/>
+                <RankIcon className="studyNavRankIcon" />
             </IconButton>            
           </Tooltip>
           <Tooltip title="스터디플랜">
             <IconButton onClick={toggleList} >
-              <ListIcon sx={{ color: '#C3C5C5', fontSize: '35px' }}/>
+              <ListIcon className="studyNavPlanIcon" />
             </IconButton>
           </Tooltip>
           <Tooltip title="라이브챗">
             <IconButton onClick={toggleChat} >
-              <Chat sx={{ color: '#C3C5C5', fontSize: '28px' }}/>
+              <Chat className="studyNavChatIcon" />
             </IconButton>  
           </Tooltip>
           <Tooltip title="나가기">
             <IconButton onClick={goStudyBack} >
-              <ExitIcon sx={{ color: '#C3C5C5', fontSize: '40px', marginRight: "10px" }}/>
+              <ExitIcon className="studyNavExitIcon" />
             </IconButton>            
           </Tooltip>  
         </div>
