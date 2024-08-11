@@ -14,7 +14,11 @@ const MainRecentRoom = () => {
   }, [fetchRecentRoom]);
 
   if (!recentRoom) {
-    return <div>최근 입장한 방이 없소!</div>;
+    return (
+      <div className="recentRoomIsNone">
+        <p>최근 입장한 방이 없소!</p>
+      </div>
+    );
   }
 
   return (
