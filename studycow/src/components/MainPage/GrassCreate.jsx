@@ -17,7 +17,9 @@ const GrassCreate = ({ year, month, plans }) => {
 
   return (
     <div className="grassCalendar">
-      <h1>{moment(`${year}-${month}`, "YYYY-MM").format("YYYY년 MM월")}</h1>
+      <h1>{`${moment(`${year}-${month}`, "YYYY-MM").format(
+        "YYYY년 MM월"
+      )} Plans`}</h1>
       <div className="grassCalendar-grid">
         {Array.from({ length: startDay }).map((_, i) => (
           <div

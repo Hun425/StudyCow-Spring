@@ -19,15 +19,17 @@ const MainRecentRoom = () => {
 
   return (
     <div className="mainRecentRoomContainer">
-      <h3>최근 입장한 방</h3>
-      <RecentRoomItem
-        roomId={recentRoom.id}
-        title={recentRoom.roomTitle}
-        thumb={recentRoom.roomThumb}
-        maxPerson={recentRoom.roomMaxPerson}
-        nowPerson={recentRoom.roomNowPerson}
-        content={recentRoom.roomContent}
-      />
+      <div>
+        <h3>최근 입장한 방</h3>
+        <RecentRoomItem
+          roomId={recentRoom.id}
+          title={recentRoom.roomTitle}
+          thumb={recentRoom.roomThumb}
+          maxPerson={recentRoom.roomMaxPerson}
+          nowPerson={recentRoom.roomNowPerson}
+          content={recentRoom.roomContent}
+        />
+      </div>
     </div>
   );
 };

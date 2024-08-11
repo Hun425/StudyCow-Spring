@@ -1,12 +1,20 @@
 .mainGradeContainer {
-  width: 550px;
-  height: 430px;
+  width: 45%;
+  height: auto;
+  background-color: white;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .mainGradeHeader {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 5px;
 }
 
 .mainGradeHeader h3 {

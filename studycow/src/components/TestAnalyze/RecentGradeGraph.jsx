@@ -31,13 +31,17 @@ const RecentGradeGraph = () => {
     userId: state.userInfo.userId,
   }));
 
-  const { selectedSubject, subjectGrades, fetchSelectedSubjectGrade, setSelectedSubject } =
-    useGradeStore((state) => ({
-      selectedSubject: state.selectedSubject,
-      subjectGrades: state.subjectGrades,
-      fetchSelectedSubjectGrade: state.fetchSelectedSubjectGrade,
-      setSelectedSubject: state.setSelectedSubject,
-    }));
+  const {
+    selectedSubject,
+    subjectGrades,
+    fetchSelectedSubjectGrade,
+    setSelectedSubject,
+  } = useGradeStore((state) => ({
+    selectedSubject: state.selectedSubject,
+    subjectGrades: state.subjectGrades,
+    fetchSelectedSubjectGrade: state.fetchSelectedSubjectGrade,
+    setSelectedSubject: state.setSelectedSubject,
+  }));
 
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState(null);
@@ -90,14 +94,6 @@ const RecentGradeGraph = () => {
           },
         },
       },
-      title: {
-        display: true,
-        text: "최근 성적 변화 그래프",
-        font: {
-          size: 18,
-          weight: "bold",
-        },
-      },
       tooltip: {
         callbacks: {
           label: function (context) {
@@ -125,14 +121,6 @@ const RecentGradeGraph = () => {
     },
     scales: {
       x: {
-        title: {
-          display: true,
-          text: "날짜",
-          font: {
-            size: 14,
-            weight: "bold",
-          },
-        },
         ticks: {
           font: {
             size: 12,
@@ -140,14 +128,6 @@ const RecentGradeGraph = () => {
         },
       },
       y: {
-        title: {
-          display: true,
-          text: "점수",
-          font: {
-            size: 14,
-            weight: "bold",
-          },
-        },
         ticks: {
           font: {
             size: 12,

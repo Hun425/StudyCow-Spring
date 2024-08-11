@@ -8,7 +8,12 @@ const GradeAnalyzeBox = () => {
   return (
     <div className="selectedSubjectBox">
       <div className="upsidePartBox">
-        <RecentGradeGraph />
+        <div className="recentGradeChangeGraph">
+          <h1>최근 성적 변화 그래프</h1>
+          <div>
+            <RecentGradeGraph />
+          </div>
+        </div>
         <LearningStatus />
       </div>
       <div className="downsidePartBox">

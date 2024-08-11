@@ -7,13 +7,18 @@ import MainRecentRoom from "./MainRecentRoom";
 const Main_login = () => {
   return (
     <div className="mainTotalContainer">
-      <div className="uppartContainer">
-        <MainPlanItem />
-        <MainGrassItem />
+      <div className="charImgPart">
+        <h1>캐릭터</h1>
       </div>
-      <div className="downpartContainer">
-        <MainGradeItem />
-        <MainRecentRoom />
+      <div className="mainInfoPart">
+        <div className="uppartContainer">
+          <MainPlanItem />
+          <MainGrassItem />
+        </div>
+        <div className="downpartContainer">
+          <MainGradeItem />
+          <MainRecentRoom />
+        </div>
       </div>
     </div>
   );

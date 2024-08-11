@@ -1,6 +1,14 @@
+.mainPlanMover {
+  width: 45%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .mainPlanContainer {
-  width: 530px;
-  height: 450px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   background-color: yellow;
@@ -17,7 +25,7 @@
 
 .goToPlanPage {
   width: 100%;
-  height: 50px;
+  height: auto;
   bottom: 0px;
   border: none;
   background-color: rgb(196, 196, 2);

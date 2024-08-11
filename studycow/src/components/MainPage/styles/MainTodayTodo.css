@@ -1,5 +1,6 @@
 .mainTodayTodoList {
   padding: 0px 20px;
+  height: 300px;
   overflow-y: auto; /* 세로 스크롤바 추가 */
   padding-right: 10px; /* 스크롤바 공간 확보 */
 }
