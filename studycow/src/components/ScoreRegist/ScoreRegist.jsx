@@ -111,7 +111,11 @@ const ScoreRegist = ({ onCancel, onSubmit }) => {
     // 오답 데이터 검증
     for (const wrong of wrongs) {
       if (wrong.catCode !== "" && wrong.wrongCnt <= 0) {
-        setErrorMessage("오답 유형을 선택하셨다면, 오답 개수는 0 이상이어야 합니다.");
+        setErrorMessage("오답 개수는 0 이상이어야 합니다.");
+        return false;
+      }
+      if (wrong.catCode === "" && wrong.wrongCnt >= 0) {
+        setErrorMessage(" 오답 유형을 선택해야 합니다.");
         return false;
       }
     }
@@ -119,6 +123,7 @@ const ScoreRegist = ({ onCancel, onSubmit }) => {
     setErrorMessage(""); // 모든 필드가 유효하면 오류 메시지 초기화
     return true;
   };
+
 
 
   const handleSubmit = (e) => {
