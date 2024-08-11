@@ -2,10 +2,10 @@
   position: fixed;
   bottom: 0;
   right: 0;
-  padding: calc(8 / 1440 * 100vw); /* 패딩을 화면 너비에 비례하여 설정 */
+  padding: 0;
   margin: 0;
   width: calc(300 / 1440 * 100vw); /* 사이드바 너비를 화면 너비에 비례하여 설정 */
-  height: calc((100vh - calc(70 / 1440 * 100vw)) / 2); /* 전체 화면 높이에 비례한 높이 */
+  height: calc((100vh - calc(70 / 1440 * 100vw)) / 2 - calc(10 / 1440 * 100vw)); /* 전체 화면 높이에 비례한 높이 */
   border: calc(1 / 1440 * 100vw) solid #ddd; /* 테두리 두께를 화면 너비에 비례하여 설정 */
   background-color: #f8f9fa;
   display: flex;
@@ -64,18 +64,24 @@
   display: flex;
   align-items: center;
   padding: calc(8 / 1440 * 100vw); /* 패딩을 화면 너비에 비례하여 설정 */
+  height: calc(56 / 1440 * 100vw);
 }
 
 .chat-input-container .MuiTextField-root {
   margin-right: calc(8 / 1440 * 100vw); /* 마진을 화면 너비에 비례하여 설정 */
 }
 
+.css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input {
+  height: calc(24 / 1440 * 100vw) !important;
+}
 .messageSendButton {
   background-color: transparent;
   border: none;
 }
 
-.sendButtonImg {
-  width: calc(24 / 1440 * 100vw); /* 아이콘 너비를 화면 너비에 비례하여 설정 */
-  height: calc(24 / 1440 * 100vw); /* 아이콘 높이를 화면 너비에 비례하여 설정 */
+
+
+.roomMessageSendIcon {
+  width: calc(24 / 1440 * 100vw) !important; /* 아이콘 너비를 화면 너비에 비례하여 설정 */
+  height: calc(24 / 1440 * 100vw) !important; /* 아이콘 높이를 화면 너비에 비례하여 설정 */  
 }

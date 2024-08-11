@@ -128,6 +128,7 @@ function RoomChat({ roomId }) {
       </div>
       <div className="chat-input-container">
         <TextField
+          className='roomInputItem'
           fullWidth
           inputRef={messageInputRef}
           placeholder="채팅 입력하기"
@@ -136,7 +137,7 @@ function RoomChat({ roomId }) {
           size="small"
         />
         <IconButton onClick={sendMessage}>
-          <SendIcon />
+          <SendIcon className='roomMessageSendIcon'/>
         </IconButton>
       </div>
     </Paper>

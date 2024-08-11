@@ -3,11 +3,9 @@
 .studyRoomRankLeaderboard {
     background-color: #B4C8BB !important;
     width: calc(295 / 1440 * 100vw); /* 컨테이너의 너비 설정 */
-    height: calc((100vh - calc(70 / 1440 * 100vw)) / 4 - calc(7.5 / 1440 * 100vw)); /* 전체 화면 높이에 비례한 높이 */
+    height: calc((100vh - calc(70 / 1440 * 100vw)) / 4 - calc(10 / 1440 * 100vw)); /* 전체 화면 높이에 비례한 높이 */
     padding: 0px !important;
     border-radius: 10px 10px; /* 붙이는 부분 둥글게 */
-    margin-top: calc(2.5 / 1440 * 100vw);
-    margin-bottom: calc(5 / 1440 * 100vw);
   }
   
   .studyRoomRankTitlePaper {

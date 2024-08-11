@@ -33,7 +33,7 @@
 }
 
 .studyRoomCamContainer > .video-session-container {
-  width: 100vw; /* RoomCam의 너비 설정 */
+  width: calc(1200 / 1440 * 100vw); /* RoomCam의 너비 설정 */
   height: auto; /* RoomCam의 높이 자동 조정 */
 }
 
@@ -54,5 +54,5 @@
 }
 
 .studyRoomUtilItem {
-  padding: calc(5 / 1440 * 100vw) calc(10 / 1440 * 100vw); /* 화면 너비에 비례하여 패딩 설정 */
+  padding: calc(10 / 1440 * 100vw) calc(10 / 1440 * 100vw) 0; /* 화면 너비에 비례하여 패딩 설정 */
 }
