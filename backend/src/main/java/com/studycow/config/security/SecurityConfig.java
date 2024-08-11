@@ -62,7 +62,8 @@ public class SecurityConfig implements WebSocketMessageBrokerConfigurer {
             "/swagger-ui.html#/**",
             "/ws/**",
             "/ws-stomp/**",
-            "/error"
+            "/error",
+            "/actuator/**"
     };
 
 
