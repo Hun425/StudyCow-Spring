@@ -42,11 +42,16 @@ const getAvatarImage = (rank) => {
 };
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
-  background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)", // 그라데이션 배경 적용
-  borderRadius: 15, // 모서리를 둥글게
-  boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)", // 그림자 효과
-  color: "white", // 텍스트 색상
-  padding: theme.spacing(2), // 내부 여백
+  background: "#83a1ca", // 파란색
+  borderRadius: 15,
+  boxShadow: "0 3px 5px 2px rgba(33, 203, 243, .3)", // 그림자 색상 조정
+  color: "white",
+  padding: theme.spacing(3), // 패딩 증가
+}));
+
+const StyledTypography = styled(Typography)(({ theme }) => ({
+  fontSize: "1.4rem", // 글씨 크기 증가
+  fontWeight: "bold",
 }));
 
 const StudyList = () => {
@@ -111,22 +116,25 @@ const StudyList = () => {
                         alt={`Rank ${data.rank}`}
                         className="studyListRankAvatar"
                       />
-                      <Typography
+                      <StyledTypography
                         variant="body2"
                         className="studyListRankNumber"
                       >
                         {data.rank}위
-                      </Typography>
+                      </StyledTypography>
                     </Box>
-                    <Typography
+                    <StyledTypography
                       variant="body1"
                       className="studyListRankUserNick"
                     >
                       {data.userNickName}
-                    </Typography>
-                    <Typography variant="body2" className="studyListRankTime">
+                    </StyledTypography>
+                    <StyledTypography
+                      variant="body2"
+                      className="studyListRankTime"
+                    >
                       {formatStudyTime(data.sumTime)}
-                    </Typography>
+                    </StyledTypography>
                   </Box>
                 ))}
             </Box>
