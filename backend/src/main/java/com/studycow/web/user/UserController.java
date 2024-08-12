@@ -87,4 +87,12 @@ public class UserController {
 
         return new ResponseEntity<>(userInfoDtos,HttpStatus.OK);
     }
+
+    @Operation(summary = "회원 공개여부 수정", description = "현재 유저의 공개여부를 전환합니다")
+    @PatchMapping("/me/public")
+    public ResponseEntity<?> updateUserPublic(@AuthenticationPrincipal CustomUserDetails user){
+        userService.updateUserPublic(user);
+
+        return new ResponseEntity<>("수정 성공", HttpStatus.OK);
+    }
 }

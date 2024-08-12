@@ -181,4 +181,17 @@ public class UserServiceImpl implements UserService  {
                 .map(user->modelMapper.map(user, UserInfoDto.class))
                 .collect(Collectors.toList());
     }
+
+    @Transactional
+    @Override
+    public void updateUserPublic(CustomUserDetails customUserDetails){
+        Optional<User> user = userRepository.findById((long)customUserDetails.getUser().getUserId());
+        if(!user.isPresent()){
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
+        int currentStatus = user.get().getUserPublic();
+        if(currentStatus == 1)user.get().setUserPublic(0);
+        else user.get().setUserPublic(1);
+
+    }
 }

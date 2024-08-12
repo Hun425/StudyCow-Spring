@@ -63,8 +63,30 @@ const PlanModify = ({ planId, show, onClose }) => {
     }
   }, [show, planId, token, modifyPlannerUrl]);
 
+  // 내용 입력 시 100자 제한 추가
+  const handleContentChange = (e) => {
+    const value = e.target.value;
+    if (value.length > 100) {
+      alert("내용은 100자 이내로 입력해 주세요."); // 100자 이상 입력 시 경고 메시지
+      return;
+    }
+    setContent(value);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // 과목이 선택되지 않았을 경우
+    if (!selectedSubject) {
+      alert("과목을 선택해 주세요.");
+      return;
+    }
+
+    // 시간과 분이 모두 0일 경우
+    if (selectedTime === 0 && selectedMinutes === 0) {
+      alert("시간과 분을 설정해 주세요.");
+      return;
+    }
 
     const totalMinutes =
       parseInt(selectedTime, 10) * 60 + parseInt(selectedMinutes, 10);
@@ -143,8 +165,8 @@ const PlanModify = ({ planId, show, onClose }) => {
               type="range"
               id="estimatedTime"
               name="estimatedTime"
-              min="1"
-              max="9"
+              min="0"
+              max="23"
               value={selectedTime}
               onChange={(e) => setSelectedTime(e.target.value)}
             />
@@ -170,7 +192,7 @@ const PlanModify = ({ planId, show, onClose }) => {
               id="content"
               name="content"
               value={content}
-              onChange={(e) => setContent(e.target.value)}
+              onChange={handleContentChange}
             ></textarea>
           </div>
           <div className="CreateModify-form-buttons">

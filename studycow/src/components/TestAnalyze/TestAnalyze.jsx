@@ -47,6 +47,10 @@ const TestAnalyze = () => {
         <h1>{userInfo.userNickName}님 어서오세요</h1>
 
         <div className="analyzeSideNav">
+          <button className="analyzeScoreRegistButton">
+            동민이의 신비한 버튼
+          </button>
+
           {/* 성적 등록 버튼 */}
           <button className="analyzeScoreRegistButton" onClick={openModal}>
             성적 등록

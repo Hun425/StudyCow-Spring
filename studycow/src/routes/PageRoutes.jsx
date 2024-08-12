@@ -11,7 +11,6 @@ import MyPage from "../views/MyPage.jsx";
 // 마이페이지 - 세부 페이지
 import MyPageEdit from "../components/ChangeInfo/ChangeInfo.jsx";
 import FriendComponent from "../components/Friends/FriendComponent";
-import MyPageGrade from "../components/MyPage/MyPageGrade.jsx";
 
 // 플래너페이지
 import PlanPage from "../views/PlanPage.jsx";
@@ -41,7 +40,6 @@ const PageRoutes = () => (
     <Route path="/myaccount" element={<MyPage />}>
       <Route path="" element={<MyPageEdit />} />
       <Route path="friends" element={<FriendComponent />} />
-      <Route path="grade" element={<MyPageGrade />} />
     </Route>
 
     {/* 홈 */}

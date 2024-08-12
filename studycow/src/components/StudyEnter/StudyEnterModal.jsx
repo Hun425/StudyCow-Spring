@@ -8,9 +8,10 @@ const StudyEnterModal = ({ isOpen, onRequestClose, roomId }) => {
     <ReactModal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
-      className="Modal"
-      overlayClassName="Overlay"
+      className="enterModal"
+      overlayClassName="enterOverlay"
       ariaHideApp={false}
+      shouldCloseOnOverlayClick={true}
     >
       <StudyEnter roomId={roomId} onRequestClose={onRequestClose} />
     </ReactModal>
