@@ -3,6 +3,7 @@
 import { create } from "zustand";
 import axios from "axios";
 import useInfoStore from "./infos";
+import Notiflix from 'notiflix';
 
 const API_URL =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/studycow/";
@@ -40,14 +41,12 @@ const useScoreStore = create((set) => ({
         },
       });
       if (response.status === 200) {
-        alert("점수 등록에 성공했습니다.");
-        // 상태 초기화 또는 추가 작업 수행
+        Notiflix.Notify.success("성적이 등록되었습니다.");
       } else {
-        alert("점수 등록에 실패했습니다.");
+        Notiflix.Notify.failure("성적 등록 실패.");
       }
     } catch (error) {
-      console.error("점수 등록 중 오류 발생:", error);
-      alert("점수 등록 중 오류가 발생했습니다.");
+      Notiflix.Notify.failure("성적 등록 실패.");
     }
   },
 }));

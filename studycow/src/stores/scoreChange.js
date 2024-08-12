@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
 import useInfoStore from "./infos";
-
+import Notiflix from 'notiflix';
 const API_URL =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/studycow/";
 
@@ -31,16 +31,17 @@ const useScoreChangeStore = create((set) => ({
       if (response.status === 200) {
         // 성공 상태로 설정
         set({ scoreChangeStatus: "success" });
-        console.log("성적 정보가 성공적으로 수정되었습니다.", response.data);
+        Notiflix.Notify.success("성적이 수정되었습니다.");
+        
       } else {
         // 실패 상태로 설정
-        set({ scoreChangeStatus: "error" });
-        console.error("성적 정보 수정에 실패했습니다.", response.status);
+        Notiflix.Notify.failure("성적 수정 실패.");
+        
       }
     } catch (error) {
       // 오류 발생 상태로 설정
-      set({ scoreChangeStatus: "error" });
-      console.error("성적 정보 수정 중 오류가 발생했습니다.", error);
+      Notiflix.Notify.failure("성적 수정 실패.");
+      
     }
   },
 
@@ -61,16 +62,16 @@ const useScoreChangeStore = create((set) => ({
       if (response.status === 200) {
         // 성공 상태로 설정
         set({ scoreChangeStatus: "success" });
-        console.log("성적 정보가 성공적으로 삭제되었습니다.");
+        Notiflix.Notify.success("성적이 삭제되었습니다.");
       } else {
         // 실패 상태로 설정
         set({ scoreChangeStatus: "error" });
-        console.error("성적 정보 삭제에 실패했습니다.", response.status);
+        Notiflix.Notify.failure("성적 삭제 실패.");
       }
     } catch (error) {
       // 오류 발생 상태로 설정
       set({ scoreChangeStatus: "error" });
-      console.error("성적 정보 삭제 중 오류가 발생했습니다.", error);
+      Notiflix.Notify.failure("성적 삭제 실패.");
     }
   },
 

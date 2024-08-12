@@ -4,6 +4,7 @@ import useScoreStore from "../../stores/scoreRegist";
 import useSubjectStore from "../../stores/subjectStore";
 import useInfoStore from "../../stores/infos";
 import useGradeStore from "../../stores/grade";
+import Notiflix from 'notiflix';
 
 const ScoreRegist = ({ onCancel, onSubmit }) => {
   const { updateScore, submitScore } = useScoreStore();
@@ -17,7 +18,7 @@ const ScoreRegist = ({ onCancel, onSubmit }) => {
   const [testScore, setTestScore] = useState("");
   const [testGrade, setTestGrade] = useState("");
   const [wrongs, setWrongs] = useState([{ catCode: "", wrongCnt: "" }]);
-  const [errorMessage, setErrorMessage] = useState("");
+
 
   const grades = Array.from({ length: 9 }, (_, i) => `${i + 1}등급`);
 
@@ -98,19 +99,19 @@ const ScoreRegist = ({ onCancel, onSubmit }) => {
 
   const validateForm = () => {
     if (!subjectCode) {
-      setErrorMessage("과목을 선택하세요.");
+      Notiflix.Notify.warning('과목을 선택 하세요.');
       return false;
     }
     if (!testDate) {
-      setErrorMessage("시험 날짜를 선택하세요.");
+      Notiflix.Notify.warning("시험 날짜를 선택하세요.");
       return false;
     }
     if (testScore === "") {
-      setErrorMessage("점수를 입력하세요.");
+      Notiflix.Notify.warning("점수를 입력하세요.");
       return false;
     }
     if (!testGrade) {
-      setErrorMessage("등급을 선택하세요.");
+      Notiflix.Notify.warning("등급을 선택하세요.");
       return false;
     }
 
@@ -122,11 +123,11 @@ const ScoreRegist = ({ onCancel, onSubmit }) => {
         wrong.catCode !== "" &&
         (wrong.wrongCnt === "" || wrong.wrongCnt <= 0)
       ) {
-        setErrorMessage("오답 개수는 0 이상이어야 합니다.");
+        Notiflix.Notify.warning("오답 개수는 0 이상이어야 합니다.");
         return false;
       }
       if (wrong.catCode === "" && wrong.wrongCnt > 0) {
-        setErrorMessage("오답 유형을 선택해야 합니다.");
+        Notiflix.Notify.warning("오답 유형을 선택해야 합니다.");
         return false;
       }
     }
@@ -145,7 +146,7 @@ const ScoreRegist = ({ onCancel, onSubmit }) => {
     const existingScores = Object.values(subjectGrades);
     for (const score of existingScores) {
       if (score.testDate === testDate) {
-        setErrorMessage("이미 동일한 날짜에 등록된 성적이 있습니다.");
+        Notiflix.Notify.warning("이미 동일한 날짜에 등록된 성적이 있습니다.");
         return;
       }
     }
@@ -169,7 +170,6 @@ const ScoreRegist = ({ onCancel, onSubmit }) => {
     }
 
     updateScore("scoreDetails", mergedWrongs);
-
     submitScore();
     onSubmit(subjectCode);
   };
@@ -178,7 +178,6 @@ const ScoreRegist = ({ onCancel, onSubmit }) => {
     <div className="ScoreRegist-container">
       <div className="ScoreRegist-register">
         <h3>성적 등록</h3>
-        {errorMessage && <p className="ScoreRegist-error">{errorMessage}</p>}
         <div className="ScoreRegist-form">
           <select
             className="ScoreRegist-select"
