@@ -22,7 +22,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <pre>
@@ -67,9 +69,12 @@ public class ChatGPTController {
         try {
             ScoreChatRequest request = new ScoreChatRequest(model, responseScoreDto.toString());
             ChatGPTResponse chatGPTResponse = template.postForObject(apiURL, request, ChatGPTResponse.class);
-            responseScoreDto.setAdvice(chatGPTResponse.getChoices().get(0).getMessage().getContent());
 
-            return ResponseEntity.ok(responseScoreDto);
+            Map<String, String> advice = new HashMap<>();
+            advice.put("advice", chatGPTResponse.getChoices().get(0).getMessage().getContent());
+            //responseScoreDto.setAdvice(chatGPTResponse.getChoices().get(0).getMessage().getContent());
+
+            return ResponseEntity.ok(advice);
         }catch (Exception e){
             return new ResponseEntity<>("성적 조언생성 실패 : " + e.getMessage(), HttpStatus.BAD_REQUEST);
         }

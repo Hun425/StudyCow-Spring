@@ -7,22 +7,11 @@ BEGIN
 	DECLARE V_USER_ID INT;
     DECLARE V_ROOM_ID bigint;
     DECLARE V_ROOM_CNT INT;
-    DECLARE V_ROOM_MAX_PERSON INT;
-    DECLARE V_ROOM_NOW_PERSON INT;
+    DECLARE V_ATTEND_ROOM bigint;
+    DECLARE V_ATTEND_CNT INT;
     
     SET V_USER_ID = NEW.user_id;
     SET V_ROOM_ID = NEW.room_id;
-    
-    -- 참석하려는 방의 최대정원과 현 인원 수 조회
-    SELECT room_max_person, room_now_person
-    INTO V_ROOM_MAX_PERSON, V_ROOM_NOW_PERSON
-    FROM t_room
-    WHERE room_id = V_ROOM_ID;
-    
-    -- 방 인원이 다 찼을 경우 EXCEPTION 발생
-    IF V_ROOM_NOW_PERSON >= V_ROOM_MAX_PERSON THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '방 정원이 초과되었습니다. 입장할 수 없습니다.';
-	END IF;
     
     -- 정산일자를 06:00 기준으로 업데이트 하기위한 STUDY_DATE
     IF NEW.in_date - INTERVAL 6 HOUR < current_date() THEN
@@ -31,14 +20,33 @@ BEGIN
 		SET NEW.study_date = current_date();
     END IF;
     
+    -- 현재 유저가 참석중인 방 확인
+    SELECT room_id INTO V_ATTEND_ROOM
+	FROM t_attend 
+    WHERE user_id = V_USER_ID;
+    
     -- 참석자 정보 조회 후 없을 경우 INSERT 처리
-	IF NOT EXISTS (
-        SELECT 1 
-        FROM t_attend 
-        WHERE user_id = V_USER_ID AND room_id = V_ROOM_ID
-    ) THEN
+	IF V_ATTEND_ROOM IS NULL THEN
         INSERT INTO t_attend (user_id, room_id) 
         VALUES (V_USER_ID, V_ROOM_ID);
+	-- 참석자가 다른 방에 참여중일 경우
+	ELSEIF V_ATTEND_ROOM <> V_ROOM_ID THEN
+	BEGIN
+		-- 참석자가 참여 정보 UPDATE
+		UPDATE t_attend SET room_id = V_ROOM_ID
+		WHERE user_id = V_USER_ID;
+        
+        -- 기존에 참여했던 방의 정보 최신화
+        SELECT COUNT(*) 
+		INTO V_ATTEND_CNT 
+		FROM t_attend 
+		WHERE room_id = V_ATTEND_ROOM; 
+        
+        UPDATE t_room
+        SET room_now_person = V_ATTEND_CNT,
+        room_update_date = NOW()
+        WHERE room_id = V_ATTEND_ROOM;
+	END;
     END IF;
     
     SELECT COUNT(*) 
@@ -52,7 +60,6 @@ BEGIN
     room_update_date = NOW()
     WHERE room_id = NEW.room_id;
 END //
-
 
 DELIMITER //
 -- 방 입장 log 퇴장 시 방 참여유저 delete, 방 인원 수 최신화
