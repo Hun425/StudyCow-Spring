@@ -154,66 +154,71 @@ const useStudyStore = create(
         const { token } = useInfoStore.getState(); // userNickName을 가져옵니다.
 
         try {
-          const response = await axios.post(
-            `${API_URL}roomLog/enter/${rId}`,
-            {},
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-
-          if (response.status === 200) {
-            const data = response.data;
-            console.log("방 입장 성공", data);
-
-            const { logId, rankDto, roomStudyTime } = data;
-
-            // 상태 업데이트
-            const studyStore = useStudyStore.getState();
-            studyStore.setLogId(logId);
-            studyStore.setMyStudyTime(roomStudyTime);
-            studyStore.setMyStudyTimeSec(roomStudyTime*60);
-            studyStore.setRankInfo(rankDto);
-            
-          } else {
-            console.error(`응답 코드 오류: ${response.status}`);
-            alert(`응답 코드 오류: ${response.status}`);
-            window.location.href = "/study";
-          }
-        } catch (error) {
-          if (error.response) {
-            // 서버가 상태 코드를 응답했을 때
-            switch (error.response.status) {
-              case 400:
-                console.error(
-                  "잘못된 요청입니다. 요청을 확인해 주세요.",
-                  error.response.data
-                );
-                break;
-              case 500:
-                console.error(
-                  "서버 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.",
-                  error.response.data
-                );
-                break;
-              default:
-                console.error(
-                  `알 수 없는 오류가 발생했습니다. 상태 코드: ${error.response.status}`,
-                  error.response.data
-                );
-            }
-          } else if (error.request) {
-            // 요청이 전송되었으나 응답을 받지 못했을 때
-            console.error(
-              "응답을 받지 못했습니다. 네트워크를 확인해 주세요.",
-              error.request
+            const response = await axios.post(
+                `${API_URL}roomLog/enter/${rId}`,
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
             );
-          } else {
-            // 다른 오류
-            console.error("요청 중 오류가 발생했습니다.", error.message);
-          }
+
+            if (response.status === 200) {
+                const data = response.data;
+                console.log("방 입장 성공", data);
+
+                const { logId, rankDto, roomStudyTime } = data;
+
+                // 상태 업데이트
+                const studyStore = useStudyStore.getState();
+                studyStore.setLogId(logId);
+                studyStore.setMyStudyTime(roomStudyTime);
+                studyStore.setMyStudyTimeSec(roomStudyTime * 60);
+                studyStore.setRankInfo(rankDto);
+
+                return response.status; // 성공 시 상태 코드 반환
+            } else {
+                console.error(`응답 코드 오류: ${response.status}`);
+                alert(`응답 코드 오류: ${response.status}`);
+                window.location.href = "/study";
+                return response.status; // 응답 코드 오류 시 상태 코드 반환
+            }
+        } catch (error) {
+            if (error.response) {
+                // 서버가 상태 코드를 응답했을 때
+                switch (error.response.status) {
+                    case 400:
+                        console.error(
+                            "잘못된 요청입니다. 요청을 확인해 주세요.",
+                            error.response.data
+                        );
+                        break;
+                    case 500:
+                        console.error(
+                            "서버 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.",
+                            error.response.data
+                        );
+                        break;
+                    default:
+                        console.error(
+                            `알 수 없는 오류가 발생했습니다. 상태 코드: ${error.response.status}`,
+                            error.response.data
+                        );
+                }
+                return error.response.status; // 오류 응답 시 상태 코드 반환
+            } else if (error.request) {
+                // 요청이 전송되었으나 응답을 받지 못했을 때
+                console.error(
+                    "응답을 받지 못했습니다. 네트워크를 확인해 주세요.",
+                    error.request
+                );
+                return null; // 네트워크 오류 시 상태 코드 반환 없음
+            } else {
+                // 다른 오류
+                console.error("요청 중 오류가 발생했습니다.", error.message);
+                return null; // 기타 오류 시 상태 코드 반환 없음
+            }
         }
       },
 

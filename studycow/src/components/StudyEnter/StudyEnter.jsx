@@ -17,11 +17,18 @@ const StudyEnter = ({ roomId, onRequestClose }) => {
 
   const handleClick = async () => {
     try {
-      await registerRoom(roomId); // 방 입장 함수 호출 및 완료 대기
-      navigate(`/study/room/${roomId}`); // 라우팅
+        const status = await registerRoom(roomId); // 방 입장 함수 호출 및 완료 대기
+        
+        if (status === 200) {
+            // 상태 코드가 200일 때 라우팅
+            navigate(`/study/room/${roomId}`);
+        } else {
+            // 상태 코드가 200이 아닐 때 /study로 리다이렉트
+            navigate('/study');
+        }
     } catch (error) {
-      console.error("방 입장 중 오류 발생", error);
-      navigate(''); // 에러 발생 시 /study로 리다이렉트
+        console.error("방 입장 중 오류 발생", error);
+        navigate('/study'); // 에러 발생 시 /study로 리다이렉트
     }
   };
 
