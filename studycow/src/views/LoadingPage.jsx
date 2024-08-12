@@ -20,7 +20,7 @@ const LoadingPage = () => {
     const progressInterval = setInterval(() => {
       setProgress((prevProgress) => {
         if (prevProgress < 100) {
-          return prevProgress + 100 / 3000;
+          return prevProgress + 100 / 2000;
         } else {
           clearInterval(progressInterval);
           return 100;

@@ -65,9 +65,34 @@ const PlanCreate = ({ show, onClose }) => {
     }));
   };
 
+  // 내용 입력 시 100자 제한 추가
+  const handleContentChange = (e) => {
+    const value = e.target.value;
+    if (value.length > 100) {
+      alert("내용은 100자 이내로 입력해 주세요."); // 100자 이상 입력 시 경고 메시지
+      return;
+    }
+    setFormState((prevState) => ({
+      ...prevState,
+      content: value,
+    }));
+  };
+
   // 플래너 제출 핸들러
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // 과목이 선택되지 않았을 경우
+    if (!formState.selectedSubject) {
+      alert("과목을 선택해 주세요.");
+      return;
+    }
+
+    // 시간과 분이 모두 0일 경우
+    if (formState.selectedTime === 0 && formState.selectedMinutes === 0) {
+      alert("시간과 분을 설정해 주세요.");
+      return;
+    }
 
     const subCode = parseInt(formState.selectedSubject, 10);
     const catCode = parseInt(formState.selectedSubSubject, 10); // 세부 과목 코드
@@ -174,7 +199,7 @@ const PlanCreate = ({ show, onClose }) => {
               id="estimatedHours"
               name="estimatedHours"
               min="0"
-              max="24"
+              max="23"
               value={formState.selectedTime}
               onChange={(e) =>
                 setFormState((prevState) => ({
@@ -212,12 +237,7 @@ const PlanCreate = ({ show, onClose }) => {
               id="content"
               name="content"
               value={formState.content}
-              onChange={(e) =>
-                setFormState((prevState) => ({
-                  ...prevState,
-                  content: e.target.value,
-                }))
-              }
+              onChange={handleContentChange}
             ></textarea>
           </div>
           <div className="CreateModify-form-buttons">

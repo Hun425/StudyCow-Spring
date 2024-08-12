@@ -32,6 +32,17 @@ const AIPlannerModal = ({ show, onClose, analysis, plans }) => {
   }, [plans]);
 
   const handleRegister = async () => {
+    for (const plan of editablePlans) {
+      if (!plan.subCode) {
+        alert("모든 플랜에서 과목을 선택해 주세요.");
+        return;
+      }
+      if (plan.planStudyTime === 0) {
+        alert("모든 플랜에서 시간과 분을 설정해 주세요.");
+        return;
+      }
+    }
+
     const success = await registerPlans(editablePlans); // 플래너 등록
     if (success) {
       alert("플래너가 성공적으로 등록되었습니다.");
@@ -52,6 +63,11 @@ const AIPlannerModal = ({ show, onClose, analysis, plans }) => {
   };
 
   const handlePlanChange = (index, field, value) => {
+    if (field === "planContent" && value.length > 100) {
+      alert("내용은 100자 이내로 입력해 주세요.");
+      return;
+    }
+
     const updatedPlans = [...editablePlans];
     updatedPlans[index] = { ...updatedPlans[index], [field]: value };
     setEditablePlans(updatedPlans);
@@ -136,6 +152,8 @@ const AIPlannerModal = ({ show, onClose, analysis, plans }) => {
                       <>
                         <input
                           type="number"
+                          min="0"
+                          max="23"
                           value={Math.floor(plan.planStudyTime / 60)}
                           onChange={(e) =>
                             handlePlanChange(
@@ -150,6 +168,9 @@ const AIPlannerModal = ({ show, onClose, analysis, plans }) => {
                         시간
                         <input
                           type="number"
+                          min="0"
+                          max="50"
+                          step="10"
                           value={plan.planStudyTime % 60}
                           onChange={(e) =>
                             handlePlanChange(
