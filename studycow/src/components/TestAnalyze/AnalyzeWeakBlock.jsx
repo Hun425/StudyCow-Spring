@@ -17,7 +17,7 @@ const AnalyzeWeakBlock = () => {
 
   return (
     <div className="analyzeWeakBlock">
-      <h3>가장 많이 틀리는 취약점 Top 3</h3>
+      <h4>가장 많이 틀리는 취약점 Top 3</h4>
       {/* weaknessTop3 객체에 데이터가 있는지 확인 */}
       {Object.keys(weaknessTop3).length > 0 ? (
         <div className="weaknessList">

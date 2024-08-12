@@ -1,16 +1,37 @@
 .mainTotalContainer {
   width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.charImgPart {
+  width: 20%;
+  height: auto;
+  max-height: 500px;
+  text-align: center;
+  background-color: rgb(0, 255, 8);
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.mainInfoPart {
+  width: 60%;
+  background-color: #7092be;
+  border-radius: 20px;
+  padding: 20px;
 }
 
 .uppartContainer {
   display: flex;
-  padding: 10px 50px;
-  justify-content: space-between;
-  height: 500px;
+  padding: 10px 10px 50px;
+  justify-content: space-evenly;
+  align-items: center;
+  height: auto;
 }
 
 .downpartContainer {
   display: flex;
-  padding: 10px 50px;
+  padding: 10px;
   justify-content: space-evenly;
+  align-items: center;
 }

@@ -40,9 +40,6 @@ const MainGrassItem = () => {
 
   return (
     <div className="mainGrassContainer">
-      <div className="charImgPart">
-        <h1>캐릭터</h1>
-      </div>
       <div className="createdGrass">
         <GrassCreate
           year={todayYear}

@@ -220,6 +220,30 @@ const usePlanStore = create(
           return false;
         }
       },
+
+      // 추가된 getSubjectPlans 함수
+      getSubjectPlans: async (subjectId) => {
+        const { token } = useInfoStore.getState();
+        const headers = {
+          Authorization: `Bearer ${token}`,
+        };
+        try {
+          const response = await axios.get(API_URL + "planner/list/subject", {
+            params: { subjectId },
+            headers,
+          });
+          if (response.status === 200) {
+            set({ subPlans: response.data ?? [] });
+            return response.data; // 성공 시 데이터를 반환
+          } else {
+            throw new Error("정보불러오기 에러");
+          }
+        } catch (e) {
+          console.log(e);
+          return false;
+        }
+      },
+
     }),
     {
       name: "plan-storage", // 상태를 로컬 스토리지에 저장

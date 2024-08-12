@@ -1,23 +1,31 @@
 /* 전체 그래프 컨테이너 스타일 */
 .analyze-weak-graph {
-  width: 100%;
+  width: 60%;
   max-width: 800px; /* 최대 너비 설정 */
-  margin: 0 auto; /* 중앙 정렬 */
+  height: auto;
+  min-height: 450px;
   padding: 20px;
   box-sizing: border-box; /* 패딩을 너비에 포함 */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 /* 그래프 제목 스타일 */
 .analyze-weak-graph h3 {
   text-align: center;
   color: #333;
-  margin-bottom: 20px;
 }
 
 /* 차트 컨테이너 스타일 */
 .chart-container {
   width: 100%;
-  height: 400px; /* 차트의 높이 설정 */
+  height: auto;
+  min-height: 400px; /* 차트의 높이 설정 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* 반응형 디자인을 위한 미디어 쿼리 */
@@ -28,6 +36,6 @@
   }
 
   .chart-container {
-    height: 300px; /* 차트 높이 축소 */
+    height: 200px; /* 차트 높이 축소 */
   }
 }

@@ -14,20 +14,26 @@ const MainRecentRoom = () => {
   }, [fetchRecentRoom]);
 
   if (!recentRoom) {
-    return <div>최근 입장한 방이 없소!</div>;
+    return (
+      <div className="recentRoomIsNone">
+        <p>최근 입장한 방이 없소!</p>
+      </div>
+    );
   }
 
   return (
     <div className="mainRecentRoomContainer">
-      <h3>최근 입장한 방</h3>
-      <RecentRoomItem
-        roomId={recentRoom.id}
-        title={recentRoom.roomTitle}
-        thumb={recentRoom.roomThumb}
-        maxPerson={recentRoom.roomMaxPerson}
-        nowPerson={recentRoom.roomNowPerson}
-        content={recentRoom.roomContent}
-      />
+      <div>
+        <h3>최근 입장한 방</h3>
+        <RecentRoomItem
+          roomId={recentRoom.id}
+          title={recentRoom.roomTitle}
+          thumb={recentRoom.roomThumb}
+          maxPerson={recentRoom.roomMaxPerson}
+          nowPerson={recentRoom.roomNowPerson}
+          content={recentRoom.roomContent}
+        />
+      </div>
     </div>
   );
 };
