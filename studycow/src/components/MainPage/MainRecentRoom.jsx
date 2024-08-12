@@ -24,7 +24,7 @@ const MainRecentRoom = () => {
   return (
     <div className="mainRecentRoomContainer">
       <div>
-        <h3>최근 입장한 방</h3>
+        <h4>최근 입장한 방</h4>
         <RecentRoomItem
           roomId={recentRoom.id}
           title={recentRoom.roomTitle}
