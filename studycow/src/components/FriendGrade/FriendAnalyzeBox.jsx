@@ -2,6 +2,7 @@ import "./styles/FriendAnalyzeBox.css";
 import FriendRecentGrades from "./FriendRecentGrades";
 import FriendLearningStatus from "./FriendLearningStatus";
 import FriendWeakBlock from "./FriendWeakBlock";
+import FriendWeakGraph from "./FriendWeakGraph";
 
 const FriendAnalyzeBox = ({ userId }) => {
   return (
@@ -17,6 +18,7 @@ const FriendAnalyzeBox = ({ userId }) => {
       </div>
       <div className="downsideContainer">
         <FriendWeakBlock userId={userId} />
+        <FriendWeakGraph userId={userId} />
       </div>
     </div>
   );

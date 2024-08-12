@@ -2,7 +2,7 @@ import "./styles/FriendWeakBlock.css";
 import React, { useEffect } from "react";
 import useGradeStore from "../../stores/grade";
 
-const AnalyzeWeakBlock = ({ userId }) => {
+const FriendWeakBlock = ({ userId }) => {
   const { weaknessTop3, fetchWeaknessPart, selectedSubject } = useGradeStore();
 
   useEffect(() => {
@@ -35,4 +35,4 @@ const AnalyzeWeakBlock = ({ userId }) => {
   );
 };
 
-export default AnalyzeWeakBlock;
+export default FriendWeakBlock;
