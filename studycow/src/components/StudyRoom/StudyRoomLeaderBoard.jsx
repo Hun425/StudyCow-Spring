@@ -57,9 +57,11 @@ const StudyRoomLeaderBoard = ({ myRankInfo = { userName: '', studyTime: 0 } }) =
           공부 시간 랭킹
         </Typography>
       </Paper>
-      {rankInfo.length === 0 ? (
+      {rankInfo.length === 0 || myRankInfo.length === 0 ? (
         <Typography variant="body2" className="studyRoomRankNoData">
           현재 랭킹을 조회할 수 없습니다.
+          <br/>
+          잠시 후 다시 시도해주세요.
         </Typography>
       ) : (
         <>
