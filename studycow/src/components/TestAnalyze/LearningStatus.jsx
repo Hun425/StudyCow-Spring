@@ -40,13 +40,7 @@ const LearningStatus = () => {
       {selectedSubject && subjectInfo ? (
         <div className="learning-status-table">
           <div className="learning-status-row">
-            <span className="learning-status-label">목표</span>
-            <span className="learning-status-value">
-              {subjectInfo.targetScore} 점
-            </span>
-          </div>
-          <div className="learning-status-row">
-            <span className="learning-status-label">플래너 학습 시간</span>
+            <span className="learning-status-label">플래너 누적 학습 시간</span>
             <span className="learning-status-value">
               {subjectInfo.sumStudyTime} 분
             </span>

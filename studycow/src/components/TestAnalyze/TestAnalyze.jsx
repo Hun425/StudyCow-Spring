@@ -46,25 +46,29 @@ const TestAnalyze = () => {
       <div className="analyzeHeader">
         <h1>{userInfo.userNickName}님 어서오세요</h1>
 
-        {/* 성적 등록 버튼 */}
-        <button onClick={openModal}>성적 등록</button>
+        <div className="analyzeSideNav">
+          {/* 성적 등록 버튼 */}
+          <button className="analyzeScoreRegistButton" onClick={openModal}>
+            성적 등록
+          </button>
 
-        <div className="gradeSubjectSelect">
-          <select
-            name="subject"
-            onChange={(e) => handleSubjectChange(e.target.value)}
-            value={selectedSubject}
-            className="form-control ml-2"
-          >
-            <option value="" disabled hidden>
-              과목 선택
-            </option>
-            {subjects.map((subject) => (
-              <option key={subject.subCode} value={subject.subCode}>
-                {subject.subName}
+          <div className="gradeSubjectSelect">
+            <select
+              name="subject"
+              onChange={(e) => handleSubjectChange(e.target.value)}
+              value={selectedSubject}
+              className="form-control ml-2"
+            >
+              <option value="" disabled hidden>
+                과목 선택
               </option>
-            ))}
-          </select>
+              {subjects.map((subject) => (
+                <option key={subject.subCode} value={subject.subCode}>
+                  {subject.subName}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
       <div className="analyzeBody">
