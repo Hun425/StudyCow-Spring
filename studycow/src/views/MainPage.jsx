@@ -3,6 +3,7 @@ import useInfoStore from "../stores/infos"; // 상태 관리 파일에서 useInf
 import Main_Unlogin from "../components/MainPage/Main_Unlogin";
 import Main_Login from "../components/MainPage/Main_Login";
 import { useRef, useEffect } from "react";
+import "../styles/MainPage.css";
 
 const MainPage = () => {
   const isLogin = useInfoStore((state) => state.isLogin); // 로그인 상태 체크
