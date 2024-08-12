@@ -77,6 +77,7 @@ const MyPlanner = () => {
 
   return (
     <>
+    <div className="MyPlannerMain">
       <div className="MyPlanDatePlanContainer">
         <div className="MyPlanDateCalendar">
           <Calendar />
@@ -123,7 +124,7 @@ const MyPlanner = () => {
               name="subject"
               onChange={(e) => setSelectedSubject(e.target.value)}
               value={selectedSubject}
-              className="form-control ml-2"
+              className="form-control ml-2 MyPlanCatSelectControl"
             >
               <option value="" disabled hidden>
                 과목 선택
@@ -156,6 +157,7 @@ const MyPlanner = () => {
 
       {/* PlanCreate 모달 창 */}
       <PlanCreate show={showPlanCreate} onClose={handleClosePlanCreate} />
+    </div>
     </>
   );
 };

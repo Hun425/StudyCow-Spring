@@ -1,8 +1,8 @@
 .navContainer {
   z-index: 2;
-  position: absolute;
+  position: sticky;
   top: 0;
-  width: 100%;
+  width: 100vw;
   height: calc(60 / 1440 * 100vw);
   display: flex;
   justify-content: center;
@@ -58,6 +58,7 @@
 }
 
 .leftContainer {
+  margin-left: calc(50 / 1440 * 100vw);
   justify-content: flex-start;
   font-size: calc(20 / 1440 * 100vw);
 }

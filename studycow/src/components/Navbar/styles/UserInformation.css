@@ -83,7 +83,7 @@ div .profileImg {
   z-index: 2;
   position: absolute !important;
   top: calc(6.25 / 1440 * 100vw);
-  right: calc(15 / 1440 * 100vw);
+  right: calc(50 / 1440 * 100vw);
   display: inline-block;
   font-family: "CustomFont", sans-serif;
 }

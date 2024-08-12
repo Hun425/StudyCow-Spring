@@ -1,22 +1,47 @@
 .singlePlanBox {
-  width: 490px; /* 박스 크기 설정 */
+  width: calc(490 / 1440 * 100vw); /* 박스 크기 설정 */
   margin: 0; /* 마진 0 */
   padding: 0; /* 패딩 0 */
+  overflow-y: auto; /* 세로 스크롤바 표시 */
+}
+
+/* 기본 스크롤바 숨기기 */
+.singlePlanBox::-webkit-scrollbar {
+  width: calc(0 / 1440 * 100vw); /* 화면 너비에 비례한 스크롤바 너비 */
+}
+
+/* 호버 시 스크롤바 나타내기 */
+.singlePlanBox:hover::-webkit-scrollbar {
+  width: calc(10 / 1440 * 100vw); /* 화면 너비에 비례한 스크롤바 너비 */
+}
+
+.singlePlanBox::-webkit-scrollbar-track {
+  background: #f1f1f1; /* 스크롤바 트랙 색상 */
+  border-radius: calc(10 / 1440 * 100vw); /* 화면 너비에 비례한 둥글기 */
+}
+
+.singlePlanBox::-webkit-scrollbar-thumb {
+  background: #888; /* 스크롤바 색상 */
+  border-radius: calc(10 / 1440 * 100vw); /* 화면 너비에 비례한 둥글기 */
+}
+
+.singlePlanBox:hover::-webkit-scrollbar-thumb {
+  background: #555; /* 호버 시 스크롤바 색상 */
 }
 
 .singlePlanBox p {
   display: flex; /* 체크박스와 텍스트를 일렬로 정렬 */
   align-items: center; /* 세로 방향 중앙 정렬 */
   justify-content: center;
-  font-size: 40px;
+  font-size: calc(40 / 1440 * 100vw);
 }
 
 .singlePlanContent {
   display: flex; /* 체크박스와 텍스트를 일렬로 정렬 */
   align-items: center; /* 세로 방향 중앙 정렬 */
   justify-content: space-between;
-  border-bottom: 1px solid red; /* 빨간 밑줄 */
-  padding-top: 10px;
+  border-bottom: calc(1 / 1440 * 100vw) solid red; /* 빨간 밑줄 */
+  padding-top: calc(10 / 1440 * 100vw);
   position: relative; /* ::before 가상 요소 위치 조정을 위해 필요 */
 }
 
@@ -24,7 +49,7 @@
   display: flex;
   align-items: center;
   margin: 0;
-  font-size: 24px; /* 글자 크기 설정 */
+  font-size: calc(24 / 1440 * 100vw); /* 글자 크기 설정 */
 }
 
 /* .singlePlanContent label { } */
@@ -36,29 +61,29 @@
 }
 
 .singlePlanCheckbox {
-  margin-left: 10px; /* 체크박스 여백 */
-  margin-right: 30px; /* 체크박스 여백 */
-  width: 19px; /* 체크박스의 너비 */
-  height: 19px; /* 체크박스의 높이 */
+  margin-left: calc(10 / 1440 * 100vw); /* 체크박스 여백 */
+  margin-right: calc(30 / 1440 * 100vw); /* 체크박스 여백 */
+  width: calc(19 / 1440 * 100vw); /* 체크박스의 너비 */
+  height: calc(19 / 1440 * 100vw); /* 체크박스의 높이 */
   /* transform 속성을 사용하여 체크박스의 크기를 비율로 조절 */
   transform: scale(1.5); /* 1.5배 크기 조절 */
 }
 
 .singlePlanStudyTime {
-  margin-left: 8px; /* 체크박스와 시간 텍스트 사이의 간격 */
-  font-size: 24px; /* 시간 텍스트 크기 */
+  margin-left: calc(8 / 1440 * 100vw); /* 체크박스와 시간 텍스트 사이의 간격 */
+  font-size: calc(24 / 1440 * 100vw); /* 시간 텍스트 크기 */
 }
 
 .singlePlanButtonBox {
-  margin-right: 10px;
+  margin-right: calc(10 / 1440 * 100vw);
   display: flex; /* 체크박스와 텍스트를 일렬로 정렬 */
   align-items: center; /* 세로 방향 중앙 정렬 */
   justify-content: space-between;
 }
 
 .singlePlanButtonCase {
-  width: 30px;
-  height: 30px;
+  width: calc(30 / 1440 * 100vw);
+  height: calc(30 / 1440 * 100vw);
   background-color: transparent; /* 배경을 투명하게 설정 */
   border: none; /* 기본 테두리 제거 */
   padding: 0; /* 기본 여백 제거 */
@@ -68,13 +93,13 @@
 }
 
 .singlePlanEditButton {
-  height: 23px;
-  width: 23px;
+  height: calc(23 / 1440 * 100vw);
+  width: calc(23 / 1440 * 100vw);
 }
 
 .singlePlanDeleteButton {
-  height: 26px !important;
-  width: 27px !important;
+  height: calc(26 / 1440 * 100vw) !important;
+  width: calc(27 / 1440 * 100vw) !important;
   padding-bottom: 1px;
 }
 
@@ -85,7 +110,7 @@
   left: 0;
   right: 0;
   top: 50%; /* 텍스트 중앙에 위치 */
-  height: 2px; /* 선의 두께 */
+  height: calc(2 / 1440 * 100vw); /* 선의 두께 */
   background-color: gray; /* 선의 색상 */
   z-index: 1; /* 텍스트 위에 표시 */
 }

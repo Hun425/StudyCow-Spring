@@ -9,47 +9,44 @@ button {
 
 /* 날짜와 계획 컨테이너 */
 .MyPlanDatePlanContainer {
-  position: relative;
   height: 100%;
   display: flex;
   align-items: center;
-  padding-top: 10px;
   justify-content: center;
-  gap: 30px;
 }
 
 /* 캘린더 컨테이너 */
 .MyPlanDateCalendar {
-  max-width: 600px;
+  max-width: calc(600 / 1440 * 100vw);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   flex: 1;
   margin: 0px;
-  padding: 30px;
+  padding: calc(30 / 1440 * 100vw);
   background-color: rgba(0, 0, 0, 0); /* 완전 투명 배경 */
-  max-height: 500px;
+  max-height: calc(500 / 1440 * 100vw);
   border: none; /* 경계선 제거 */
   box-shadow: none; /* 그림자 제거 */
 }
 
 /* 계획 목록 컨테이너 */
 .MyPlanDatePlanbox {
-  max-width: 600px;
+  max-width: calc(600 / 1440 * 100vw);
   display: flex;
   align-items: center; /* 변경: center에서 flex-start로 */
   justify-content: flex-start;
   flex-direction: column;
   flex: 1;
   border: none;
-  border-radius: 12px;
-  margin: 35px;
-  padding: 30px;
+  border-radius: calc(12 / 1440 * 100vw);
+  margin: calc(35 / 1440 * 100vw);
+  padding: calc(30 / 1440 * 100vw);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   overflow-y: auto; /* 이미 있음: 세로 스크롤 허용 */
-  min-height: 395px;
-  max-height: 420px; /* 추가: 최대 높이 설정 */
+  min-height: calc(395 / 1440 * 100vw);
+  max-height: calc(420 / 1440 * 100vw); /* 추가: 최대 높이 설정 */
   transition: all 0.3s ease;
   background-color: #ffeb3b;
   position: relative;
@@ -58,21 +55,21 @@ button {
 .MyPlanDatePlanbox:before {
   content: "";
   position: absolute;
-  top: -10px;
-  left: 20px;
-  width: 50px;
-  height: 10px;
+  top: calc( - 10 / 1440 * 100vw);
+  left: calc(20 / 1440 * 100vw);
+  width: calc(50 / 1440 * 100vw);
+  /* height: calc(10 / 1440 * 100vw); */
   background-color: #f1c40f; /* 위쪽 붙이는 부분 색상 */
-  border-radius: 0 0 10px 10px; /* 붙이는 부분 둥글게 */
+  border-radius: 0 0 calc(10 / 1440 * 100vw) calc(10 / 1440 * 100vw); /* 붙이는 부분 둥글게 */
 }
 
 /* 버튼 컨테이너 */
 .MyPlanButtonContainer {
   display: flex; /* 플렉스 박스로 설정하여 가로로 배치 */
-  gap: 40px; /* 버튼 사이의 간격 */
+  gap: calc(40 / 1440 * 100vw); /* 버튼 사이의 간격 */
   justify-content: center; /* 버튼을 가운데 정렬 */
   align-items: center; /* 수직 정렬 */
-  margin-top: 10px; /* 상단 마진 추가 */
+  margin-top: calc(10 / 1440 * 100vw); /* 상단 마진 추가 */
 }
 
 /* 자동생성 버튼 스타일 */
@@ -81,35 +78,35 @@ button {
   flex-direction: column; /* 이미지와 텍스트를 세로로 배치 */
   align-items: center;
   justify-content: center;
-  gap: 5px; /* 이미지와 텍스트 사이의 간격 */
+  gap: calc(5 / 1440 * 100vw); /* 이미지와 텍스트 사이의 간격 */
   background-color: transparent; /* 배경색 제거 */
   border: none; /* 테두리 제거 */
   cursor: pointer; /* 커서 포인터로 변경 */
   font-weight: bold; /* 텍스트 굵기 설정 */
-  font-size: 14px; /* 텍스트 크기 설정 */
+  font-size: calc(14 / 1440 * 100vw); /* 텍스트 크기 설정 */
   text-decoration: none; /* 텍스트 장식 제거 */
   color: #333; /* 텍스트 색상 */
   transition: background-color 0.3s ease;
 }
 
 .MyPlanAutoButton img {
-  width: 40px; /* 이미지 크기 설정 */
-  height: 40px;
+  width: calc(40 / 1440 * 100vw); /* 이미지 크기 설정 */
+  height: calc(40 / 1440 * 100vw);
 }
 
 /* 기존 추가 버튼 스타일 */
 .MyPlanAddButton {
-  height: 33px;
-  width: 33px;
-  padding-bottom: 1px;
+  height: calc(33 / 1440 * 100vw);
+  width: calc(33 / 1440 * 100vw);
+  padding-bottom: calc(1 / 1440 * 100vw);
   border: none; /* 테두리 제거 */
 }
 
 /* 개별 계획 항목 스타일 */
 .MyPlanPlanListItem {
   flex-direction: row;
-  padding: 12px 0;
-  border-bottom: 1px solid #e0e0e0;
+  padding: calc(12 / 1440 * 100vw) 0;
+  border-bottom: calc(1 / 1440 * 100vw)solid #e0e0e0;
   transition: background-color 0.2s ease;
 }
 
@@ -123,38 +120,38 @@ button {
 
 .MyPlanPlanListItem label {
   flex: 1;
-  font-size: 16px;
+  font-size: calc(16 / 1440 * 100vw);
   color: #333;
   cursor: pointer;
 }
 
 .MyPlanPlanListItem span {
-  margin-left: 15px;
+  margin-left: calc(15 / 1440 * 100vw);
   color: #6b7280;
-  font-size: 14px;
+  font-size: calc(14 / 1440 * 100vw);
 }
 
 .MyPlanDatePlanDate {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 490px;
+  width: calc(490 / 1440 * 100vw);
 }
 
 .MyPlanDatePlanDate p {
-  font-size: 35px;
+  font-size: calc(35 / 1440 * 100vw);
 }
 
 .MyPlanEmptyCase {
-  height: 33px;
-  width: 33px;
-  padding-bottom: 1px;
+  height: calc(33 / 1440 * 100vw);
+  width: calc(33 / 1440 * 100vw);
+  padding-bottom: calc(1 / 1440 * 100vw);
 }
 
 .MyPlanOutoaddButton {
-  height: 33px;
-  width: 33px;
-  padding-bottom: 1px;
+  height: calc(33 / 1440 * 100vw);
+  width: calc(33 / 1440 * 100vw);
+  padding-bottom: calc(1 / 1440 * 100vw);
   background-color: red;
 }
 
@@ -168,9 +165,9 @@ button {
 
 .MyPlanCatPlanHeader {
   padding: 0px;
-  margin-right: 10px;
-  max-height: 40px;
-  width: 1200px;
+  margin-right: calc(10 / 1440 * 100vw);
+  max-height: calc(40 / 1440 * 100vw);
+  width: calc(1200 / 1440 * 100vw);
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -181,9 +178,12 @@ button {
 .MyPlanCatSelectbar {
   align-items: center;
 }
+.MyPlanCatSelectControl {
+  font-size: calc(16 / 1440 * 100vw) !important;
+}
 
 .MyPlanCatSelectbar select {
-  width: 150px;
+  width: calc(150 / 1440 * 100vw);
 }
 
 .MyPlanCatPlanContainer {
@@ -192,18 +192,18 @@ button {
   justify-content: flex-start;
   flex-direction: column;
   position: relative;
-  gap: 30px;
-  width: 1217px;
-  left: 120px;
+  gap: calc(30 / 1440 * 100vw);
+  width: calc(1217 / 1440 * 100vw);
+  left: calc(120 / 1440 * 100vw);
   box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 12px;
+  border: calc(1 / 1440 * 100vw) solid #ccc;
+  border-radius: calc(12 / 1440 * 100vw);
   height: auto;
-  max-height: 500px;
-  padding-top: 10px;
-  padding: 10px;
-  background-color: rgba(0, 0, 0, 0); /* 완전 투명 배경 */
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  max-height: calc(500 / 1440 * 100vw);
+  padding-top: calc(10 / 1440 * 100vw);
+  padding: calc(10 / 1440 * 100vw);
+  background-color: white;
+  box-shadow: 0 calc(8 / 1440 * 100vw) calc(24 / 1440 * 100vw) rgba(0, 0, 0, 0.1);
 }
 
 .MyPlanCatPlanbox {
@@ -211,23 +211,23 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 1200px;
+  width: calc(1200 / 1440 * 100vw);
   height: auto;
-  max-height: 250px;
+  max-height: calc(250 / 1440 * 100vw);
   background-color: rgba(0, 0, 0, 0);
   overflow-y: auto; /* 이미 있음: 세로 스크롤 허용 */
   position: relative;
-  padding: 20px;
+  padding: calc(20 / 1440 * 100vw);
   padding-top: 0px;
   box-sizing: border-box;
 }
 
 .MyPlanCatPlanbox > :first-child {
-  padding-top: 10px;
+  padding-top: calc(10 / 1440 * 100vw);
 }
 
 .MyPlanCatPlanTitle p {
-  font-size: 40px;
+  font-size: calc(40 / 1440 * 100vw);
   margin: 0px;
   padding: 0px;
   text-align: center;
