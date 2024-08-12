@@ -244,7 +244,7 @@ const useFriendsStore = create((set, get) => ({
     }
   },
 
-  friendInfo: null,
+  friendInfo: {},
 
   // 친구 정보 조회
   fetchFriendInfo: async (userId) => {
@@ -259,7 +259,7 @@ const useFriendsStore = create((set, get) => ({
     try {
       // API 요청 보내기
       const response = await axios.get(API_URL + `user/me`, {
-        params: { userId: userId },
+        params: { id: userId },
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -274,6 +274,9 @@ const useFriendsStore = create((set, get) => ({
     } catch (error) {
       // 에러 처리
       console.error("친구 정보 조회 중 오류 발생:", error);
+      if (error.response) {
+        console.error("서버 응답 내용:", error.response.data);
+      }
     }
   },
 }));

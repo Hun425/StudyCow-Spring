@@ -1,9 +1,12 @@
 import "../styles/FriendGradePage.css";
-import { Outlet } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import { useRef, useEffect } from "react";
 import Navbar from "../components/Navbar/Navbar";
+import useFriendsStore from "../stores/friends";
 
 const FriendGradePage = () => {
+  const { userId } = useParams();
+  const { fetchFriendInfo } = useFriendsStore();
   const friendGradeMainRef = useRef(null);
 
   useEffect(() => {
@@ -23,11 +26,17 @@ const FriendGradePage = () => {
       window.removeEventListener("resize", updateFriendGradeMainMargin);
   }, []);
 
+  useEffect(() => {
+    if (userId) {
+      fetchFriendInfo(userId);
+    }
+  }, [fetchFriendInfo, userId]);
+
   return (
     <>
       <Navbar />
       <div ref={friendGradeMainRef} className="friendGradeMain">
-        <Outlet />
+        <Outlet context={{ userId }} />
       </div>
     </>
   );
