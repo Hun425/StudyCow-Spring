@@ -7,6 +7,7 @@ import RoomPlanner from "./RoomPlanner.jsx";
 import "./styles/StudyRoom.css";
 import useInfoStore from "../../stores/infos.js";
 import useStudyStore from "../../stores/study.js";
+import usePlanStore from "../../stores/plan.js";
 import { useParams } from "react-router-dom";
 import StudyRoomLeaderBoard from "./StudyRoomLeaderBoard.jsx";
 import AudioModal from './AudioModal.jsx';
@@ -43,6 +44,23 @@ function StudyRoom() {
   useEffect(() => {
     audioRef.current.volume = volume;
   }, [volume]);
+
+  const { saveDate } = usePlanStore(
+    (state) => ({
+      saveDate: state.saveDate,
+    })
+  );
+
+  // 페이지가 로드될 때 date 상태를 항상 오늘 날짜로 설정
+  useEffect(() => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0"); // 월은 0부터 시작하므로 1을 더함
+    const day = String(today.getDate()).padStart(2, "0");
+    const formattedToday = `${year}-${month}-${day}`;
+
+    saveDate(formattedToday); // 오늘 날짜로 설정
+  }, [saveDate]); // 페이지가 로드될 때마다 실행
 
   useEffect(() => {
     if (selectedAudio) {

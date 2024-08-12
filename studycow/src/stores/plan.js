@@ -144,7 +144,8 @@ const usePlanStore = create(
 
       saveDate: (day) => set({ date: day }),
 
-      getTodayPlanRequest: async (today) => {
+      getTodayPlanRequest: async () => {
+        const { today } = usePlanStore.getState();
         console.log("오늘은: " + today);
         const { token } = useInfoStore.getState();
         const headers = {

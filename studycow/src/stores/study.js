@@ -179,6 +179,8 @@ const useStudyStore = create(
             
           } else {
             console.error(`응답 코드 오류: ${response.status}`);
+            alert(`응답 코드 오류: ${response.status}`);
+            window.location.href = "/study";
           }
         } catch (error) {
           if (error.response) {
