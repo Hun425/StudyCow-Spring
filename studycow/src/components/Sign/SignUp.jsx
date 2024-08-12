@@ -16,7 +16,6 @@ const SignUp = () => {
 
     // 비밀번호 확인 검증
     if (password !== confirmPassword) {
-      setError("비밀번호가 일치하지 않습니다.");
       Notiflix.Notify.failure('비밀번호가 일치하지 않습니다.');
       return;
     }
@@ -24,11 +23,9 @@ const SignUp = () => {
     setError("");
     const success = await sendRegisterRequest(email, password, nickname);
     if (success) {
-      setSuccess("회원가입 성공!");
       Notiflix.Notify.success('회원가입에 성공했습니다!');
       sendLoginRequest(email, password);
     } else {
-      setError("회원가입에 실패했습니다.");
       Notiflix.Notify.failure('회원가입에 실패했습니다.');
     }
   };

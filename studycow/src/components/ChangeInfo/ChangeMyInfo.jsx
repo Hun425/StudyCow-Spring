@@ -1,27 +1,24 @@
-/*이메일 닉네임 프로필 이미지 변경 기능*/
-
 import React, { useState, useEffect } from "react";
 import useInfoStore from "../../stores/infos";
 import "./Styles/ChangeInfo.css";
 import { useNavigate } from "react-router-dom";
+import Notiflix from 'notiflix';
 
 const ChangeMyInfo = () => {
-  // logout 가져오기
   const { userInfo, updateUserInfo, logout } = useInfoStore((state) => ({
     userInfo: state.userInfo,
     updateUserInfo: state.updateUserInfo,
-    logout: state.logout, // 로그아웃 함수 가져오기
+    logout: state.logout,
   }));
 
   const [email, setEmail] = useState("");
   const [nickname, setNickname] = useState("");
-  const [thumb, setThumb] = useState(null); // 파일 선택에 대한 상태
-  const [currentThumb, setCurrentThumb] = useState(null); // 현재 이미지 상태
+  const [thumb, setThumb] = useState(null); 
+  const [currentThumb, setCurrentThumb] = useState(null);
 
-  const navigate = useNavigate(); // 페이지 이동을 위한 useNavigate 훅
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // 사용자 정보 초기화
     setEmail(userInfo.userEmail || "");
     setNickname(userInfo.userNickName || "");
     setCurrentThumb(userInfo.userThumb || "");
@@ -29,25 +26,34 @@ const ChangeMyInfo = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // 파일이 선택되지 않았을 경우 현재 이미지를 사용
     const imageToUpload = thumb || currentThumb;
     const success = await updateUserInfo(email, nickname, imageToUpload);
 
     if (success) {
-      alert("회원정보가 성공적으로 변경되었습니다.");
-
-      logout(); // 로그아웃 호출
-
-      // 로그인 페이지로 리다이렉트
+      Notiflix.Notify.success("회원정보가 성공적으로 변경되었습니다.");
+      logout();
       navigate("/login");
     } else {
-      alert("회원정보 변경에 실패했습니다.");
+      Notiflix.Notify.failure("회원정보 변경에 실패했습니다.");
     }
   };
 
   const handleFileChange = (e) => {
-    setThumb(e.target.files[0]); // 파일 선택 시 상태 업데이트
-  };
+    const file = e.target.files[0];
+    const fileType = file.type;
+
+    if (!fileType.startsWith('image/')) {
+        Notiflix.Notify.warning('이미지 파일만 선택할 수 있습니다.');
+        setThumb(null);
+        setCurrentThumb(userInfo.userThumb || ""); // 기존 이미지로 다시 설정
+        e.target.value = ""; // 파일 입력 필드를 초기화
+        return;
+    }
+
+    setThumb(file);
+};
+
+
 
   return (
     <div className="ChangeInfo-info-form">
