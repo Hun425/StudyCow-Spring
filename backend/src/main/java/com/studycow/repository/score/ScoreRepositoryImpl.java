@@ -256,8 +256,20 @@ public class ScoreRepositoryImpl implements ScoreRepository{
                     throw new CustomException(ErrorCode.NOT_AUTHENTICAION);
                 }
 
-                SubjectCode subjectCode = em.find(SubjectCode.class, requestScoreDto.getSubCode());
                 LocalDate testDate = requestScoreDto.getTestDate();
+
+                int scoreCnt = queryFactory
+                        .selectFrom(userSubjectScore)
+                        .where(userSubjectScore.user.eq(user)
+                                .and(userSubjectScore.subjectCode.eq(subjectCode))
+                                .and(userSubjectScore.testDate.eq(testDate)))
+                        .fetch().size();
+
+                if(scoreCnt > 0){
+                    throw new CustomException(ErrorCode.DUPLICATE_SCORE);
+                }
+
+                SubjectCode subjectCode = em.find(SubjectCode.class, requestScoreDto.getSubCode());
                 int testScore = requestScoreDto.getTestScore();
                 Integer testGrade = requestScoreDto.getTestGrade();
 
@@ -312,7 +324,7 @@ public class ScoreRepositoryImpl implements ScoreRepository{
         }catch(IllegalStateException e) {
             throw e;
         } catch(Exception e) {
-            throw new PersistenceException("성적 조회 중 에러 발생", e);
+            throw new PersistenceException("과목 목표 조회 중 에러 발생", e);
         }
     }
 

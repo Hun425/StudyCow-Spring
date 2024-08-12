@@ -7,6 +7,8 @@ import com.studycow.domain.*;
 import com.studycow.dto.roomLog.StudyRoomLogDto;
 import com.studycow.dto.roomLog.SessionRankDto;
 import com.studycow.dto.roomLog.LogRequestDto;
+import com.studycow.exception.CustomException;
+import com.studycow.exception.ErrorCode;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
@@ -50,6 +52,9 @@ public class RoomLogRepositoryImpl implements RoomLogRepository {
             User user = em.find(User.class, userId);
             StudyRoom studyRoom = em.find(StudyRoom.class, roomId);
 
+            if(studyRoom.getRoomMaxPerson() <= studyRoom.getRoomNowPerson())
+                throw new CustomException(ErrorCode.ROOM_CAPACITY_EXCEEDED);
+
             UserStudyRoomEnter ure = new UserStudyRoomEnter(
                     null,
                     0,
@@ -73,6 +78,8 @@ public class RoomLogRepositoryImpl implements RoomLogRepository {
                     ure.getInDate(),
                     ure.getOutDate()
             );
+        }catch(CustomException e){
+            throw e;
         }catch(Exception e){
             throw new PersistenceException("방 입장 중 에러 발생", e);
         }
@@ -95,7 +102,7 @@ public class RoomLogRepositoryImpl implements RoomLogRepository {
 
             if(ure != null) {
                 if (ure.getUser().getId() != userId) {
-                    throw new IllegalStateException("세션ID의 사용자가 일치하지 않습니다.");
+                    throw new CustomException(ErrorCode.UNAUTHORIZED_ROOM_LOG);
                 }
 
                 Integer studyTime = logRequestDto.getStudyTime();
@@ -120,8 +127,10 @@ public class RoomLogRepositoryImpl implements RoomLogRepository {
                         ure.getOutDate()
                 );
             }else{
-                throw new EntityNotFoundException("잘못된 세션 ID입니다.");
+                throw new CustomException(ErrorCode.NOT_FOUND_ROOM_LOG);
             }
+        }catch(CustomException e){
+            throw e;
         }catch(Exception e){
             throw new PersistenceException("방 퇴장 중 에러 발생", e);
         }
@@ -163,7 +172,7 @@ public class RoomLogRepositoryImpl implements RoomLogRepository {
 
             if(ure != null) {
                 if (ure.getUser().getId() != userId) {
-                    throw new IllegalStateException("세션ID의 사용자가 일치하지 않습니다.");
+                    throw new CustomException(ErrorCode.UNAUTHORIZED_ROOM_LOG);
                 }
                 Integer studyTime = logRequestDto.getStudyTime();
 
@@ -186,8 +195,10 @@ public class RoomLogRepositoryImpl implements RoomLogRepository {
                         ure.getOutDate()
                 );
             }else{
-                throw new EntityNotFoundException("잘못된 세션 ID입니다.");
+                throw new CustomException(ErrorCode.NOT_FOUND_ROOM_LOG);
             }
+        }catch(CustomException e){
+            throw e;
         }catch(Exception e){
             throw new PersistenceException("시간 갱신 중 에러 발생", e);
         }
@@ -201,18 +212,30 @@ public class RoomLogRepositoryImpl implements RoomLogRepository {
      */
     @Override
     public List<SessionRankDto> roomRank(Long roomId, LocalDate studyDate) throws PersistenceException {
-        return queryFactory
-                .select(Projections.constructor(SessionRankDto.class,
-                        Expressions.template(Integer.class,
-                                "rank() over (order by {0} desc)"
-                                ,userStudyRoomEnter.studyTime.sum()),
-                        userStudyRoomEnter.user.id,
-                        userStudyRoomEnter.user.userNickname,
-                        userStudyRoomEnter.studyTime.sum()))
-                .from(userStudyRoomEnter)
-                .where(userStudyRoomEnter.studyRoom.id.eq(roomId)
-                        .and(userStudyRoomEnter.studyDate.eq(studyDate)))
-                .groupBy(userStudyRoomEnter.user.id)
-                .fetch();
+        try {
+            StudyRoom studyRoom = em.find(StudyRoom.class, roomId);
+
+            if(studyRoom != null) {
+                return queryFactory
+                        .select(Projections.constructor(SessionRankDto.class,
+                                Expressions.template(Integer.class,
+                                        "rank() over (order by {0} desc)"
+                                        , userStudyRoomEnter.studyTime.sum()),
+                                userStudyRoomEnter.user.id,
+                                userStudyRoomEnter.user.userNickname,
+                                userStudyRoomEnter.studyTime.sum()))
+                        .from(userStudyRoomEnter)
+                        .where(userStudyRoomEnter.studyRoom.eq(studyRoom)
+                                .and(userStudyRoomEnter.studyDate.eq(studyDate)))
+                        .groupBy(userStudyRoomEnter.user.id)
+                        .fetch();
+            }else{
+                throw new CustomException(ErrorCode.NOT_FOUND_ROOM);
+            }
+        }catch(CustomException e){
+            throw e;
+        }catch(Exception e){
+            throw new PersistenceException("방 랭크 조회 중 에러 발생", e);
+        }
     }
 }
