@@ -22,7 +22,7 @@ const MainGradeItem = () => {
   return (
     <div className="mainGradeContainer">
       <div className="mainGradeHeader">
-        <h3>과목별 성적 현황</h3>
+        <h4>과목별 성적 현황</h4>
         <div className="mainGradeSubjectSelect">
           <select
             id="subject"

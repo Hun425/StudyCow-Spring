@@ -52,6 +52,9 @@ public enum ErrorCode {
     //스터디룸 오류 코드
     NOT_FOUND_ROOM(HttpStatus.NOT_FOUND,"해당 스터디룸이 존재하지 않습니다."),
     UNAUTHORIZED_ROOM_UPDATE(HttpStatus.UNAUTHORIZED, "방장만 접근할 수 있는 서비스입니다."),
+    ROOM_CAPACITY_EXCEEDED(HttpStatus.BAD_REQUEST, "방의 정원이 초과되었습니다. 다른 방을 이용해주세요."),
+    UNAUTHORIZED_ROOM_LOG(HttpStatus.UNAUTHORIZED, "입장ID의 사용자가 일치하지 않습니다."),
+    NOT_FOUND_ROOM_LOG(HttpStatus.NOT_FOUND,"입장ID를 찾을 수 업습니다."),
     
     // 친구 관리 오류 코드
     DUPLICATE_FRIEND(HttpStatus.CONFLICT, "이미 친구 관계입니다."),

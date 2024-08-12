@@ -1,3 +1,5 @@
+/*비밀번호 변경 폼&미사용*/
+
 import React from "react";
 import "./Styles/ChangeInfo.css";
 

@@ -1,3 +1,5 @@
+/*안쓰는 비번 변경 폼 전환 버튼임*/
+
 import React from "react";
 import "./Styles/ChangeInfo.css";
 

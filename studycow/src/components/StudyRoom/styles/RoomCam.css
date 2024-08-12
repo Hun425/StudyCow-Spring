@@ -44,8 +44,12 @@
   display: flex; /* Flexbox 레이아웃 사용 */
   flex-wrap: wrap; /* 아이템이 컨테이너 너비를 넘을 때 줄 바꿈 */
   width: calc(100% + (16 / 1440 * 100vw)); /* 너비를 화면 너비에 비례하여 조정 */
-  /* flex-direction: row; 아이템을 가로 방향으로 정렬 */
+  flex-direction: row; /* 아이템을 가로 방향으로 정렬 */
   justify-content: center; /* 아이템을 수평으로 가운데 정렬 */
   align-items: center; /* 아이템을 수직으로 가운데 정렬 */
   margin: 0px;
+}
+
+.MuiGrid-container {
+  justify-content: center !important;
 }

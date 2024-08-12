@@ -1,4 +1,4 @@
-/* 기존 ChangeInfo 관련 스타일 */
+/* 회원정보 변경 폼 전체 페이지 컨테이너 관련 CSS */
 
 .ChangeInfo-full-page-container {
   margin: 0;
@@ -7,6 +7,8 @@
   justify-content: center;
   align-items: center;
 }
+
+/* 회원정보 변경 폼 컨테이너 관련 CSS */
 
 .ChangeInfo-container {
   position: relative;
@@ -19,6 +21,8 @@
   justify-content: center;
 }
 
+/* 회원정보 변경 폼 내부 컨테이너 관련 CSS */
+
 .ChangeInfo-form-container {
   width: 100%;
   max-width: 400px;
@@ -27,6 +31,8 @@
   align-items: center;
   justify-content: center;
 }
+
+/* 회원정보 변경 폼 스타일 관련 CSS */
 
 .ChangeInfo-info-form {
   background-color: #f0f4f8;
@@ -40,12 +46,16 @@
   align-items: center;
 }
 
+/* 폼 내부 스타일 관련 CSS */
+
 .ChangeInfo-container form {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
+/* 폼 제목 스타일 관련 CSS */
 
 .ChangeInfo-info-form h2 {
   margin: 0;
@@ -56,6 +66,8 @@
   width: 100%;
 }
 
+/* 폼 그룹 관련 CSS */
+
 .ChangeInfo-form-group {
   width: 100%;
   margin-top: 15px;
@@ -64,11 +76,15 @@
   align-items: center;
 }
 
+/* 폼 그룹 내 레이블 스타일 관련 CSS */
+
 .ChangeInfo-form-group label {
   width: 30%;
   font-weight: bold;
   color: #333;
 }
+
+/* 폼 그룹 내 입력 필드 스타일 관련 CSS */
 
 .ChangeInfo-form-group input {
   width: 70%;
@@ -78,14 +94,20 @@
   box-sizing: border-box;
 }
 
+/* 파일 입력 필드 스타일 관련 CSS */
+
 .ChangeInfo-form-group input[type="file"] {
   padding: 3px;
 }
+
+/* 입력 필드 포커스 스타일 관련 CSS */
 
 .ChangeInfo-form-group input:focus {
   border-color: #4a90e2;
   outline: none;
 }
+
+/* 버튼 그룹 관련 CSS */
 
 .ChangeInfo-button-group {
   display: flex;
@@ -94,6 +116,8 @@
   margin-top: 20px;
   width: 100%;
 }
+
+/* 제출 버튼 스타일 관련 CSS */
 
 .ChangeInfo-submit-button {
   background-color: #4a90e2;
@@ -109,9 +133,13 @@
   text-align: center;
 }
 
+/* 제출 버튼 호버 스타일 관련 CSS */
+
 .ChangeInfo-submit-button:hover {
   background-color: #357ab7;
 }
+
+/* 취소 버튼 스타일 관련 CSS */
 
 .ChangeInfo-cancel-button {
   background-color: #f86c6b;
@@ -124,9 +152,13 @@
   text-align: center;
 }
 
+/* 취소 버튼 호버 스타일 관련 CSS */
+
 .ChangeInfo-cancel-button:hover {
   background-color: #d9534f;
 }
+
+/* 중앙에 위치한 버튼 스타일 관련 CSS */
 
 .ChangeInfo-center-button {
   display: block;
@@ -136,13 +168,17 @@
 
 /* ChangeButton 관련 스타일 */
 
+/* 오버레이 버튼 컨테이너 관련 CSS */
+
 .ChangeInfo-overlay-container2 {
   position: absolute;
-  top: 10px; /* Adjust this value to control the vertical position */
-  left: 28%; /* Adjust this value to align it with the form's left edge */
+  top: 10px; /* 이 값을 조정하여 수직 위치를 제어 */
+  left: 28%; /* 이 값을 조정하여 폼의 왼쪽 가장자리와 맞춤 */
   transform: translateX(-50%);
-  z-index: 1; /* Ensure the button is above the form */
+  z-index: 1; /* 버튼이 폼 위에 위치하도록 설정 */
 }
+
+/* 오버레이 버튼 스타일 관련 CSS */
 
 .ChangeInfo-overlay-button2 {
   background-color: #4a90e2;
@@ -153,6 +189,8 @@
   cursor: pointer;
   font-size: 1rem;
 }
+
+/* 오버레이 버튼 호버 스타일 관련 CSS */
 
 .ChangeInfo-overlay-button2:hover {
   background-color: #357ab7;

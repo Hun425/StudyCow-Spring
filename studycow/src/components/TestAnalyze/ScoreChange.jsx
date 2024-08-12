@@ -17,7 +17,6 @@ const ScoreChange = ({ initialData, onClose, onScoreChange }) => {
   });
   const [errorMessage, setErrorMessage] = useState("");
 
-  // 과목 데이터 가져오기
   useEffect(() => {
     fetchSubjects(); // 컴포넌트가 마운트될 때 과목 데이터 가져오기
 
@@ -48,7 +47,17 @@ const ScoreChange = ({ initialData, onClose, onScoreChange }) => {
 
   const handleScoreDetailChange = (index, field, value) => {
     const newDetails = [...scoreData.scoreDetails];
-    newDetails[index][field] = value;
+    if (field === "wrongCnt") {
+      const parsedValue = parseInt(value, 10);
+      const validValue = Math.max(
+        0,
+        Math.min(20, isNaN(parsedValue) ? 0 : parsedValue)
+      ); // 0에서 20 사이로 제한
+      newDetails[index][field] = validValue;
+    } else if (field === "catCode") {
+      newDetails[index][field] = parseInt(value, 10);
+      newDetails[index]["wrongCnt"] = ""; // 유형이 바뀌면 오답 개수 초기화
+    }
     setScoreData({ ...scoreData, scoreDetails: newDetails });
   };
 
@@ -60,8 +69,8 @@ const ScoreChange = ({ initialData, onClose, onScoreChange }) => {
   const addWrongForm = () => {
     const newDetails = [
       ...scoreData.scoreDetails,
-      { catCode: "", wrongCnt: 0 },
-    ];
+      { catCode: "", wrongCnt: "" },
+    ]; // 초기값을 빈 문자열로 설정
     setScoreData({ ...scoreData, scoreDetails: newDetails });
   };
 
@@ -82,6 +91,25 @@ const ScoreChange = ({ initialData, onClose, onScoreChange }) => {
       setErrorMessage("등급을 선택하세요.");
       return false;
     }
+
+    // 오답 데이터 검증 추가
+    for (const wrong of scoreData.scoreDetails) {
+      if (wrong.catCode === "" && wrong.wrongCnt === "") {
+        continue;
+      }
+      if (
+        wrong.catCode !== "" &&
+        (wrong.wrongCnt === "" || wrong.wrongCnt <= 0)
+      ) {
+        setErrorMessage("오답 개수는 0 이상이어야 합니다.");
+        return false;
+      }
+      if (wrong.catCode === "" && wrong.wrongCnt > 0) {
+        setErrorMessage("오답 유형을 선택해야 합니다.");
+        return false;
+      }
+    }
+
     setErrorMessage("");
     return true;
   };
@@ -91,7 +119,31 @@ const ScoreChange = ({ initialData, onClose, onScoreChange }) => {
     if (!validateForm()) {
       return;
     }
-    updatePlanner(initialData.scoreId, scoreData).then(() => {
+
+    // 중복된 오답 유형 합치기
+    const mergedDetails = [];
+    const detailsMap = {};
+
+    scoreData.scoreDetails.forEach((detail) => {
+      if (detail.catCode && detail.wrongCnt) {
+        if (detailsMap[detail.catCode]) {
+          detailsMap[detail.catCode].wrongCnt += detail.wrongCnt; // 오답 개수 합산
+        } else {
+          detailsMap[detail.catCode] = { ...detail };
+        }
+      }
+    });
+
+    for (const key in detailsMap) {
+      mergedDetails.push(detailsMap[key]);
+    }
+
+    setScoreData({ ...scoreData, scoreDetails: mergedDetails });
+
+    updatePlanner(initialData.scoreId, {
+      ...scoreData,
+      scoreDetails: mergedDetails,
+    }).then(() => {
       onClose(); // 모달 닫기
       if (onScoreChange) {
         onScoreChange(); // 부모 컴포넌트에 신호 보내기
@@ -190,12 +242,15 @@ const ScoreChange = ({ initialData, onClose, onScoreChange }) => {
             <input
               type="number"
               className="ScoreChange-input-number"
+              name="wrongCnt"
               min="0"
+              max="20" // 20개로 제한
               value={detail.wrongCnt}
               onChange={(e) =>
                 handleScoreDetailChange(index, "wrongCnt", e.target.value)
               }
               placeholder="오답 개수"
+              disabled={!detail.catCode} // 오답 유형이 선택되지 않으면 비활성화
               required
             />
             <button

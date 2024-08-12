@@ -1,5 +1,7 @@
+/*이메일 닉네임 프로필 이미지 변경 기능*/
+
 import React, { useState, useEffect } from "react";
-import useInfoStore from "../../stores/infos"; // 이미 작성된 store 가져오기
+import useInfoStore from "../../stores/infos";
 import "./Styles/ChangeInfo.css";
 import { useNavigate } from "react-router-dom";
 
@@ -22,7 +24,7 @@ const ChangeMyInfo = () => {
     // 사용자 정보 초기화
     setEmail(userInfo.userEmail || "");
     setNickname(userInfo.userNickName || "");
-    setCurrentThumb(userInfo.userThumb || ""); // 현재 이미지 초기화
+    setCurrentThumb(userInfo.userThumb || "");
   }, [userInfo]);
 
   const handleSubmit = async (e) => {
@@ -34,7 +36,6 @@ const ChangeMyInfo = () => {
     if (success) {
       alert("회원정보가 성공적으로 변경되었습니다.");
 
-      // 로그아웃 로직 추가
       logout(); // 로그아웃 호출
 
       // 로그인 페이지로 리다이렉트
