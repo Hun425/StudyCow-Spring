@@ -14,7 +14,6 @@ const slide = keyframes`
   100% { transform: translateY(-100%); }
 `;
 
-
 const formatStudyTime = (minutes) => {
   const hours = Math.floor(minutes / 60);
   const remainingMinutes = minutes % 60;
@@ -25,12 +24,11 @@ const formatStudyTime = (minutes) => {
   );
 };
 
-const StudyRoomLeaderBoard = ({myRankInfo}) => {
-  const {rankInfo} = useStudyStore();
+const StudyRoomLeaderBoard = ({ myRankInfo = { userName: '', studyTime: 0 } }) => {
+  const { rankInfo = [] } = useStudyStore();
 
   const [index, setIndex] = useState(0);
   const displayCount = Math.min(3, rankInfo.length);
-
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -39,19 +37,18 @@ const StudyRoomLeaderBoard = ({myRankInfo}) => {
     return () => clearInterval(interval);
   }, [displayCount]);
 
-// 랭크에 따라 아바타 이미지를 반환하는 함수
-const getAvatarImage = (rank) => {
-  switch (rank) {
-    case 1:
-      return firstPlaceImg;
-    case 2:
-      return secondPlaceImg;
-    case 3:
-      return thirdPlaceImg;
-    default:
-      return myPlaceImg; // 기본 이미지 설정
-  }
-};
+  const getAvatarImage = (rank) => {
+    switch (rank) {
+      case 1:
+        return firstPlaceImg;
+      case 2:
+        return secondPlaceImg;
+      case 3:
+        return thirdPlaceImg;
+      default:
+        return myPlaceImg; // 기본 이미지 설정
+    }
+  };
 
   return (
     <Container className="studyRoomRankLeaderboard">
@@ -93,7 +90,7 @@ const getAvatarImage = (rank) => {
             <Box className="studyRoomRankinfoContent">
               <Avatar src={myPlaceImg} alt="기본이미지" />
               <Typography variant="body2" className="studyRoomRankUserNick">
-                {myRankInfo.userName}
+                {myRankInfo.userName || "알 수 없음"}
               </Typography>
               <Typography variant="body2">
                 {formatStudyTime(myRankInfo.studyTime)}
