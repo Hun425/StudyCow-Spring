@@ -32,10 +32,6 @@ function StudyRoom() {
     // 페이지를 떠나기 전에 goStudyBack을 호출
     const handleBeforeUnload = (event) => {
       goStudyBack();
-      
-      // 기본 동작 방지
-      event.preventDefault();
-      event.returnValue = ''; // 크롬과 일부 브라우저에서는 필수로 설정
     };
 
     // 페이지 로딩 타입을 감지하는 함수
