@@ -4,6 +4,7 @@ import { useOutletContext } from "react-router-dom";
 import useGradeStore from "../../stores/grade";
 import useSubjectStore from "../../stores/subjectStore";
 import useFriendsStore from "../../stores/friends";
+import FriendAnalyzeBox from "./FriendAnalyzeBox";
 
 const FriendGradeMain = () => {
   const { userId } = useOutletContext();
@@ -28,7 +29,7 @@ const FriendGradeMain = () => {
   return (
     <div className="friendGradeContainer">
       <div className="friendGradeHeader">
-        <h1>{friendInfo.userNickName}님 어서오세요</h1>
+        <h1>{friendInfo.userNickName}님의 성적관리 페이지입니다.</h1>
         <div className="friendGradeSideNav">
           <div className="friendGradeSubjectSelect">
             <select
@@ -54,7 +55,7 @@ const FriendGradeMain = () => {
           <h1>캐릭터 부분</h1>
         </div>
         <div className="friendGradeStatus">
-          <h1>성적 분석 부분</h1>
+          <FriendAnalyzeBox userId={friendInfo.userId} subject={selectedSubject}/>
         </div>
       </div>
     </div>

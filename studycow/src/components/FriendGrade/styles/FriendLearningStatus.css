@@ -1,0 +1,38 @@
+.learningStatusContainer {
+  width: 30%;
+  margin: 0px;
+  padding: 20px;
+  background: linear-gradient(to bottom, #f7faff, #dce7f3);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.learningStatusTitle {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.learningStatusTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.learningStatusRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+}
+
+.learningStatusLabel {
+  font-size: 16px;
+  color: #333;
+}
+
+.learningStatusValue {
+  font-size: 16px;
+  font-weight: bold;
+  color: #555;
+}

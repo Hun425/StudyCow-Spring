@@ -1,0 +1,25 @@
+.selectedSubjectContainer {
+  width: 100%;
+}
+
+.upsideContainer {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.downsideContainer {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  margin-top: 30px;
+}
+
+.recentGradesGraph {
+  width: 65%;
+  height: auto;
+}
+
+.recentGradesGraph h3 {
+  text-align: center;
+}
