@@ -60,6 +60,7 @@ public class ResponseScoreDto {
         sb.append("targetScore=").append(targetScore).append("\n");
         sb.append("targetGrade=").append(targetGrade).append("\n");
         sb.append("maxScore=").append(maxScore).append("\n");
+        sb.append("diffScore=").append(diffScore).append("\n");
         sb.append("scores=[").append("\n");
         for(ScoreDto score : scores){
             sb.append(score.toString());
