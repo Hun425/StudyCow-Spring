@@ -257,6 +257,7 @@ public class ScoreRepositoryImpl implements ScoreRepository{
                 }
 
                 LocalDate testDate = requestScoreDto.getTestDate();
+                SubjectCode subjectCode = em.find(SubjectCode.class, requestScoreDto.getSubCode());
 
                 int scoreCnt = queryFactory
                         .selectFrom(userSubjectScore)
@@ -265,11 +266,11 @@ public class ScoreRepositoryImpl implements ScoreRepository{
                                 .and(userSubjectScore.testDate.eq(testDate)))
                         .fetch().size();
 
-                if(scoreCnt > 0){
+                if((us.getTestDate() != testDate || us.getSubjectCode() != subjectCode)
+                    && scoreCnt > 0){
                     throw new CustomException(ErrorCode.DUPLICATE_SCORE);
                 }
 
-                SubjectCode subjectCode = em.find(SubjectCode.class, requestScoreDto.getSubCode());
                 int testScore = requestScoreDto.getTestScore();
                 Integer testGrade = requestScoreDto.getTestGrade();
 
