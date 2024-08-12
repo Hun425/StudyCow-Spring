@@ -31,8 +31,6 @@ function UserInformation() {
               <div>
                 <a>
                   {userInfo.userNickName}님
-                  <br />
-                  안녕하세요!
                 </a>
               </div>
               <div>
@@ -54,8 +52,6 @@ function UserInformation() {
               <div>
                 <a>
                   {userInfo.userNickName}님
-                  <br />
-                  안녕하세요!
                 </a>
               </div>
               <div>

@@ -1,64 +1,78 @@
 div .profileImg {
   object-fit: cover; /* 'auto' 대신 'cover'를 사용하여 이미지 비율을 유지하면서 잘 맞추도록 */
   object-position: center;
-  width: calc(65 / 1440 * 100vw); /* px 단위를 제거하고 계산 간소화 */
-  height: calc(65 / 1440 * 100vw);
-  box-shadow: 0 calc(4 / 1440 * 100vw) calc(4 / 1440 * 100vw) rgba(0, 0, 0, 0.25);
+  width: calc(32.5 / 1440 * 100vw); /* px 단위를 제거하고 계산 간소화 */
+  height: calc(32.5 / 1440 * 100vw);
+  box-shadow: 0 calc(2 / 1440 * 100vw) calc(2 / 1440 * 100vw) rgba(0, 0, 0, 0.25);
   border-color: rgba(0, 0, 0, 1);
   border-style: solid;
-  border-width: 0.1vw ; /* 너무 작은 단위의 계산 보정 */
+  border-width: 0.1vw !important; /* 너무 작은 단위의 계산 보정 */
   border-radius: 50%;
   margin: 0;
   padding: 0;
 }
 
-.userInfoOpen,
 .userInfoClose {
-  font-size: calc(15 / 1440 * 100vw);
+  font-size: calc(14 / 1440 * 100vw);
   display: flex;
   align-items: center;
   justify-content: space-around;
-  height: calc(75 / 1440 * 100vw);
-  width: calc(250 / 1440 * 100vw);
+  height: calc(50 / 1440 * 100vw);
+  width: calc(230 / 1440 * 100vw);
   border-color: rgba(0, 0, 0, 0);
   border-width: 0.1vw ; /* 너무 작은 단위의 계산 보정 */
   border-style: solid;
+  color: #bf714d;
+  margin-bottom: calc(5 / 1440 * 100vw);
+}
+
+.userInfoOpen {
+  font-size: calc(14 / 1440 * 100vw);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: calc(50 / 1440 * 100vw);
+  width: calc(230 / 1440 * 100vw);
+  color: #bf714d;
+  margin-bottom: calc(5 / 1440 * 100vw);
 }
 
 .userInfoDetail {
   margin: 0;
   z-index: 2;
-  height: calc(175 / 1440 * 100vw);
-  width: calc(250 / 1440 * 100vw);
+  height: calc(100 / 1440 * 100vw);
+  width: calc(230 / 1440 * 100vw);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  border-width: 0.1vw ; /* 너무 작은 단위의 계산 보정 */
-  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.25) !important;
+  border-width: 0.1vw !important; /* 너무 작은 단위의 계산 보정 */
+  border-top: solid;
   background-color: white;
 }
 
 .userInfoDetail p {
   z-index: 2;
-  font-size: calc(16 / 1440 * 100vw);
+  font-size: calc(14 / 1440 * 100vw);
   margin: 0;
-  padding-top: calc(10 / 1440 * 100vw);
-  padding-bottom: calc(5 / 1440 * 100vw);
-  padding-left: calc(10 / 1440 * 100vw);
+  padding-top: calc(5 / 1440 * 100vw);
+  padding-bottom: calc(2.5 / 1440 * 100vw);
+  padding-left: calc(5 / 1440 * 100vw);
   background-color: white;
 }
 
 .userInfoItem {
   margin: 0;
   z-index: 2;
-  font-size: calc(16 / 1440 * 100vw) !important;
-  height: calc(75 / 1440 * 100vw);
-  width: calc(250 / 1440 * 100vw);
+  font-size: calc(14 / 1440 * 100vw) !important;
+  height: calc(50 / 1440 * 100vw);
+  width: calc(230 / 1440 * 100vw);
   display: flex;
   align-items: center;
   justify-content: center;
   border-width: 0.1vw ; /* 너무 작은 단위의 계산 보정 */
-  border-style: solid;
+  border-top: solid;
+  border-color: rgba(0, 0, 0, 0.25);
   background-color: white;
   text-decoration-line: none;
   color: black;
@@ -68,14 +82,14 @@ div .profileImg {
   margin: 0;
   z-index: 2;
   position: absolute !important;
-  top: calc(12.5 / 1440 * 100vw);
-  right: calc(30 / 1440 * 100vw);
+  top: calc(6.25 / 1440 * 100vw);
+  right: calc(15 / 1440 * 100vw);
   display: inline-block;
   font-family: "CustomFont", sans-serif;
 }
 
 .upImg,
 .downImg {
-  width: calc(30 / 1440 * 100vw);
-  height: calc(30 / 1440 * 100vw);
+  width: calc(15 / 1440 * 100vw);
+  height: calc(15 / 1440 * 100vw);
 }
