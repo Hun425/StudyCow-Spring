@@ -13,7 +13,7 @@
 }
 
 .SidebarContent {
-    padding-top: calc(20 / 1440 * 100vw);
+    padding-top: calc(40 / 1440 * 100vw);
     display: flex;
     justify-content: start;
     align-items: start;
@@ -23,7 +23,7 @@
 
 .SidebarContentItem {
     color: white;
-    margin-top: calc(30 / 1440 * 100vw);
+    margin-top: calc(40 / 1440 * 100vw);
     font-size: 1.528vw !important;
     font-weight: 100;
     text-decoration: none; /* 'text-decoration-line' 대신 'text-decoration' 사용 */
@@ -43,7 +43,7 @@
     align-items: center;
     flex-direction: column;
     height: calc(240 / 1440 * 100vw);
-    padding-top: calc(50 / 1440 * 100vw);
+    padding-top: calc(70 / 1440 * 100vw);
     width: calc(317 / 1440 * 100vw);
 }
 
@@ -117,4 +117,10 @@
     font-size: 1.25vw;
     color: white;
     text-decoration: none; /* 'text-decoration-line' 대신 'text-decoration' 사용 */
+}
+
+
+.LogoItemImg {
+    height: calc(35 / 1440 * 100vw);
+    width: calc(35 / 1440 * 100vw);
 }
