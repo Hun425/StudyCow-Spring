@@ -23,10 +23,7 @@ const SignUp = () => {
     setError("");
     const success = await sendRegisterRequest(email, password, nickname);
     if (success) {
-      Notiflix.Notify.success('회원가입에 성공했습니다!');
       sendLoginRequest(email, password);
-    } else {
-      Notiflix.Notify.failure('회원가입에 실패했습니다.');
     }
   };
 
