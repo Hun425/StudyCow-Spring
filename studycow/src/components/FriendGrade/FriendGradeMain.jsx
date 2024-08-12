@@ -26,6 +26,15 @@ const FriendGradeMain = () => {
     console.log(subjectCode);
   };
 
+  if (friendInfo.userPublic === 0) {
+    // 비공개 상태일 때 메시지 표시
+    return (
+      <div className="friendGradeContainer">
+        <h1>{friendInfo.userNickName}님의 페이지는 비공개 상태입니다.</h1>
+      </div>
+    );
+  }
+
   return (
     <div className="friendGradeContainer">
       <div className="friendGradeHeader">
@@ -55,7 +64,10 @@ const FriendGradeMain = () => {
           <h1>캐릭터 부분</h1>
         </div>
         <div className="friendGradeStatus">
-          <FriendAnalyzeBox userId={friendInfo.userId} subject={selectedSubject}/>
+          <FriendAnalyzeBox
+            userId={friendInfo.userId}
+            subject={selectedSubject}
+          />
         </div>
       </div>
     </div>
