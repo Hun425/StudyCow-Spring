@@ -24,20 +24,16 @@ ChartJS.register(
   Legend
 );
 
-const FriendRecentGrades = ({userId}) => {
-  const {
-    selectedSubject,
-    subjectGrades,
-    fetchSelectedSubjectGrade,
-  } = useGradeStore((state) => ({
-    selectedSubject: state.selectedSubject,
-    subjectGrades: state.subjectGrades,
-    fetchSelectedSubjectGrade: state.fetchSelectedSubjectGrade,
-  }));
+const FriendRecentGrades = ({ userId }) => {
+  const { selectedSubject, subjectGrades, fetchSelectedSubjectGrade } =
+    useGradeStore((state) => ({
+      selectedSubject: state.selectedSubject,
+      subjectGrades: state.subjectGrades,
+      fetchSelectedSubjectGrade: state.fetchSelectedSubjectGrade,
+    }));
 
   useEffect(() => {
     if (selectedSubject) {
-      console.log(selectedSubject)
       fetchSelectedSubjectGrade(userId, selectedSubject);
     }
   }, [userId, selectedSubject, fetchSelectedSubjectGrade]);

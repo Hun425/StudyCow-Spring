@@ -5,6 +5,7 @@ import useGradeStore from "../../stores/grade";
 import useSubjectStore from "../../stores/subjectStore";
 import useFriendsStore from "../../stores/friends";
 import FriendAnalyzeBox from "./FriendAnalyzeBox";
+import FriendGradeImg from "./FriendGradeImg";
 
 const FriendGradeMain = () => {
   const { userId } = useOutletContext();
@@ -23,7 +24,6 @@ const FriendGradeMain = () => {
     } else {
       setSelectedSubject(subjectCode);
     }
-    console.log(subjectCode);
   };
 
   if (friendInfo.userPublic === 0) {
@@ -61,7 +61,12 @@ const FriendGradeMain = () => {
       </div>
       <div className="friendGradeBody">
         <div className="friendCowStatus">
-          <h1>캐릭터 부분</h1>
+          {/* userGrade.gradeName은 제대로 동작하지 않아 옵셔널 체이닝 사용 */}
+          <FriendGradeImg
+            gradeName={friendInfo.userGrade?.gradeName}
+            userExp={friendInfo.userExp}
+            maxExp={friendInfo.userGrade?.maxExp}
+          />
         </div>
         <div className="friendGradeStatus">
           <FriendAnalyzeBox
