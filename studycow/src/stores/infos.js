@@ -14,7 +14,7 @@ const useInfoStore = create(
       userInfo: {
         userId: 0,
         userEmail: null,
-        userPublic: 0,
+        userPublic: 0,  // 회원 공개여부 상태
         userThumb: defaultProfile,
         userGrade: {
           gradeCode: 0,
@@ -72,6 +72,7 @@ const useInfoStore = create(
                   maxExp: response.data.userGrade.maxExp ?? 0,
                 },
                 userExp: response.data.userExp ?? 0,
+                userPublic: response.data.userPublic ?? 0,  // 로그인 시 공개여부 초기화
               },
             });
             return true;
@@ -96,6 +97,14 @@ const useInfoStore = create(
 
       ChangeInfoUrl: API_URL + "user/me",
 
+      /**
+       * 회원 정보 업데이트 메소드
+       * @param {string} email - 변경할 이메일
+       * @param {string} nickname - 변경할 닉네임
+       * @param {File} thumb - 변경할 프로필 이미지 파일
+       * @param {boolean} publicStatus - 공개 여부
+       * @returns {boolean} - 성공 여부
+       */
       updateUserInfo: async (email, nickname, thumb, publicStatus) => {
         try {
           const { token, ChangeInfoUrl, userInfo } = get();
@@ -126,7 +135,7 @@ const useInfoStore = create(
                 ...userInfo,
                 userEmail: email,
                 userNickName: nickname,
-                userThumb: thumb ? thumb : userInfo.userThumb, // createObjectURL 제거
+                userThumb: thumb ? thumb : userInfo.userThumb,
                 userPublic: publicStatus,
               },
             });
@@ -136,6 +145,49 @@ const useInfoStore = create(
           }
         } catch (error) {
           console.error("Error updating user info:", error);
+          return false;
+        }
+      },
+
+      // 회원 공개여부 변경 URL
+      ChangePublicUrl: API_URL + "user/me/public",
+
+      /**
+       * 회원 공개여부 변경 메소드
+       * @param {boolean} publicStatus - 공개 여부 (true: 공개, false: 비공개)
+       * @returns {boolean} - 성공 여부 (true: 성공, false: 실패)
+       */
+      updateUserPublicStatus: async (publicStatus) => {
+        try {
+          const { token, ChangePublicUrl, userInfo } = get();
+          if (!token) {
+            console.error("토큰이 없습니다.");
+            return false;
+          }
+
+          const response = await axios.patch(
+            ChangePublicUrl, 
+            { public: publicStatus }, // 서버에 보내는 데이터
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          if (response.status === 200) {
+            set({
+              userInfo: {
+                ...userInfo,
+                userPublic: publicStatus, // 상태 업데이트
+              },
+            });
+            return true;
+          } else {
+            throw new Error("회원 공개여부 변경에 실패했습니다.");
+          }
+        } catch (error) {
+          console.error("Error updating user public status:", error);
           return false;
         }
       },

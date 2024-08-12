@@ -8,7 +8,7 @@ import ScoreRegist from "../ScoreRegist/ScoreRegist"; // ScoreRegist 컴포넌�
 import UserGradeImage from "../GradeImg/GradeImg";
 
 const TestAnalyze = () => {
-  const { userInfo } = useInfoStore();
+  const { userInfo, updateUserPublicStatus } = useInfoStore(); // updateUserPublicStatus 추가
   const { selectedSubject, setSelectedSubject } = useGradeStore();
   const { subjects, fetchSubjects } = useSubjectStore();
 
@@ -42,14 +42,20 @@ const TestAnalyze = () => {
     handleSubjectChange(registeredSubjectCode); // 방금 등록한 과목으로 새로고침
   };
 
+  const handlePublicToggle = async () => {
+    const newPublicStatus = !userInfo.userPublic; // 현재 공개여부를 반전시킴
+    const success = await updateUserPublicStatus(newPublicStatus);
+
+  };
+
   return (
     <div className="analyzeTotalContainer">
       <div className="analyzeHeader">
         <h1>{userInfo.userNickName}님 어서오세요</h1>
 
         <div className="analyzeSideNav">
-          <button className="analyzeScoreRegistButton">
-            동민이의 신비한 버튼
+          <button className="analyzeScoreRegistButton" onClick={handlePublicToggle}>
+            {userInfo.userPublic ? "비공개로 설정" : "공개로 설정"}
           </button>
 
           {/* 성적 등록 버튼 */}
