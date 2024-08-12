@@ -3,7 +3,8 @@ import axios from "axios";
 import useInfoStore from "./infos";
 import defaultProfile from "../assets/defaultProfile.png";
 
-const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/studycow/";
+const API_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/studycow/";
 
 const useFriendsStore = create((set, get) => ({
   friends: [],
@@ -36,6 +37,7 @@ const useFriendsStore = create((set, get) => ({
       console.error("API 요청 실패:", error);
     }
   },
+
   removeFriend: async (userId) => {
     const { token } = useInfoStore.getState();
 
@@ -60,6 +62,7 @@ const useFriendsStore = create((set, get) => ({
       alert("친구 삭제에 실패했소...");
     }
   },
+
   fetchGetRequests: async () => {
     const { token } = useInfoStore.getState();
 
@@ -85,6 +88,7 @@ const useFriendsStore = create((set, get) => ({
       console.error("API 요청 실패:", error);
     }
   },
+
   acceptGetRequest: async (friendRequestId) => {
     const { token } = useInfoStore.getState();
 
@@ -118,6 +122,7 @@ const useFriendsStore = create((set, get) => ({
       alert("친구 요청 수락에 실패했소...");
     }
   },
+
   fetchSendRequests: async () => {
     const { token } = useInfoStore.getState();
 
@@ -144,6 +149,7 @@ const useFriendsStore = create((set, get) => ({
       console.error("API 요청 실패:", error);
     }
   },
+
   cancelSendRequest: async (requestId) => {
     const { token } = useInfoStore.getState();
 
@@ -169,7 +175,9 @@ const useFriendsStore = create((set, get) => ({
       alert("친구 요청 취소에 실패했소...");
     }
   },
+
   setSearchedNickname: (searchedNickname) => set({ searchedNickname }),
+
   fetchSearchedFriends: async (searchedNickname) => {
     const { token } = useInfoStore.getState();
 
@@ -191,6 +199,7 @@ const useFriendsStore = create((set, get) => ({
       set({ searchedFriends: [] });
     }
   },
+
   sendFriendRequest: async (toUserId) => {
     const { token } = useInfoStore.getState();
     const { friends, sendRequests } = get();
@@ -232,6 +241,39 @@ const useFriendsStore = create((set, get) => ({
     } catch (error) {
       console.error("친구 요청 실패:", error);
       alert("친구 요청에 실패했습니다.");
+    }
+  },
+
+  friendInfo: null,
+
+  // 친구 정보 조회
+  fetchFriendInfo: async (userId) => {
+    const { token } = useInfoStore.getState();
+
+    // 토큰 유효성 검사
+    if (!token) {
+      console.error("토큰이 없습니다.");
+      return;
+    }
+
+    try {
+      // API 요청 보내기
+      const response = await axios.get(API_URL + `user/me`, {
+        params: { userId: userId },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      // 응답 데이터 처리
+      console.log("친구 정보:", response.data);
+
+      // 응답 데이터를 상태에 저장
+      set({ friendInfo: response.data });
+      console.log("친구 정보:", response.data);
+    } catch (error) {
+      // 에러 처리
+      console.error("친구 정보 조회 중 오류 발생:", error);
     }
   },
 }));
