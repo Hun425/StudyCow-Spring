@@ -5,6 +5,7 @@ import GradeAnalyzeBox from "./GradeAnalyzeBox";
 import useGradeStore from "../../stores/grade";
 import useSubjectStore from "../../stores/subjectStore";
 import ScoreRegist from "../ScoreRegist/ScoreRegist"; // ScoreRegist 컴포넌트 가져오기
+import UserGradeImage from "../GradeImg/GradeImg";
 
 const TestAnalyze = () => {
   const { userInfo } = useInfoStore();
@@ -77,7 +78,7 @@ const TestAnalyze = () => {
       </div>
       <div className="analyzeBody">
         <div className="analyzeCowStatus">
-          <h1>캐릭터 부분</h1>
+          <UserGradeImage />
         </div>
         <div className="analyzeGradeStatus">
           <GradeAnalyzeBox subject={selectedSubject} />

@@ -1,0 +1,6 @@
+/* Gradelmg.css */
+.user-grade-image {
+  width: 150px;  /* 원하는 너비로 조절 */
+  height: auto;  /* 이미지 비율을 유지하면서 높이 조절 */
+  border-radius: 50%;  /* 원형으로 만들기 위해 적용 */
+}
