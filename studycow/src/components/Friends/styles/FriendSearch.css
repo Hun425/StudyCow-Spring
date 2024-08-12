@@ -1,53 +1,54 @@
 .searchBox {
   display: flex;
   flex-direction: column;
-  width: 720px;
-  height: 230px;
+  width: calc(720 / 1440 * 100vw);
+  height: calc(230 / 1440 * 100vw);
   justify-content: center;
   align-items: center;
-  padding: 10px;
-  border-radius: 5px;
-  background: linear-gradient(to bottom, #dee5f0, #ffffff);
-  border: solid 1px black;
+  padding: calc(10 / 1440 * 100vw);
+  border-radius: calc(5 / 1440 * 100vw);
+  background: #f0f4f8;
+  box-shadow: 0 calc(4 / 1440 * 100vw) calc(6 / 1440 * 100vw) rgba(0, 0, 0, 0.1);
 }
 
 .searchBar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 10px;
-  width: 670px;
+  margin-top: calc(10 / 1440 * 100vw);
+  width: calc(670 / 1440 * 100vw);
 }
 
 .searchInput {
-  width: 540px;
-  height: 40px;
-  margin-right: 10px;
-  border-radius: 5px;
+  width: calc(540 / 1440 * 100vw);
+  height: calc(40 / 1440 * 100vw);
+  margin-right: calc(10 / 1440 * 100vw);
+  border: calc(1 / 1440 * 100vw) solid #ccc;
+  border-radius: calc(5 / 1440 * 100vw);
 }
 
 .searchBtn {
-  width: 110px;
-  height: 40px;
+  width: calc(110 / 1440 * 100vw);
+  height: calc(40 / 1440 * 100vw);
   text-align: center;
-  padding: 10px 20px; /* 버튼 패딩 */
-  font-size: 15px; /* 버튼 글자 크기 */
+  padding: calc(10 / 1440 * 100vw) calc(20 / 1440 * 100vw); /* 버튼 패딩 */
+  font-size: calc(15 / 1440 * 100vw); /* 버튼 글자 크기 */
   font-weight: bold; /* 버튼 글자 굵기 */
   background-color: #ffffff; /* 버튼 배경색 */
   color: #000000; /* 버튼 글자색 */
-  border-radius: 5px; /* 버튼 모서리 둥글게 */
+  border-radius: calc(5 / 1440 * 100vw); /* 버튼 모서리 둥글게 */
   cursor: pointer; /* 마우스 커서가 포인터로 변경 */
 }
 
 .friendsList {
-  margin-top: 10px;
+  margin-top: calc(10 / 1440 * 100vw);
   background-color: #ffffff;
-  width: 670px;
-  height: 150px;
-  border-radius: 5px;
-  border: 1px solid black;
+  width: calc(670 / 1440 * 100vw);
+  height: calc(150 / 1440 * 100vw);
+  border-radius: calc(5 / 1440 * 100vw);
+  border: calc(1 / 1440 * 100vw) solid #ccc;
   overflow-y: auto; /* 세로 스크롤바 추가 */
-  padding-right: 10px; /* 스크롤바 공간 확보 */
+  padding-right: calc(10 / 1440 * 100vw); /* 스크롤바 공간 확보 */
 }
 
 /* 웹킷 기반 브라우저용 스크롤바 숨김 */
@@ -64,4 +65,10 @@
 /* IE and Edge용 스크롤바 숨김 */
 .friendsList {
   -ms-overflow-style: none;
+}
+
+.NoFriendAlarm{
+  padding-top: calc(60 / 1440 * 100vw);
+  text-align: center;
+  align-items: center;
 }

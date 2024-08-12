@@ -4,13 +4,15 @@
     align-items: center;
     margin: 0;
     padding: 0;
+    height: 100vh;
+    width: 100vw;
 }
 
 .MyPageContainer {
-    height: auto;
-    min-height: 914px;
+    height: 100vh;
+    overflow-y: auto;
     display: flex;
-    width: 1199px;
+    width: calc(1199 / 1440 * 100vw);
     margin: 0;
     padding: 0;
   }
@@ -21,20 +23,20 @@
     position: relative;
     background-color: #7092BE;
     box-sizing: border-box;
-    height: 200vh;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
     box-shadow: rgb(38, 57, 77) 0 calc(20 / 1440 * 100vw) calc(30 / 1440 * 100vw) -10px;
   }
   
   .MyPageContent {
-    padding: 100px;
-    padding-top: 50px;
     z-index: 1;
-    width: 804px;
+    width: calc(804 / 1440 * 100vw);
     background-color: #fff;
     box-sizing: border-box;
   }
 
   .FriendsTitle {
-    font-size: 30px;
+    font-size: calc(30 / 1440 * 100vw);
     margin: 20px 0px;
   }

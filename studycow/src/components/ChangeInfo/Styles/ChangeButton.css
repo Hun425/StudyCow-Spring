@@ -2,18 +2,18 @@
 
 .overlay-container2 {
   position: absolute;
-  top: 10px; /* Adjust this value to control the vertical position */
+  top: calc(10 / 1440 * 100vw); /* Adjust this value to control the vertical position */
   left: 28%; /* Adjust this value to align it with the form's left edge */
   transform: translateX(-50%);
   z-index: 1; /* Ensure the button is above the form */
 }
 
 .overlay-button2 {
-  background-color: #4a90e2;
+  background-color: #7092BE;
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
+  padding: calc(10 / 1440 * 100vw) calc(20 / 1440 * 100vw);
+  border-radius: calc(5 / 1440 * 100vw);
   cursor: pointer;
-  font-size: 1rem;
+  font-size: calc(16 / 1440 * 100vw);
 }

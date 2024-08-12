@@ -34,7 +34,7 @@ div .profileImg {
   height: calc(50 / 1440 * 100vw);
   width: calc(230 / 1440 * 100vw);
   color: #bf714d;
-  margin-bottom: calc(5 / 1440 * 100vw);
+  margin-bottom: calc(4 / 1440 * 100vw);
 }
 
 .userInfoDetail {
@@ -46,7 +46,7 @@ div .profileImg {
   flex-direction: column;
   align-items: flex-start;
   border-color: rgba(0, 0, 0, 0.25) !important;
-  border-width: 0.1vw !important; /* 너무 작은 단위의 계산 보정 */
+  border-width: 0.1vw; /* 너무 작은 단위의 계산 보정 */
   border-top: solid;
   background-color: white;
 }

@@ -6,6 +6,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-image: url('../../../assets/MyPageBackground.png');
+  background-size: cover; /* 배경 이미지가 전체 컨테이너에 맞게 조정됩니다. */
+  background-position: center; /* 배경 이미지가 가운데에 위치합니다. */
+  background-repeat: no-repeat; /* 배경 이미지가 반복되지 않도록 설정합니다. */
 }
 
 /* 회원정보 변경 폼 컨테이너 관련 CSS */
@@ -13,7 +17,7 @@
 .ChangeInfo-container {
   position: relative;
   width: 100%;
-  max-width: 600px;
+  max-width: calc(600 / 1440 * 100vw);
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -25,7 +29,7 @@
 
 .ChangeInfo-form-container {
   width: 100%;
-  max-width: 500px;
+  max-width: calc(500 / 1440 * 100vw);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,11 +40,11 @@
 
 .ChangeInfo-info-form {
   background-color: #f0f4f8;
-  padding: 30px;
-  border-radius: 10px;
+  padding: calc(30 / 1440 * 100vw);
+  border-radius: calc(10 / 1440 * 100vw);
   width: 100%;
   box-sizing: border-box;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 calc(4 / 1440 * 100vw) calc(6 / 1440 * 100vw) rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -59,9 +63,9 @@
 
 .ChangeInfo-info-form h2 {
   margin: 0;
-  margin-bottom: 20px;
+  margin-bottom: calc(20 / 1440 * 100vw);
   text-align: center;
-  font-size: 1.5rem;
+  font-size: calc(24 / 1440 * 100vw);
   color: #333;
   width: 100%;
 }
@@ -70,7 +74,7 @@
 
 .ChangeInfo-form-group {
   width: 100%;
-  margin-top: 15px;
+  margin-top: calc(15 / 1440 * 100vw);
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -88,22 +92,22 @@
 
 .ChangeInfo-form-group input {
   width: 70%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  padding: calc(10 / 1440 * 100vw);
+  border: calc(1 / 1440 * 100vw) solid #ccc;
+  border-radius: calc(5 / 1440 * 100vw);
   box-sizing: border-box;
 }
 
 /* 파일 입력 필드 스타일 관련 CSS */
 
 .ChangeInfo-form-group input[type="file"] {
-  padding: 3px;
+  padding: calc(3 / 1440 * 100vw);
 }
 
 /* 입력 필드 포커스 스타일 관련 CSS */
 
 .ChangeInfo-form-group input:focus {
-  border-color: #4a90e2;
+  border-color: #7092BE;
   outline: none;
 }
 
@@ -112,24 +116,24 @@
 .ChangeInfo-button-group {
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin-top: 20px;
+  gap: calc(10 / 1440 * 100vw);
+  margin-top: calc(20 / 1440 * 100vw);
   width: 100%;
 }
 
 /* 제출 버튼 스타일 관련 CSS */
 
 .ChangeInfo-submit-button {
-  background-color: #4a90e2;
+  background-color: #7092BE;
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  margin-bottom: 15px;
+  padding: calc(10 / 1440 * 100vw) calc(20 / 1440 * 100vw);
+  border-radius: calc(5 / 1440 * 100vw);
+  margin-bottom: calc(15 / 1440 * 100vw);
   cursor: pointer;
-  font-size: 1rem;
+  font-size: calc(16 / 1440 * 100vw);
   width: auto;
-  max-width: 150px;
+  max-width: calc(150 / 1440 * 100vw);
   text-align: center;
 }
 
@@ -145,10 +149,10 @@
   background-color: #f86c6b;
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
+  padding: calc(10 / 1440 * 100vw) calc(20 / 1440 * 100vw);
+  border-radius: calc(5 / 1440 * 100vw);
   cursor: pointer;
-  font-size: 1rem;
+  font-size: calc(16 / 1440 * 100vw);
   text-align: center;
 }
 
@@ -162,7 +166,7 @@
 
 .ChangeInfo-center-button {
   display: block;
-  margin: 20px auto 0;
+  margin: calc(20 / 1440 * 100vw) auto 0;
   width: 50%;
 }
 
@@ -172,7 +176,7 @@
 
 .ChangeInfo-overlay-container2 {
   position: absolute;
-  top: 10px; /* 이 값을 조정하여 수직 위치를 제어 */
+  top: calc(10 / 1440 * 100vw); /* 이 값을 조정하여 수직 위치를 제어 */
   left: 28%; /* 이 값을 조정하여 폼의 왼쪽 가장자리와 맞춤 */
   transform: translateX(-50%);
   z-index: 1; /* 버튼이 폼 위에 위치하도록 설정 */
@@ -181,13 +185,13 @@
 /* 오버레이 버튼 스타일 관련 CSS */
 
 .ChangeInfo-overlay-button2 {
-  background-color: #4a90e2;
+  background-color: #7092BE;
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
+  padding: calc(10 / 1440 * 100vw) calc(20 / 1440 * 100vw);
+  border-radius: calc(5 / 1440 * 100vw);
   cursor: pointer;
-  font-size: 1rem;
+  font-size: calc(16 / 1440 * 100vw);
 }
 
 /* 오버레이 버튼 호버 스타일 관련 CSS */

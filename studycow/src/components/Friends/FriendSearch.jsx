@@ -48,7 +48,7 @@ const FriendSearch = () => {
               <SearchedItem key={index} friend={searchedFriend} />
             ))
           ) : (
-            <p>친구목록 나올 영역</p>
+            <p className="NoFriendAlarm">아직 등록된 친구가 없소!</p>
           )}
         </div>
       </div>

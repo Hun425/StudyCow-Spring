@@ -25,7 +25,7 @@ const FriendList = () => {
             />
           ))
         ) : (
-          <p>아직 추가한 친구가 없소</p>
+          <p className="NoAddFriend">아직 추가한 친구가 없소!</p>
         )}
       </div>
     </div>

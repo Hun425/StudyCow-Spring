@@ -1,22 +1,23 @@
 .searchedItem {
   display: flex;
   justify-content: space-between;
-  padding: 5px 15px;
-  border-bottom: 1px solid black;
+  padding: calc(5 / 1440 * 100vw) calc(15 / 1440 * 100vw);
+  border: calc(1 / 1440 * 100vw) solid #ccc;
+  width: calc(670 / 1440 * 100vw);
   align-items: center;
 }
 
 .searchedItemInfo {
-  margin: 0px;
+  margin: 0;
   text-align: center;
 }
 
 .addFriendBtn {
-  background-color: #4d8ee4;
+  background-color: #7092BE;
   color: #fff;
-  font-size: 15px;
-  padding: 3px 8px;
-  border-radius: 5px;
+  font-size: calc(15 / 1440 * 100vw);
+  padding: calc(3 / 1440 * 100vw) calc(8 / 1440 * 100vw);
+  border-radius: calc(5 / 1440 * 100vw);
   border: none;
   text-align: center;
 }
