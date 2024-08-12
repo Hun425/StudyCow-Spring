@@ -66,4 +66,5 @@
 .rightContainer {
   justify-content: flex-end;
   font-size: calc(15 / 1440 * 100vw);
+  margin-right: calc(50 / 1440 * 100vw);
 }

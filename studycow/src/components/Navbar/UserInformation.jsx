@@ -28,7 +28,7 @@ function UserInformation() {
                   alt="프로필이미지"
                 />
               </div>
-              <div>
+              <div className="userNicnameContainer">
                 <a>
                   {userInfo.userNickName}님
                 </a>
@@ -49,7 +49,7 @@ function UserInformation() {
                   alt="프로필이미지"
                 />
               </div>
-              <div>
+              <div className="userNicnameContainer">
                 <a>
                   {userInfo.userNickName}님
                 </a>
