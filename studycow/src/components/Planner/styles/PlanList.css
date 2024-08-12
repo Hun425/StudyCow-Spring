@@ -33,7 +33,7 @@
   display: flex; /* 체크박스와 텍스트를 일렬로 정렬 */
   align-items: center; /* 세로 방향 중앙 정렬 */
   justify-content: center;
-  font-size: calc(40 / 1440 * 100vw);
+  font-size: calc(30 / 1440 * 100vw);
 }
 
 .singlePlanContent {
@@ -49,7 +49,7 @@
   display: flex;
   align-items: center;
   margin: 0;
-  font-size: calc(24 / 1440 * 100vw); /* 글자 크기 설정 */
+  font-size: calc(16 / 1440 * 100vw); /* 글자 크기 설정 */
 }
 
 /* .singlePlanContent label { } */
@@ -63,15 +63,15 @@
 .singlePlanCheckbox {
   margin-left: calc(10 / 1440 * 100vw); /* 체크박스 여백 */
   margin-right: calc(30 / 1440 * 100vw); /* 체크박스 여백 */
-  width: calc(19 / 1440 * 100vw); /* 체크박스의 너비 */
-  height: calc(19 / 1440 * 100vw); /* 체크박스의 높이 */
+  width: calc(14 / 1440 * 100vw); /* 체크박스의 너비 */
+  height: calc(14 / 1440 * 100vw); /* 체크박스의 높이 */
   /* transform 속성을 사용하여 체크박스의 크기를 비율로 조절 */
   transform: scale(1.5); /* 1.5배 크기 조절 */
 }
 
 .singlePlanStudyTime {
   margin-left: calc(8 / 1440 * 100vw); /* 체크박스와 시간 텍스트 사이의 간격 */
-  font-size: calc(24 / 1440 * 100vw); /* 시간 텍스트 크기 */
+  font-size: calc(16 / 1440 * 100vw); /* 시간 텍스트 크기 */
 }
 
 .singlePlanButtonBox {

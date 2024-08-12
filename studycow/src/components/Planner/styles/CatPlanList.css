@@ -6,7 +6,7 @@
 }
 
 .singleSubNoPlan {
-  font-size: calc(24 / 1440 * 100vw); /* 기본 폰트 크기 설정 */
+  font-size: calc(16 / 1440 * 100vw); /* 기본 폰트 크기 설정 */
   text-align: center;
 }
 
@@ -18,7 +18,7 @@
   border-bottom: calc(1 / 1440 * 100vw) solid red; /* 빨간 밑줄 */
   padding-top: calc(10 / 1440 * 100vw);
   position: relative; /* ::before 가상 요소를 위해 추가 */
-  font-size: calc(24 / 1440 * 100vw); /* 기본 폰트 크기 설정 */
+  font-size: calc(16 / 1440 * 100vw); /* 기본 폰트 크기 설정 */
 }
 
 .MyPlanCatSelectControl{
@@ -31,20 +31,20 @@
 .singleSubPlanCheckbox {
   margin-left: calc(10 / 1440 * 100vw); /* 체크박스 여백 */
   margin-right: calc(10 / 1440 * 100vw); /* 체크박스 여백 */
-  width: calc(19 / 1440 * 100vw); /* 체크박스의 너비 */
-  height: calc(19 / 1440 * 100vw); /* 체크박스의 높이 */
+  width: calc(14 / 1440 * 100vw); /* 체크박스의 너비 */
+  height: calc(14 / 1440 * 100vw); /* 체크박스의 높이 */
   transform: scale(1.5); /* 1.5배 크기 조절 */
 }
 
 .singleSubPlanStudyTime {
   margin-left: calc(8 / 1440 * 100vw); /* 체크박스와 시간 텍스트 사이의 간격 */
-  font-size: calc(24 / 1440 * 100vw); /* 시간 텍스트 크기 */
+  font-size: calc(16 / 1440 * 100vw); /* 시간 텍스트 크기 */
   font-weight: normal; /* 폰트 두께 설정 */
 }
 
 .singleSubPlanContentText {
   margin: 0;
-  font-size: calc(24 / 1440 * 100vw); /* 텍스트의 기본 폰트 크기 */
+  font-size: calc(16 / 1440 * 100vw); /* 텍스트의 기본 폰트 크기 */
   font-weight: normal; /* 텍스트 두께 */
 }
 

@@ -139,7 +139,7 @@ button {
 }
 
 .MyPlanDatePlanDate p {
-  font-size: calc(35 / 1440 * 100vw);
+  font-size: calc(24 / 1440 * 100vw);
 }
 
 .MyPlanEmptyCase {
@@ -227,7 +227,7 @@ button {
 }
 
 .MyPlanCatPlanTitle p {
-  font-size: calc(40 / 1440 * 100vw);
+  font-size: calc(30 / 1440 * 100vw);
   margin: 0px;
   padding: 0px;
   text-align: center;
