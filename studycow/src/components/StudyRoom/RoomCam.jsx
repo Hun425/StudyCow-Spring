@@ -66,7 +66,7 @@ function RoomCam({ roomId }) {
   // publisher와 publisher.stream이 정의되었는지 확인
   useEffect(() => {
     if (publisher && publisher.stream) {
-      console.log("Publisher stream:", publisher.stream);
+      // console.log("Publisher stream:", publisher.stream);
       // 필요시 publisher.stream의 메서드를 호출할 수 있습니다.
       // 예: publisher.stream.getAudioTracks();
     }

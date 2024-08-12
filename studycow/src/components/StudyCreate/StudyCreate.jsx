@@ -3,6 +3,7 @@ import Infobox from "./Infobox";
 import useStudyStore from "../../stores/study";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import Notiflix from 'notiflix';
 
 const StudyCreate = () => {
   const [roomTitle, setRoomTitle] = useState("");
@@ -24,10 +25,10 @@ const StudyCreate = () => {
     });
     const success = await submitStudyRoomData();
     if (success) {
-      alert("방 생성하기가 성공했소!");
+      Notiflix.Notify.success("방 생성하기가 성공했소!");
       navigate("/study");
     } else {
-      alert("방 생성에 실패했소...");
+      Notiflix.Notify.failure("방 생성에 실패했소...");
     }
   };
 

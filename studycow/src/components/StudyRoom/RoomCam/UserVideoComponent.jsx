@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import OpenViduVideoComponent from './OvVideo';
 import useInfoStore from '../../../stores/infos';
 import useStudyStore from "../../../stores/study.js";
+import Notiflix from 'notiflix';
 import './UserVideo.css';
 
 export default class UserVideoComponent extends Component {
@@ -57,7 +58,7 @@ export default class UserVideoComponent extends Component {
             this.hands = new window.Hands({
                 locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4/${file}`
             });
-            console.log("핸즈 객체 로드확인:", this.hands); // Hands 객체가 올바르게 로드되었는지 확인
+            // console.log("핸즈 객체 로드확인:", this.hands); // Hands 객체가 올바르게 로드되었는지 확인
 
             this.hands.setOptions({
                 maxNumHands: 2,
@@ -111,7 +112,8 @@ export default class UserVideoComponent extends Component {
         try {
             return JSON.parse(this.props.streamManager?.stream?.connection?.data || "{}").clientData;
         } catch (error) {
-            console.error("getNicknameTag 오류:", error);
+            // console.error("getNicknameTag 오류:", error);
+            Notiflix.Notify.warning('유저의 닉네임을 불러오지 못했소');
             return "";
         }
     }
