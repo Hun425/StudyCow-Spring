@@ -15,11 +15,14 @@ const StudyEnter = ({ roomId, onRequestClose }) => {
   }, [roomId, fetchRoomDetailInfo]);
 
 
-  const handleClick = () => {
-    // registerRoom 함수를 호출
-    registerRoom(roomId);
-    // 라우팅
-    navigate(`room/${roomId}`);
+  const handleClick = async () => {
+    try {
+      await registerRoom(roomId); // 방 입장 함수 호출 및 완료 대기
+      navigate(`/study/room/${roomId}`); // 라우팅
+    } catch (error) {
+      console.error("방 입장 중 오류 발생", error);
+      navigate(''); // 에러 발생 시 /study로 리다이렉트
+    }
   };
 
 

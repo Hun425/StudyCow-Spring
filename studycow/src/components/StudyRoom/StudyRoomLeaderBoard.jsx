@@ -3,10 +3,15 @@ import React, { useState, useEffect } from 'react';
 import { Container, Typography, Paper, Box, Avatar } from '@mui/material';
 import { keyframes } from '@emotion/react';
 import useStudyStore from "../../stores/study";
+import useInfoStore from "../../stores/infos";
 import firstPlaceImg from "./img/firstRankImg.png"
 import secondPlaceImg from "./img/secondRankImg.png"
 import thirdPlaceImg from "./img/thirdRankImg.png"
 import myPlaceImg from "./img/myRankImg.png"
+
+
+const InfoStore = useInfoStore.getState();
+
 
 // 슬라이딩 애니메이션을 위한 keyframes
 const slide = keyframes`
@@ -24,7 +29,7 @@ const formatStudyTime = (minutes) => {
   );
 };
 
-const StudyRoomLeaderBoard = ({ myRankInfo = { userName: '', studyTime: 0 } }) => {
+const StudyRoomLeaderBoard = ({ myRankInfo = { userName: InfoStore.userInfo.userNickName, studyTime: 0 } }) => {
   const { rankInfo = [] } = useStudyStore();
 
   const [index, setIndex] = useState(0);
@@ -57,9 +62,11 @@ const StudyRoomLeaderBoard = ({ myRankInfo = { userName: '', studyTime: 0 } }) =
           공부 시간 랭킹
         </Typography>
       </Paper>
-      {rankInfo.length === 0 ? (
+      {rankInfo.length === 0 || myRankInfo.length === 0 ? (
         <Typography variant="body2" className="studyRoomRankNoData">
           현재 랭킹을 조회할 수 없습니다.
+          <br/>
+          잠시 후 다시 시도해주세요.
         </Typography>
       ) : (
         <>
