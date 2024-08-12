@@ -26,7 +26,7 @@ const TestAnalyze = () => {
     } else {
       setSelectedSubject(subjectCode);
     }
-    console.log(subjectCode); // selectedSubject 변경 시 콘솔에 출력
+    // console.log(subjectCode); // selectedSubject 변경 시 콘솔에 출력
   };
 
   const openModal = () => {
@@ -45,7 +45,6 @@ const TestAnalyze = () => {
   const handlePublicToggle = async () => {
     const newPublicStatus = !userInfo.userPublic; // 현재 공개여부를 반전시킴
     const success = await updateUserPublicStatus(newPublicStatus);
-
   };
 
   return (
@@ -54,7 +53,10 @@ const TestAnalyze = () => {
         <h1>{userInfo.userNickName}님 어서오세요</h1>
 
         <div className="analyzeSideNav">
-          <button className="analyzeScoreRegistButton" onClick={handlePublicToggle}>
+          <button
+            className="analyzeScoreRegistButton"
+            onClick={handlePublicToggle}
+          >
             {userInfo.userPublic ? "비공개로 설정" : "공개로 설정"}
           </button>
 

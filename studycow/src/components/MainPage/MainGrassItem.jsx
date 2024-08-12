@@ -31,7 +31,7 @@ const MainGrassItem = () => {
         }, {});
         setThisMonthPlan(planData);
       } catch (error) {
-        console.error("Error fetching the data", error);
+        console.error("데이터 fetch 실패:", error);
       }
     };
 

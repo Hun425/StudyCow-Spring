@@ -21,7 +21,7 @@ const ScoreChange = ({ initialData, onClose, onScoreChange }) => {
     fetchSubjects(); // 컴포넌트가 마운트될 때 과목 데이터 가져오기
 
     if (initialData) {
-      console.log("initialData:", initialData); // 초기 데이터 확인
+      // console.log("initialData:", initialData); // 초기 데이터 확인
       setScoreData({
         subCode: initialData.subCode || "",
         testDate: initialData.testDate || "",
