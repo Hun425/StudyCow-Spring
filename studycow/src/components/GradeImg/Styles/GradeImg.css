@@ -1,6 +1,40 @@
-/* Gradelmg.css */
+.user-grade-image-container {
+  display: flex;
+  flex-direction: column; /* 세로 방향으로 정렬 */
+  justify-content: center;  /* 수평 가운데 정렬 */
+  align-items: center;  /* 수직 가운데 정렬 */
+  height: 100%;  /* 부모 높이에 따라 조정 가능, 필요에 따라 수정 */
+}
+
 .user-grade-image {
-  width: 150px;  /* 원하는 너비로 조절 */
+  width: 200px;  /* 원하는 너비로 조절 */
   height: auto;  /* 이미지 비율을 유지하면서 높이 조절 */
   border-radius: 50%;  /* 원형으로 만들기 위해 적용 */
+}
+
+.user-grade-text {
+  margin-top: 30px; /* 이미지와 텍스트 사이의 간격 */
+  font-size: 25px; /* 텍스트 크기 */
+  color: #333; /* 텍스트 색상 */
+}
+
+.user-grade-progress-bar-container {
+  width: 100%; /* 바의 전체 너비 */
+  background-color: #e0e0e0; /* 바의 배경색 */
+  border-radius: 10px; /* 둥근 모서리 */
+  margin-top: 10px; /* 텍스트와의 간격 */
+  height: 20px; /* 바의 높이 */
+  overflow: hidden;
+}
+
+.user-grade-progress-bar {
+  height: 100%;
+  background-color: #4caf50; /* 진행 바의 색상 (녹색) */
+  border-radius: 10px; /* 둥근 모서리 */
+}
+
+.user-grade-exp-text {
+  margin-top: 5px; /* 바와의 간격 */
+  font-size: 16px; /* 텍스트 크기 */
+  color: #333; /* 텍스트 색상 */
 }
