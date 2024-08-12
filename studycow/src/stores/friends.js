@@ -16,7 +16,7 @@ const useFriendsStore = create((set, get) => ({
     const { token } = useInfoStore.getState();
 
     if (!token) {
-      console.error("토큰이 없습니다.");
+      console.error("로그인 상태가 아닙니다.");
       return;
     }
 
@@ -42,7 +42,7 @@ const useFriendsStore = create((set, get) => ({
     const { token } = useInfoStore.getState();
 
     if (!token) {
-      console.error("토큰이 없습니다.");
+      console.error("로그인 상태가 아닙니다.");
       return;
     }
 
@@ -67,7 +67,7 @@ const useFriendsStore = create((set, get) => ({
     const { token } = useInfoStore.getState();
 
     if (!token) {
-      console.error("토큰이 없습니다.");
+      console.error("로그인 상태가 아닙니다.");
       return;
     }
 
@@ -93,7 +93,7 @@ const useFriendsStore = create((set, get) => ({
     const { token } = useInfoStore.getState();
 
     if (!token) {
-      console.error("토큰이 없습니다.");
+      console.error("로그인 상태가 아닙니다.");
       return;
     }
 
@@ -127,7 +127,7 @@ const useFriendsStore = create((set, get) => ({
     const { token } = useInfoStore.getState();
 
     if (!token) {
-      console.error("토큰이 없습니다.");
+      console.error("로그인 상태가 아닙니다.");
       return;
     }
 
@@ -154,7 +154,7 @@ const useFriendsStore = create((set, get) => ({
     const { token } = useInfoStore.getState();
 
     if (!token) {
-      console.error("토큰이 없습니다.");
+      console.error("로그인 상태가 아닙니다.");
       return;
     }
 
@@ -182,7 +182,7 @@ const useFriendsStore = create((set, get) => ({
     const { token } = useInfoStore.getState();
 
     if (!token) {
-      console.error("토큰이 없습니다.");
+      console.error("로그인 상태가 아닙니다.");
       return;
     }
 
@@ -195,7 +195,7 @@ const useFriendsStore = create((set, get) => ({
       });
       set({ searchedFriends: response.data });
     } catch (error) {
-      console.error("Error fetching friends:", error);
+      console.error("목록을 불러오는 데 실패했습니다.:", error);
       set({ searchedFriends: [] });
     }
   },
@@ -205,7 +205,7 @@ const useFriendsStore = create((set, get) => ({
     const { friends, sendRequests } = get();
 
     if (!token) {
-      console.error("토큰이 없습니다.");
+      console.error("로그인 상태가 아닙니다.");
       return;
     }
 
@@ -252,7 +252,7 @@ const useFriendsStore = create((set, get) => ({
 
     // 토큰 유효성 검사
     if (!token) {
-      console.error("토큰이 없습니다.");
+      console.error("로그인 상태가 아닙니다.");
       return;
     }
 
@@ -264,13 +264,8 @@ const useFriendsStore = create((set, get) => ({
           Authorization: `Bearer ${token}`,
         },
       });
-
-      // 응답 데이터 처리
-      console.log("친구 정보:", response.data);
-
       // 응답 데이터를 상태에 저장
       set({ friendInfo: response.data });
-      console.log("친구 정보:", response.data);
     } catch (error) {
       // 에러 처리
       console.error("친구 정보 조회 중 오류 발생:", error);

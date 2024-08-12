@@ -16,8 +16,6 @@ const FriendStatusStore = create(
       // 과목 정보를 가져오는 함수
       fetchSubjectInfo: async (userId) => {
         const { token } = useInfoStore.getState();
-        console.log(token);
-        console.log(userId);
 
         // grade.js에서 selectedSubject 가져오기
         const { selectedSubject } = useGradeStore.getState();
@@ -51,7 +49,6 @@ const FriendStatusStore = create(
           // 요청이 성공하면 데이터를 상태로 설정
           if (response.status === 200) {
             set({ subjectInfo: response.data, error: null });
-            console.log("과목 데이터 조회 성공:", response.data);
           } else {
             // 요청 실패 시 오류 메시지 설정
             set({ error: "정보 불러오기 에러" });
