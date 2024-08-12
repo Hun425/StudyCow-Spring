@@ -1,90 +1,99 @@
 import React, { useState, useEffect } from "react";
 import "./styles/ScoreRegist.css";
 import useScoreStore from "../../stores/scoreRegist";
-import useSubjectStore from "../../stores/subjectStore"; 
-import useInfoStore from "../../stores/infos"; 
-import useGradeStore from "../../stores/grade"; 
+import useSubjectStore from "../../stores/subjectStore";
+import useInfoStore from "../../stores/infos";
+import useGradeStore from "../../stores/grade";
 
 const ScoreRegist = ({ onCancel, onSubmit }) => {
-  const { updateScore, submitScore } = useScoreStore(); 
-  const { subjects, fetchSubjects, problemTypes, fetchProblemTypes } = useSubjectStore();
-  const { fetchSelectedSubjectGrade, subjectGrades } = useGradeStore(); 
-  const { userInfo } = useInfoStore(); 
+  const { updateScore, submitScore } = useScoreStore();
+  const { subjects, fetchSubjects, problemTypes, fetchProblemTypes } =
+    useSubjectStore();
+  const { fetchSelectedSubjectGrade, subjectGrades } = useGradeStore();
+  const { userInfo } = useInfoStore();
 
   const [subjectCode, setSubjectCode] = useState("");
-  const [testDate, setTestDate] = useState(""); 
+  const [testDate, setTestDate] = useState("");
   const [testScore, setTestScore] = useState("");
   const [testGrade, setTestGrade] = useState("");
   const [wrongs, setWrongs] = useState([{ catCode: "", wrongCnt: "" }]);
-  const [errorMessage, setErrorMessage] = useState(""); 
+  const [errorMessage, setErrorMessage] = useState("");
 
   const grades = Array.from({ length: 9 }, (_, i) => `${i + 1}등급`);
 
   useEffect(() => {
-    fetchSubjects(); 
+    fetchSubjects();
 
     const today = new Date();
     const formattedDate = today.toISOString().split("T")[0];
     setTestDate(formattedDate);
-    updateScore("testDate", formattedDate); 
+    updateScore("testDate", formattedDate);
   }, [fetchSubjects, updateScore]);
 
   useEffect(() => {
     if (subjectCode) {
       fetchProblemTypes(subjectCode);
-      fetchSelectedSubjectGrade(userInfo.userId, subjectCode); // 성적 정보 가져오기
+      fetchSelectedSubjectGrade(userInfo.userId, subjectCode);
     }
-  }, [subjectCode, fetchProblemTypes, fetchSelectedSubjectGrade, userInfo.userId]);
+  }, [
+    subjectCode,
+    fetchProblemTypes,
+    fetchSelectedSubjectGrade,
+    userInfo.userId,
+  ]);
 
   const handleSubjectChange = (e) => {
     const code = e.target.value;
     setSubjectCode(code);
-    updateScore("subCode", parseInt(code, 10)); 
+    updateScore("subCode", parseInt(code, 10));
   };
 
   const handleDateChange = (e) => {
     const date = e.target.value;
     setTestDate(date);
-    updateScore("testDate", date); 
+    updateScore("testDate", date);
   };
 
   const handleScoreChange = (e) => {
     const value = parseInt(e.target.value, 10);
-    const validValue = Math.max(0, Math.min(100, isNaN(value) ? 0 : value)); 
+    const validValue = Math.max(0, Math.min(100, isNaN(value) ? 0 : value));
     setTestScore(validValue);
-    updateScore("testScore", validValue); 
+    updateScore("testScore", validValue);
   };
 
   const handleGradeChange = (e) => {
     const grade = e.target.value;
     setTestGrade(grade);
-    updateScore("testGrade", parseInt(grade, 10)); 
+    updateScore("testGrade", parseInt(grade, 10));
   };
 
   const handleWrongChange = (index, field, value) => {
     const newWrongs = [...wrongs];
     if (field === "wrongCnt") {
       const parsedValue = parseInt(value, 10);
-      const validValue = Math.max(0, isNaN(parsedValue) ? 0 : parsedValue); 
+      const validValue = Math.min(
+        20,
+        Math.max(0, isNaN(parsedValue) ? 0 : parsedValue)
+      ); // 오답 개수를 20으로 제한
       newWrongs[index][field] = validValue;
     } else if (field === "catCode") {
-      newWrongs[index][field] = parseInt(value, 10); 
+      newWrongs[index][field] = parseInt(value, 10);
       newWrongs[index]["wrongCnt"] = "";
     }
     setWrongs(newWrongs);
-    updateScore("scoreDetails", newWrongs); 
+    updateScore("scoreDetails", newWrongs);
   };
 
   const addWrongForm = () => {
     const newWrongs = [...wrongs, { catCode: "", wrongCnt: "" }];
     setWrongs(newWrongs);
-    updateScore("scoreDetails", newWrongs); 
+    updateScore("scoreDetails", newWrongs);
   };
 
   const removeWrongForm = (index) => {
     const newWrongs = wrongs.filter((_, i) => i !== index);
     setWrongs(newWrongs);
-    updateScore("scoreDetails", newWrongs); 
+    updateScore("scoreDetails", newWrongs);
   };
 
   const validateForm = () => {
@@ -109,7 +118,10 @@ const ScoreRegist = ({ onCancel, onSubmit }) => {
       if (wrong.catCode === "" && wrong.wrongCnt === "") {
         continue;
       }
-      if (wrong.catCode !== "" && (wrong.wrongCnt === "" || wrong.wrongCnt <= 0)) {
+      if (
+        wrong.catCode !== "" &&
+        (wrong.wrongCnt === "" || wrong.wrongCnt <= 0)
+      ) {
         setErrorMessage("오답 개수는 0 이상이어야 합니다.");
         return false;
       }
@@ -126,7 +138,7 @@ const ScoreRegist = ({ onCancel, onSubmit }) => {
     e.preventDefault();
 
     if (!validateForm()) {
-      return; 
+      return;
     }
 
     // 중복 성적 검증
@@ -138,14 +150,28 @@ const ScoreRegist = ({ onCancel, onSubmit }) => {
       }
     }
 
-    const filteredWrongs = wrongs.filter(
-      (wrong) => wrong.catCode !== "" || wrong.wrongCnt !== ""
-    );
+    // 오답 유형 중복 검증 및 합치기
+    const mergedWrongs = [];
+    const wrongsMap = {};
 
-    updateScore("scoreDetails", filteredWrongs);
+    wrongs.forEach((wrong) => {
+      if (wrong.catCode && wrong.wrongCnt) {
+        if (wrongsMap[wrong.catCode]) {
+          wrongsMap[wrong.catCode].wrongCnt += wrong.wrongCnt; // 오답 개수 합산
+        } else {
+          wrongsMap[wrong.catCode] = { ...wrong };
+        }
+      }
+    });
+
+    for (const key in wrongsMap) {
+      mergedWrongs.push(wrongsMap[key]);
+    }
+
+    updateScore("scoreDetails", mergedWrongs);
 
     submitScore();
-    onSubmit(subjectCode); 
+    onSubmit(subjectCode);
   };
 
   return (
@@ -217,7 +243,7 @@ const ScoreRegist = ({ onCancel, onSubmit }) => {
               onChange={(e) =>
                 handleWrongChange(index, "catCode", e.target.value)
               }
-              disabled={!subjectCode} 
+              disabled={!subjectCode}
               required
             >
               <option value="" disabled hidden>
@@ -238,7 +264,7 @@ const ScoreRegist = ({ onCancel, onSubmit }) => {
                 handleWrongChange(index, "wrongCnt", e.target.value)
               }
               placeholder="오답 개수"
-              disabled={!wrong.catCode} 
+              disabled={!wrong.catCode}
               required
             />
             <button
