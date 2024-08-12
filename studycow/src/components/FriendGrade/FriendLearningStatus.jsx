@@ -3,28 +3,17 @@ import useFriendStatusStore from "../../stores/friendStatus"; // 학습 상태 �
 import useGradeStore from "../../stores/grade"; // 과목 선택 상태 관리를 위한 zustand 스토어
 import "./styles/FriendLearningStatus.css"; // CSS 파일 가져오기
 
-const FriendLearningStatus = ({userId}) => {
+const FriendLearningStatus = ({ userId }) => {
   // 학습 상태 스토어에서 상태와 함수를 가져오기
-  const { subjectInfo, fetchSubjectInfo, clearSubjectInfo, error } =
-    useFriendStatusStore();
+  const { subjectInfo, fetchSubjectInfo, error } = useFriendStatusStore();
 
   // 과목 선택 스토어에서 selectedSubject 가져오기
   const { selectedSubject } = useGradeStore();
 
   // 컴포넌트가 마운트될 때 학습 상태 데이터를 가져오기 위해 useEffect 사용
   useEffect(() => {
-    if (selectedSubject) {
-      // 선택된 과목이 있을 때만 데이터 가져오기
-      fetchSubjectInfo(selectedSubject);
-    } else {
-      // 선택된 과목이 없으면 정보를 초기화
-      clearSubjectInfo();
-    }
-  }, [
-    fetchSubjectInfo,
-    selectedSubject,
-    clearSubjectInfo,
-  ]);
+    fetchSubjectInfo(userId, selectedSubject);
+  }, [fetchSubjectInfo, userId, selectedSubject]);
 
   return (
     <div className="learningStatusContainer">
@@ -35,9 +24,7 @@ const FriendLearningStatus = ({userId}) => {
         <>
           <div className="learningStatusTable">
             <div className="learningStatusRow">
-              <span className="learningStatusLabel">
-                플래너 누적 학습 시간
-              </span>
+              <span className="learningStatusLabel">플래너 누적 학습 시간</span>
               <span className="learningStatusValue">
                 {subjectInfo.sumStudyTime} 분
               </span>

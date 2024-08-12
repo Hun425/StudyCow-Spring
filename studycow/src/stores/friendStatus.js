@@ -12,11 +12,12 @@ const FriendStatusStore = create(
   persist(
     (set) => ({
       subjectInfo: null, // 과목 정보를 저장할 상태
-      error: null, // 오류 메시지를 저장할 상태
 
       // 과목 정보를 가져오는 함수
-      fetchSubjectInfo: async (userId, limit = 5) => {
+      fetchSubjectInfo: async (userId) => {
         const { token } = useInfoStore.getState();
+        console.log(token);
+        console.log(userId);
 
         // grade.js에서 selectedSubject 가져오기
         const { selectedSubject } = useGradeStore.getState();
@@ -45,8 +46,6 @@ const FriendStatusStore = create(
           // GET 요청을 통해 과목 데이터 가져오기
           const response = await axios.get(url, {
             headers,
-            // params: { limit },
-            // 위의 params에 리미트 값으로 과목 코드를 가져오는 원인 미상의 버그가 발생
           });
 
           // 요청이 성공하면 데이터를 상태로 설정
@@ -62,9 +61,6 @@ const FriendStatusStore = create(
           set({ error: "API 요청 중 오류 발생" });
         }
       },
-
-      // 상태 초기화 함수
-      clearSubjectInfo: () => set({ subjectInfo: null, error: null }),
     }),
     {
       name: "friend-learning-status-storage",
