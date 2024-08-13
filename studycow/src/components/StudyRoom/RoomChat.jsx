@@ -6,6 +6,7 @@ import { Paper, Typography, TextField, IconButton } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/RoomChat.css';
+import Notiflix from 'notiflix';
 
 let stompClient = null;
 
@@ -34,7 +35,7 @@ function RoomChat({ roomId }) {
       },
       onStompError: (frame) => {
         console.error('STOMP error: ' + frame);
-        alert('웹소켓 서버 접속 불가');
+        Notiflix.Notify.failure('웹소켓 서버에 접속이 불가합니다. 다시 시도해주소ㅜㅜ');
       }
     });
     stompClient.connectHeaders = {
@@ -69,8 +70,8 @@ function RoomChat({ roomId }) {
         body: JSON.stringify(chatMessage)
       });
     } else {
-      console.error('STOMP 클라이언트에 연결되지 않음.');
-      alert('서버에 연결되지 않음.');
+      // console.error('STOMP 클라이언트에 연결되지 않음.');
+      Notiflix.Notify.failure('웹소켓 서버에 연결되지 않았소. 다시 시도해주소ㅜㅜ');
     }
   };
 

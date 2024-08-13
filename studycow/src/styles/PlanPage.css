@@ -1,9 +1,8 @@
 /* 전반적인 스타일 */
 .planerMain {
   font-family: "CustomFontGothic", sans-serif;
-  top: 100px;
-  position: relative;
-  width: 1440px;
-  padding-top: 20px;
-  padding-bottom: 30px;
+  top: 0px;
+  width: 100vw;
+  overflow-y: auto;
+  padding-bottom: calc(30 / 1440 * 100vw);
 }

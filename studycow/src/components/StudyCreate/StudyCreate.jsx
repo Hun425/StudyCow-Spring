@@ -3,6 +3,7 @@ import Infobox from "./Infobox";
 import useStudyStore from "../../stores/study";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import Notiflix from 'notiflix';
 
 const StudyCreate = () => {
   const [roomTitle, setRoomTitle] = useState("");
@@ -14,7 +15,30 @@ const StudyCreate = () => {
   const { setStudyRoomData, submitStudyRoomData } = useStudyStore();
   const navigate = useNavigate();
 
+  const isValidForm = () => {
+    if (!roomTitle || !roomMaxPerson || !roomEndDate || !roomContent) {
+      Notiflix.Notify.failure("모든 필드를 채워주소ㅜㅜ");
+      return false;
+    }
+
+    if (isNaN(roomMaxPerson) || roomMaxPerson <= 0) {
+      Notiflix.Notify.failure("숫자를 입력하소ㅜㅜ");
+      return false;
+    }
+
+    const today = new Date();
+    const endDate = new Date(roomEndDate);
+    if (endDate <= today) {
+      Notiflix.Notify.failure("만료일은 오늘 이후로 해주소ㅜㅜ");
+      return false;
+    }
+
+    return true;
+  };
+
   const handleSubmit = async () => {
+    if (!isValidForm()) return;
+
     setStudyRoomData({
       roomTitle,
       roomMaxPerson,
@@ -22,12 +46,13 @@ const StudyCreate = () => {
       roomContent,
       roomThumb,
     });
+
     const success = await submitStudyRoomData();
     if (success) {
-      alert("방 생성하기가 성공했소!");
+      Notiflix.Notify.success("방 생성하기가 성공했소!");
       navigate("/study");
     } else {
-      alert("방 생성에 실패했소...");
+      Notiflix.Notify.failure("방 생성에 실패했소...");
     }
   };
 

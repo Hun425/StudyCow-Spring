@@ -78,10 +78,10 @@ const Calendar = () => {
       );
 
     return {
-      "--day-bg-color": isSelected ? "#BBD0E9" : "#f8f8f8",
-      "--day-color": isSelected ? "white" : isToday(day) ? "#BBD0E9" : "black",
-      "--day-border": isToday(day) ? "2px solid #BBD0E9" : "none",
-      "--day-hover-bg-color": isSelected ? "#BBD0E9" : "#e6f2ff",
+      "--day-bg-color": isSelected ? "#778c86" : "#f3f8f3",
+      "--day-color": isSelected ? "white" : isToday(day) ? "#778c86" : "black",
+      "--day-border": isToday(day) ? "2px solid #778c86" : "none",
+      "--day-hover-bg-color": isSelected ? "#778c86" : "#B4C8BB",
     };
   };
 

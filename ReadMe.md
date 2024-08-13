@@ -1,4 +1,4 @@
-# 📖 영화 추천 웹 서비스  CINEMA SPRINT
+# 📖 공부 했소?
 
 
 
@@ -11,13 +11,10 @@
 
 ## 프로젝트 소개
 
-- 20대 이상 사용자에게 추억의 영화를 선호하는 장르를 기준으로 추천해주는 사이트입니다.
-- 20대 미만 사용자들에게는 최근 영화를 장르에 맞춰 추천해줍니다.
-- 영화의 기본 정보들을 알 수 있고, 사용자들이 어떤 영화를 얼마나 좋아하는지 알 수 있습니다.
-- 자신이 좋아하는 영화를 저장하고, 목록으로 모아서 볼 수 있습니다.
-- 심심할 때, 간단한 정보가 필요할 때, 챗 봇을 통해 정보를 얻을 수 있습니다.
-- 자신이 관심있는 영화에 댓글을 달고, 다른 사용자들과 소통 할 수 있습니다.
-- 원하는 영화 정보를 검색해 볼 수 있습니다.
+- **성적 관리** 및 **동기 부여**가 필요한 학생을 위한 통합 서비스
+- 온라인 그룹 스터디를 위한 캠 스터디 및 손 감지 타이머 기능
+- 자율 학습 관리를 위한 플래너 및 성적 기반 자동 생성 기능
+- 학생 동기부여를 위한 성적관리 및 게이미피케이션 & 랭킹 기능
 
 <br>
 
@@ -27,7 +24,7 @@
 
 | **채기훈** | **황민채** |
 | :------: |  :------: |
-| [<img src="https://avatars.githubusercontent.com/Hun425?v=4" height=150 width=150> <br/> @Hun425](https://github.com/Hun425) | [<img src="https://avatars.githubusercontent.com/trick0846?v=4" height=150 width=150> <br/> @trick0846](https://github.com/trick0846) |
+| [<img src="https://avatars.githubusercontent.com/Hun425?v=4" height=150 width=150><br/> @Hun425](https://github.com/Hun425) | [<img src="https://avatars.githubusercontent.com/trick0846?v=4" height=150 width=150> <br/> @trick0846](https://github.com/trick0846) |
 
 </div>
 
@@ -35,10 +32,14 @@
 
 ## 1. 개발 환경 및 요구사항 명세
 
-- Front :  js,  Vue
-- Back-end : Django
-- 버전 및 이슈관리 : Github
+- Front 
+<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
+ <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> 
+- Back-end : Java, Spring
+- 버전 및 이슈관리 : Gitlab 
 - 협업 툴 : Jira, Discord, Notion
+- 인프라 : AWS, Docker, Jenkins, Nginx
+- 성능 관리 및 모니터링 : Grafana, prometheus
 - 디자인 : [Figma](https://www.figma.com/file/fAisC2pEKzxTOzet9CfqML/README(oh-my-code)?node-id=39%3A1814)
 
 <br>

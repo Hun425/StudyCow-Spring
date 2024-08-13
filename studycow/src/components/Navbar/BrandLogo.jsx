@@ -4,7 +4,10 @@ import "./styles/BrandLogo.css"
 function brandLogo() {
   return (
     <>
-      <img className="brandLogo" src={Logo} alt="로고" />
+    <div className="navLogoContainer">
+      <img className="navLogo" src={Logo} alt="로고" />
+      <span className="navLogoContent">공부했소?</span>
+    </div>
     </>
   );
 }

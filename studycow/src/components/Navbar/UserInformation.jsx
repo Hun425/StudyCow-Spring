@@ -21,21 +21,21 @@ function UserInformation() {
         {!isOpen && (
           <>
             <div className="userInfoClose" onClick={toggleDropdown}>
-              <div>
+              <div className="userImgContainer">
                 <img
                   className="profileImg"
                   src={userInfo.userThumb}
                   alt="프로필이미지"
                 />
               </div>
-              <div>
+              <div className="userNicnameContainer">
                 <a>
                   {userInfo.userNickName}님
                   <br />
-                  안녕하세요!
+                  <span className="userNickHi">안녕하소!</span>
                 </a>
               </div>
-              <div>
+              <div className="miniArrowContainer">
                 <img className="downImg" src={downImg} alt="아랫방향" />
               </div>
             </div>
@@ -44,21 +44,21 @@ function UserInformation() {
         {isOpen && (
           <>
             <div className="userInfoOpen" onClick={toggleDropdown}>
-              <div>
+              <div className="userImgContainer">
                 <img
                   className="profileImg"
                   src={userInfo.userThumb}
                   alt="프로필이미지"
                 />
               </div>
-              <div>
-                <a>
-                  {userInfo.userNickName}님
-                  <br />
-                  안녕하세요!
-                </a>
-              </div>
-              <div>
+                <div className="userNicnameContainer">
+                  <a>
+                    {userInfo.userNickName}님
+                    <br />
+                    <span className="userNickHi">안녕하소!</span>
+                  </a>
+                </div>
+              <div className="miniArrowContainer">
                 <img className="upImg" src={upImg} alt="윗방향" />
               </div>
             </div>

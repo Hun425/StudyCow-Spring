@@ -4,6 +4,7 @@ import RoomDetailInfoBox from "./RoomDetailInfoBox";
 import { useNavigate } from 'react-router-dom';
 import useStudyStore from "../../stores/study";
 import Webcam from "react-webcam";
+import Notiflix from 'notiflix';
 
 const StudyEnter = ({ roomId, onRequestClose }) => {
   const { roomDetailInfo, fetchRoomDetailInfo, registerRoom } = useStudyStore();
@@ -17,11 +18,20 @@ const StudyEnter = ({ roomId, onRequestClose }) => {
 
   const handleClick = async () => {
     try {
-      await registerRoom(roomId); // 방 입장 함수 호출 및 완료 대기
-      navigate(`/study/room/${roomId}`); // 라우팅
+        const status = await registerRoom(roomId); // 방 입장 함수 호출 및 완료 대기
+        
+        if (status === 200) {
+            // 상태 코드가 200일 때 라우팅
+            Notiflix.Notify.success('방 입장에 성공했소!');
+            navigate(`/study/room/${roomId}`);
+        } else {
+            // 상태 코드가 200이 아닐 때 /study로 리다이렉트
+            Notiflix.Notify.failure('방 입장에 실패했소 ㅜㅜ');
+            navigate('/study');
+        }
     } catch (error) {
-      console.error("방 입장 중 오류 발생", error);
-      navigate(''); // 에러 발생 시 /study로 리다이렉트
+      Notiflix.Notify.failure('방 입장에 실패했소 ㅜㅜ');
+        navigate('/study'); // 에러 발생 시 /study로 리다이렉트
     }
   };
 

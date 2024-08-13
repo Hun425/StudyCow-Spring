@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./styles/ScoreChange.css";
 import useScoreChangeStore from "../../stores/scoreChange";
 import useSubjectStore from "../../stores/subjectStore"; // subject store import
+import Notiflix from 'notiflix';
 
 const ScoreChange = ({ initialData, onClose, onScoreChange }) => {
   const { updatePlanner, deletePlanner } = useScoreChangeStore();
@@ -15,13 +16,12 @@ const ScoreChange = ({ initialData, onClose, onScoreChange }) => {
     testGrade: "",
     scoreDetails: [],
   });
-  const [errorMessage, setErrorMessage] = useState("");
-
+  
   useEffect(() => {
     fetchSubjects(); // 컴포넌트가 마운트될 때 과목 데이터 가져오기
 
     if (initialData) {
-      console.log("initialData:", initialData); // 초기 데이터 확인
+      // console.log("initialData:", initialData); // 초기 데이터 확인
       setScoreData({
         subCode: initialData.subCode || "",
         testDate: initialData.testDate || "",
@@ -76,19 +76,19 @@ const ScoreChange = ({ initialData, onClose, onScoreChange }) => {
 
   const validateForm = () => {
     if (!scoreData.subCode) {
-      setErrorMessage("과목을 선택하세요.");
+      Notiflix.Notify.warning("과목을 선택하세요.");
       return false;
     }
     if (!scoreData.testDate) {
-      setErrorMessage("시험 날짜를 선택하세요.");
+      Notiflix.Notify.warning("시험 날짜를 선택하세요.");
       return false;
     }
     if (scoreData.testScore === "") {
-      setErrorMessage("점수를 입력하세요.");
+      Notiflix.Notify.warning("점수를 입력하세요.");
       return false;
     }
     if (!scoreData.testGrade) {
-      setErrorMessage("등급을 선택하세요.");
+      Notiflix.Notify.warning("등급을 선택하세요.");
       return false;
     }
 
@@ -101,16 +101,15 @@ const ScoreChange = ({ initialData, onClose, onScoreChange }) => {
         wrong.catCode !== "" &&
         (wrong.wrongCnt === "" || wrong.wrongCnt <= 0)
       ) {
-        setErrorMessage("오답 개수는 0 이상이어야 합니다.");
+        Notiflix.Notify.warning("오답 개수는 0 이상이어야 합니다.");
         return false;
       }
       if (wrong.catCode === "" && wrong.wrongCnt > 0) {
-        setErrorMessage("오답 유형을 선택해야 합니다.");
+        Notiflix.Notify.warning("오답 유형을 선택해야 합니다.");
         return false;
       }
     }
 
-    setErrorMessage("");
     return true;
   };
 
@@ -144,6 +143,7 @@ const ScoreChange = ({ initialData, onClose, onScoreChange }) => {
       ...scoreData,
       scoreDetails: mergedDetails,
     }).then(() => {
+
       onClose(); // 모달 닫기
       if (onScoreChange) {
         onScoreChange(); // 부모 컴포넌트에 신호 보내기
@@ -153,6 +153,7 @@ const ScoreChange = ({ initialData, onClose, onScoreChange }) => {
 
   const handleDelete = () => {
     deletePlanner(initialData.scoreId).then(() => {
+
       onClose(); // 모달 닫기
       if (onScoreChange) {
         onScoreChange(); // 부모 컴포넌트에 신호 보내기
@@ -164,7 +165,6 @@ const ScoreChange = ({ initialData, onClose, onScoreChange }) => {
     <div className="ScoreChange-container">
       <div className="ScoreChange-register">
         <h3>성적 수정/삭제</h3>
-        {errorMessage && <p className="ScoreChange-error">{errorMessage}</p>}
         <div className="ScoreChange-form">
           <select
             className="ScoreChange-select"

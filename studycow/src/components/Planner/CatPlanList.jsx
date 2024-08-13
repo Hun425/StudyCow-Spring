@@ -106,7 +106,7 @@ const CatPlanList = () => {
   return (
     <div className="singleSubPlanBox">
       {Array.isArray(subPlans) && subPlans.length === 0 && subCode > 0 ? (
-        <p>해당 과목에 등록된 플랜이 없습니다.</p>
+        <p className="singleSubNoPlan">해당 과목에 등록된 플랜이 없습니다.</p>
       ) : (
         Array.isArray(subPlans) &&
         subPlans.map((plan) => (

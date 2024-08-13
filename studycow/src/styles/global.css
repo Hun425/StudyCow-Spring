@@ -19,6 +19,10 @@
   font-style: normal;
 }
 
+* {
+  text-decoration: none !important;
+}
+
 body {
   font-family: "CustomFontGothic", sans-serif;
   width: 100vw;

@@ -3,12 +3,13 @@ import MainPlanItem from "./MainPlanItem";
 import MainGrassItem from "./MainGrassItem";
 import MainGradeItem from "./MainGradeItem";
 import MainRecentRoom from "./MainRecentRoom";
+import UserGradeImage from "../GradeImg/GradeImg";
 
 const Main_login = () => {
   return (
     <div className="mainTotalContainer">
       <div className="charImgPart">
-        <h1>캐릭터</h1>
+        <UserGradeImage /> {/* 유저 등급 이미지 추가 */}
       </div>
       <div className="mainInfoPart">
         <div className="uppartContainer">

@@ -1,3 +1,4 @@
 .main {
-  padding-top: 20px;
+  margin-top: 0px !important;
+  width: 100vw;
 }

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import useInfoStore from "../../stores/infos";
+import Notiflix from 'notiflix';
 
 const SignUp = () => {
   const { sendLoginRequest, sendRegisterRequest } = useInfoStore();
@@ -7,17 +8,22 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error] = useState("");
-  const [success] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // 비밀번호 확인 검증
+    if (password !== confirmPassword) {
+      Notiflix.Notify.failure('비밀번호가 일치하지 않습니다.');
+      return;
+    }
+
+    setError("");
     const success = await sendRegisterRequest(email, password, nickname);
     if (success) {
-      alert("회원가입 성공!");
       sendLoginRequest(email, password);
-    } else {
-      alert("회원가입 실패!");
     }
   };
 

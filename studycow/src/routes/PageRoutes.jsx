@@ -34,6 +34,10 @@ import ScoreRegist from "../components/ScoreRegist/ScoreRegist.jsx";
 import AnalyzePage from "../views/AnalyzePage.jsx";
 import TestAnalyze from "../components/TestAnalyze/TestAnalyze.jsx";
 
+// 친구 성적 보기
+import FriendGradePage from "../views/FriendGradePage.jsx";
+import FriendGradeMain from "../components/FriendGrade/FriendGradeMain.jsx";
+
 const PageRoutes = () => (
   <Routes>
     {/* 마이페이지 */}
@@ -70,6 +74,11 @@ const PageRoutes = () => (
 
     {/*성적등록*/}
     <Route path="/score/regist" element={<ScoreRegist />} />
+
+    {/* 친구 성적 보기 */}
+    <Route path="/friend/:userId" element={<FriendGradePage />}>
+      <Route path="" element={<FriendGradeMain />} />
+    </Route>
   </Routes>
 );
 

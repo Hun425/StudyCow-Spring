@@ -3,7 +3,6 @@ import usePlanStore from "../../stores/plan"; // usePlanStore를 import 합니�
 import "./styles/MainPlanItem.css";
 import { useNavigate } from "react-router-dom";
 import MainTodayTodo from "./MainTodayTodo";
-import { div } from "@tensorflow/tfjs";
 
 // 현재 날짜를 YYYY-MM-DD 형식으로 반환하는 함수
 const getTodayDate = () => {

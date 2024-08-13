@@ -1,32 +1,33 @@
 .Calendar {
     font-weight: bold;
-    width: 350px;
+    width: calc(350 / 1440 * 100vw);
     height: auto;
-    border-radius: 15px;
+    border-radius: calc(15 / 1440 * 100vw);
     font-family: 'Arial', sans-serif;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    box-shadow: 0 calc(8 / 1440 * 100vw) calc(24 / 1440 * 100vw) rgba(0,0,0,0.1);
     overflow: hidden;
-    background-color: #e9e9eb;
+    background-color: white;
+    
   }
   
   .calendarHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
-    background-color: #b0b6b7;
-    color: #f8f8f8;
+    padding: calc(10 / 1440 * 100vw);
+    background-color: #B4C8BB;
+    color: white;
   }
   
   .calendarButton {
     background: none;
     border: none;
-    font-size: 40px;
+    font-size: calc(40 / 1440 * 100vw);
     color: white;
     cursor: pointer;
     transition: transform 0.2s;
     margin: 0;
-    padding: 0px 20px;
+    padding: 0 calc(20 / 1440 * 100vw);
   }
   
   .calendarButton:hover {
@@ -34,26 +35,26 @@
   }
   
   .MonthYear {
-    margin-top: 7px;
+    margin-top: calc(7 / 1440 * 100vw);
     font-family: "CustomFontGothic", sans-serif;
-    font-size: 25px;
+    font-size: calc(25 / 1440 * 100vw);
   }
   
   .calendarGrid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
-    padding: 15px;
-    background-color: #e9e9eb;
+    gap: calc(5 / 1440 * 100vw);
+    padding: calc(15 / 1440 * 100vw);
+    background-color: white;
   }
   
   .DayBase {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 40px;
+    height: calc(40 / 1440 * 100vw);
     border-radius: 25%;
-    font-size: 14px;
+    font-size: calc(14 / 1440 * 100vw);
     transition: all 0.3s ease;
   }
   
@@ -63,13 +64,13 @@
   }
   
   .Day {
-    background-color: var(--day-bg-color, #f8f8f8);
+    background-color: var(--day-bg-color, #f6f8f6);
     color: var(--day-color, black);
     cursor: pointer;
     border: var(--day-border, none);
   }
   
   .Day:hover {
-    background-color: var(--day-hover-bg-color, #e6f2ff);
+    background-color: var(--day-hover-bg-color, #B4C8BB) !important;
   }
   

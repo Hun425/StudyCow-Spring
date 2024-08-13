@@ -46,8 +46,6 @@ const useGradeStore = create((set) => ({
       }, {});
 
       set({ subjectGrades: grades }); // 변환된 데이터를 상태에 저장
-
-      console.log("성적 불러오기 성공:", grades); // 성공 로그 출력
     } catch (error) {
       console.error("성적 불러오기 실패:", error); // 에러 로그 출력
     }
@@ -83,8 +81,6 @@ const useGradeStore = create((set) => ({
 
       // 상태 업데이트
       set({ weaknessTop3 });
-
-      console.log("취약점 불러오기 성공", weaknessTop3);
     } catch (error) {
       console.error("취약점 불러오기 실패", error);
     }

@@ -3,6 +3,7 @@ import { persist } from "zustand/middleware";
 import axios from "axios";
 import useInfoStore from "./infos";
 import useRoomStore from "./OpenVidu";
+import Notiflix from 'notiflix';
 import { data } from "@tensorflow/tfjs";
 
 const API_URL =
@@ -39,7 +40,7 @@ const useStudyStore = create(
           });
           return true;
         } catch (error) {
-          console.error("에러가 발생했습니다:", error);
+          // console.error("에러가 발생했습니다:", error);
           return false;
         }
       },
@@ -62,7 +63,9 @@ const useStudyStore = create(
           }));
           set({ rooms });
         } catch (error) {
-          console.error("방 정보를 가져오는 데 실패했습니다.", error);
+          // console.error("방 정보를 가져오는 데 실패했습니다.", error);
+          Notiflix.Notify.failure('방 정보를 가져오는 데 실패했소ㅜㅜ');
+
         }
       },
       setNavigate: (navigate) => set({ navigate }),
@@ -97,12 +100,14 @@ const useStudyStore = create(
         if (navigate) {
           try {
             await studyStore.exitRoom(); // API 호출이 끝날 때까지 기다림
+            Notiflix.Notify.warning('방에서 나가졌소!');
             navigate("/study"); // 이전 페이지로 리다이렉트
             window.location.reload(); // 새로고침
             setTimeout(() => {}, 50); // 50ms 후에 새로고침 실행
           } catch (error) {
-            console.error("퇴장 중 오류 발생:", error);
+            // console.error("퇴장 중 오류 발생:", error);
             // 오류 처리 로직 추가 가능
+            Notiflix.Notify.failure('퇴장에 실패했소ㅜㅜ');
           }
         }
       },
@@ -128,13 +133,13 @@ const useStudyStore = create(
           if (Array.isArray(response.data) && response.data.length > 0) {
             // 첫 번째 항목을 recentRoom으로 설정
             set({ recentRoom: response.data[0] });
-            console.log("가장 최근 방이 업데이트되었습니다:", response.data[0]);
+            // console.log("가장 최근 방이 업데이트되었습니다:", response.data[0]);
           } else {
-            console.log("최근 방이 없습니다.");
+            // console.log("최근 방이 없습니다.");
             set({ recentRoom: null });
           }
         } catch (error) {
-          console.error("방 정보를 가져오는 데 실패했습니다.", error);
+          // console.error("방 정보를 가져오는 데 실패했습니다.", error);
           set({ recentRoom: null });
         }
       },
@@ -154,66 +159,74 @@ const useStudyStore = create(
         const { token } = useInfoStore.getState(); // userNickName을 가져옵니다.
 
         try {
-          const response = await axios.post(
-            `${API_URL}roomLog/enter/${rId}`,
-            {},
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-
-          if (response.status === 200) {
-            const data = response.data;
-            console.log("방 입장 성공", data);
-
-            const { logId, rankDto, roomStudyTime } = data;
-
-            // 상태 업데이트
-            const studyStore = useStudyStore.getState();
-            studyStore.setLogId(logId);
-            studyStore.setMyStudyTime(roomStudyTime);
-            studyStore.setMyStudyTimeSec(roomStudyTime*60);
-            studyStore.setRankInfo(rankDto);
-            
-          } else {
-            console.error(`응답 코드 오류: ${response.status}`);
-            alert(`응답 코드 오류: ${response.status}`);
-            window.location.href = "/study";
-          }
-        } catch (error) {
-          if (error.response) {
-            // 서버가 상태 코드를 응답했을 때
-            switch (error.response.status) {
-              case 400:
-                console.error(
-                  "잘못된 요청입니다. 요청을 확인해 주세요.",
-                  error.response.data
-                );
-                break;
-              case 500:
-                console.error(
-                  "서버 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.",
-                  error.response.data
-                );
-                break;
-              default:
-                console.error(
-                  `알 수 없는 오류가 발생했습니다. 상태 코드: ${error.response.status}`,
-                  error.response.data
-                );
-            }
-          } else if (error.request) {
-            // 요청이 전송되었으나 응답을 받지 못했을 때
-            console.error(
-              "응답을 받지 못했습니다. 네트워크를 확인해 주세요.",
-              error.request
+            const response = await axios.post(
+                `${API_URL}roomLog/enter/${rId}`,
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
             );
-          } else {
-            // 다른 오류
-            console.error("요청 중 오류가 발생했습니다.", error.message);
-          }
+
+            if (response.status === 200) {
+                const data = response.data;
+                // console.log("방 입장 성공", data);
+
+                const { logId, rankDto, roomStudyTime } = data;
+
+                // 상태 업데이트
+                const studyStore = useStudyStore.getState();
+                studyStore.setLogId(logId);
+                studyStore.setMyStudyTime(roomStudyTime);
+                studyStore.setMyStudyTimeSec(roomStudyTime * 60);
+                studyStore.setRankInfo(rankDto);
+
+                return response.status; // 성공 시 상태 코드 반환
+            } else {
+                // console.error(`응답 코드 오류: ${response.status}`);
+                // alert(`응답 코드 오류: ${response.status}`);
+                window.location.href = "/study";
+                return response.status; // 응답 코드 오류 시 상태 코드 반환
+            }
+        } catch (error) {
+            if (error.response) {
+                // 서버가 상태 코드를 응답했을 때
+                switch (error.response.status) {
+                    case 400:
+                      Notiflix.Notify.failure('요청이 잘못되었소! 요청을 확인해 주소ㅜㅜ');
+                        // console.error(
+                        //     "잘못된 요청입니다. 요청을 확인해 주세요.",
+                        //     error.response.data
+                        // );
+                        break;
+                    case 500:
+                      Notiflix.Notify.failure('서버에 오류가 발생했소! 잠시후 다시 시도해 주소ㅜㅜ');
+                        // console.error(
+                        //     "서버 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.",
+                        //     error.response.data
+                        // );
+                        break;
+                    default:
+                        // console.error(
+                        //     `알 수 없는 오류가 발생했습니다. 상태 코드: ${error.response.status}`,
+                        //     error.response.data
+                        // );
+                }
+                return error.response.status; // 오류 응답 시 상태 코드 반환
+            } else if (error.request) {
+              Notiflix.Notify.failure('네트워크 상태를 다시 확인해 주소ㅜㅜ');
+                // // 요청이 전송되었으나 응답을 받지 못했을 때
+                // console.error(
+                //     "응답을 받지 못했습니다. 네트워크를 확인해 주세요.",
+                //     error.request
+                // );
+                return null; // 네트워크 오류 시 상태 코드 반환 없음
+            } else {
+                // 다른 오류
+                // console.error("요청 중 오류가 발생했습니다.", error.message);
+                return null; // 기타 오류 시 상태 코드 반환 없음
+            }
         }
       },
 
@@ -228,10 +241,10 @@ const useStudyStore = create(
               Authorization: `Bearer ${token}`,
             },
           });
-          console.log(response.data);
+          // console.log(response.data);
           set({ roomDetailInfo: response.data });
         } catch (error) {
-          console.log(error);
+          // console.log(error);
         }
       },
 
@@ -246,10 +259,10 @@ const useStudyStore = create(
               Authorization: `Bearer ${token}`,
             },
           });
-          console.log(response.data);
+          // console.log(response.data);
           set({ yesterdayRankInfo: response.data });
         } catch (error) {
-          console.log(error);
+          // console.log(error);
         }
       },
 
@@ -281,46 +294,46 @@ const useStudyStore = create(
           );
 
           if (response.status === 200) {
-            console.log("방 퇴장 성공", response.data);
+            // console.log("방 퇴장 성공", response.data);
             // 상태 업데이트(초기화)
             studyStore.setLogId(0);
             studyStore.setRankInfo([]);
             studyStore.setMyStudyTime(0);
             studyStore.setMyStudyTimeSec(0);
           } else {
-            console.error(`응답 코드 오류: ${response.status}`);
+            // console.error(`응답 코드 오류: ${response.status}`);
           }
         } catch (error) {
           if (error.response) {
             // 서버가 상태 코드를 응답했을 때
             switch (error.response.status) {
               case 400:
-                console.error(
-                  "잘못된 요청입니다. 요청을 확인해 주세요.",
-                  error.response.data
-                );
+                // console.error(
+                //   "잘못된 요청입니다. 요청을 확인해 주세요.",
+                //   error.response.data
+                // );
                 break;
               case 500:
-                console.error(
-                  "서버 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.",
-                  error.response.data
-                );
+                // console.error(
+                //   "서버 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.",
+                //   error.response.data
+                // );
                 break;
               default:
-                console.error(
-                  `알 수 없는 오류가 발생했습니다. 상태 코드: ${error.response.status}`,
-                  error.response.data
-                );
+                // console.error(
+                //   `알 수 없는 오류가 발생했습니다. 상태 코드: ${error.response.status}`,
+                //   error.response.data
+                // );
             }
           } else if (error.request) {
             // 요청이 전송되었으나 응답을 받지 못했을 때
-            console.error(
-              "응답을 받지 못했습니다. 네트워크를 확인해 주세요.",
-              error.request
-            );
+            // console.error(
+            //   "응답을 받지 못했습니다. 네트워크를 확인해 주세요.",
+            //   error.request
+            // );
           } else {
             // 다른 오류
-            console.error("요청 중 오류가 발생했습니다.", error.message);
+            // console.error("요청 중 오류가 발생했습니다.", error.message);
           }
         }
       },
@@ -353,7 +366,8 @@ const useStudyStore = create(
           );
 
           if (response.status === 200) {
-            console.log("방 시간 갱신 성공", response.data);
+            Notiflix.Notify.success('방 시간 갱신에 성공했소!');
+            // console.log("방 시간 갱신 성공", response.data);
 
 
             const data = response.data;
@@ -362,39 +376,40 @@ const useStudyStore = create(
             studyStore.setRankInfo(rankDto);
 
           } else {
-            console.error(`응답 코드 오류: ${response.status}`);
+            // console.error(`응답 코드 오류: ${response.status}`);
           }
         } catch (error) {
+          Notiflix.Notify.failure('방 시간 갱신에 실패했소!');
           if (error.response) {
             // 서버가 상태 코드를 응답했을 때
             switch (error.response.status) {
               case 400:
-                console.error(
-                  "잘못된 요청입니다. 요청을 확인해 주세요.",
-                  error.response.data
-                );
+                // console.error(
+                //   "잘못된 요청입니다. 요청을 확인해 주세요.",
+                //   error.response.data
+                // );
                 break;
               case 500:
-                console.error(
-                  "서버 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.",
-                  error.response.data
-                );
+                // console.error(
+                //   "서버 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.",
+                //   error.response.data
+                // );
                 break;
               default:
-                console.error(
-                  `알 수 없는 오류가 발생했습니다. 상태 코드: ${error.response.status}`,
-                  error.response.data
-                );
+                // console.error(
+                //   `알 수 없는 오류가 발생했습니다. 상태 코드: ${error.response.status}`,
+                //   error.response.data
+                // );
             }
           } else if (error.request) {
-            // 요청이 전송되었으나 응답을 받지 못했을 때
-            console.error(
-              "응답을 받지 못했습니다. 네트워크를 확인해 주세요.",
-              error.request
-            );
+            // // 요청이 전송되었으나 응답을 받지 못했을 때
+            // console.error(
+            //   "응답을 받지 못했습니다. 네트워크를 확인해 주세요.",
+            //   error.request
+            // );
           } else {
             // 다른 오류
-            console.error("요청 중 오류가 발생했습니다.", error.message);
+            // console.error("요청 중 오류가 발생했습니다.", error.message);
           }
         }
       },

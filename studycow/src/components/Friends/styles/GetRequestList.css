@@ -1,11 +1,12 @@
 .listBox01 {
-  width: 340px;
-  height: 210px;
-  border-radius: 5px;
-  background: linear-gradient(to bottom, #dee5f0, #ffffff);
-  border: solid 1px black;
+  width: calc(340 / 1440 * 100vw);
+  height: calc(210 / 1440 * 100vw);
+  border-radius: calc(5 / 1440 * 100vw);
+  background: #f0f4f8;
+  box-shadow: 0 calc(4 / 1440 * 100vw) calc(6 / 1440 * 100vw) rgba(0, 0, 0, 0.1);
+  border: calc(1 / 1440 * 100vw) solid #ccc;
   overflow-y: auto; /* 세로 스크롤바 추가 */
-  padding-right: 10px; /* 스크롤바 공간 확보 */
+  padding-right: calc(10 / 1440 * 100vw); /* 스크롤바 공간 확보 */
 }
 
 /* 웹킷 기반 브라우저용 스크롤바 숨김 */

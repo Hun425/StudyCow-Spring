@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import useInfoStore from "../../stores/infos";
+import Notiflix from 'notiflix';
 
 const SignIn = () => {
   const { sendLoginRequest } = useInfoStore();
@@ -11,9 +12,9 @@ const SignIn = () => {
     e.preventDefault();
     const success = await sendLoginRequest(email, password);
     if (success) {
-      alert("로그인 성공!");
+      Notiflix.Notify.success('로그인 성공');
     } else {
-      alert("로그인 실패!");
+      Notiflix.Notify.failure('비밀번호가 일치하지 않습니다.');
     }
   };
 

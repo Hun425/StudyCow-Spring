@@ -2,8 +2,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid black;
-  padding: 0px 10px;
+  border: calc(1 / 1440 * 100vw) solid #ccc;
+  padding: 0 calc(10 / 1440 * 100vw);
+  width: calc(340 / 1440 * 100vw);
 }
 
 .friendInfo {
@@ -13,24 +14,30 @@
 }
 
 .friendThumbnail {
-  width: 50px;
-  height: 50px;
-  margin-right: 10px;
+  width: calc(50 / 1440 * 100vw);
+  height: calc(50 / 1440 * 100vw);
+  margin-right: calc(10 / 1440 * 100vw);
 }
 
 .friendNickname {
-  font-size: 20px;
+  font-size: calc(20 / 1440 * 100vw);
   margin: 0;
   vertical-align: middle;
 }
 
 .friendDelete {
-  width: 40px;
-  height: 40px;
-  font-size: 20px;
+  width: calc(40 / 1440 * 100vw);
+  height: calc(40 / 1440 * 100vw);
+  font-size: calc(20 / 1440 * 100vw);
   vertical-align: middle;
   text-align: center;
-  padding: 0px;
+  padding: 0;
   border: none;
   background: none;
+}
+
+.NoAddFriend {
+    padding-top: calc(240 / 1440 * 100vw);
+    text-align: center;
+    align-items: center;
 }

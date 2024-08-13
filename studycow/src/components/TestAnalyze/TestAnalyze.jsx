@@ -5,9 +5,10 @@ import GradeAnalyzeBox from "./GradeAnalyzeBox";
 import useGradeStore from "../../stores/grade";
 import useSubjectStore from "../../stores/subjectStore";
 import ScoreRegist from "../ScoreRegist/ScoreRegist"; // ScoreRegist 컴포넌트 가져오기
+import UserGradeImage from "../GradeImg/GradeImg";
 
 const TestAnalyze = () => {
-  const { userInfo } = useInfoStore();
+  const { userInfo, updateUserPublicStatus } = useInfoStore(); // updateUserPublicStatus 추가
   const { selectedSubject, setSelectedSubject } = useGradeStore();
   const { subjects, fetchSubjects } = useSubjectStore();
 
@@ -25,7 +26,7 @@ const TestAnalyze = () => {
     } else {
       setSelectedSubject(subjectCode);
     }
-    console.log(subjectCode); // selectedSubject 변경 시 콘솔에 출력
+    // console.log(subjectCode); // selectedSubject 변경 시 콘솔에 출력
   };
 
   const openModal = () => {
@@ -41,14 +42,22 @@ const TestAnalyze = () => {
     handleSubjectChange(registeredSubjectCode); // 방금 등록한 과목으로 새로고침
   };
 
+  const handlePublicToggle = async () => {
+    const newPublicStatus = !userInfo.userPublic; // 현재 공개여부를 반전시킴
+    const success = await updateUserPublicStatus(newPublicStatus);
+  };
+
   return (
     <div className="analyzeTotalContainer">
       <div className="analyzeHeader">
         <h1>{userInfo.userNickName}님 어서오세요</h1>
 
         <div className="analyzeSideNav">
-          <button className="analyzeScoreRegistButton">
-            동민이의 신비한 버튼
+          <button
+            className="analyzeScoreRegistButton"
+            onClick={handlePublicToggle}
+          >
+            {userInfo.userPublic ? "비공개로 설정" : "공개로 설정"}
           </button>
 
           {/* 성적 등록 버튼 */}
@@ -77,7 +86,7 @@ const TestAnalyze = () => {
       </div>
       <div className="analyzeBody">
         <div className="analyzeCowStatus">
-          <h1>캐릭터 부분</h1>
+          <UserGradeImage />
         </div>
         <div className="analyzeGradeStatus">
           <GradeAnalyzeBox subject={selectedSubject} />

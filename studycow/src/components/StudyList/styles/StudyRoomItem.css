@@ -1,6 +1,6 @@
 .studyRoomContainer {
-  width: 256px;
-  height: 150px;
+  width: 300px;
+  height: 200px;
   border-radius: 10px;
   background: #83a1ca; /* 기본 배경 색 */
   background-size: cover; /* 배경 이미지가 컨테이너를 덮도록 설정 */

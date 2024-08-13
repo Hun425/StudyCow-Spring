@@ -1,0 +1,46 @@
+/* 전체 컨테이너 스타일 */
+.friendGradeContainer {
+  margin-bottom: 30px;
+  padding: 0px 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 헤더 스타일 */
+.friendGradeHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  width: 93%;
+}
+
+/* 과목 선택 스타일 */
+.friendGradeSubjectSelect {
+  align-items: center;
+}
+
+.friendGradeSubjectSelect select {
+  width: 150px;
+}
+
+/* 캐릭터 상태 스타일 */
+.friendCowStatus {
+  width: 20%;
+  height: auto;
+  max-height: 460px;
+  background-color: violet;
+  border-radius: 20px;
+}
+
+/* 본문 스타일 */
+.friendGradeBody {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.friendGradeStatus {
+  width: 70%;
+}

@@ -1,14 +1,20 @@
 import "./styles/SearchedItem.css";
 import useFriendsStore from "../../stores/friends";
+import { useCallback } from "react";
 
 const SearchedItem = ({ friend }) => {
   const sendFriendRequest = useFriendsStore((state) => state.sendFriendRequest);
   const sendRequests = useFriendsStore((state) => state.sendRequests);
   const getRequests = useFriendsStore((state) => state.getRequests);
 
-  const handleAddFriendClick = async () => {
-    await sendFriendRequest(friend.userId);
-  };
+  const handleAddFriendClick = useCallback(() => {
+    const isConfirmed = window.confirm(
+      `${friend.userNickName}님께 친구 요청을 보내시겠습니까?`
+    );
+    if (isConfirmed) {
+      sendFriendRequest(friend.userId);
+    }
+  }, [sendFriendRequest, friend.userId, friend.userNickName]);
 
   // 이미 친구요청을 했는지 구분하기 위해 사용
   const isRequestSent =

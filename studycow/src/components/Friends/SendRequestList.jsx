@@ -24,7 +24,7 @@ const SendRequestList = () => {
             />
           ))
         ) : (
-          <p>보낸 친구 요청이 없소</p>
+          <p className="NoSendFriendRequest">보낸 친구 요청이 없소!</p>
         )}
       </div>
     </div>

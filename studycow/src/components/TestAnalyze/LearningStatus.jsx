@@ -39,13 +39,6 @@ const LearningStatus = () => {
     clearSubjectInfo,
   ]);
 
-  // subjectInfo 데이터 콘솔에 출력
-  useEffect(() => {
-    if (subjectInfo) {
-      console.log("학습 상태 정보:", subjectInfo);
-    }
-  }, [subjectInfo]);
-
   // 과목 변경 시 성적 조언 초기화
   useEffect(() => {
     setAdviceResult(null);
@@ -95,12 +88,14 @@ const LearningStatus = () => {
 
           {/* 조언 요청 버튼과 결과 표시 */}
           <div className="learning-status-advice-section">
-            <button
-              onClick={handleGenerateAdvice}
-              className="learning-status-advice-button"
-            >
-              성적 조언 받기
-            </button>
+            {!adviceResult && (
+              <button
+                onClick={handleGenerateAdvice}
+                className="learning-status-advice-button"
+              >
+                성적 조언 받기
+              </button>
+            )}
             {adviceResult && (
               <div className="learning-status-advice-result">
                 <p>{adviceResult}</p>

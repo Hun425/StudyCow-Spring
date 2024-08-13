@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import OpenViduVideoComponent from './OvVideo';
 import useInfoStore from '../../../stores/infos';
 import useStudyStore from "../../../stores/study.js";
+import Notiflix from 'notiflix';
 import './UserVideo.css';
 
 export default class UserVideoComponent extends Component {
@@ -46,11 +47,18 @@ export default class UserVideoComponent extends Component {
                 }
             }, 1000);
 
+            // 손동작 감지 5초마다 수행
+            this.handDetectionInterval = setInterval(() => {
+                if (this.hands && this.videoElement.current) {
+                    this.hands.send({ image: this.videoElement.current });
+                }
+            }, 5000);
+
             // MediaPipe Hands 초기화
             this.hands = new window.Hands({
                 locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4/${file}`
             });
-            console.log("핸즈 객체 로드확인:", this.hands); // Hands 객체가 올바르게 로드되었는지 확인
+            // console.log("핸즈 객체 로드확인:", this.hands); // Hands 객체가 올바르게 로드되었는지 확인
 
             this.hands.setOptions({
                 maxNumHands: 2,
@@ -77,14 +85,17 @@ export default class UserVideoComponent extends Component {
     componentWillUnmount() {
         // 컴포넌트가 언마운트 될 때 타이머와 카메라 정리
         if (this.timerInterval) {
-            clearInterval(this.timerInterval);
+            clearInterval(this.timerInterval); // 타이머 인터벌 정리
+        }
+        if (this.handDetectionInterval) {
+            clearInterval(this.handDetectionInterval); // 손동작 감지 인터벌 정리
         }
         if (this.camera) {
-            this.camera.stop();
+            this.camera.stop(); // 카메라 정리
         }
         if (this.hands) {
             // Hands 객체 정리 (해당 메서드가 존재하는지 확인 필요)
-            this.hands.close && this.hands.close();
+            this.hands.close && this.hands.close(); // Hands 객체 정리
         }
     }
 
@@ -101,7 +112,8 @@ export default class UserVideoComponent extends Component {
         try {
             return JSON.parse(this.props.streamManager?.stream?.connection?.data || "{}").clientData;
         } catch (error) {
-            console.error("getNicknameTag 오류:", error);
+            // console.error("getNicknameTag 오류:", error);
+            Notiflix.Notify.warning('유저의 닉네임을 불러오지 못했소');
             return "";
         }
     }

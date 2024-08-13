@@ -1,5 +1,7 @@
 import { create } from 'zustand';
 import { OpenVidu } from 'openvidu-browser';
+import useStudyStore from './study.js';
+import Notiflix from 'notiflix';
 import axios from 'axios';
 
 // 로컬 미디어 서버 주소
@@ -50,12 +52,14 @@ const useRoomStore = create((set) => ({
       const token = await createToken(sessionIdResult);
       return token;
     } catch (error) {
-      console.error("Error while creating token:", error);
-      throw error;
+      // console.error("Error while creating token:", error);
+      Notiflix.Notify.failure('세션 입장에 실패했소ㅜㅜ');
+      throw error;ㄴ
     }
   },
 
   joinSession: async () => {
+    const study = useStudyStore.getState();
     const state = useRoomStore.getState();
     const OV = new OpenVidu();
     
@@ -76,20 +80,21 @@ const useRoomStore = create((set) => ({
           subscribers: [...state.subscribers, subscriber]
         }));
       } catch (error) {
-        console.error("Error subscribing to stream:", error);
+        // console.error("Error subscribing to stream:", error);
+        Notiflix.Notify.failure('화상 화면에 스트리밍에 실패했소ㅜㅜ');
       }
     });
 
     mySession.on("streamDestroyed", (e) => {
       set((state) => {
         const updatedSubscribers = state.subscribers.filter(sub => sub !== e.stream.streamManager);
-        console.log("Subscriber removed:", e.stream.streamManager.stream.connection.connectionId);
+        // console.log("Subscriber removed:", e.stream.streamManager.stream.connection.connectionId);
         return { subscribers: updatedSubscribers };
       });
     });
 
     mySession.on("exception", (exception) => {
-      console.warn(exception);
+      // console.warn(exception); ?
     });
 
     mySession.on("publisherStartSpeaking", (event) => {
@@ -110,8 +115,9 @@ const useRoomStore = create((set) => ({
       try {
         await navigator.mediaDevices.getUserMedia({ video: true });
       } catch (error) {
-        alert("카메라 장치를 찾을 수 없습니다.", error);
-        console.error("카메라 장치를 찾을 수 없습니다.", error);
+        study.exitRoom();
+        Notiflix.Notify.failure('카메라 장치를 찾을 수 없어 입장에 실패했소ㅜㅜ');
+        // console.error("카메라 장치를 찾을 수 없습니다.", error);
         // 카메라가 없는 경우 빈 문자열로 리디렉션
         window.location.href = "/study";
         return;
@@ -134,7 +140,8 @@ const useRoomStore = create((set) => ({
         publisher: publisher,
       });
     } catch (error) {
-      console.log("세션 연결 오류", error.code, error.message);
+      Notiflix.Notify.failure('비디오 세션 연결에 실패했소ㅜㅜ');
+      // console.log("세션 연결 오류", error.code, error.message);
     }
   }
 }));
@@ -156,7 +163,7 @@ const createSession = async (sessionId) => {
     return response.data.id;
   } catch (error) {
     if (error.response?.status === 409) {
-      console.log("Session already exists. Attempting to connect...");
+      // console.log("Session already exists. Attempting to connect...");
       return sessionId;
     } else {
       const userConfirmed = window.confirm(
@@ -186,7 +193,7 @@ const createToken = async (sessionId) => {
     );
     return response.data.token;
   } catch (error) {
-    console.error("Error creating token:", error.response?.data || error.message);
+    // console.error("Error creating token:", error.response?.data || error.message);
     throw error;
   }
 };
