@@ -13,12 +13,12 @@ const Main_login = () => {
           <div className="charImgPart">
             <UserGradeImage /> {/* 유저 등급 이미지 추가 */}
           </div>
-          <MainGradeItem />
-          <MainRecentRoom />
+          <MainPlanItem />
+          <MainGrassItem />
         </div>
         <div className="downpartContainer">
-          <MainGrassItem />
-          <MainPlanItem />
+          <MainGradeItem />
+          <MainRecentRoom />          
         </div>
       </div>
     </div>

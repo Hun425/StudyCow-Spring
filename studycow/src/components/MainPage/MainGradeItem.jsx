@@ -1,7 +1,7 @@
 import "./styles/MainGradeItem.css";
 import { useEffect } from "react";
 import useGradeStore from "../../stores/grade";
-import RecentGradeGraph from "../TestAnalyze/RecentGradeGraph";
+import MainRecentGradeGraph from "./MainRecentGradeGraph.jsx";
 import useSubjectStore from "../../stores/subjectStore";
 
 const MainGradeItem = () => {
@@ -44,7 +44,7 @@ const MainGradeItem = () => {
           </select>
         </div>
       </div>
-      <RecentGradeGraph />
+      <MainRecentGradeGraph />
     </div>
   );
 };

@@ -62,7 +62,7 @@
   width: calc(180 / 1440 * 100vw);
   height: calc(50 / 1440 * 100vw);
   align-self: center;
-  font-size: calc(30 / 1440 * 100vw);
+  font-size: calc(30 / 1440 * 100vw)x;
   color: #ffffff;
   font-family: "CustomFontGothic", sans-serif;
   cursor: pointer;

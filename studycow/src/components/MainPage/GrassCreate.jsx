@@ -9,10 +9,10 @@ const GrassCreate = ({ year, month, plans }) => {
   // 월의 날짜와 관련된 계획 개수를 색깔로 표시하기 위한 함수
   const getDayColor = (day) => {
     const planCount = plans[day.toString().padStart(2, "0")] || 0;
-    if (planCount === 0) return "#fff"; // 기본 색상
-    if (planCount <= 2) return "#33CCFF"; // 연한 파랑
-    if (planCount <= 4) return "#1A66CC"; // 조금 진한 파랑
-    return "#000099"; // 진한 파랑
+    if (planCount === 0) return "#f3f8f3"; // 기본 색상
+    if (planCount <= 2) return "#f1f8f1"; // 연한 연두
+    if (planCount <= 4) return "#B4C8BB"; // 조금 진한 연두
+    return "#778c86"; // 진한 초록
   };
 
   return (

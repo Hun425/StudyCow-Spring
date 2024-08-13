@@ -1,13 +1,14 @@
 .mainGradeContainer {
-  width: 40%;
-  height: auto;
+  width: 50%;
+  height: calc(350 / 1440 * 100vw);
   background-color: white;
   border-radius: calc(20 / 1440 * 100vw);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: calc(20 / 1440 * 100vw);
+  padding: calc(30 / 1440 * 100vw) calc(10 / 1440 * 100vw);
+  box-shadow: 0 calc(8 / 1440 * 100vw) calc(12 / 1440 * 100vw) rgba(0, 0, 0, 0.1);
 }
 
 .mainGradeHeader {
@@ -15,6 +16,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: calc(20 / 1440 * 100vw) !important;
   padding: calc(5 / 1440 * 100vw);
 }
 
