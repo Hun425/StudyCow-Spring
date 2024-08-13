@@ -54,12 +54,14 @@ const useRoomStore = create((set) => ({
     } catch (error) {
       // console.error("Error while creating token:", error);
       Notiflix.Notify.failure('세션 입장에 실패했소ㅜㅜ');
+      const study = useStudyStore.getState();
+      study.exitRoom();
+      study.goStudyBack();
       throw error;
     }
   },
 
   joinSession: async () => {
-    const study = useStudyStore.getState();
     const state = useRoomStore.getState();
     const OV = new OpenVidu();
     
@@ -82,6 +84,9 @@ const useRoomStore = create((set) => ({
       } catch (error) {
         // console.error("Error subscribing to stream:", error);
         Notiflix.Notify.failure('화상 화면에 스트리밍에 실패했소ㅜㅜ');
+        const study = useStudyStore.getState();
+        study.exitRoom();
+        study.goStudyBack();
       }
     });
 
@@ -117,9 +122,10 @@ const useRoomStore = create((set) => ({
       } catch (error) {
         study.exitRoom();
         Notiflix.Notify.failure('카메라 장치를 찾을 수 없어 입장에 실패했소ㅜㅜ');
+        const study = useStudyStore.getState();
+        study.exitRoom();
+        study.goStudyBack();
         // console.error("카메라 장치를 찾을 수 없습니다.", error);
-        // 카메라가 없는 경우 빈 문자열로 리디렉션
-        window.location.href = "/study";
         return;
       }
 
@@ -141,6 +147,9 @@ const useRoomStore = create((set) => ({
       });
     } catch (error) {
       Notiflix.Notify.failure('비디오 세션 연결에 실패했소ㅜㅜ');
+      const study = useStudyStore.getState();
+      study.exitRoom();
+      study.goStudyBack();
       // console.log("세션 연결 오류", error.code, error.message);
     }
   }
