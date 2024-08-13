@@ -35,9 +35,19 @@
   z-index: 2; /* 텍스트를 오버레이 위에 배치 */
 }
 
-.recentRoomCount {
+.recentRoomCount1 {
   color: #fff;
-  text-align: right;
+  font-size: calc(14 / 1440 * 100vw);
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin: 0;
+  position: relative; /* 텍스트를 오버레이 위에 배치 */
+  z-index: 2; /* 텍스트를 오버레이 위에 배치 */
+}
+
+.recentRoomCount2 {
+  color: #fff;
   font-size: calc(14 / 1440 * 100vw);
   font-style: normal;
   font-weight: 400;
@@ -62,7 +72,7 @@
   width: calc(180 / 1440 * 100vw);
   height: calc(50 / 1440 * 100vw);
   align-self: center;
-  font-size: calc(30 / 1440 * 100vw)x;
+  font-size: calc(30 / 1440 * 100vw) x;
   color: #ffffff;
   font-family: "CustomFontGothic", sans-serif;
   cursor: pointer;

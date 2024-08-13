@@ -8,7 +8,7 @@
 }
 
 .mainPlanContainer {
-  width: 100%;
+  width: calc(321 / 1440 * 100vw);
   display: flex;
   height: calc(350 / 1440 * 100vw);
   flex-direction: column;

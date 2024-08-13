@@ -13,13 +13,15 @@
 
 .ai-planner-modal__content {
   background-color: #fff;
-  padding: calc(20 / 1440 * 100vw)x;
+  padding: calc(20 / 1440 * 100vw);
   border-radius: calc(8 / 1440 * 100vw);
   box-shadow: 0 calc(4 / 1440 * 100vw) calc(8 / 1440 * 100vw) rgba(0, 0, 0, 0.2);
-  max-width: 90%;
+  max-width: 100%;
   width: 90%;
-  max-height: 90vh; /* 최대 높이를 설정하여 화면에서 벗어나지 않도록 함 */
-  overflow-y: auto; /* 내용이 넘칠 경우 스크롤 가능하게 설정 */
+  max-height: 90vh;
+  overflow-y: auto;
+  margin-left: calc(20 / 1440 * 100vw); /* 좌측 마진 추가 */
+  margin-right: calc(20 / 1440 * 100vw); /* 우측 마진 추가 */
 }
 
 .ai-planner-modal__content-body {

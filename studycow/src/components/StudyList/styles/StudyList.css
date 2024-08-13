@@ -47,7 +47,7 @@
 .recentEnterTitle,
 .studyListTitle {
   font-size: calc(30 / 1440 * 100vw);
-  margin: calc(400 / 1440 * 100vw) 0 calc(20 / 1440 * 100vw);
+  margin: calc(40 / 1440 * 100vw) 0 calc(20 / 1440 * 100vw);
 }
 
 /* 랭킹 제목 스타일 */
