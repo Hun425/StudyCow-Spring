@@ -6,56 +6,6 @@
   height: 100%;
   padding: 20px;
   border-radius: 15px;
-  transition: background 0.5s ease;
-}
-
-/* 등급별 배경 그라데이션 설정 */
-.user-grade-image-container.브론즈 {
-  background: linear-gradient(
-    to bottom right,
-
-    rgba(173, 86, 0, 1) 10%,
-    rgba(242, 186, 79, 0.5) 90%
-  );
-}
-
-.user-grade-image-container.실버 {
-  background: linear-gradient(
-    to bottom right,
-    rgba(67, 95, 122, 1) 10%,
-    rgba(121, 141, 255, 0.5) 90%
-  );
-}
-
-.user-grade-image-container.골드 {
-  background: linear-gradient(
-    to bottom right,
-    rgba(255, 215, 0, 1) 10%,
-    rgba(255, 255, 255, 0.5) 90%
-  );
-}
-
-.user-grade-image-container.플래티넘 {
-  background: linear-gradient(
-    to bottom right,
-    rgba(229, 228, 226, 1) 10%,
-    rgba(255, 255, 255, 0.5) 90%
-  );
-}
-
-.user-grade-image-container.다이아 {
-  background: linear-gradient(
-    to bottom right,
-    rgba(185, 242, 255, 1) 10%,
-    rgba(255, 255, 255, 0.5) 90%
-  );
-}
-
-.user-grade-image {
-  width: 200px;
-  height: auto;
-  border-radius: 50%;
-  border: 5px solid #fff;
 }
 
 .user-grade-text {
@@ -63,7 +13,78 @@
   font-size: 30px;
   font-weight: bold;
   color: #444;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.user-grade-image-container.브론즈 {
+  background: linear-gradient(
+    to bottom right,
+    rgba(173, 86, 0, 1) 10%,
+    rgba(242, 186, 79, 0.5) 90%
+  );
+  box-shadow: 0 4px 8px rgba(173, 86, 0, 0.7);
+}
+
+.user-grade-text.브론즈 {
+  text-shadow: 2px 2px 4px rgba(173, 86, 0, 0.7);
+}
+
+.user-grade-image-container.실버 {
+  background: linear-gradient(
+    to bottom right,
+    rgba(111, 125, 135, 1) 10%,
+    rgba(192, 192, 192, 0.5) 90%
+  );
+  box-shadow: 0 4px 8px rgba(111, 125, 135, 0.7);
+}
+
+.user-grade-text.실버 {
+  text-shadow: 2px 2px 4px rgba(111, 125, 135, 0.7);
+}
+
+.user-grade-image-container.골드 {
+  background: linear-gradient(
+    to bottom right,
+    rgba(230, 200, 50, 1) 10%,
+    rgba(255, 200, 0, 0.5) 90%
+  );
+  box-shadow: 0 4px 8px rgba(230, 200, 50, 0.7);
+}
+
+.user-grade-text.골드 {
+  text-shadow: 2px 2px 4px rgba(230, 200, 50, 0.7);
+}
+
+.user-grade-image-container.플래티넘 {
+  background: linear-gradient(
+    to bottom right,
+    rgba(200, 200, 220, 1) 10%,
+    rgba(170, 255, 230, 0.5) 90%
+  );
+  box-shadow: 0 4px 8px rgba(200, 200, 220, 0.7);
+}
+
+.user-grade-text.플래티넘 {
+  text-shadow: 2px 2px 4px rgba(200, 200, 220, 0.7);
+}
+
+.user-grade-image-container.다이아 {
+  background: linear-gradient(
+    to bottom right,
+    rgba(100, 130, 255, 1) 10%,
+    rgba(50, 255, 255, 0.5) 90%
+  );
+  box-shadow: 0 4px 8px rgba(100, 130, 255, 0.7);
+}
+
+.user-grade-text.다이아 {
+  text-shadow: 2px 2px 4px rgba(100, 130, 255, 0.7);
+}
+
+.user-grade-image {
+  width: 200px;
+  height: auto;
+  border-radius: 50%;
+  border: 5px solid #fff;
 }
 
 .user-grade-progress-bar-container {
