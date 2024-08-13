@@ -6,7 +6,7 @@ import useGradeStore from "../../stores/grade";
 import useSubjectStore from "../../stores/subjectStore";
 import ScoreRegist from "../ScoreRegist/ScoreRegist"; // ScoreRegist 컴포넌트 가져오기
 import UserGradeImage from "../GradeImg/GradeImg";
-import { Switch, Typography, Stack } from '@mui/material';
+import { Switch, Typography, Stack } from "@mui/material";
 
 const TestAnalyze = () => {
   const { userInfo, updateUserPublicStatus } = useInfoStore(); // updateUserPublicStatus 추가
@@ -51,23 +51,24 @@ const TestAnalyze = () => {
   return (
     <div className="analyzeTotalContainer">
       <div className="analyzeHeader">
-        <h1>{userInfo.userNickName}님 어서오세요</h1>
+        <div className="analyzeUserCheck">
+          <h1>{userInfo.userNickName}님 어서오세요</h1>
+        </div>
 
         <div className="analyzeSideNav">
-
           {/* 공개/비공개 스위치 적용 */}
           <Stack direction="row" spacing={0.5} alignItems="center">
             <Typography>비공개</Typography>
-              <Switch
-                size="medium"
-                color="warning"
-                checked={userInfo.userPublic}
-                onChange={handlePublicToggle}
-                />
+            <Switch
+              size="medium"
+              color="warning"
+              checked={userInfo.userPublic}
+              onChange={handlePublicToggle}
+            />
             <Typography>공개</Typography>
-            </Stack>
-          
-            {/* <button
+          </Stack>
+
+          {/* <button
               className={`changePublicStatusBtn ${
                 userInfo.userPublic === true ? "public" : "private"
               }`}

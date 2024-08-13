@@ -16,36 +16,40 @@ const FriendLearningStatus = ({ userId }) => {
   }, [fetchSubjectInfo, userId, selectedSubject]);
 
   return (
-    <div className="learningStatusContainer">
+    <div className="learningStatusMain">
       <h1 className="learningStatusTitle">학습 현황</h1>
-      {error && <p style={{ color: "red" }}>{error}</p>}{" "}
-      {/* 오류 메시지 표시 */}
-      {selectedSubject && subjectInfo ? (
-        <>
-          <div className="learningStatusTable">
-            <div className="learningStatusRow">
-              <span className="learningStatusLabel">플래너 누적 학습 시간</span>
-              <span className="learningStatusValue">
-                {subjectInfo.sumStudyTime} 분
-              </span>
+      <div className="learningStatusContainer">
+        {error && <p style={{ color: "red" }}>{error}</p>}{" "}
+        {/* 오류 메시지 표시 */}
+        {selectedSubject && subjectInfo ? (
+          <>
+            <div className="learningStatusTable">
+              <div className="learningStatusRow">
+                <span className="learningStatusLabel">
+                  플래너 누적 학습 시간
+                </span>
+                <span className="learningStatusValue">
+                  {subjectInfo.sumStudyTime} 분
+                </span>
+              </div>
+              <div className="learningStatusRow">
+                <span className="learningStatusLabel">현재 점수</span>
+                <span className="learningStatusValue">
+                  {subjectInfo.nowScore} 점
+                </span>
+              </div>
+              <div className="learningStatusRow">
+                <span className="learningStatusLabel">최근 점수 변화</span>
+                <span className="learningStatusValue">
+                  {subjectInfo.diffScore} 점
+                </span>
+              </div>
             </div>
-            <div className="learningStatusRow">
-              <span className="learningStatusLabel">현재 점수</span>
-              <span className="learningStatusValue">
-                {subjectInfo.nowScore} 점
-              </span>
-            </div>
-            <div className="learningStatusRow">
-              <span className="learningStatusLabel">최근 점수 변화</span>
-              <span className="learningStatusValue">
-                {subjectInfo.diffScore} 점
-              </span>
-            </div>
-          </div>
-        </>
-      ) : (
-        <p>과목을 선택하세요.</p>
-      )}
+          </>
+        ) : (
+          <p>과목을 선택하세요.</p>
+        )}
+      </div>
     </div>
   );
 };

@@ -12,8 +12,18 @@
 .analyzeHeader {
   display: flex;
   justify-content: space-between;
-  margin-bottom: calc(20 / 1440 * 100vw);
+  margin-bottom: calc(40 / 1440 * 100vw);
   width: 93%;
+}
+
+.analyzeUserCheck {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.analyzeUserCheck h1 {
+  margin: 0px;
 }
 
 /* 과목 선택 스타일 */

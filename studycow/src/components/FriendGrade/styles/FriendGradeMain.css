@@ -12,7 +12,7 @@
 .friendGradeHeader {
   display: flex;
   justify-content: space-between;
-  margin-bottom: calc(20 / 1440 * 100vw);
+  margin-bottom: calc(40 / 1440 * 100vw);
   width: 93%;
 }
 
@@ -42,4 +42,10 @@
 
 .friendGradeStatus {
   width: 70%;
+}
+
+.notSelectSubject {
+  font-size: 30px;
+  text-align: center;
+  margin-top: 200px;
 }

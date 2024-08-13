@@ -16,7 +16,6 @@
 
 .learning-status-title {
   font-size: calc(24 / 1440 * 100vw);
-  margin-bottom: calc(15 / 1440 * 100vw);
   text-align: center;
   margin-bottom: calc(20 / 1440 * 100vw);
 }
