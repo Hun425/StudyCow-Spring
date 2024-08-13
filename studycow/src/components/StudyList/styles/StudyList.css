@@ -6,6 +6,12 @@
   margin-right: auto;
 }
 
+.studyListHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 /* 스터디 생성 버튼 스타일 */
 .studyCreateBtn {
   width: 150px;
@@ -17,6 +23,23 @@
   color: #ffffff;
   font-family: "CustomFontGothic", sans-serif;
   cursor: pointer;
+}
+
+.studySysInfo {
+  width: 50px;
+  height: 50px;
+  background: none;
+  border: 3px solid #84c1f6;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.studySysInfo p {
+  margin: 0px;
+  font-size: 30px;
+  color: #84c1f6;
 }
 
 /* 최근 입장한 스터디와 스터디 리스트 제목 스타일 */

@@ -93,9 +93,14 @@ const StudyList = () => {
 
   return (
     <div className="studyListContainer">
-      <Link to="/study/create">
-        <button className="studyCreateBtn">방 생성</button>
-      </Link>
+      <div className="studyListHeader">
+        <Link to="/study/create">
+          <button className="studyCreateBtn">방 생성</button>
+        </Link>
+        <div className="studySysInfo">
+          <p>?</p>
+        </div>
+      </div>
       <div>
         <p className="rankTitle">누적 공부시간 랭킹</p>
         <Container className="studyListRankLeaderboard">
