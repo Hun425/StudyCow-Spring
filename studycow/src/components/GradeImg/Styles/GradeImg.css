@@ -3,9 +3,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  padding: 20px;
-  border-radius: 15px;
+  width: calc(272 / 1440 * 100vw);
+  height: calc(396 / 1440 * 100vw);
+  padding: calc(20 / 1440 * 100vw);
+  border-radius: calc(15 / 1440 * 100vw);
 }
 
 .user-grade-text {
@@ -21,11 +22,11 @@
     rgba(173, 86, 0, 1) 10%,
     rgba(242, 186, 79, 0.5) 90%
   );
-  box-shadow: 0 4px 8px rgba(173, 86, 0, 0.7);
+  box-shadow: 0 calc(4 / 1440 * 100vw) calc(8 / 1440 * 100vw) rgba(173, 86, 0, 0.7);
 }
 
 .user-grade-text.브론즈 {
-  text-shadow: 2px 2px 4px rgba(173, 86, 0, 0.7);
+  text-shadow: calc(2 / 1440 * 100vw) calc(2 / 1440 * 100vw) calc(4 / 1440 * 100vw) rgba(173, 86, 0, 0.7);
 }
 
 .user-grade-image-container.실버 {
@@ -34,11 +35,11 @@
     rgba(111, 125, 135, 1) 10%,
     rgba(192, 192, 192, 0.5) 90%
   );
-  box-shadow: 0 4px 8px rgba(111, 125, 135, 0.7);
+  box-shadow: 0 calc(4 / 1440 * 100vw) calc(8 / 1440 * 100vw) rgba(111, 125, 135, 0.7);
 }
 
 .user-grade-text.실버 {
-  text-shadow: 2px 2px 4px rgba(111, 125, 135, 0.7);
+  text-shadow: calc(2 / 1440 * 100vw) calc(2 / 1440 * 100vw) calc(4 / 1440 * 100vw) rgba(111, 125, 135, 0.7);
 }
 
 .user-grade-image-container.골드 {
@@ -47,11 +48,11 @@
     rgba(230, 200, 50, 1) 10%,
     rgba(255, 200, 0, 0.5) 90%
   );
-  box-shadow: 0 4px 8px rgba(230, 200, 50, 0.7);
+  box-shadow: 0 calc(4 / 1440 * 100vw) calc(8 / 1440 * 100vw) rgba(230, 200, 50, 0.7);
 }
 
 .user-grade-text.골드 {
-  text-shadow: 2px 2px 4px rgba(230, 200, 50, 0.7);
+  text-shadow: calc(2 / 1440 * 100vw) calc(2 / 1440 * 100vw) calc(4 / 1440 * 100vw) rgba(230, 200, 50, 0.7);
 }
 
 .user-grade-image-container.플래티넘 {
@@ -60,11 +61,11 @@
     rgba(200, 200, 220, 1) 10%,
     rgba(170, 255, 230, 0.5) 90%
   );
-  box-shadow: 0 4px 8px rgba(200, 200, 220, 0.7);
+  box-shadow: 0 calc(4 / 1440 * 100vw) calc(8 / 1440 * 100vw) rgba(200, 200, 220, 0.7);
 }
 
 .user-grade-text.플래티넘 {
-  text-shadow: 2px 2px 4px rgba(200, 200, 220, 0.7);
+  text-shadow: calc(2 / 1440 * 100vw) calc(2 / 1440 * 100vw) calc(4 / 1440 * 100vw) rgba(200, 200, 220, 0.7);
 }
 
 .user-grade-image-container.다이아 {
@@ -73,27 +74,26 @@
     rgba(100, 130, 255, 1) 10%,
     rgba(50, 255, 255, 0.5) 90%
   );
-  box-shadow: 0 4px 8px rgba(100, 130, 255, 0.7);
+  box-shadow: 0 calc(4 / 1440 * 100vw) calc(8 / 1440 * 100vw) rgba(100, 130, 255, 0.7);
 }
 
 .user-grade-text.다이아 {
-  text-shadow: 2px 2px 4px rgba(100, 130, 255, 0.7);
+  text-shadow: calc(2 / 1440 * 100vw) calc(2 / 1440 * 100vw) calc(4 / 1440 * 100vw) rgba(100, 130, 255, 0.7);
 }
 
 .user-grade-image {
-  width: 200px;
+  width: calc(200 / 1440 * 100vw);
   height: auto;
   border-radius: 50%;
-  border: 5px solid #fff;
+  border: calc(5 / 1440 * 100vw) solid #fff;
 }
 
 .user-grade-progress-bar-container {
-  width: 80%;
+  width: calc(186 / 1440 * 100vw);
   background-color: #e0e0e0;
   border-radius: calc(10 / 1440 * 100vw);
   margin-top: calc(10 / 1440 * 100vw);
   height: calc(20 / 1440 * 100vw);
-  overflow: hidden;
   box-shadow: inset 0 calc(1 / 1440 * 100vw) calc(3 / 1440 * 100vw) rgba(0, 0, 0, 0.2);
 }
 

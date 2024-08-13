@@ -1,0 +1,139 @@
+.MainScoreChange-container {
+    width: 100%;
+    margin: 0 auto;
+    padding: calc(20 / 1440 * 100vw);
+    background-color: #f0f8f8;
+    border-radius: calc(8 / 1440 * 100vw);
+  }
+  
+  .MainScoreChange-register,
+  .MainScoreChange-mistake-register {
+    padding: calc(15 / 1440 * 100vw);
+    background-color: #dceaea;
+    margin-bottom: calc(20 / 1440 * 100vw);
+    border-radius: calc(8 / 1440 * 100vw);
+  }
+  
+  .MainScoreChange-form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 내부 요소를 좌우 끝에 배치 */
+    margin-bottom: calc(10 / 1440 * 100vw);
+  }
+  
+  .MainScoreChange-mistake-form {
+    display: flex;
+    align-items: center;
+    margin-bottom: calc(10 / 1440 * 100vw);
+  }
+  
+  .MainScoreChange-select {
+    width: 45%; /* 기존 너비를 유지 */
+    margin-right: 2%;
+    padding: calc(10 / 1440 * 100vw);
+    border-radius: calc(4 / 1440 * 100vw);
+    border: calc(1 / 1440 * 100vw) solid #ccc;
+    background-color: white;
+    white-space: nowrap; /* 긴 텍스트를 한 줄로 유지 */
+    overflow: hidden;
+    text-overflow: ellipsis; /* 긴 텍스트가 잘리는 경우 "..."로 표시 */
+  }
+  
+  .MainScoreChange-select option {
+    white-space: normal; /* 선택된 항목의 텍스트가 잘리지 않고 줄바꿈되도록 설정 */
+    word-wrap: break-word; /* 긴 단어를 적절하게 줄바꿈 */
+    overflow-wrap: break-word; /* 텍스트가 박스를 넘어서지 않도록 줄바꿈 */
+    width: auto;
+    max-width: 500px; /* 최대 너비를 설정하여 드롭다운 박스가 너무 넓어지지 않도록 설정 */
+  }
+  
+  .MainScoreChange-input-number,
+  .MainScoreChange-input-date {
+    width: 45%; /* 각 요소가 동일한 공간을 차지하도록 설정 */
+    margin-right: 2%;
+    padding: calc(10 / 1440 * 100vw);
+    border-radius: calc(4 / 1440 * 100vw);
+    border: calc(1 / 1440 * 100vw) solid #ccc;
+    background-color: white;
+  }
+  
+  .MainScoreChange-add-btn {
+    width: 4calc(8 / 1440 * 100vw);
+    height: calc(40 / 1440 * 100vw);
+    margin-left: 2%;
+    background-color: #7c9ee3;
+    color: white;
+    border: none;
+    border-radius: calc(4 / 1440 * 100vw);
+    cursor: pointer;
+  }
+  
+  .MainScoreChange-remove-btn {
+    width: 4calc(8 / 1440 * 100vw);
+    height: calc(40 / 1440 * 100vw);
+    margin-left: 2%;
+    background-color: #e57373;
+    color: white;
+    border: none;
+    border-radius: calc(4 / 1440 * 100vw);
+    cursor: pointer;
+  }
+  
+  .MainScoreChange-button-group {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .MainScoreChange-update-btn {
+    width: 48%;
+    padding: calc(10 / 1440 * 100vw);
+    background-color: #7c9ee3;
+    color: white;
+    border: none;
+    border-radius: calc(4 / 1440 * 100vw);
+    cursor: pointer;
+  }
+  
+  .MainScoreChange-delete-btn {
+    width: 48%;
+    padding: calc(10 / 1440 * 100vw);
+    background-color: #e57373;
+    color: white;
+    border: none;
+    border-radius: calc(4 / 1440 * 100vw);
+    cursor: pointer;
+  }
+  
+  .MainScoreChange-cancel-btn {
+    width: 48%;
+    padding: calc(10 / 1440 * 100vw);
+    background-color: #ccc;
+    color: white;
+    border: none;
+    border-radius: calc(4 / 1440 * 100vw);
+    cursor: pointer;
+  }
+  
+  /* 모달 오버레이 스타일 */
+  .MainScoreChangeModal-overlay {
+    position: fixed; /* 화면에 고정 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 반투명 검은색 배경 */
+    display: flex;
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    z-index: 1000; /* 다른 요소들 위에 표시되도록 */
+  }
+  
+  /* 모달 콘텐츠 스타일 */
+  .MainScoreChangeModal-content {
+    background-color: white;
+    padding: calc(20 / 1440 * 100vw);
+    border-radius: calc(8 / 1440 * 100vw);
+    width: calc(500 / 1440 * 100vw); /* 원하는 너비 설정 */
+    position: relative;
+  }
+  

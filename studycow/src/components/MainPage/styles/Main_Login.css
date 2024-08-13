@@ -2,30 +2,35 @@
   width: 100%;
   display: flex;
   justify-content: space-evenly;
-  padding-top: calc(30 / 1440 * 100vw);
+  padding-top: calc(10 / 1440 * 100vw);
 }
 
 .charImgPart {
   width: 20%;
   height: auto;
-  max-height: calc(500 / 1440 * 100vw);
   text-align: center;
   border-radius: calc(20 / 1440 * 100vw);
-  padding: calc(20 / 1440 * 100vw);
+  margin-top: calc(46 / 1440 * 100vw);
+}
+
+.charImgPart > div {
+  margin: 0%;
 }
 
 .mainInfoPart {
   width: 100%;
   border-radius: calc(20 / 1440 * 100vw);
   padding: calc(20 / 1440 * 100vw);
+  padding-top: 0;
 }
 
 .uppartContainer {
   display: flex;
-  padding: calc(10 / 1440 * 100vw) calc(10 / 1440 * 100vw) calc(50 / 1440 * 100vw);
+  padding: 0 calc(20 / 1440 * 100vw) calc(50 / 1440 * 100vw);
   justify-content: space-evenly;
   align-items: center;
-  height: auto;
+  height: calc(500/ 1440 * 100vw);
+  margin-bottom: calc(20 / 1440 * 100vw);
 }
 
 .downpartContainer {

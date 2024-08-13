@@ -1,5 +1,5 @@
 .mainPlanMover {
-  width: 60%;
+  width: 23%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -10,14 +10,16 @@
 .mainPlanContainer {
   width: 100%;
   display: flex;
+  height: calc(350 / 1440 * 100vw);
   flex-direction: column;
-  background-color: yellow;
+  background-color: #ffeb3b;
   border-radius: calc(20 / 1440 * 100vw);
   text-align: center;
+  box-shadow: 0 calc(8 / 1440 * 100vw) calc(12 / 1440 * 100vw) rgba(0, 0, 0, 0.1);
 }
 
 .mainTodayTodo {
-  font-size: calc(35 / 1440 * 100vw);
+  font-size: calc(30 / 1440 * 100vw);
   margin-top: calc(15 / 1440 * 100vw);
   padding-bottom: calc(15 / 1440 * 100vw);
   border-bottom: calc(1 / 1440 * 100vw) solid black;
@@ -25,10 +27,10 @@
 
 .goToPlanPage {
   width: 100%;
-  height: auto;
+  height: calc(70 / 1440 * 100vw);
   bottom: 0;
   border: none;
-  background-color: rgb(196, 196, 2);
+  background-color: #fbc02d;
   margin-top: auto;
   border-radius: 0 0 calc(20 / 1440 * 100vw) calc(20 / 1440 * 100vw);
   font-size: calc(20 / 1440 * 100vw);

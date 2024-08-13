@@ -1,0 +1,19 @@
+ .main-subject-grade-graph {
+    height: 100%;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    position: relative;
+  }
+  
+  .main-subject-grade-graph-line {
+    height: 100%;
+    width: 100%;
+  }
+  
+  .main-subject-grade-graph canvas {
+    height: 100% !important;
+    width: 100% !important;
+    display: block;
+  }
+  
