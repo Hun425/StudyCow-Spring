@@ -103,7 +103,7 @@ const useStudyStore = create(
             Notiflix.Notify.warning('방에서 나가졌소!');
             navigate("/study"); // 이전 페이지로 리다이렉트
             window.location.reload(); // 새로고침
-            setTimeout(() => {}, 50); // 50ms 후에 새로고침 실행
+            setTimeout(() => {}, 1); // 50ms 후에 새로고침 실행
           } catch (error) {
             // console.error("퇴장 중 오류 발생:", error);
             // 오류 처리 로직 추가 가능

@@ -15,6 +15,19 @@ const StudyEnter = ({ roomId, onRequestClose }) => {
     fetchRoomDetailInfo(roomId);
   }, [roomId, fetchRoomDetailInfo]);
 
+  // 마이크 및 카메라 권한 요청 함수
+  const requestPermissions = async () => {
+    try {
+      await navigator.mediaDevices.getUserMedia({ audio: true, video: true });
+      Notiflix.Notify.success('카메라 및 마이크 권한이 허용되었습니다.');
+    } catch (error) {
+      Notiflix.Notify.failure('카메라 또는 마이크 권한이 거부되었습니다.');
+    }
+  };
+
+  useEffect(() => {
+    requestPermissions();
+  }, []);
 
   const handleClick = async () => {
     try {
@@ -34,7 +47,6 @@ const StudyEnter = ({ roomId, onRequestClose }) => {
         navigate('/study'); // 에러 발생 시 /study로 리다이렉트
     }
   };
-
 
   return (
     <div>
@@ -73,7 +85,7 @@ const StudyEnter = ({ roomId, onRequestClose }) => {
             <h2>카메라 테스트</h2>
             <Webcam
               className="roomWebcamTest"
-              audio={false}
+              audio={true}  // 오디오(마이크) 활성화
               videoConstraints={{ width: 450, height: 280, facingMode: "user" }}
             />
           </div>

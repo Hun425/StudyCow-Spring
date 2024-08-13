@@ -54,7 +54,7 @@ const useRoomStore = create((set) => ({
     } catch (error) {
       // console.error("Error while creating token:", error);
       Notiflix.Notify.failure('세션 입장에 실패했소ㅜㅜ');
-      throw error;ㄴ
+      throw error;
     }
   },
 
@@ -144,6 +144,7 @@ const useRoomStore = create((set) => ({
       // console.log("세션 연결 오류", error.code, error.message);
     }
   }
+
 }));
 
 // 세션 생성
@@ -193,7 +194,7 @@ const createToken = async (sessionId) => {
     );
     return response.data.token;
   } catch (error) {
-    // console.error("Error creating token:", error.response?.data || error.message);
+    console.error("Error creating token:", error.response?.data || error.message);
     throw error;
   }
 };

@@ -31,37 +31,43 @@ function StudyRoom() {
   useEffect(() => {
     // 페이지를 떠나기 전에 goStudyBack을 호출
     const handleBeforeUnload = (event) => {
+      // console.log("페이지 떠남")
       goStudyBack();
     };
-
+  
     // 페이지 로딩 타입을 감지하는 함수
     const checkPageReload = () => {
       const entries = performance.getEntriesByType('navigation');
       if (entries.length > 0 && entries[0].type !== 'reload') {
+        // console.log("새로고침됨")
         goStudyBack();
       }
     };
-
+  
     // 페이지의 히스토리 상태가 변경될 때 호출되는 함수
     const handlePopState = () => {
+      // console.log("페이지 히스토리 변경")
       goStudyBack();
     };
-
-    // 페이지 로딩 시에만 checkPageReload 호출
-    if (initialLoadRef.current) {
+  
+    // 페이지 로딩 시에만 checkPageReload 호출 (첫 로딩이 아닐 경우)
+    if (!initialLoadRef.current) {
       checkPageReload();
+    } else {
       initialLoadRef.current = false;
     }
-
+  
     // 페이지를 떠나기 전에 handleBeforeUnload 함수 호출
     window.addEventListener('beforeunload', handleBeforeUnload);
-
+  
     // 컴포넌트가 언마운트되거나 의존성 배열이 변경될 때 이벤트 리스너 제거
     return () => {
-      handlePopState();
+      // console.log("리턴 됨")
       window.removeEventListener('beforeunload', handleBeforeUnload);
+      handlePopState();
     };
   }, [goStudyBack]);
+  
 
   useEffect(() => {
     const filteredRankInfo = rankInfo.find(
