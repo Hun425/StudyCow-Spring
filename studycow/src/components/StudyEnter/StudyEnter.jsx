@@ -49,7 +49,7 @@ const StudyEnter = ({ roomId, onRequestClose }) => {
   };
 
   return (
-    <div>
+    <div className="studyEnterPageMain">
       <button className="closeButton" onClick={onRequestClose}>
         X
       </button>
@@ -86,7 +86,7 @@ const StudyEnter = ({ roomId, onRequestClose }) => {
             <Webcam
               className="roomWebcamTest"
               audio={true}  // 오디오(마이크) 활성화
-              videoConstraints={{ width: 450, height: 280, facingMode: "user" }}
+              videoConstraints={{ facingMode: "user" }}
             />
           </div>
         </div>

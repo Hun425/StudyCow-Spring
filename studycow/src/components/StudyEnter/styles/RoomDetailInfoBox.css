@@ -13,8 +13,10 @@
 
 .roomDetailInfoItem h2 {
   margin: 0;
+  font-size: calc(24 / 1440 * 100vw);
 }
 
 .roomDetailInfoItem p {
   margin: 0;
+  font-size: calc(16 / 1440 * 100vw);
 }
