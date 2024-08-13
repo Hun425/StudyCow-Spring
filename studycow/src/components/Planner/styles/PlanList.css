@@ -100,7 +100,7 @@
 .singlePlanDeleteButton {
   height: calc(26 / 1440 * 100vw) !important;
   width: calc(27 / 1440 * 100vw) !important;
-  padding-bottom: 1px;
+  padding-bottom: calc(1 / 1440 * 100vw);
 }
 
 /* 완료된 플랜에 대한 스타일 */

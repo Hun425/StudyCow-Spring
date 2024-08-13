@@ -4,8 +4,8 @@
     background-color: #B4C8BB !important;
     width: calc(295 / 1440 * 100vw); /* 컨테이너의 너비 설정 */
     height: calc((100vh - calc(70 / 1440 * 100vw)) / 4 - calc(10 / 1440 * 100vw)); /* 전체 화면 높이에 비례한 높이 */
-    padding: 0px !important;
-    border-radius: 10px 10px; /* 붙이는 부분 둥글게 */
+    padding: 0 !important;
+    border-radius: calc(10 / 1440 * 100vw) calc(10 / 1440 * 100vw); /* 붙이는 부분 둥글게 */
   }
   
   .studyRoomRankTitlePaper {
@@ -120,6 +120,6 @@
     width: 100%; /* Paper의 너비를 전체 컨테이너 너비와 맞춤 */
     font-family: "CustomFontGothic", sans-serif !important;
     font-size: calc(17 / 1440 * 100vw) !important; /* 폰트 크기 설정 */
-    border-radius: 10px 10px; /* 붙이는 부분 둥글게 */
+    border-radius: calc(10 / 1440 * 100vw) calc(10 / 1440 * 100vw); /* 붙이는 부분 둥글게 */
   }
   

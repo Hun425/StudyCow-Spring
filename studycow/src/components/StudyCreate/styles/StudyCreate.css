@@ -3,9 +3,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 1400px;
-  height: 620px;
-  margin-top: 100px;
+  width: calc(1400 / 1440 * 100vw);
+  height: calc(620 / 1440 * 100vw);
+  margin-top: calc(100 / 1440 * 100vw);
 }
 
 .Info {
@@ -18,14 +18,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 290px;
-  height: 350px;
-  margin-right: 10px;
+  width: calc(290 / 1440 * 100vw);
+  height: calc(350 / 1440 * 100vw);
+  margin-right: calc(10 / 1440 * 100vw);
 }
 
 .InfoInput {
-  width: 700px;
-  height: 350px;
+  width: calc(700 / 1440 * 100vw);
+  height: calc(350 / 1440 * 100vw);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -33,23 +33,23 @@
 }
 
 .DetailInfoTitle {
-  margin-top: 30px;
+  margin-top: calc(30 / 1440 * 100vw);
 }
 
 .DetailInfoInput {
-  width: 1100px;
-  height: 90px;
+  width: calc(1100 / 1440 * 100vw);
+  height: calc(90 / 1440 * 100vw);
 }
 
 .create-btn {
-  width: 150px; /* 버튼 너비 */
-  padding: 10px 20px; /* 버튼 패딩 */
-  font-size: 20px; /* 버튼 글자 크기 */
+  width: calc(150 / 1440 * 100vw); /* 버튼 너비 */
+  padding: calc(10 / 1440 * 100vw) calc(20 / 1440 * 100vw); /* 버튼 패딩 */
+  font-size: calc(20 / 1440 * 100vw); /* 버튼 글자 크기 */
   font-weight: bold; /* 버튼 글자 굵기 */
   background-color: #84c1f6; /* 버튼 배경색 */
   color: #000000; /* 버튼 글자색 */
   border: none; /* 버튼 테두리 없음 */
-  border-radius: 5px; /* 버튼 모서리 둥글게 */
+  border-radius: calc(5 / 1440 * 100vw); /* 버튼 모서리 둥글게 */
   cursor: pointer; /* 마우스 커서가 포인터로 변경 */
   transition: background-color 0.3s; /* 배경색 변화 애니메이션 */
 }
@@ -58,7 +58,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 30px;
+  margin-top: calc(30 / 1440 * 100vw);
 }
 
 .create-btn:hover {
@@ -66,11 +66,11 @@
 }
 
 .subbox {
-  width: 290px;
-  height: 290px;
+  width: calc(290 / 1440 * 100vw);
+  height: calc(290 / 1440 * 100vw);
   background-color: #84c1f6;
-  margin-bottom: 10px;
-  border: solid 1px black;
+  margin-bottom: calc(10 / 1440 * 100vw);
+  border: solid calc(1 / 1440 * 100vw) black;
   display: flex;
   align-items: center;
   justify-content: center;

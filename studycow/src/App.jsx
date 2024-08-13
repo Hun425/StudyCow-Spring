@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import "./App.css";
 import PageRoutes from "./routes/PageRoutes";
+import Notiflix from 'notiflix';
 
 function App() {
   useEffect(() => {
@@ -15,6 +16,15 @@ function App() {
     };
 
     setViewportMeta(); // 초기 설정
+
+    // Notiflix 전역 설정
+    Notiflix.Notify.init({
+      position: 'center-top',
+      width: 'calc(320 / 1440 * 100vw)',
+      borderRadius: 'calc(7 / 1440 * 100vw)',
+      clickToClose: true
+    });
+
   }, []);
   
   return (

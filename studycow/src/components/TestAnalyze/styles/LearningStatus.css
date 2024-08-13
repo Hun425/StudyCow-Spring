@@ -1,17 +1,17 @@
 .learning-status-container {
   width: 30%;
-  margin: 0px;
-  padding: 20px;
+  margin: 0;
+  padding: calc(20 / 1440 * 100vw);
   background: linear-gradient(to bottom, #f7faff, #dce7f3);
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: calc(8 / 1440 * 100vw);
+  box-shadow: 0 calc(4 / 1440 * 100vw) calc(8 / 1440 * 100vw) rgba(0, 0, 0, 0.1);
   font-family: Arial, sans-serif;
 }
 
 .learning-status-title {
-  font-size: 24px;
+  font-size: calc(24 / 1440 * 100vw);
   font-weight: bold;
-  margin-bottom: 15px;
+  margin-bottom:calc(15 / 1440 * 100vw);
   text-align: center;
 }
 
@@ -23,36 +23,36 @@
 .learning-status-row {
   display: flex;
   justify-content: space-between;
-  padding: 8px 0;
+  padding: calc(8 / 1440 * 100vw) 0;
 }
 
 .learning-status-label {
-  font-size: 16px;
+  font-size: calc(16 / 1440 * 100vw);
   color: #333;
 }
 
 .learning-status-value {
-  font-size: 16px;
+  font-size: calc(16 / 1440 * 100vw);
   font-weight: bold;
   color: #555;
 }
 
 /* 조언 섹션 스타일링 */
 .learning-status-advice-section {
-  margin-top: 20px;
+  margin-top: calc(20 / 1440 * 100vw);
   text-align: center;
 }
 
 .learning-status-advice-button {
   background-color: #007bff; /* 파란색 배경 */
   color: white;
-  padding: 10px 20px;
+  padding: calc(10 / 1440 * 100vw) calc(20 / 1440 * 100vw);
   border: none;
-  border-radius: 5px;
+  border-radius: calc(5 / 1440 * 100vw);
   cursor: pointer;
-  font-size: 16px;
+  font-size: calc(16 / 1440 * 100vw);
   transition: background-color 0.3s ease; /* 호버 시 부드러운 색상 전환 */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 버튼에 약간의 그림자 추가 */
+  box-shadow: 0 calc(4 / 1440 * 100vw) calc(6 / 1440 * 100vw) rgba(0, 0, 0, 0.1); /* 버튼에 약간의 그림자 추가 */
 }
 
 .learning-status-advice-button:hover {
@@ -60,11 +60,11 @@
 }
 
 .learning-status-advice-result {
-  margin-top: 15px;
-  padding: 15px;
+  margin-top: calc(15 / 1440 * 100vw);
+  padding: calc(15 / 1440 * 100vw);
   background-color: #e9f7ef;
-  border-radius: 5px;
-  font-size: 16px;
+  border-radius: calc(5 / 1440 * 100vw);
+  font-size: calc(16 / 1440 * 100vw);
   text-align: left;
   font-weight: bold; /* 텍스트를 볼드체로 설정 */
 }

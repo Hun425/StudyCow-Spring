@@ -16,7 +16,7 @@ function Header() {
         const height = navRef.current.offsetHeight;
         document.documentElement.style.setProperty(
           "--nav-height",
-          `${height}px`
+          `calc(${height} / 1440 * 100vw)`
         );
       }
     };

@@ -2,29 +2,27 @@
   width: 100%;
   display: flex;
   justify-content: space-evenly;
-  padding-top: 30px;
+  padding-top: calc(30 / 1440 * 100vw);
 }
 
 .charImgPart {
   width: 20%;
   height: auto;
-  max-height: 500px;
+  max-height: calc(500 / 1440 * 100vw);
   text-align: center;
-  background-color: rgb(0, 255, 8);
-  border-radius: 20px;
-  padding: 20px;
+  border-radius: calc(20 / 1440 * 100vw);
+  padding: calc(20 / 1440 * 100vw);
 }
 
 .mainInfoPart {
-  width: 70%;
-  background-color: #7092be;
-  border-radius: 20px;
-  padding: 20px;
+  width: 100%;
+  border-radius: calc(20 / 1440 * 100vw);
+  padding: calc(20 / 1440 * 100vw);
 }
 
 .uppartContainer {
   display: flex;
-  padding: 10px 10px 50px;
+  padding: calc(10 / 1440 * 100vw) calc(10 / 1440 * 100vw) calc(50 / 1440 * 100vw);
   justify-content: space-evenly;
   align-items: center;
   height: auto;
@@ -32,7 +30,7 @@
 
 .downpartContainer {
   display: flex;
-  padding: 10px;
+  padding: calc(10 / 1440 * 100vw);
   justify-content: space-evenly;
   align-items: center;
 }

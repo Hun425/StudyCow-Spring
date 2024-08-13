@@ -63,7 +63,7 @@
 
 .singleTodayPlanContent input[type="checkbox"] {
   margin-left: calc(10 / 1440 * 100vw); /* 화면 너비에 비례한 체크박스 여백 */
-  margin-right: 0px; /* 체크박스 여백 */
+  margin-right: 0; /* 체크박스 여백 */
   width: calc(19 / 1440 * 100vw); /* 화면 너비에 비례한 체크박스 너비 */
   height: calc(19 / 1440 * 100vw); /* 화면 너비에 비례한 체크박스 높이 */
   transform: scale(1); /* 체크박스 크기 조절 */

@@ -40,13 +40,22 @@ const UserGradeImage = () => {
   const progressPercentage = Math.min((userExp / userGrade.maxExp) * 100, 100); // 100%를 초과하지 않도록 설정
 
   return (
-    <div className="user-grade-image-container">
-      <img src={gradeImage} alt={`${userGrade.gradeName} 등급 이미지`} className="user-grade-image" />
+    <div className={`user-grade-image-container ${userGrade.gradeName}`}>
+      <img
+        src={gradeImage}
+        alt={`${userGrade.gradeName} 등급 이미지`}
+        className="user-grade-image"
+      />
       <p className="user-grade-text">{userGrade.gradeName}</p>
       <div className="user-grade-progress-bar-container">
-        <div className="user-grade-progress-bar" style={{ width: `${progressPercentage}%` }}></div>
+        <div
+          className="user-grade-progress-bar"
+          style={{ width: `${progressPercentage}%` }}
+        ></div>
       </div>
-      <p className="user-grade-exp-text">{`경험치: ${userExp} / ${userGrade.maxExp}`}</p> {/* 현재 경험치와 최대 경험치 표시 */}
+      <p className="user-grade-exp-text">
+        경험치: {userExp} / {userGrade.maxExp}
+      </p>
     </div>
   );
 };

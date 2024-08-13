@@ -1,7 +1,7 @@
 /* 전체 컨테이너 스타일 */
 .analyzeTotalContainer {
-  margin-bottom: 30px;
-  padding: 0px 80px;
+  margin-bottom: calc(30 / 1440 * 100vw);
+  padding: 0 calc(80 / 1440 * 100vw);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -12,7 +12,7 @@
 .analyzeHeader {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: calc(20 / 1440 * 100vw);
   width: 93%;
 }
 
@@ -22,7 +22,7 @@
 }
 
 .gradeSubjectSelect select {
-  width: 150px;
+  width: calc(150 / 1440 * 100vw);
 }
 
 /* 캐릭터 상태 스타일 */
@@ -30,7 +30,6 @@
   width: 20%;
   height: auto;
   max-height: 460px;
-  background-color: violet;
   border-radius: 20px;
 }
 
@@ -62,9 +61,9 @@
 /* 모달 콘텐츠 스타일 */
 .analyzeModal-content {
   background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  width: 500px; /* 원하는 너비 설정 */
+  padding: calc(20 / 1440 * 100vw);
+  border-radius: calc(8 / 1440 * 100vw);
+  width: calc(500 / 1440 * 100vw); /* 원하는 너비 설정 */
   position: relative;
 }
 
@@ -73,14 +72,14 @@
   background-color: #4caf50; /* 배경색: 녹색 */
   border: none; /* 테두리 제거 */
   color: white; /* 글자 색상 */
-  padding: 10px 20px; /* 패딩 */
+  padding: calc(10 / 1440 * 100vw) calc(20 / 1440 * 100vw); /* 패딩 */
   text-align: center; /* 텍스트 중앙 정렬 */
   text-decoration: none; /* 텍스트 밑줄 제거 */
   display: inline-block; /* 인라인 블록 요소 */
-  font-size: 16px; /* 폰트 크기 */
-  margin: 4px 2px; /* 약간의 마진 */
+  font-size: calc(16 / 1440 * 100vw); /* 폰트 크기 */
+  margin: calc(4 / 1440 * 100vw) calc(2 / 1440 * 100vw); /* 약간의 마진 */
   cursor: pointer; /* 마우스 커서 포인터로 변경 */
-  border-radius: 8px; /* 모서리 둥글게 */
+  border-radius: calc(8 / 1440 * 100vw); /* 모서리 둥글게 */
 }
 
 .analyzeScoreRegistButton:hover {
@@ -92,7 +91,30 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-right: 15px;
-  gap: 30px;
+  margin-right: calc(15 / 1440 * 100vw);
+  gap: calc(30 / 1440 * 100vw);
   flex-wrap: wrap; /* 아이템이 넘칠 경우 다음 줄로 이동 */
+}
+
+/* 성적 공개 여부 변경 버튼 */
+.changePublicStatusBtn {
+  border: none; /* 테두리 제거 */
+  padding: 10px 20px; /* 패딩 */
+  text-align: center; /* 텍스트 중앙 정렬 */
+  text-decoration: none; /* 텍스트 밑줄 제거 */
+  display: inline-block; /* 인라인 블록 요소 */
+  font-size: 16px; /* 폰트 크기 */
+  margin: 4px 2px; /* 약간의 마진 */
+  cursor: pointer; /* 마우스 커서 포인터로 변경 */
+  border-radius: 8px; /* 모서리 둥글게 */
+}
+
+.changePublicStatusBtn.public {
+  background-color: blue;
+  color: white;
+}
+
+.changePublicStatusBtn.private {
+  background-color: red;
+  color: white;
 }

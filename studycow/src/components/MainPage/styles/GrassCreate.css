@@ -24,7 +24,7 @@
 /* 각 날짜 칸 스타일 */
 .grassCalendar-day {
   aspect-ratio: 1 / 1;
-  border: 1px solid #ddd;
+  border: calc(1 / 1440 * 100vw) solid #ddd;
   box-sizing: border-box;
   display: flex;
   align-items: center;

@@ -1,13 +1,13 @@
 .mainGradeContainer {
-  width: 45%;
+  width: 40%;
   height: auto;
   background-color: white;
-  border-radius: 20px;
+  border-radius: calc(20 / 1440 * 100vw);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: calc(20 / 1440 * 100vw);
 }
 
 .mainGradeHeader {
@@ -15,11 +15,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 5px;
+  padding: calc(5 / 1440 * 100vw);
 }
 
 .mainGradeHeader h4 {
-  margin: 0px;
+  margin: 0;
 }
 
 .mainGradeSubjectSelect {
@@ -27,5 +27,5 @@
 }
 
 .mainGradeSubjectSelect select {
-  width: 150px;
+  width: calc(150 / 1440 * 100vw);
 }

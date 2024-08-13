@@ -8,17 +8,17 @@ import UserGradeImage from "../GradeImg/GradeImg";
 const Main_login = () => {
   return (
     <div className="mainTotalContainer">
-      <div className="charImgPart">
-        <UserGradeImage /> {/* 유저 등급 이미지 추가 */}
-      </div>
       <div className="mainInfoPart">
         <div className="uppartContainer">
-          <MainPlanItem />
-          <MainGrassItem />
-        </div>
-        <div className="downpartContainer">
+          <div className="charImgPart">
+            <UserGradeImage /> {/* 유저 등급 이미지 추가 */}
+          </div>
           <MainGradeItem />
           <MainRecentRoom />
+        </div>
+        <div className="downpartContainer">
+          <MainGrassItem />
+          <MainPlanItem />
         </div>
       </div>
     </div>

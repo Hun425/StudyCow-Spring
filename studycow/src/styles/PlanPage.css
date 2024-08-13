@@ -1,7 +1,7 @@
 /* 전반적인 스타일 */
 .planerMain {
   font-family: "CustomFontGothic", sans-serif;
-  top: 0px;
+  top: 0;
   width: 100vw;
   overflow-y: auto;
   padding-bottom: calc(30 / 1440 * 100vw);

@@ -2,23 +2,23 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 600px;
-  margin: 20px;
+  width: calc(600 / 1440 * 100vw);
+  margin: calc(20 / 1440 * 100vw);
 }
 
 .title {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 190px;
+  width: calc(190 / 1440 * 100vw);
 }
 
 .titleName {
-  margin: 0px;
-  font-size: 20px;
+  margin: 0;
+  font-size: calc(20 / 1440 * 100vw);
 }
 
 .content {
-  width: 495px;
-  height: 60px;
+  width: calc(495 / 1440 * 100vw);
+  height: calc(60 / 1440 * 100vw);
 }

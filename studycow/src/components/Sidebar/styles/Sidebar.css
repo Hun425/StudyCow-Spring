@@ -34,7 +34,7 @@
   margin-top: calc(50 / 1440 * 100vw);
   margin-bottom: calc(50 / 1440 * 100vw);
   width: calc(317 / 1440 * 100vw);
-  border: 1px solid #ddd;
+  border: calc(1 / 1440 * 100vw) solid #ddd;
 }
 
 .SidebarUserInfo {
@@ -57,7 +57,7 @@
 
 .SidbarUserInfoContent p {
   font-size: 1.667vw;
-  margin-bottom: 1px;
+  margin-bottom: calc(1 / 1440 * 100vw);
 }
 
 .SidbarUserInfoContent a {

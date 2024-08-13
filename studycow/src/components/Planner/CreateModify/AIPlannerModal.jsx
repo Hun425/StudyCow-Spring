@@ -163,7 +163,7 @@ const AIPlannerModal = ({ show, onClose, analysis, plans }) => {
                                 (plan.planStudyTime % 60)
                             )
                           }
-                          style={{ width: "40px", marginRight: "5px" }}
+                          style={{ width: "calc(40 / 1440 * 100vw)", marginRight: "calc(5 / 1440 * 100vw)" }}
                         />
                         시간
                         <input
@@ -180,7 +180,7 @@ const AIPlannerModal = ({ show, onClose, analysis, plans }) => {
                                 Number(e.target.value)
                             )
                           }
-                          style={{ width: "40px", marginLeft: "5px" }}
+                          style={{ width: "calc(40 / 1440 * 100vw)", marginLeft: "calc(5 / 1440 * 100vw)" }}
                         />
                         분
                       </>

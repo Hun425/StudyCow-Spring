@@ -100,14 +100,12 @@ const useStudyStore = create(
         if (navigate) {
           try {
             await studyStore.exitRoom(); // API 호출이 끝날 때까지 기다림
-            Notiflix.Notify.warning('방에서 나가졌소!');
             navigate("/study"); // 이전 페이지로 리다이렉트
             window.location.reload(); // 새로고침
             setTimeout(() => {}, 1); // 50ms 후에 새로고침 실행
           } catch (error) {
             // console.error("퇴장 중 오류 발생:", error);
             // 오류 처리 로직 추가 가능
-            Notiflix.Notify.failure('퇴장에 실패했소ㅜㅜ');
           }
         }
       },
@@ -194,14 +192,14 @@ const useStudyStore = create(
                 // 서버가 상태 코드를 응답했을 때
                 switch (error.response.status) {
                     case 400:
-                      Notiflix.Notify.failure('요청이 잘못되었소! 요청을 확인해 주소ㅜㅜ');
+                      // Notiflix.Notify.failure('요청이 잘못되었소! 요청을 확인해 주소ㅜㅜ');
                         // console.error(
                         //     "잘못된 요청입니다. 요청을 확인해 주세요.",
                         //     error.response.data
                         // );
                         break;
                     case 500:
-                      Notiflix.Notify.failure('서버에 오류가 발생했소! 잠시후 다시 시도해 주소ㅜㅜ');
+                      // Notiflix.Notify.failure('서버에 오류가 발생했소! 잠시후 다시 시도해 주소ㅜㅜ');
                         // console.error(
                         //     "서버 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.",
                         //     error.response.data
@@ -215,7 +213,7 @@ const useStudyStore = create(
                 }
                 return error.response.status; // 오류 응답 시 상태 코드 반환
             } else if (error.request) {
-              Notiflix.Notify.failure('네트워크 상태를 다시 확인해 주소ㅜㅜ');
+              // Notiflix.Notify.failure('네트워크 상태를 다시 확인해 주소ㅜㅜ');
                 // // 요청이 전송되었으나 응답을 받지 못했을 때
                 // console.error(
                 //     "응답을 받지 못했습니다. 네트워크를 확인해 주세요.",

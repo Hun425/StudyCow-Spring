@@ -2,7 +2,7 @@ import React from "react";
 import "./styles/CarouselContents.css";
 import { useNavigate } from "react-router-dom";
 
-const CarouselContents = ({ src, alt, text, left = "0px", top = "0px" }) => {
+const CarouselContents = ({ src, alt, text, left = "0", top = "0" }) => {
 
   // 이동 - 로그인화면으로 단순 이동
   const navigate = useNavigate();

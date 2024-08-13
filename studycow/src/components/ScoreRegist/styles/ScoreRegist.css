@@ -1,39 +1,39 @@
 .ScoreRegist-container {
   width: 100%;
-  max-width: 500px;
+  max-width: calc(500 / 1440 * 100vw);
   margin: 0 auto;
-  padding: 20px;
+  padding: calc(20 / 1440 * 100vw);
   background-color: #f0f8f8;
-  border-radius: 8px;
+  border-radius: calc(8 / 1440 * 100vw);
 }
 
 .ScoreRegist-register,
 .ScoreRegist-mistake-register {
-  padding: 15px;
+  padding: calc(15 / 1440 * 100vw);
   background-color: #dceaea;
-  margin-bottom: 20px;
-  border-radius: 8px;
+  margin-bottom: calc(20 / 1440 * 100vw);
+  border-radius: calc(8 / 1440 * 100vw);
 }
 
 .ScoreRegist-form {
   display: flex;
   align-items: center;
   justify-content: space-between; /* 내부 요소를 좌우 끝에 배치 */
-  margin-bottom: 10px;
+  margin-bottom: calc(10 / 1440 * 100vw);
 }
 
 .ScoreRegist-mistake-form {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: calc(10 / 1440 * 100vw);
 }
 
 .ScoreRegist-select {
   width: 45%; /* 기존 너비를 유지 */
   margin-right: 2%;
-  padding: 10px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
+  padding: calc(10 / 1440 * 100vw);
+  border-radius: calc(4 / 1440 * 100vw);
+  border: calc(1 / 1440 * 100vw) solid #ccc;
   background-color: white;
   white-space: nowrap; /* 긴 텍스트를 한 줄로 유지 */
   overflow: hidden;
@@ -45,38 +45,38 @@
   word-wrap: break-word; /* 긴 단어를 적절하게 줄바꿈 */
   overflow-wrap: break-word; /* 텍스트가 박스를 넘어서지 않도록 줄바꿈 */
   width: auto;
-  max-width: 500px; /* 최대 너비를 설정하여 드롭다운 박스가 너무 넓어지지 않도록 설정 */
+  max-width: calc(500 / 1440 * 100vw); /* 최대 너비를 설정하여 드롭다운 박스가 너무 넓어지지 않도록 설정 */
 }
 
 .ScoreRegist-input-number,
 .ScoreRegist-input-date {
   width: 45%; /* 각 요소가 동일한 공간을 차지하도록 설정 */
   margin-right: 2%;
-  padding: 10px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
+  padding: calc(10 / 1440 * 100vw);
+  border-radius: calc(4 / 1440 * 100vw);
+  border: calc(1 / 1440 * 100vw) solid #ccc;
   background-color: white;
 }
 
 .ScoreRegist-add-btn {
-  width: 48px;
-  height: 40px;
+  width: calc(48 / 1440 * 100vw);
+  height: calc(40 / 1440 * 100vw);
   margin-left: 2%;
   background-color: #7c9ee3;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: calc(4 / 1440 * 100vw);
   cursor: pointer;
 }
 
 .ScoreRegist-remove-btn {
-  width: 48px;
-  height: 40px;
+  width: calc(48 / 1440 * 100vw);
+  height: calc(40 / 1440 * 100vw);
   margin-left: 2%;
   background-color: #e57373;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: calc(4 / 1440 * 100vw);
   cursor: pointer;
 }
 
@@ -87,20 +87,20 @@
 
 .ScoreRegist-register-btn {
   width: 48%;
-  padding: 10px;
+  padding: calc(10 / 1440 * 100vw);
   background-color: #7c9ee3;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: calc(4 / 1440 * 100vw);
   cursor: pointer;
 }
 
 .ScoreRegist-cancel-btn {
   width: 48%;
-  padding: 10px;
+  padding: calc(10 / 1440 * 100vw);
   background-color: #ccc;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: calc(4 / 1440 * 100vw);
   cursor: pointer;
 }

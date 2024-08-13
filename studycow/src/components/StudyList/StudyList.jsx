@@ -3,9 +3,17 @@ import StudyRoomItem from "./StudyRoomItem";
 import { Link } from "react-router-dom";
 import useStudyStore from "../../stores/study";
 import { useState, useEffect } from "react";
-import { Container, Typography, Paper, Box, Avatar } from "@mui/material";
+import {
+  Container,
+  Typography,
+  Paper,
+  Box,
+  Avatar,
+  Tooltip,
+} from "@mui/material";
 import { keyframes } from "@emotion/react";
 import { styled } from "@mui/material/styles";
+import InfoIcon from "@mui/icons-material/Info";
 
 // 랭킹 이미지들
 import firstRankImg from "../StudyRoom/img/firstRankImg.png";
@@ -44,7 +52,7 @@ const getAvatarImage = (rank) => {
 const StyledPaper = styled(Paper)(({ theme }) => ({
   background: "#83a1ca", // 파란색
   borderRadius: 15,
-  boxShadow: "0 3px 5px 2px rgba(33, 203, 243, .3)", // 그림자 색상 조정
+  boxShadow: "0 calc(3 / 1440 * 100vw) calc(5 / 1440 * 100vw) calc(2 / 1440 * 100vw) rgba(33, 203, 243, .3)", // 그림자 색상 조정
   color: "white",
   padding: theme.spacing(3), // 패딩 증가
 }));
@@ -53,6 +61,49 @@ const StyledTypography = styled(Typography)(({ theme }) => ({
   fontSize: "1.4rem", // 글씨 크기 증가
   fontWeight: "bold",
 }));
+
+// 커스텀 Tooltip 스타일 정의
+const LargeTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  "& .MuiTooltip-tooltip": {
+    fontSize: "1rem",
+    padding: "10px 15px",
+    backgroundColor: "#ffffff", // 툴팁 배경색 변경
+    color: "black", // 툴팁 텍스트 색상
+    maxWidth: "350px", // 툴팁의 최대 너비 증가
+    border: "2px solid #6b85a7", // 경계선 추가
+  },
+}));
+
+// 커스텀 InfoIcon 스타일 정의
+const LargeInfoIcon = styled(InfoIcon)(({ theme }) => ({
+  fontSize: "3rem", // 아이콘 크기 증가
+  color: "#83a1ca", // 아이콘 색상 변경
+  cursor: "pointer", // 마우스 오버 시 커서 변경
+}));
+
+// 툴팁 내용 컴포넌트(설명)
+const TooltipContent = () => (
+  <div>
+    <Typography variant="subtitle1" fontWeight="bold" mb={1}>
+      경험치 정산 방식
+    </Typography>
+    <ul style={{ paddingLeft: "20px", margin: 0, marginBottom: "10px" }}>
+      <li>경험치는 학습시간 1분당 1씩 쌓입니다.</li>
+      <li>하루 동안 적립한 경험치는 익일 오전 6시에 정산됩니다.</li>
+    </ul>
+    <Typography variant="subtitle1" fontWeight="bold" mb={1}>
+      랭킹 정산 방식
+    </Typography>
+    <ul style={{ paddingLeft: "20px", margin: 0 }}>
+      <li>
+        들어갔던 모든 방에서 공부했던 시간을 합산한 뒤, 순위를 정산합니다.
+      </li>
+      <li>순위는 경험치와 동일하게 익일 오전 6시에 갱신됩니다.</li>
+    </ul>
+  </div>
+);
 
 const StudyList = () => {
   const {
@@ -93,9 +144,14 @@ const StudyList = () => {
 
   return (
     <div className="studyListContainer">
-      <Link to="/study/create">
-        <button className="studyCreateBtn">방 생성</button>
-      </Link>
+      <div className="studyListHeader">
+        <Link to="/study/create">
+          <button className="studyCreateBtn">방 생성</button>
+        </Link>
+        <LargeTooltip title={<TooltipContent />} arrow placement="bottom-start">
+          <LargeInfoIcon color="primary" />
+        </LargeTooltip>
+      </div>
       <div>
         <p className="rankTitle">누적 공부시간 랭킹</p>
         <Container className="studyListRankLeaderboard">

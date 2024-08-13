@@ -1,8 +1,8 @@
 .mainTodayTodoList {
-  padding: 0px 20px;
-  height: 300px;
+  padding: 0 calc(20 / 1440 * 100vw);
+  height: calc(300 / 1440 * 100vw);
   overflow-y: auto; /* 세로 스크롤바 추가 */
-  padding-right: 10px; /* 스크롤바 공간 확보 */
+  padding-right: calc(10 / 1440 * 100vw); /* 스크롤바 공간 확보 */
 }
 
 .mainTodayTodoItem {
@@ -10,16 +10,16 @@
   justify-content: space-between;
   align-items: center;
   text-align: center;
-  font-size: 25px;
-  padding: 7px 0px;
+  font-size: calc(25 / 1440 * 100vw);
+  padding: calc(7 / 1440 * 100vw) 0;
 }
 
 .mainTodayTodoItem p {
-  margin: 0px;
+  margin: 0;
 }
 
 .mainTodayTodoNone {
-  font-size: 25px;
+  font-size: calc(25 / 1440 * 100vw);
 }
 
 /* 웹킷 기반 브라우저용 스크롤바 숨김 */

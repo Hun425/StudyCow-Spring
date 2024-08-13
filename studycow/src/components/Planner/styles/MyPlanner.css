@@ -23,7 +23,7 @@ button {
   justify-content: center;
   flex-direction: column;
   flex: 1;
-  margin: 0px;
+  margin: 0;
   padding: calc(30 / 1440 * 100vw);
   background-color: rgba(0, 0, 0, 0); /* 완전 투명 배경 */
   max-height: calc(500 / 1440 * 100vw);
@@ -43,7 +43,7 @@ button {
   border-radius: calc(12 / 1440 * 100vw);
   margin: calc(35 / 1440 * 100vw);
   padding: calc(30 / 1440 * 100vw);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 calc(8 / 1440 * 100vw) calc(24 / 1440 * 100vw) rgba(0, 0, 0, 0.1);
   overflow-y: auto; /* 이미 있음: 세로 스크롤 허용 */
   min-height: calc(395 / 1440 * 100vw);
   max-height: calc(420 / 1440 * 100vw); /* 추가: 최대 높이 설정 */
@@ -164,7 +164,7 @@ button {
 }
 
 .MyPlanCatPlanHeader {
-  padding: 0px;
+  padding: 0;
   margin-right: calc(10 / 1440 * 100vw);
   max-height: calc(40 / 1440 * 100vw);
   width: calc(1200 / 1440 * 100vw);
@@ -218,7 +218,7 @@ button {
   overflow-y: auto; /* 이미 있음: 세로 스크롤 허용 */
   position: relative;
   padding: calc(20 / 1440 * 100vw);
-  padding-top: 0px;
+  padding-top: 0;
   box-sizing: border-box;
 }
 
@@ -228,15 +228,15 @@ button {
 
 .MyPlanCatPlanTitle p {
   font-size: calc(30 / 1440 * 100vw);
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
   text-align: center;
   width: 100%;
 }
 
 .MyPlanCatPlanTitle {
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
 }
 
 .MyPlanCatPlanContent {

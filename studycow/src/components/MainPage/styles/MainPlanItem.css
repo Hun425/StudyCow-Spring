@@ -1,5 +1,5 @@
 .mainPlanMover {
-  width: 45%;
+  width: 60%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -12,24 +12,24 @@
   display: flex;
   flex-direction: column;
   background-color: yellow;
-  border-radius: 20px;
+  border-radius: calc(20 / 1440 * 100vw);
   text-align: center;
 }
 
 .mainTodayTodo {
-  font-size: 35px;
-  margin-top: 15px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid black;
+  font-size: calc(35 / 1440 * 100vw);
+  margin-top: calc(15 / 1440 * 100vw);
+  padding-bottom: calc(15 / 1440 * 100vw);
+  border-bottom: calc(1 / 1440 * 100vw) solid black;
 }
 
 .goToPlanPage {
   width: 100%;
   height: auto;
-  bottom: 0px;
+  bottom: 0;
   border: none;
   background-color: rgb(196, 196, 2);
   margin-top: auto;
-  border-radius: 0px 0px 20px 20px;
-  font-size: 20px;
+  border-radius: 0 0 calc(20 / 1440 * 100vw) calc(20 / 1440 * 100vw);
+  font-size: calc(20 / 1440 * 100vw);
 }

@@ -1,7 +1,7 @@
 /* 전체 컨테이너 스타일 */
 .friendGradeContainer {
-  margin-bottom: 30px;
-  padding: 0px 80px;
+  margin-bottom: calc(30 / 1440 * 100vw);
+  padding: 0 calc(80 / 1440 * 100vw);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -12,7 +12,7 @@
 .friendGradeHeader {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: calc(20 / 1440 * 100vw);
   width: 93%;
 }
 
@@ -22,7 +22,7 @@
 }
 
 .friendGradeSubjectSelect select {
-  width: 150px;
+  width: calc(150 / 1440 * 100vw);
 }
 
 /* 캐릭터 상태 스타일 */
@@ -30,7 +30,6 @@
   width: 20%;
   height: auto;
   max-height: 460px;
-  background-color: violet;
   border-radius: 20px;
 }
 

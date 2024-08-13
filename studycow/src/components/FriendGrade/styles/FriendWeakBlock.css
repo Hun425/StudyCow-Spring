@@ -1,8 +1,8 @@
 .friendWeakBlock {
   width: 35%;
   height: auto;
-  max-height: 370px;
-  padding: 20px;
+  max-height: calc(370 / 1440 * 100vw);
+  padding: calc(20 / 1440 * 100vw);
   box-sizing: border-box; /* 패딩을 너비에 포함 */
 }
 
@@ -11,9 +11,9 @@
 }
 
 .friendWeaknessList {
-  margin-top: 20px;
+  margin-top: calc(20 / 1440 * 100vw);
   height: auto;
-  min-height: 300px;
+  min-height: calc(300 / 1440 * 100vw);
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -22,14 +22,14 @@
 
 .friendWeaknessItem {
   width: 100%;
-  border-radius: 10px;
-  border: solid 1px black;
+  border-radius: calc(10 / 1440 * 100vw);
+  border: solid calc(1 / 1440 * 100vw) black;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 10px;
+  padding: calc(20 / 1440 * 100vw) calc(10 / 1440 * 100vw);
 }
 
 .friendWeaknessItem p {
-  margin: 0px;
+  margin: 0;
 }

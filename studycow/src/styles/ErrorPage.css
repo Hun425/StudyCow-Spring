@@ -9,13 +9,13 @@
 
 .ErrorPage img {
   clip-path: circle(45%);
-  width: 300px;
-  height: 300px;
+  width: calc(300 / 1440 * 100vw);
+  height: calc(300 / 1440 * 100vw);
   object-fit: cover; /* 이미지가 원형에 맞게 잘리도록 설정 */
 }
 
 .ErrorPage > h1 {
   color: crimson;
-  font-size: 50px; /* 폰트 크기 증가 */
-  margin-top: 50px; /* 그림과 h1 문자 사이의 간격 추가 */
+  font-size: calc(50 / 1440 * 100vw); /* 폰트 크기 증가 */
+  margin-top: calc(50 / 1440 * 100vw); /* 그림과 h1 문자 사이의 간격 추가 */
 }

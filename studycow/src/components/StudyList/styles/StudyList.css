@@ -6,29 +6,53 @@
   margin-right: auto;
 }
 
+.studyListHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 /* 스터디 생성 버튼 스타일 */
 .studyCreateBtn {
-  width: 150px;
-  height: 75px;
-  border-radius: 10px;
+  width: calc(150 / 1440 * 100vw);
+  height: calc(75 / 1440 * 100vw);
+  border-radius: calc(10 / 1440 * 100vw);
   border: none;
   background: #84c1f6;
-  font-size: 30px;
+  font-size: calc(30 / 1440 * 100vw);
   color: #ffffff;
   font-family: "CustomFontGothic", sans-serif;
   cursor: pointer;
 }
 
+.studySysInfo {
+  width: calc(50 / 1440 * 100vw);
+  height: calc(50 / 1440 * 100vw);
+  background: none;
+  border: calc(3 / 1440 * 100vw) solid #84c1f6;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: help;
+}
+
+.studySysInfo p {
+  margin: 0;
+  font-size: calc(30 / 1440 * 100vw);
+  color: #84c1f6;
+}
+
 /* 최근 입장한 스터디와 스터디 리스트 제목 스타일 */
 .recentEnterTitle,
 .studyListTitle {
-  font-size: 30px;
-  margin: 40px 0px 20px;
+  font-size: calc(30 / 1440 * 100vw);
+  margin: calc(400 / 1440 * 100vw) 0 calc(20 / 1440 * 100vw);
 }
 
 /* 랭킹 제목 스타일 */
 .rankTitle {
-  font-size: 30px;
+  font-size: calc(30 / 1440 * 100vw);
   text-align: center;
 }
 
@@ -37,16 +61,16 @@
   display: grid;
   grid-template-columns: repeat(
     auto-fill,
-    minmax(300px, 1fr)
+    minmax(calc(300 / 1440 * 100vw), 1fr)
   ); /* 수정: 최소 너비를 300px로 변경 */
-  gap: 50px; /* 그리드 아이템 간 간격 */
+  gap: calc(50 / 1440 * 100vw); /* 그리드 아이템 간 간격 */
   justify-content: center;
 }
 
 /* 개별 스터디룸 아이템 스타일 */
 .studyRoomItem {
   width: 100%;
-  max-width: 300px; /* 수정: max-width를 300px로 설정 */
+  max-width: calc(300 / 1440 * 100vw); /* 수정: max-width를 300px로 설정 */
   margin: 0 auto;
   box-sizing: border-box; /* 패딩과 테두리를 너비에 포함 */
 }
@@ -54,12 +78,12 @@
 /* 수정: studyRoomContainer 스타일 통합 */
 .studyRoomContainer {
   width: 100%; /* 수정: 부모 요소의 너비에 맞춤 */
-  height: 200px;
-  border-radius: 10px;
+  height: calc(200 / 1440 * 100vw);
+  border-radius: calc(10 / 1440 * 100vw);
   background: #83a1ca; /* 기본 배경 색 */
   background-size: cover; /* 배경 이미지가 컨테이너를 덮도록 설정 */
   background-position: center; /* 배경 이미지 중앙 정렬 */
-  padding: 10px;
+  padding: calc(10 / 1440 * 100vw);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -80,11 +104,11 @@
 
 .studyRoomTitle {
   color: #fff;
-  font-size: 25px;
+  font-size: calc(25 / 1440 * 100vw);
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  margin: 0px;
+  margin: 0;
   position: relative; /* 텍스트를 오버레이 위에 배치 */
   z-index: 2; /* 텍스트를 오버레이 위에 배치 */
 }
@@ -92,24 +116,24 @@
 .studyRoomCount {
   color: #fff;
   text-align: right;
-  font-size: 14px;
+  font-size: 14;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  margin: 0px;
+  margin: 0;
   position: relative; /* 텍스트를 오버레이 위에 배치 */
   z-index: 2; /* 텍스트를 오버레이 위에 배치 */
 }
 
 .openEnterModalBtn {
-  width: 180px;
-  height: 50px;
+  width: calc(180 / 1440 * 100vw);
+  height: calc(50 / 1440 * 100vw);
   align-self: center;
-  font-size: 30px;
+  font-size: calc(30 / 1440 * 100vw);
   color: #ffffff;
   font-family: "CustomFontGothic", sans-serif;
   cursor: pointer;
-  border-radius: 25px;
+  border-radius: calc(25 / 1440 * 100vw);
   background: #494949;
   position: relative; /* 텍스트를 오버레이 위에 배치 */
   z-index: 2; /* 텍스트를 오버레이 위에 배치 */
@@ -129,9 +153,9 @@
   }
 
   .studyCreateBtn {
-    width: 120px;
-    height: 60px;
-    font-size: 24px; /* 버튼 크기와 폰트 크기 줄임 */
+    width: calc(120 / 1440 * 100vw);
+    height: calc(60 / 1440 * 100vw);
+    font-size: calc(24 / 1440 * 100vw); /* 버튼 크기와 폰트 크기 줄임 */
   }
 
   /* 수정: 900px 이하에서 그리드 열 조정 */
@@ -149,13 +173,13 @@
   .rankTitle,
   .recentEnterTitle,
   .studyListTitle {
-    font-size: 24px; /* 제목 폰트 크기 줄임 */
+    font-size: calc(24 / 1440 * 100vw); /* 제목 폰트 크기 줄임 */
   }
 
   .studyCreateBtn {
-    width: 100px;
-    height: 50px;
-    font-size: 20px; /* 버튼 크기와 폰트 크기 더 줄임 */
+    width: calc(100 / 1440 * 100vw);
+    height: calc(50 / 1440 * 100vw);
+    font-size: calc(20 / 1440 * 100vw); /* 버튼 크기와 폰트 크기 더 줄임 */
   }
 
   /* 수정: 600px 이하에서 그리드 열을 1개로 조정 */
@@ -165,36 +189,36 @@
 
   /* 수정: 600px 이하에서 studyRoomContainer 크기 조정 */
   .studyRoomContainer {
-    height: 180px;
+    height: calc(180 / 1440 * 100vw);
   }
 
   .studyRoomTitle {
-    font-size: 22px;
+    font-size: calc(22 / 1440 * 100vw);
   }
 
   .openEnterModalBtn {
-    width: 160px;
-    height: 45px;
-    font-size: 26px;
+    width: calc(160 / 1440 * 100vw);
+    height: calc(45 / 1440 * 100vw);
+    font-size: calc(26 / 1440 * 100vw);
   }
 }
 
 /* 랭킹 리더보드 스타일 (변경 없음) */
 .studyListRankLeaderboard {
-  margin-bottom: 20px;
+  margin-bottom: calc(20 / 1440 * 100vw);
   width: 100%;
 }
 
 .studyListRankPaper {
   background-color: #f0f8ff;
-  border-radius: 15px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: calc(15 / 1440 * 100vw);
+  box-shadow: 0 calc(4 / 1440 * 100vw) calc(6 / 1440 * 100vw) rgba(0, 0, 0, 0.1);
 }
 
 .studyListRankContent {
   position: relative;
-  height: 80px;
-  padding: 10px;
+  height: calc(80 / 1440 * 100vw);
+  padding: calc(10 / 1440 * 100vw);
 }
 
 /* 랭킹 아이템 스타일 (변경 없음) */
@@ -210,7 +234,7 @@
   justify-content: space-between;
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
-  padding: 0 20px;
+  padding: 0 calc(20 / 1440 * 100vw);
 }
 
 .studyListRankItem.active {
@@ -224,9 +248,9 @@
 }
 
 .studyListRankAvatar {
-  margin-right: 10px;
-  width: 40px;
-  height: 40px;
+  margin-right: calc(10 / 1440 * 100vw);
+  width: calc(40 / 1440 * 100vw);
+  height: calc(40 / 1440 * 100vw);
 }
 
 .studyListRankNumber {

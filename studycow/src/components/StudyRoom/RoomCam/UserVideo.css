@@ -11,45 +11,45 @@
 .streamingComponent video {
   width: 100%;
   height: auto;
-  border-radius: 8px;
+  border-radius: calc(8 / 1440 * 100vw);
 }
 
 /* 닉네임을 우하단에 위치시키기 위한 스타일 */
 .streamInfoName {
   position: absolute;
-  bottom: 10px;
-  right: 10px;
+  bottom: calc(10 / 1440 * 100vw);
+  right: calc(10 / 1440 * 100vw);
   margin: 0;
-  padding: 5px 10px;
+  padding: calc(5 / 1440 * 100vw) calc(10 / 1440 * 100vw);
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
-  border-radius: 5px;
+  border-radius: calc(5 / 1440 * 100vw);
 }
 
 /* 타이머를 좌하단에 위치시키기 위한 스타일 */
 .streamInfoTime {
   position: absolute;
-  bottom: 10px;
-  left: 10px;
+  bottom: calc(10 / 1440 * 100vw);
+  left: calc(10 / 1440 * 100vw);
   margin: 0;
-  padding: 5px 10px;
+  padding: calc(5 / 1440 * 100vw) calc(10 / 1440 * 100vw);
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
-  border-radius: 5px;
+  border-radius: calc(5 / 1440 * 100vw);
 }
 
 /* 손동작 감지 여부를 상단 가운데에 위치시키기 위한 스타일 */
 .handDetectionStatus {
   position: absolute;
-  top: 10px;
+  top: calc(10 / 1440 * 100vw);
   left: 50%;
   transform: translateX(-50%);
   margin: 0;
-  padding: 5px 10px;
+  padding: calc(5 / 1440 * 100vw) calc(10 / 1440 * 100vw);
   background-color: rgba(0, 0, 0, 0.7);
   color: white;
-  border-radius: 5px;
-  font-size: 16px;
+  border-radius: calc(5 / 1440 * 100vw);
+  font-size: calc(16 / 1440 * 100vw);
   font-weight: bold;
 }
 

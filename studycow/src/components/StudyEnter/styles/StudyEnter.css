@@ -6,11 +6,11 @@
 }
 
 .studyEnterPageContainer h1 {
-  margin-bottom: 20px;
+  margin-bottom: calc(20 / 1440 * 100vw);
 }
 
 .studyEnterPageHeader {
-  padding: 0px 50px;
+  padding: 0 calc(50 / 1440 * 100vw);
 }
 
 .roomDetailInfoListUpside {
@@ -26,38 +26,38 @@
 .studyEnterPageBody {
   display: flex;
   justify-content: space-evenly;
-  margin-top: 20px;
+  margin-top: calc(20 / 1440 * 100vw);
 }
 
 .roomDetailInfoContent {
-  width: 500px;
-  padding: 20px;
+  width: calc(500 / 1440 * 100vw);
+  padding: calc(20 / 1440 * 100vw);
 }
 
 .studyEnterPageBody h2 {
-  margin-bottom: 10px;
+  margin-bottom: calc(10 / 1440 * 100vw);
 }
 
 .cameraTestArea {
-  width: 500px;
-  padding: 20px;
+  width: calc(500 / 1440 * 100vw);
+  padding: calc(20 / 1440 * 100vw);
 }
 
 .roomWebcamTest {
-  width: 450px;
-  height: 280px;
-  border-radius: 15px;
+  width: calc(450 / 1440 * 100vw);
+  height: calc(280 / 1440 * 100vw);
+  border-radius: calc(15 / 1440 * 100vw);
   background-color: black;
 }
 
 .enterRoomPageBtn {
-  width: 180px;
-  height: 50px;
+  width: calc(180 / 1440 * 100vw);
+  height: calc(50 / 1440 * 100vw);
   align-self: center;
-  font-size: 30px;
+  font-size: calc(30 / 1440 * 100vw);
   color: #ffffff;
   font-family: "CustomFontGothic", sans-serif;
   cursor: pointer;
-  border-radius: 25px;
+  border-radius: calc(25 / 1440 * 100vw);
   background: #494949;
 }

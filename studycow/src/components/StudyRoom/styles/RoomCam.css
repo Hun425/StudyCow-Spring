@@ -47,7 +47,7 @@
   flex-direction: row; /* 아이템을 가로 방향으로 정렬 */
   justify-content: center; /* 아이템을 수평으로 가운데 정렬 */
   align-items: center; /* 아이템을 수직으로 가운데 정렬 */
-  margin: 0px;
+  margin: 0;
 }
 
 .MuiGrid-container {

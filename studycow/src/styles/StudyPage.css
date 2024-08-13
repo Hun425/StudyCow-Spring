@@ -3,5 +3,5 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 20px;
+  padding-top: calc(20 / 1440 * 100vw);
 }
