@@ -47,15 +47,26 @@ const UserGradeImage = () => {
         className="user-grade-image"
       />
       <p className="user-grade-text">{userGrade.gradeName}</p>
-      <div className="user-grade-progress-bar-container">
-        <div
-          className="user-grade-progress-bar"
-          style={{ width: `${progressPercentage}%` }}
-        ></div>
-      </div>
-      <p className="user-grade-exp-text">
-        경험치: {userExp} / {userGrade.maxExp}
-      </p>
+
+      {/* 다이아 등급이 아닌 경우에만 진행 바와 max 경험치 표시 */}
+      {userGrade.gradeName !== "다이아" && (
+        <>
+          <div className="user-grade-progress-bar-container">
+            <div
+              className="user-grade-progress-bar"
+              style={{ width: `${progressPercentage}%` }}
+            ></div>
+          </div>
+          <p className="user-grade-exp-text">
+            경험치: {userExp} / {userGrade.maxExp}
+          </p>
+        </>
+      )}
+
+      {/* 다이아 등급일 때는 현재 경험치만 표시 */}
+      {userGrade.gradeName === "다이아" && (
+        <p className="user-grade-exp-text">경험치: {userExp}</p>
+      )}
     </div>
   );
 };
