@@ -31,7 +31,9 @@ const AnalyzeWeakBlock = () => {
         </div>
       ) : (
         // weaknessTop3가 비어있는 경우 (데이터 로딩 중 또는 데이터 없음) 표시할 메시지
-        <p>데이터를 불러오는 중이거나 취약점 데이터가 없습니다.</p>
+        <div className="noneWeaknessTop3">
+          <p>데이터를 불러오는 중이거나 취약점 데이터가 없습니다.</p>
+        </div>
       )}
     </div>
   );

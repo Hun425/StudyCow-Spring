@@ -48,12 +48,58 @@ const UserGradeImage = () => {
       />
       <p className="user-grade-text">{userGrade.gradeName}</p>
 
-      {/* 다이아 등급이 아닌 경우에만 진행 바와 max 경험치 표시 */}
-      {userGrade.gradeName !== "다이아" && (
+
+        {/* 브론즈 등급 */}
+        {userGrade.gradeName === "브론즈" && (
         <>
           <div className="user-grade-progress-bar-container">
             <div
-              className="user-grade-progress-bar"
+              className="user-grade-progress-bar-bronze"
+              style={{ width: `${progressPercentage}%` }}
+            ></div>
+          </div>
+          <p className="user-grade-exp-text">
+            경험치: {userExp} / {userGrade.maxExp}
+          </p>
+        </>
+      )}
+
+      {/* 실버 등급 */}
+      {userGrade.gradeName === "실버" && (
+        <>
+          <div className="user-grade-progress-bar-container">
+            <div
+              className="user-grade-progress-bar-silver"
+              style={{ width: `${progressPercentage}%` }}
+            ></div>
+          </div>
+          <p className="user-grade-exp-text">
+            경험치: {userExp} / {userGrade.maxExp}
+          </p>
+        </>
+      )}
+
+      {/* 골드 등급 */}
+      {userGrade.gradeName === "골드" && (
+        <>
+          <div className="user-grade-progress-bar-container">
+            <div
+              className="user-grade-progress-bar-gold"
+              style={{ width: `${progressPercentage}%` }}
+            ></div>
+          </div>
+          <p className="user-grade-exp-text">
+            경험치: {userExp} / {userGrade.maxExp}
+          </p>
+        </>
+      )}
+
+      {/* 플래티넘 등급 */}
+      {userGrade.gradeName === "플래티넘" && (
+        <>
+          <div className="user-grade-progress-bar-container">
+            <div
+              className="user-grade-progress-bar-platinum"
               style={{ width: `${progressPercentage}%` }}
             ></div>
           </div>
