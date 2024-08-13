@@ -13,8 +13,6 @@ const MainTodayTodo = ({ todayPlans }) => {
     <div className="mainTodayTodoList">
       {todayPlans.length > 0 ? (
         todayPlans.map((plan) => {
-          const hours = Math.floor(plan.planStudyTime / 60);
-          const minutes = plan.planStudyTime % 60;
           // subjects 배열에서 plan.subCode와 일치하는 subName을 찾는다
           const subject = subjects.find(
             (subject) => subject.subCode === plan.subCode
@@ -23,11 +21,7 @@ const MainTodayTodo = ({ todayPlans }) => {
           return (
             <div key={plan.planId} className="mainTodayTodoItem">
               <p>
-                {plan.planContent}({subjectName})
-              </p>
-              <p>
-                {hours > 0 ? `${hours}시간 ` : ""}
-                {minutes}분
+                ({subjectName}): {plan.planContent}
               </p>
             </div>
           );
