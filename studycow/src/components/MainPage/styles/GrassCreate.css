@@ -27,7 +27,7 @@
   border: calc(1 / 1440 * 100vw) solid #e7e3e3;
   box-sizing: border-box;
   display: flex;
-  background-color: #f3f8f3 !important;
+  background-color: #f3f8f3;
   align-items: center;
   justify-content: center;
   font-size: clamp(calc(8 / 1440 * 100vw), 1.5vw, calc(16 / 1440 * 100vw)); /* 반응형 폰트 크기 */
@@ -36,7 +36,7 @@
 
 /* 빈 날짜 칸 스타일 */
 .emptyGrass {
-  background-color: #e7e3e3 !important;
+  background-color: #e7e3e3;
   border-color: #e7e3e3;
 }
 
