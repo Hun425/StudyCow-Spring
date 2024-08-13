@@ -95,7 +95,7 @@
 }
 
 .singleTodayPlanContent.completed p {
-  text-decoration: line-through red; /* 완료된 항목에 대해 텍스트에 선 긋기 */
+  text-decoration: line-through red !important; /* 완료된 항목에 대해 텍스트에 선 긋기 */
 }
 
 .EmptyPlan {
