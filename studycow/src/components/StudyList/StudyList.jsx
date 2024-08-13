@@ -90,7 +90,7 @@ const TooltipContent = () => (
       경험치 정산 방식
     </Typography>
     <ul style={{ paddingLeft: "20px", margin: 0, marginBottom: "10px" }}>
-      <li>경험치는 분당 1씩 쌓입니다.</li>
+      <li>경험치는 학습시간 1분당 1씩 쌓입니다.</li>
       <li>하루 동안 적립한 경험치는 익일 오전 6시에 정산됩니다.</li>
     </ul>
     <Typography variant="subtitle1" fontWeight="bold" mb={1}>
