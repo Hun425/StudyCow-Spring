@@ -12,6 +12,7 @@
   justify-content: center;
   text-decoration: none; /* 'text-decoration-line' 대신 'text-decoration' 사용 */
   color: black;
+  cursor: pointer;
 }
 
 .LogoImgSize {

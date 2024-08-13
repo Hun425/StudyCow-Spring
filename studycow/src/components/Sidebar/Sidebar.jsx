@@ -1,13 +1,12 @@
-import Navbar from "react-bootstrap/Navbar";
 import Logo from "./BrandLogo.jsx";
 import "./styles/Sidebar.css";
 import logo from "../../assets/logo.png";
 import useInfoStore from "../../stores/infos.js";
-import { Link, useNavigate, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Sidebar() {
   // 상태 - 유저 정보 가져오기
-  const { userInfo, isLogin, logout, resign } = useInfoStore();
+  const { userInfo, logout, resign } = useInfoStore();
 
   // 이동 - 홈으로 단순 이동
   const navigate = useNavigate();
@@ -33,8 +32,12 @@ function Sidebar() {
           </div>
         </div>
         <div className="SidebarContent">
-          <Link className="SidebarContentItem" to="">회원정보 수정</Link>
-          <Link className="SidebarContentItem" to="friends">친구 관리</Link>
+          <Link className="SidebarContentItem" to="">
+            회원정보 수정
+          </Link>
+          <Link className="SidebarContentItem" to="friends">
+            친구 관리
+          </Link>
           <hr />
         </div>
         <div className="SidebarFooter">
@@ -44,8 +47,9 @@ function Sidebar() {
             <a onClick={resign}>회원탈퇴</a>
           </div>
           <div className="SidebarFooterLogo">
-            <div className="LogoItem"  onClick={goHome}>
-              <img className="LogoItemImg" src={logo} alt="로고 이미지" /><a>공부했소?</a>
+            <div className="LogoItem" onClick={goHome}>
+              <img className="LogoItemImg" src={logo} alt="로고 이미지" />
+              <a>공부했소?</a>
             </div>
           </div>
         </div>

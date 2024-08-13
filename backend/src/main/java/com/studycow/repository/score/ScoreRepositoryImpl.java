@@ -266,7 +266,7 @@ public class ScoreRepositoryImpl implements ScoreRepository{
                                 .and(userSubjectScore.testDate.eq(testDate)))
                         .fetch().size();
 
-                if((us.getTestDate() != testDate || us.getSubjectCode() != subjectCode)
+                if((!us.getTestDate().equals(testDate) || us.getSubjectCode().getCode() != subjectCode.getCode())
                     && scoreCnt > 0){
                     throw new CustomException(ErrorCode.DUPLICATE_SCORE);
                 }

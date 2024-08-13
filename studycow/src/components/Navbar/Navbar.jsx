@@ -1,4 +1,3 @@
-import Navbar from "react-bootstrap/Navbar";
 import Logo from "./BrandLogo.jsx";
 import "./styles/Navbar.css";
 import useInfoStore from "../../stores/infos.js";
