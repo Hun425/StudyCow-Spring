@@ -8,7 +8,8 @@
   justify-content: center;
   padding: calc(10 / 1440 * 100vw);
   box-sizing: border-box;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.6); /* 흰색 배경에 60% 불투명도 */
+  backdrop-filter: blur(calc(10 / 1440 * 100vw)); /* 배경 블러 처리 */
   font-family: "CustomFont", sans-serif;
   text-decoration: none !important;
 }
@@ -45,7 +46,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: white;
+  background-color: transparent;
   padding: calc(10 / 1440 * 100vw);
   box-sizing: border-box;
 }

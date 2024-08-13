@@ -1,41 +1,65 @@
 .mainTotalContainer {
-  width: 100%;
-  display: flex;
-  justify-content: space-evenly;
-  padding-top: calc(10 / 1440 * 100vw);
-}
-
-.charImgPart {
-  width: 20%;
+  position: relative;
   height: auto;
-  text-align: center;
-  border-radius: calc(20 / 1440 * 100vw);
-  margin-top: calc(46 / 1440 * 100vw);
-}
-
-.charImgPart > div {
-  margin: 0%;
+  display: flex;
+  padding: calc(10 / 1440 * 100vw); /* 전체 컨테이너에 여백 추가 */
+  border-radius: calc(20 / 1440 * 100vw); /* 네비게이션 바 밑에 위치 */
 }
 
 .mainInfoPart {
+  display: flex;
   width: 100%;
-  border-radius: calc(20 / 1440 * 100vw);
-  /* padding: calc(20 / 1440 * 100vw); */
-  padding-top: 0;
+  gap: 20px; /* 좌우 컨테이너 사이 간격 추가 */
 }
 
-.uppartContainer {
+.mainRightContainer {
+  margin-left: calc(30 / 1440* 100vw);
+  width: calc(940 / 1440 * 100vw); /* 고정 폭 설정 */
+  position: relative; /* 위치를 부모 요소 기준으로 설정 */
   display: flex;
-  padding: 0 calc(20 / 1440 * 100vw) calc(50 / 1440 * 100vw);
-  justify-content: space-evenly;
-  align-items: center;
-  height: calc(500/ 1440 * 100vw);
-  margin-bottom: calc(20 / 1440 * 100vw);
+  flex-direction: column;
+  gap: 20px; /* 상하 컨테이너 사이 간격 추가 */
 }
 
-.downpartContainer {
+.mainRightUpperContainer {
   display: flex;
-  padding: calc(10 / 1440 * 100vw);
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-items: center;
+  height: calc(390 / 1440* 100vw);
+  background-color: #f0f4f8;
+  border-radius: calc(20 / 1440 * 100vw); /* 네비게이션 바 밑에 위치 */
+  box-shadow: 0 calc(8 / 1440 * 100vw) calc(12 / 1440 * 100vw) rgba(0, 0, 0, 0.1);
+  padding: calc(20 / 1440 * 100vw);
+}
+
+.mainRightDownContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f4f8;
+  border-radius: calc(20 / 1440 * 100vw); /* 네비게이션 바 밑에 위치 */
+  box-shadow: 0 calc(8 / 1440 * 100vw) calc(12 / 1440 * 100vw) rgba(0, 0, 0, 0.1);
+  padding: calc(20 / 1440 * 100vw);
+}
+
+.charImgPart {
+  margin-bottom: 1rem; /* 이미지와 그 아래 요소들 사이에 간격 설정 */
+}
+
+
+
+
+
+.mainLeftContainer {
+  width: calc(300 / 1440 * 100vw); /* 고정 폭 설정 */
+  height: auto;
+  background-color: #f0f4f8;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  border-radius: calc(20 / 1440 * 100vw); /* 모서리 둥글게 */
+  box-shadow: 0 calc(8 / 1440 * 100vw) calc(12 / 1440 * 100vw) rgba(0, 0, 0, 0.1);
+  padding: calc(20 / 1440 * 100vw); /* 내부 패딩 */
+
 }

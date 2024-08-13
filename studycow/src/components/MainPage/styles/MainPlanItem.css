@@ -1,6 +1,6 @@
 .mainPlanMover {
-  width: 23%;
-  height: 100%;
+  width: calc(360 / 1440* 100vw);
+  height: calc(350 / 1440* 100vw);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -8,7 +8,7 @@
 }
 
 .mainPlanContainer {
-  width: calc(321 / 1440 * 100vw);
+  width: calc(360 / 1440* 100vw);
   display: flex;
   height: calc(350 / 1440 * 100vw);
   flex-direction: column;
