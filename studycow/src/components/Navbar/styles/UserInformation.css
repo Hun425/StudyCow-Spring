@@ -81,6 +81,7 @@ div .profileImg {
   backdrop-filter: blur(calc(10 / 1440 * 100vw)); /* 배경 블러 처리 */
   text-decoration-line: none;
   color: black;
+  cursor: pointer;
 }
 
 .userDropdown {
