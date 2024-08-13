@@ -181,6 +181,7 @@ const useFriendsStore = create((set, get) => ({
 
   fetchSearchedFriends: async (searchedNickname) => {
     const { token, userInfo } = useInfoStore.getState();
+    const { friends } = get();
 
     if (!token) {
       Notiflix.Notify.failure("제대로 로그인이 되었는지 확인해보소!");
@@ -195,9 +196,11 @@ const useFriendsStore = create((set, get) => ({
         },
       });
 
-      // 검색 결과에 자기가 있어도 출력되지 않도록
+      // 검색 결과에서 자기 자신과 이미 친구로 등록된 사용자를 제외
       const filteredFriends = response.data.filter(
-        (friend) => friend.userNickName !== userInfo.userNickName
+        (friend) =>
+          friend.userNickName !== userInfo.userNickName &&
+          !friends.some((f) => f.friendUserId === friend.userId)
       );
 
       set({ searchedFriends: filteredFriends });
