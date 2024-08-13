@@ -30,7 +30,6 @@
   width: 20%;
   height: auto;
   max-height: 460px;
-  background-color: violet;
   border-radius: 20px;
 }
 
@@ -95,4 +94,27 @@
   margin-right: 15px;
   gap: 30px;
   flex-wrap: wrap; /* 아이템이 넘칠 경우 다음 줄로 이동 */
+}
+
+/* 성적 공개 여부 변경 버튼 */
+.changePublicStatusBtn {
+  border: none; /* 테두리 제거 */
+  padding: 10px 20px; /* 패딩 */
+  text-align: center; /* 텍스트 중앙 정렬 */
+  text-decoration: none; /* 텍스트 밑줄 제거 */
+  display: inline-block; /* 인라인 블록 요소 */
+  font-size: 16px; /* 폰트 크기 */
+  margin: 4px 2px; /* 약간의 마진 */
+  cursor: pointer; /* 마우스 커서 포인터로 변경 */
+  border-radius: 8px; /* 모서리 둥글게 */
+}
+
+.changePublicStatusBtn.public {
+  background-color: blue;
+  color: white;
+}
+
+.changePublicStatusBtn.private {
+  background-color: red;
+  color: white;
 }

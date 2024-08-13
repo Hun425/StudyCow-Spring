@@ -42,9 +42,9 @@ const TestAnalyze = () => {
     handleSubjectChange(registeredSubjectCode); // 방금 등록한 과목으로 새로고침
   };
 
-  const handlePublicToggle = async () => {
+  const handlePublicToggle = () => {
     const newPublicStatus = !userInfo.userPublic; // 현재 공개여부를 반전시킴
-    const success = await updateUserPublicStatus(newPublicStatus);
+    updateUserPublicStatus(newPublicStatus);
   };
 
   return (
@@ -54,10 +54,14 @@ const TestAnalyze = () => {
 
         <div className="analyzeSideNav">
           <button
-            className="analyzeScoreRegistButton"
+            className={`changePublicStatusBtn ${
+              userInfo.userPublic === true ? "public" : "private"
+            }`}
             onClick={handlePublicToggle}
           >
-            {userInfo.userPublic ? "비공개로 설정" : "공개로 설정"}
+            {userInfo.userPublic
+              ? "비공개로 설정 (현재: 공개)"
+              : "공개로 설정 (현재: 비공개)"}
           </button>
 
           {/* 성적 등록 버튼 */}
