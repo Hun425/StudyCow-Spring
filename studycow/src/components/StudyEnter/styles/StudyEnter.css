@@ -31,7 +31,6 @@
 .studyEnterPageBody {
   display: flex;
   justify-content: space-evenly;
-  margin-top: calc(20 / 1440 * 100vw);
 }
 
 .roomDetailInfoContent {

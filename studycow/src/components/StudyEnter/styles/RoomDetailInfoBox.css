@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   text-align: left;
-  padding: calc(20 / 1440 * 100vw);
+  padding: calc(10 / 1440 * 100vw) calc(20 / 1440 * 100vw);
   width: calc(500 / 1440 * 100vw);
   border: calc(1 / 1440 * 100vw) solid black;
   border-radius: calc(10 / 1440 * 100vw);
