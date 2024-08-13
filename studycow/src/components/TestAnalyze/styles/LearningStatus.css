@@ -1,6 +1,12 @@
-.learning-status-container {
+.learning-status-main {
   width: 30%;
+}
+
+.learning-status-container {
+  width: 100%;
   margin: 0;
+  height: auto;
+  min-height: calc(400 / 1440 * 100vw);
   padding: calc(20 / 1440 * 100vw);
   background: linear-gradient(to bottom, #f7faff, #dce7f3);
   border-radius: calc(8 / 1440 * 100vw);
@@ -10,9 +16,9 @@
 
 .learning-status-title {
   font-size: calc(24 / 1440 * 100vw);
-  font-weight: bold;
-  margin-bottom:calc(15 / 1440 * 100vw);
+  margin-bottom: calc(15 / 1440 * 100vw);
   text-align: center;
+  margin-bottom: calc(20 / 1440 * 100vw);
 }
 
 .learning-status-table {

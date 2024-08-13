@@ -57,55 +57,57 @@ const LearningStatus = () => {
   };
 
   return (
-    <div className="learning-status-container">
+    <div className="learning-status-main">
       <h1 className="learning-status-title">학습 현황</h1>
-      {error && <p style={{ color: "red" }}>{error}</p>}{" "}
-      {/* 오류 메시지 표시 */}
-      {selectedSubject && subjectInfo ? (
-        <>
-          <div className="learning-status-table">
-            <div className="learning-status-row">
-              <span className="learning-status-label">
-                플래너 누적 학습 시간
-              </span>
-              <span className="learning-status-value">
-                {subjectInfo.sumStudyTime} 분
-              </span>
-            </div>
-            <div className="learning-status-row">
-              <span className="learning-status-label">현재 점수</span>
-              <span className="learning-status-value">
-                {subjectInfo.nowScore} 점
-              </span>
-            </div>
-            <div className="learning-status-row">
-              <span className="learning-status-label">최근 점수 변화</span>
-              <span className="learning-status-value">
-                {subjectInfo.diffScore} 점
-              </span>
-            </div>
-          </div>
-
-          {/* 조언 요청 버튼과 결과 표시 */}
-          <div className="learning-status-advice-section">
-            {!adviceResult && (
-              <button
-                onClick={handleGenerateAdvice}
-                className="learning-status-advice-button"
-              >
-                성적 조언 받기
-              </button>
-            )}
-            {adviceResult && (
-              <div className="learning-status-advice-result">
-                <p>{adviceResult}</p>
+      <div className="learning-status-container">
+        {error && <p style={{ color: "red" }}>{error}</p>}{" "}
+        {/* 오류 메시지 표시 */}
+        {selectedSubject && subjectInfo ? (
+          <>
+            <div className="learning-status-table">
+              <div className="learning-status-row">
+                <span className="learning-status-label">
+                  플래너 누적 학습 시간
+                </span>
+                <span className="learning-status-value">
+                  {subjectInfo.sumStudyTime} 분
+                </span>
               </div>
-            )}
-          </div>
-        </>
-      ) : (
-        <p>과목을 선택하세요.</p>
-      )}
+              <div className="learning-status-row">
+                <span className="learning-status-label">현재 점수</span>
+                <span className="learning-status-value">
+                  {subjectInfo.nowScore} 점
+                </span>
+              </div>
+              <div className="learning-status-row">
+                <span className="learning-status-label">최근 점수 변화</span>
+                <span className="learning-status-value">
+                  {subjectInfo.diffScore} 점
+                </span>
+              </div>
+            </div>
+
+            {/* 조언 요청 버튼과 결과 표시 */}
+            <div className="learning-status-advice-section">
+              {!adviceResult && (
+                <button
+                  onClick={handleGenerateAdvice}
+                  className="learning-status-advice-button"
+                >
+                  성적 조언 받기
+                </button>
+              )}
+              {adviceResult && (
+                <div className="learning-status-advice-result">
+                  <p>{adviceResult}</p>
+                </div>
+              )}
+            </div>
+          </>
+        ) : (
+          <p>과목을 선택하세요.</p>
+        )}
+      </div>
     </div>
   );
 };
