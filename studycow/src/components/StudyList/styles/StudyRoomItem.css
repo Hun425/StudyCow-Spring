@@ -11,6 +11,8 @@
   justify-content: space-between;
   position: relative; /* 위치를 조정하기 위해 상대적으로 설정 */
   overflow: hidden; /* 오버레이가 컨테이너를 벗어나지 않도록 설정 */
+  box-shadow: 0 calc(10 / 1440 * 100vw) calc(20 / 1440 * 100vw)
+    rgba(0, 0, 0, 0.5);
 }
 
 .studyRoomContainer::before {
