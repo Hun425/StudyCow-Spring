@@ -1,18 +1,20 @@
 .userGradeImageContainer {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  padding: 20px;
-  border-radius: 15px;
+  flex-direction: column; /* 카드 내 요소들을 수직으로 정렬 */
+  justify-content: center; /* 요소들을 수직 가운데 정렬 */
+  align-items: center; /* 요소들을 수평 가운데 정렬 */
+  width: calc(272 / 1440 * 100vw); /* 화면 크기에 비례하여 카드의 너비 설정 */
+  height: calc(396 / 1440 * 100vw); /* 화면 크기에 비례하여 카드의 높이 설정 */
+  padding: calc(20 / 1440 * 100vw); /* 카드 내부의 패딩 설정 */
+  border-radius: calc(15 / 1440 * 100vw); /* 카드의 모서리를 둥글게 설정 */
+  position: relative; /* 오버레이와 같은 자식 요소의 절대 위치를 기준으로 설정 */
 }
 
 .userGradeText {
-  margin-top: 20px;
-  font-size: 30px;
-  font-weight: bold;
-  color: #444;
+  margin-top: calc(20 / 1440 * 100vw); /* 텍스트 상단 여백 설정 */
+  font-size: calc(30 / 1440 * 100vw); /* 화면 크기에 비례하여 글자 크기 설정 */
+  font-weight: bold; /* 글자 굵기 설정 */
+  color: #444; /* 글자 색상 설정 */
 }
 
 .userGradeImageContainer.브론즈 {
@@ -21,11 +23,13 @@
     rgba(173, 86, 0, 1) 10%,
     rgba(242, 186, 79, 0.5) 90%
   );
-  box-shadow: 0 4px 8px rgba(173, 86, 0, 0.7);
+  box-shadow: 0 calc(4 / 1440 * 100vw) calc(8 / 1440 * 100vw)
+    rgba(173, 86, 0, 0.7); /* 카드에 그림자 효과 추가 */
 }
 
 .userGradeText.브론즈 {
-  text-shadow: 2px 2px 4px rgba(173, 86, 0, 0.7);
+  text-shadow: calc(2 / 1440 * 100vw) calc(2 / 1440 * 100vw)
+    calc(4 / 1440 * 100vw) rgba(173, 86, 0, 0.7); /* 텍스트에 그림자 효과 추가 */
 }
 
 .userGradeImageContainer.실버 {
@@ -34,11 +38,13 @@
     rgba(111, 125, 135, 1) 10%,
     rgba(192, 192, 192, 0.5) 90%
   );
-  box-shadow: 0 4px 8px rgba(111, 125, 135, 0.7);
+  box-shadow: 0 calc(4 / 1440 * 100vw) calc(8 / 1440 * 100vw)
+    rgba(111, 125, 135, 0.7); /* 카드에 그림자 효과 추가 */
 }
 
 .userGradeText.실버 {
-  text-shadow: 2px 2px 4px rgba(111, 125, 135, 0.7);
+  text-shadow: calc(2 / 1440 * 100vw) calc(2 / 1440 * 100vw)
+    calc(4 / 1440 * 100vw) rgba(111, 125, 135, 0.7); /* 텍스트에 그림자 효과 추가 */
 }
 
 .userGradeImageContainer.골드 {
@@ -47,11 +53,13 @@
     rgba(230, 200, 50, 1) 10%,
     rgba(255, 200, 0, 0.5) 90%
   );
-  box-shadow: 0 4px 8px rgba(230, 200, 50, 0.7);
+  box-shadow: 0 calc(4 / 1440 * 100vw) calc(8 / 1440 * 100vw)
+    rgba(230, 200, 50, 0.7); /* 카드에 그림자 효과 추가 */
 }
 
 .userGradeText.골드 {
-  text-shadow: 2px 2px 4px rgba(230, 200, 50, 0.7);
+  text-shadow: calc(2 / 1440 * 100vw) calc(2 / 1440 * 100vw)
+    calc(4 / 1440 * 100vw) rgba(230, 200, 50, 0.7); /* 텍스트에 그림자 효과 추가 */
 }
 
 .userGradeImageContainer.플래티넘 {
@@ -60,11 +68,13 @@
     rgba(200, 200, 220, 1) 10%,
     rgba(170, 255, 230, 0.5) 90%
   );
-  box-shadow: 0 4px 8px rgba(200, 200, 220, 0.7);
+  box-shadow: 0 calc(4 / 1440 * 100vw) calc(8 / 1440 * 100vw)
+    rgba(200, 200, 220, 0.7); /* 카드에 그림자 효과 추가 */
 }
 
 .userGradeText.플래티넘 {
-  text-shadow: 2px 2px 4px rgba(200, 200, 220, 0.7);
+  text-shadow: calc(2 / 1440 * 100vw) calc(2 / 1440 * 100vw)
+    calc(4 / 1440 * 100vw) rgba(200, 200, 220, 0.7); /* 텍스트에 그림자 효과 추가 */
 }
 
 .userGradeImageContainer.다이아 {
@@ -73,40 +83,86 @@
     rgba(100, 130, 255, 1) 10%,
     rgba(50, 255, 255, 0.5) 90%
   );
-  box-shadow: 0 4px 8px rgba(100, 130, 255, 0.7);
+  box-shadow: 0 calc(4 / 1440 * 100vw) calc(8 / 1440 * 100vw)
+    rgba(100, 130, 255, 0.7); /* 카드에 그림자 효과 추가 */
 }
 
 .userGradeText.다이아 {
-  text-shadow: 2px 2px 4px rgba(100, 130, 255, 0.7);
+  text-shadow: calc(2 / 1440 * 100vw) calc(2 / 1440 * 100vw)
+    calc(4 / 1440 * 100vw) rgba(100, 130, 255, 0.7); /* 텍스트에 그림자 효과 추가 */
 }
 
 .userGradeImage {
-  width: 200px;
-  height: auto;
-  border-radius: 50%;
-  border: 5px solid #fff;
+  width: calc(200 / 1440 * 100vw); /* 화면 크기에 비례하여 이미지 크기 설정 */
+  height: auto; /* 이미지의 높이는 비율에 따라 자동으로 설정 */
+  border-radius: 50%; /* 이미지를 원형으로 자름 */
+  border: calc(5 / 1440 * 100vw) solid #fff; /* 이미지에 흰색 테두리 추가 */
 }
 
 .userGradeProgressBarContainer {
-  width: 80%;
-  background-color: #e0e0e0;
-  border-radius: 10px;
-  margin-top: 10px;
-  height: 20px;
-  overflow: hidden;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+  width: calc(186 / 1440 * 100vw); /* 진행 바의 너비 설정 */
+  background-color: #e0e0e0; /* 진행 바 배경 색상 설정 */
+  border-radius: calc(10 / 1440 * 100vw); /* 진행 바의 모서리를 둥글게 설정 */
+
+  height: calc(20 / 1440 * 100vw); /* 진행 바의 높이 설정 */
+  box-shadow: inset 0 calc(1 / 1440 * 100vw) calc(3 / 1440 * 100vw)
+    rgba(0, 0, 0, 0.2); /* 진행 바에 내부 그림자 효과 추가 */
 }
 
 .userGradeProgressBar {
+  height: 100%; /* 진행 바의 높이를 부모 컨테이너에 맞춤 */
+  background-color: #4caf50; /* 기본 진행 바 색상 */
+  border-radius: calc(10 / 1440 * 100vw); /* 진행 바의 모서리를 둥글게 설정 */
+  transition: width 0.4s ease-in-out; /* 너비 변화 시 애니메이션 효과 추가 */
+}
+
+.user-grade-progress-bar-브론즈 {
+  height: 100%; /* 진행 바의 높이를 부모 컨테이너에 맞춤 */
+  background-color: rgba(173, 86, 0, 1); /* 브론즈 등급의 진행 바 색상 */
+  border-radius: calc(10 / 1440 * 100vw); /* 진행 바의 모서리를 둥글게 설정 */
+  transition: width 0.4s ease-in-out; /* 너비 변화 시 애니메이션 효과 추가 */
+}
+.user-grade-progress-bar-실버 {
   height: 100%;
-  background-color: #4caf50;
-  border-radius: 10px;
+  background-color: rgba(111, 125, 135, 1); /* 실버 등급의 진행 바 색상 */
+  border-radius: calc(10 / 1440 * 100vw);
+  transition: width 0.4s ease-in-out;
+}
+.user-grade-progress-bar-골드 {
+  height: 100%;
+  background-color: rgb(223, 186, 0); /* 골드 등급의 진행 바 색상 */
+  border-radius: calc(10 / 1440 * 100vw);
+  transition: width 0.4s ease-in-out;
+}
+.user-grade-progress-bar-플래티넘 {
+  height: 100%;
+  background-color: rgba(200, 200, 220, 1); /* 플래티넘 등급의 진행 바 색상 */
+  border-radius: calc(10 / 1440 * 100vw);
   transition: width 0.4s ease-in-out;
 }
 
 .userGradeExpText {
-  margin-top: 5px;
-  font-size: 18px;
-  font-weight: 500;
-  color: #555;
+  margin-top: calc(5 / 1440 * 100vw); /* 경험치 텍스트 상단 여백 설정 */
+  font-size: calc(18 / 1440 * 100vw); /* 경험치 텍스트 크기 설정 */
+  font-weight: 500; /* 경험치 텍스트 굵기 설정 */
+  color: #555; /* 경험치 텍스트 색상 설정 */
+}
+
+.userGradeOverlay {
+  position: absolute; /* 오버레이를 카드 내부에 절대 위치시킴 */
+  width: 100%; /* 오버레이가 카드 전체를 덮도록 설정 */
+  height: 100%; /* 오버레이가 카드 전체를 덮도록 설정 */
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 219, 112, 0.8) 45%,
+    rgba(132, 50, 255, 0.6) 50%,
+    transparent 54%
+  ); /* 오버레이의 그라데이션 배경 설정 */
+  filter: brightness(1.1) opacity(0.8); /* 오버레이의 밝기와 투명도 설정 */
+  mix-blend-mode: color-dodge; /* 오버레이의 색상 혼합 모드 설정 */
+  background-size: 150% 150%; /* 오버레이 배경 이미지의 크기 설정 */
+  background-position: 100%; /* 배경 위치 초기 설정 */
+  transition: all 0.1s; /* 오버레이 효과의 전환 애니메이션 설정 */
+  pointer-events: none; /* 마우스 이벤트가 오버레이를 통과하도록 설정 */
 }
