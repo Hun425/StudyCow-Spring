@@ -40,9 +40,7 @@ const UserGradeImage = () => {
   const progressPercentage = Math.min((userExp / userGrade.maxExp) * 100, 100); // 100%를 초과하지 않도록 설정
 
   return (
-    <div
-      className={`user-grade-image-container ${userGrade.gradeName.toLowerCase()}`}
-    >
+    <div className={`user-grade-image-container ${userGrade.gradeName}`}>
       <img
         src={gradeImage}
         alt={`${userGrade.gradeName} 등급 이미지`}
