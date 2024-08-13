@@ -93,7 +93,13 @@ const TestAnalyze = () => {
           <UserGradeImage />
         </div>
         <div className="analyzeGradeStatus">
-          <GradeAnalyzeBox subject={selectedSubject} />
+          {selectedSubject ? (
+            <GradeAnalyzeBox subject={selectedSubject} />
+          ) : (
+            <div className="unSelectSubject">
+              <p>과목 먼저 선택해보소</p>
+            </div>
+          )}
         </div>
       </div>
 

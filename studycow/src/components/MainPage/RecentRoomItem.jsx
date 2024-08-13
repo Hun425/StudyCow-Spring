@@ -26,9 +26,8 @@ const RecentRoomItem = ({
       style={{ backgroundImage: `url(${thumb})` }}
     >
       <p className="recentRoomTitle">{title}</p>
-      <p className="recentRoomCount">
-        {nowPerson}/{maxPerson}
-      </p>
+      <p className="recentRoomCount1">현재 인원: {nowPerson}</p>
+      <p className="recentRoomCount2">최대 인원: {maxPerson}</p>
       <p className="recentRoomContent">{content}</p>
       <button className="recentRoomEnterBtn" onClick={openModal}>
         입장하기
