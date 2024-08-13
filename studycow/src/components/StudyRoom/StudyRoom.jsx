@@ -12,6 +12,7 @@ import { useParams } from "react-router-dom";
 import StudyRoomLeaderBoard from "./StudyRoomLeaderBoard.jsx";
 import AudioModal from './AudioModal.jsx';
 import SettingsModal from './SettingsModal.jsx';
+import { Box, CircularProgress } from '@mui/material';
 
 function StudyRoom() {
   const initialLoadRef = useRef(true); // 페이지 로딩 여부를 추적하기 위한 ref
@@ -153,8 +154,22 @@ function StudyRoom() {
               </div>
             )}
             {showLank && (
+              // 컴포넌트의 렌더링 타이밍과 데이터 로딩 타이밍의 불일치 처리, 랭크 표출
               <div className="studyRoomUtilItem">
-                <StudyRoomLeaderBoard myRankInfo={myRankInfo} />
+                {myRankInfo ? (
+                  <StudyRoomLeaderBoard myRankInfo={myRankInfo} />
+                ) : (
+                  <Box
+                    sx={{
+                      display: 'flex', // Flexbox 사용
+                      justifyContent: 'center', // 수평 중앙 정렬
+                      alignItems: 'center', // 수직 중앙 정렬
+                      height: '100%', // Box의 높이를 100%로 설정
+                    }}
+                  >
+                    <CircularProgress />
+                  </Box>
+                )}
               </div>
             )}
             {showChat && (

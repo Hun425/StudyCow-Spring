@@ -1,7 +1,15 @@
 import React, { useEffect } from 'react';
 import "./App.css";
 import PageRoutes from "./routes/PageRoutes";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Notiflix from 'notiflix';
+
+// Material UI 폰트 적용
+const theme = createTheme({
+  typography: {
+    fontFamily: "CustomFontGothic, sans-serif"
+  },
+});
 
 function App() {
   useEffect(() => {
@@ -28,9 +36,9 @@ function App() {
   }, []);
   
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <PageRoutes />
-    </>
+    </ThemeProvider>
   );
 }
 

@@ -69,10 +69,16 @@ const FriendGradeMain = () => {
           />
         </div>
         <div className="friendGradeStatus">
-          <FriendAnalyzeBox
-            userId={friendInfo.userId}
-            subject={selectedSubject}
-          />
+          {selectedSubject ? (
+            <FriendAnalyzeBox
+              userId={friendInfo.userId}
+              subject={selectedSubject}
+            />
+          ) : (
+            <div className="notSelectSubject">
+              <p>과목 먼저 선택해보소</p>
+            </div>
+          )}
         </div>
       </div>
     </div>
