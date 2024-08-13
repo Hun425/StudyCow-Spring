@@ -4,6 +4,7 @@ import "./styles/CreateModify.css";
 import useInfoStore from "../../../stores/infos";
 import usePlanStore from "../../../stores/plan";
 import useSubjectStore from "../../../stores/subjectStore"; // subject store import
+import Notiflix from "notiflix";
 
 const PlanCreate = ({ show, onClose }) => {
   const navigate = useNavigate();
@@ -69,7 +70,7 @@ const PlanCreate = ({ show, onClose }) => {
   const handleContentChange = (e) => {
     const value = e.target.value;
     if (value.length > 100) {
-      alert("내용은 100자 이내로 입력해 주세요."); // 100자 이상 입력 시 경고 메시지
+      Notiflix.Notify.warning("내용은 100자 이내로 입력해 주세요.");
       return;
     }
     setFormState((prevState) => ({
@@ -84,13 +85,13 @@ const PlanCreate = ({ show, onClose }) => {
 
     // 과목이 선택되지 않았을 경우
     if (!formState.selectedSubject) {
-      alert("과목을 선택해 주세요.");
+      Notiflix.Notify.warning("과목을 선택해 주세요.");
       return;
     }
 
     // 시간과 분이 모두 0일 경우
     if (formState.selectedTime === 0 && formState.selectedMinutes === 0) {
-      alert("시간과 분을 설정해 주세요.");
+      Notiflix.Notify.warning("시간과 분을 설정해 주세요.");
       return;
     }
 
@@ -122,8 +123,6 @@ const PlanCreate = ({ show, onClose }) => {
         const responseBody = await response.text();
 
         if (responseBody.includes("등록 성공")) {
-          alert("플래너가 성공적으로 생성되었습니다.");
-
           // 플래너 생성 후 데이터 갱신
           const success = await getDatePlanRequest(formState.selectedDate);
           if (success) {
@@ -136,11 +135,10 @@ const PlanCreate = ({ show, onClose }) => {
           // navigate("/plan", { replace: true }); // 페이지 이동
         }
       } else {
-        alert("플래너 생성에 실패했습니다.");
+        Notiflix.Notify.failure("플래너 생성에 실패했습니다.");
       }
     } catch (error) {
-      alert("플래너 생성 중 오류가 발생했습니다.");
-      console.error("플래너 생성 중 오류:", error);
+      Notiflix.Notify.failure("플래너 생성에 실패했습니다.");
     }
   };
 

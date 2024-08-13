@@ -3,6 +3,7 @@ import "./styles/CreateModify.css";
 import useInfoStore from "../../../stores/infos";
 import usePlanStore from "../../../stores/plan";
 import useSubjectStore from "../../../stores/subjectStore"; // subject store import
+import Notiflix from "notiflix";
 
 const PlanModify = ({ planId, show, onClose }) => {
   const { token } = useInfoStore((state) => ({
@@ -52,7 +53,7 @@ const PlanModify = ({ planId, show, onClose }) => {
             setContent(data.planContent);
             setDate(data.planDate);
           } else {
-            console.error("Failed to fetch planner data.");
+            Notiflix.Notify.failure("플래너 정보를 불러오는데 실패했습니다.");
           }
         } catch (error) {
           console.error("Error fetching planner data:", error);
@@ -67,7 +68,7 @@ const PlanModify = ({ planId, show, onClose }) => {
   const handleContentChange = (e) => {
     const value = e.target.value;
     if (value.length > 100) {
-      alert("내용은 100자 이내로 입력해 주세요."); // 100자 이상 입력 시 경고 메시지
+      Notiflix.Notify.warning("내용은 100자 이내로 입력해 주세요.");
       return;
     }
     setContent(value);
@@ -78,13 +79,13 @@ const PlanModify = ({ planId, show, onClose }) => {
 
     // 과목이 선택되지 않았을 경우
     if (!selectedSubject) {
-      alert("과목을 선택해 주세요.");
+      Notiflix.Notify.warning("과목을 선택해 주세요.");
       return;
     }
 
     // 시간과 분이 모두 0일 경우
     if (selectedTime === 0 && selectedMinutes === 0) {
-      alert("시간과 분을 설정해 주세요.");
+      Notiflix.Notify.warning("시간과 분을 설정해 주세요.");
       return;
     }
 
@@ -111,14 +112,13 @@ const PlanModify = ({ planId, show, onClose }) => {
       });
 
       if (response.ok) {
-        alert("플래너가 성공적으로 수정되었습니다.");
         onClose(); // 모달 닫기
         window.location.reload(); // 페이지 새로고침
       } else {
-        alert("플래너 수정에 실패했습니다.");
+        Notiflix.Notify.failure("플래너 수정에 실패했습니다.");
       }
     } catch (error) {
-      alert("플래너 수정 중 오류가 발생했습니다.");
+      console.error("Error fetching planner data:", error);
     }
   };
 

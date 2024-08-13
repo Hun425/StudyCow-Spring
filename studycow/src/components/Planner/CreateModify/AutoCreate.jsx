@@ -4,6 +4,7 @@ import usePlanStore from "../../../stores/plan"; // usePlanStore 임포트
 import AIPlannerModal from "./AIPlannerModal"; // AIPlannerModal 컴포넌트 임포트
 import LoadingPage from "../../../views/LoadingPage"; // 로딩 페이지 임포트
 import "./styles/AutoCreate.css"; // 스타일 임포트
+import Notiflix from "notiflix";
 
 const AutoCreate = ({ show, onClose }) => {
   const { date } = usePlanStore((state) => ({
@@ -23,6 +24,19 @@ const AutoCreate = ({ show, onClose }) => {
     setStartDay(date); // date가 변경될 때마다 startDay 업데이트
   }, [date]);
 
+  const handleStudyTimeChange = (e) => {
+    const value = Number(e.target.value);
+    if (value < 60) {
+      setStudyTime(60);
+      Notiflix.Notify.warning("시간은 60분 이상으로 입력해 주세요.");
+    } else if (value > 1440) {
+      setStudyTime(1440);
+      Notiflix.Notify.warning("시간은 1440분 이하로 입력해 주세요.");
+    } else {
+      setStudyTime(value);
+    }
+  };
+
   const handleCreate = async () => {
     setLoading(true); // 로딩 시작
     const result = await generatePlanner(startDay, studyTime);
@@ -32,7 +46,7 @@ const AutoCreate = ({ show, onClose }) => {
       setAiPlans(result.plans);
       setShowAIPlannerModal(true); // AIPlannerModal 열기
     } else {
-      alert("플래너 생성에 실패했습니다.");
+      Notiflix.Notify.failure("생성에 실패하였습니다");
     }
   };
 
@@ -57,7 +71,7 @@ const AutoCreate = ({ show, onClose }) => {
             <input
               type="number"
               value={studyTime}
-              onChange={(e) => setStudyTime(Number(e.target.value))}
+              onChange={handleStudyTimeChange}
               min="60"
               max="1440"
             />

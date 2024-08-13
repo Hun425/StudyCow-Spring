@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import useOpenAiStore from "../../../stores/openAi"; // OpenAI 스토어 가져오기
 import useSubjectStore from "../../../stores/subjectStore"; // Subject 스토어 가져오기
 import "./styles/AIPlannerModal.css"; // 스타일 임포트
+import Notiflix from "notiflix";
 
 // 분을 시간과 분으로 포맷하는 유틸리티 함수
 const formatTime = (minutes) => {
@@ -27,29 +28,28 @@ const AIPlannerModal = ({ show, onClose, analysis, plans }) => {
 
   // plans가 변경될 때마다 editablePlans 업데이트
   useEffect(() => {
-    console.log("플랜이 업데이트되었습니다:", plans);
     setEditablePlans(plans);
   }, [plans]);
 
   const handleRegister = async () => {
     for (const plan of editablePlans) {
       if (!plan.subCode) {
-        alert("모든 플랜에서 과목을 선택해 주세요.");
+        Notiflix.Notify.warning("모든 플랜에서 과목을 선택해 주세요.");
         return;
       }
       if (plan.planStudyTime === 0) {
-        alert("모든 플랜에서 시간과 분을 설정해 주세요.");
+        Notiflix.Notify.warning("모든 플랜에서 시간과 분을 설정해 주세요.");
         return;
       }
     }
 
     const success = await registerPlans(editablePlans); // 플래너 등록
     if (success) {
-      alert("플래너가 성공적으로 등록되었습니다.");
+      Notiflix.Notify.success("플래너가 성공적으로 등록되었습니다.");
       onClose(); // 모달 닫기
       window.location.href = "/plan"; // PlanPage로 이동
     } else {
-      alert("플래너 등록에 실패했습니다.");
+      Notiflix.Notify.failure("플래너 등록에 실패했습니다.");
     }
   };
 
@@ -64,7 +64,7 @@ const AIPlannerModal = ({ show, onClose, analysis, plans }) => {
 
   const handlePlanChange = (index, field, value) => {
     if (field === "planContent" && value.length > 100) {
-      alert("내용은 100자 이내로 입력해 주세요.");
+      Notiflix.Notify.warning("내용은 100자 이내로 입력해 주세요.");
       return;
     }
 
