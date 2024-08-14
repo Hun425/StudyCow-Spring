@@ -25,19 +25,22 @@ const AutoCreate = ({ show, onClose }) => {
   }, [date]);
 
   const handleStudyTimeChange = (e) => {
-    const value = Number(e.target.value);
-    if (value < 60) {
-      setStudyTime(60);
-      Notiflix.Notify.warning("시간은 60분 이상으로 입력해 주세요.");
-    } else if (value > 1440) {
-      setStudyTime(1440);
-      Notiflix.Notify.warning("시간은 1440분 이하로 입력해 주세요.");
-    } else {
-      setStudyTime(value);
-    }
+    const value = e.target.value;
+    // 앞에 있는 0 제거 및 빈 문자열 체크
+    const sanitizedValue = value ? String(Number(value)) : "";
+    setStudyTime(sanitizedValue);
   };
 
   const handleCreate = async () => {
+    // 공부 시간 검증 로직 추가
+    if (studyTime < 60) {
+      Notiflix.Notify.warning("공부 시간은 60분 이상이어야 합니다.");
+      return;
+    } else if (studyTime > 1440) {
+      Notiflix.Notify.warning("공부 시간은 1440분 이하여야 합니다.");
+      return;
+    }
+
     setLoading(true); // 로딩 시작
     const result = await generatePlanner(startDay, studyTime);
     setLoading(false); // 로딩 종료
@@ -72,8 +75,6 @@ const AutoCreate = ({ show, onClose }) => {
               type="number"
               value={studyTime}
               onChange={handleStudyTimeChange}
-              min="60"
-              max="1440"
             />
           </div>
           <div className="auto-create-form-buttons">
