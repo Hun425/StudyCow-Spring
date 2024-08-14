@@ -1,6 +1,6 @@
  .main-subject-grade-graph {
-    height: 100%;
-    width: auto;
+    height: 90%;
+    width: calc(800 / 1440 * 100vw);
     margin: 0;
     padding: 0;
     position: relative;

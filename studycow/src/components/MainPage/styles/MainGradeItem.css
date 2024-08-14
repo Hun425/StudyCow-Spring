@@ -1,5 +1,5 @@
 .mainGradeContainer {
-  width: 50%;
+  width: calc(860 / 1440 * 100vw);
   height: calc(350 / 1440 * 100vw);
   background-color: white;
   border-radius: calc(20 / 1440 * 100vw);
@@ -16,18 +16,23 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: calc(20 / 1440 * 100vw) !important;
+  font-size: calc(24 / 1440 * 100vw) !important;
   padding: calc(5 / 1440 * 100vw);
 }
-
-.mainGradeHeader h4 {
+.mainGradeHeader p {
   margin: 0;
+  margin-left: calc(20 / 1440 * 100vw);
 }
+
 
 .mainGradeSubjectSelect {
   align-items: center;
+  font-size: calc(24 / 1440 * 100vw) !important;
 }
 
 .mainGradeSubjectSelect select {
-  width: calc(150 / 1440 * 100vw);
+  width: calc(200 / 1440 * 100vw);
+  font-size: calc(20 / 1440 * 100vw) !important;
+  margin: 0;
+  margin-right: calc(20 / 1440 * 100vw);
 }

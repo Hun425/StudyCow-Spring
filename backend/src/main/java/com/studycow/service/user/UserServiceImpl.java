@@ -75,6 +75,7 @@ public class UserServiceImpl implements UserService  {
         loginResponseDto.setToken(accessToken);
         loginResponseDto.setUserEmail(userEmail);
         loginResponseDto.setUserId(user.getId());
+        loginResponseDto.setUserPublic(user.getUserPublic());
         loginResponseDto.setUserExp(user.getUserExp());
         loginResponseDto.setUserNickName(user.getUserNickname());
         loginResponseDto.setUserGrade(userGradeDto);

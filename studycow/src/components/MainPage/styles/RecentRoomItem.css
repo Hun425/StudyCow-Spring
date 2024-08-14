@@ -1,11 +1,11 @@
 .recentRoomContainer {
   width: 100%;
-  height: calc(300 / 1440 * 100vw);
+  height: calc(190 / 1440 * 100vw);
   border-radius: calc(10 / 1440 * 100vw);
   background: #83a1ca; /* 기본 배경 색 */
   background-size: cover; /* 배경 이미지가 컨테이너를 덮도록 설정 */
   background-position: center; /* 배경 이미지 중앙 정렬 */
-  padding: calc(30 / 1440 * 100vw) calc(10 / 1440 * 100vw);
+  padding: calc(10 / 1440 * 100vw) calc(10 / 1440 * 100vw);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -69,10 +69,11 @@
 }
 
 .recentRoomEnterBtn {
-  width: calc(180 / 1440 * 100vw);
-  height: calc(50 / 1440 * 100vw);
+  width: calc(120 / 1440 * 100vw);
+  height: calc(40 / 1440 * 100vw);
+  margin-top: calc(40 / 1440 * 100vw);
   align-self: center;
-  font-size: calc(30 / 1440 * 100vw) x;
+  font-size: calc(18 / 1440 * 100vw) !important;
   color: #ffffff;
   font-family: "CustomFontGothic", sans-serif;
   cursor: pointer;

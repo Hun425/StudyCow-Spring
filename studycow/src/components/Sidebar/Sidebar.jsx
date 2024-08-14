@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 function Sidebar() {
   // 상태 - 유저 정보 가져오기
-  const { userInfo, logout, resign } = useInfoStore();
+  const { userInfo, logout } = useInfoStore();
 
   // 이동 - 홈으로 단순 이동
   const navigate = useNavigate();
@@ -43,8 +43,6 @@ function Sidebar() {
         <div className="SidebarFooter">
           <div className="SidebarFooterItem">
             <a onClick={logout}>로그아웃</a>
-            <a>/</a>
-            <a onClick={resign}>회원탈퇴</a>
           </div>
           <div className="SidebarFooterLogo">
             <div className="LogoItem" onClick={goHome}>

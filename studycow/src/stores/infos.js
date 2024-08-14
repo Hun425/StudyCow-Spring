@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import axios from "axios";
 import defaultProfile from "../assets/defaultProfile.png";
-import Notiflix from 'notiflix';
+import Notiflix from "notiflix";
 
 const API_URL =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/studycow/";
@@ -15,7 +15,7 @@ const useInfoStore = create(
       userInfo: {
         userId: 0,
         userEmail: null,
-        userPublic: 0,  // 회원 공개여부 상태
+        userPublic: 0, // 회원 공개여부 상태
         userThumb: defaultProfile,
         userGrade: {
           gradeCode: 0,
@@ -39,10 +39,10 @@ const useInfoStore = create(
             data
           );
           if (response.status === 201) {
-            Notiflix.Notify.success('회원가입 성공');
+            Notiflix.Notify.success("회원가입 성공");
             return true;
           } else {
-            Notiflix.Notify.failure('회원가입 실패.');
+            Notiflix.Notify.failure("회원가입 실패.");
           }
         } catch (e) {
           // console.log(e);
@@ -74,12 +74,12 @@ const useInfoStore = create(
                   maxExp: response.data.userGrade.maxExp ?? 0,
                 },
                 userExp: response.data.userExp ?? 0,
-                userPublic: response.data.userPublic ?? 0,  // 로그인 시 공개여부 초기화
+                userPublic: response.data.userPublic ?? 0, // 로그인 시 공개여부 초기화
               },
             });
             return true;
           } else {
-            Notiflix.Notify.failure('로그인 에러');
+            Notiflix.Notify.failure("로그인 에러");
           }
         } catch (e) {
           console.log(e);
@@ -89,11 +89,6 @@ const useInfoStore = create(
 
       logout: (navigate) => {
         set({ isLogin: false, token: null });
-        navigate("/login");
-      },
-
-      resign: (navigate) => {
-        set({ isLogin: false });
         navigate("/login");
       },
 
@@ -111,7 +106,7 @@ const useInfoStore = create(
         try {
           const { token, ChangeInfoUrl, userInfo } = get();
           if (!token) {
-            Notiflix.Notify.failure('세션 만료, 다시 로그인 해주세요');
+            Notiflix.Notify.failure("세션 만료, 다시 로그인 해주세요");
             // console.error("토큰이 없습니다.");
             return false;
           }
@@ -122,10 +117,8 @@ const useInfoStore = create(
           formData.append("userEmail", email);
           formData.append("userNickname", nickname);
 
-
           // console.log("보내는 데이터:", formData);
           // console.log("토큰:", token);
-
 
           const response = await axios.patch(ChangeInfoUrl, formData, {
             headers: {
@@ -145,7 +138,7 @@ const useInfoStore = create(
               },
             });
             return true;
-          } 
+          }
         } catch (error) {
           // console.error("Error updating user info:", error);
           return false;
@@ -164,13 +157,13 @@ const useInfoStore = create(
         try {
           const { token, ChangePublicUrl, userInfo } = get();
           if (!token) {
-            Notiflix.Notify.failure('세션 만료, 다시 로그인 해주세요');
+            Notiflix.Notify.failure("세션 만료, 다시 로그인 해주세요");
             // console.error("토큰이 없습니다.");
             return false;
           }
 
           const response = await axios.patch(
-            ChangePublicUrl, 
+            ChangePublicUrl,
             { public: publicStatus }, // 서버에 보내는 데이터
             {
               headers: {
@@ -180,7 +173,7 @@ const useInfoStore = create(
           );
 
           if (response.status === 200) {
-            Notiflix.Notify.success('회원 공개여부 변경에 성공');
+            Notiflix.Notify.success("회원 공개여부 변경에 성공");
             set({
               userInfo: {
                 ...userInfo,
@@ -189,11 +182,11 @@ const useInfoStore = create(
             });
             return true;
           } else {
-            Notiflix.Notify.failure('회원 공개여부 변경에 실패했습니다.');
+            Notiflix.Notify.failure("회원 공개여부 변경에 실패했습니다.");
           }
         } catch (error) {
           // console.error(error);
-          Notiflix.Notify.failure('회원 공개여부 변경에 실패했습니다.');
+          Notiflix.Notify.failure("회원 공개여부 변경에 실패했습니다.");
           return false;
         }
       },

@@ -7,7 +7,7 @@
   overflow-y: auto;
   padding-top: calc(20 / 1440 * 100vw);
   padding-bottom: calc(20 / 1440 * 100vw);
-  background-image: url('../../../assets/MyPageBackground.png');
+  background-image: url('../../../assets/defaultBackground.png');
   background-size: cover; /* 배경 이미지가 전체 컨테이너에 맞게 조정됩니다. */
   background-position: center; /* 배경 이미지가 가운데에 위치합니다. */
   background-repeat: no-repeat; /* 배경 이미지가 반복되지 않도록 설정합니다. */

@@ -18,6 +18,10 @@ const TestAnalyze = () => {
   useEffect(() => {
     fetchSubjects();
   }, [fetchSubjects]);
+  useEffect(() => {
+    // userInfo.userPublic 값이 변경될 때마다 실행할 코드
+    console.log("userPublic 상태가 변경되었습니다:", userInfo.userPublic);
+  }, [userInfo.userPublic]);
 
   const handleSubjectChange = (subjectCode) => {
     // 이미 선택된 과목이 다시 선택되었을 때 처리
@@ -62,7 +66,7 @@ const TestAnalyze = () => {
             <Switch
               size="medium"
               color="warning"
-              checked={userInfo.userPublic}
+              checked={Boolean(userInfo.userPublic)}
               onChange={handlePublicToggle}
             />
             <Typography>공개</Typography>

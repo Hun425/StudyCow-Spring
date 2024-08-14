@@ -46,6 +46,10 @@
   margin: 0;
   font-size: calc(16 / 1440 * 100vw); /* 텍스트의 기본 폰트 크기 */
   font-weight: normal; /* 텍스트 두께 */
+  white-space: nowrap; /* 텍스트를 한 줄로 표시 */
+  overflow: hidden; /* 넘치는 텍스트를 숨김 */
+  text-overflow: ellipsis; /* 넘치는 부분을 '...'로 표시 */
+  width: calc(750 / 1440 * 100vw);
 }
 
 .singleSubButtonBox {

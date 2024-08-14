@@ -1,75 +1,79 @@
 /* src/components/Leaderboard.css */
 
 .studyRoomRankLeaderboard {
-    background-color: #B4C8BB !important;
+    background-color: #b4c8bb !important;
     width: calc(295 / 1440 * 100vw); /* 컨테이너의 너비 설정 */
-    height: calc((100vh - calc(70 / 1440 * 100vw)) / 4 - calc(10 / 1440 * 100vw)); /* 전체 화면 높이에 비례한 높이 */
+    height: calc(
+        (100vh - calc(70 / 1440 * 100vw)) / 4 - calc(10 / 1440 * 100vw)
+    ); /* 전체 화면 높이에 비례한 높이 */
     padding: 0 !important;
     border-radius: calc(10 / 1440 * 100vw) calc(10 / 1440 * 100vw); /* 붙이는 부분 둥글게 */
-  }
-  
-  .studyRoomRankTitlePaper {
-    background-color: #B4C8BB !important;
+}
+
+.studyRoomRankTitlePaper {
+    background-color: #b4c8bb !important;
     padding: calc(5 / 1440 * 100vw); /* 여백 조정 */
     height: 30%; /* Paper의 높이를 전체 컨테이너 높이의 30%로 설정 */
     display: flex;
     justify-content: center;
+    align-items: center;
     overflow: hidden;
-  }
+}
 
-  .studyRoomRankTitlePaper .MuiTypography-body2 {
+.studyRoomRankTitlePaper .MuiTypography-body2 {
+    flex: 1;
+    text-align: center;
     margin-top: calc(7 / 1440 * 100vw);
-    font-size: calc(20 / 1440 * 100vw);; /* 폰트 크기 설정 */
+    font-size: calc(20 / 1440 * 100vw); /* 폰트 크기 설정 */
     font-family: "CustomFontGothic", sans-serif;
-  }
+}
 
-
-  .studyRoomRankPaper {
+.studyRoomRankPaper {
     background-color: #e7e3e3 !important;
     padding: calc(5 / 1440 * 100vw); /* 여백 조정 */
     height: 35%; /* Paper의 높이를 전체 컨테이너 높이의 35%로 설정 */
     overflow: hidden;
-  }
-  
-  .studyRoomRankContent {
+}
+
+.studyRoomRankContent {
     position: relative;
     width: 100%; /* 슬라이딩 영역의 너비를 Paper의 너비와 맞춤 */
     height: 100%; /* 슬라이딩 영역의 높이를 Paper의 높이와 맞춤 */
     padding: 0; /* 슬라이딩 영역 내부 패딩 제거 */
     overflow: hidden;
-  }
-  
-  .studyRoomRankSliding {
+}
+
+.studyRoomRankSliding {
     position: absolute;
     width: 100%; /* 슬라이딩 영역의 너비를 Paper의 너비와 맞춤 */
     height: 100%; /* 슬라이딩 영역의 높이를 Paper의 높이와 맞춤 */
     display: flex;
     flex-direction: column;
     transition: transform 0.5s;
-  }
-  
-  .studyRoomRankSliding > div {
+}
+
+.studyRoomRankSliding > div {
     background-color: #e7e3e3;
     flex: 0 0 100%;
     display: flex;
     align-items: center; /* 수직 중앙 정렬 */
     justify-content: space-between; /* 가로 방향으로 space-between 정렬 */
     padding: calc(5 / 1440 * 100vw); /* 내부 패딩 조정 */
-  }
-  
-  .studyRoomRankSliding .MuiAvatar-root {
+}
+
+.studyRoomRankSliding .MuiAvatar-root {
     margin-right: calc(8 / 1440 * 100vw); /* 아바타와 텍스트 간의 간격 */
     width: calc(24 / 1440 * 100vw);
     height: calc(24 / 1440 * 100vw);
-  }
-  
-  .studyRoomRankSliding .MuiTypography-body2 {
+}
+
+.studyRoomRankSliding .MuiTypography-body2 {
     white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */
     font-size: calc(20 / 1440 * 100vw); /* 폰트 크기 설정 */
     font-family: "CustomFontGothic", sans-serif;
-  }
-  
-  .studyRoomRankinfoPaper {
+}
+
+.studyRoomRankinfoPaper {
     background-color: #e7e3e3 !important;
     padding: calc(5 / 1440 * 100vw); /* 여백 조정 */
     height: 35%; /* Paper의 높이를 전체 컨테이너 높이의 35%로 설정 */
@@ -77,9 +81,9 @@
     align-items: center; /* 수직 정렬 */
     justify-content: space-between; /* 가로 방향으로 space-between 정렬 */
     width: 100%; /* Paper의 너비를 전체 컨테이너 너비와 맞춤 */
-  }
+}
 
-  .studyRoomRankinfoContent {
+.studyRoomRankinfoContent {
     background-color: #e7e3e3;
     flex: 0 0 100%;
     display: flex;
@@ -87,29 +91,29 @@
     align-items: center; /* 수직 중앙 정렬 */
     justify-content: space-between; /* 가로 방향으로 space-between 정렬 */
     padding: calc(5 / 1440 * 100vw); /* 내부 패딩 조정 */
-  }
-  
-  .studyRoomRankinfoContent .MuiAvatar-root {
+}
+
+.studyRoomRankinfoContent .MuiAvatar-root {
     margin-right: calc(8 / 1440 * 100vw); /* 아바타와 텍스트 간의 간격 */
     width: calc(24 / 1440 * 100vw);
     height: calc(24 / 1440 * 100vw);
-  }
-  
-  .studyRoomRankinfoContent .MuiTypography-body2 {
+}
+
+.studyRoomRankinfoContent .MuiTypography-body2 {
     white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */
     font-size: calc(20 / 1440 * 100vw); /* 폰트 크기 설정 */
     font-family: "CustomFontGothic", sans-serif;
-  }
+}
 
-  .studyRoomRankUserNick {
+.studyRoomRankUserNick {
     text-align: center;
     font-size: calc(150 / 1440 * 100vw); /* 폰트 크기 설정 */
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-  }
+}
 
-  .studyRoomRankNoData {
+.studyRoomRankNoData {
     background-color: #e7e3e3 !important;
     padding: calc(10 / 1440 * 100vw); /* 여백 조정 */
     height: 70%; /* Paper의 높이를 전체 컨테이너 높이의 35%로 설정 */
@@ -121,5 +125,4 @@
     font-family: "CustomFontGothic", sans-serif !important;
     font-size: calc(17 / 1440 * 100vw) !important; /* 폰트 크기 설정 */
     border-radius: calc(10 / 1440 * 100vw) calc(10 / 1440 * 100vw); /* 붙이는 부분 둥글게 */
-  }
-  
+}

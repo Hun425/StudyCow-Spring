@@ -1,6 +1,6 @@
 import "./styles/StudyRoomLeaderBoard.css";
 import React, { useState, useEffect } from 'react';
-import { Container, Typography, Paper, Box, Avatar } from '@mui/material';
+import { Container, Typography, Paper, Box, Avatar, Link } from '@mui/material';
 import { keyframes } from '@emotion/react';
 import useStudyStore from "../../stores/study";
 import useInfoStore from "../../stores/infos";
@@ -8,9 +8,12 @@ import firstPlaceImg from "./img/firstRankImg.png"
 import secondPlaceImg from "./img/secondRankImg.png"
 import thirdPlaceImg from "./img/thirdRankImg.png"
 import myPlaceImg from "./img/myRankImg.png"
+import RefreshIcon from '@mui/icons-material/Refresh';
 
 
 const InfoStore = useInfoStore.getState();
+
+const { updateStudyTime } = useStudyStore.getState();
 
 
 // 슬라이딩 애니메이션을 위한 keyframes
@@ -61,6 +64,10 @@ const StudyRoomLeaderBoard = ({ myRankInfo = { userName: InfoStore.userInfo.user
         <Typography variant="body2">
           공부 시간 랭킹
         </Typography>
+        <Box sx={{ flex: 0, display: 'flex', justifyContent: 'flex-end' }}>
+          <Link href="#" color="inherit"><RefreshIcon onClick={updateStudyTime} /></Link>
+        </Box>
+      
       </Paper>
       {rankInfo.length === 0 || myRankInfo.length === 0 ? (
         <Typography variant="body2" className="studyRoomRankNoData">
