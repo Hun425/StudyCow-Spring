@@ -28,7 +28,7 @@ const getCurrentDate = () => {
 
 const usePlanStore = create(
   persist(
-    (set, get) => ({
+    (set) => ({
       today: getCurrentDate(),
       date: getCurrentDate(),
       plans: [],
@@ -38,7 +38,6 @@ const usePlanStore = create(
 
       setPlans: (plans) => {
         if (!Array.isArray(plans)) {
-          console.error("plans is not an array:", plans);
           plans = [];
         }
         set({ plans });
@@ -130,14 +129,9 @@ const usePlanStore = create(
             }));
             return true;
           } else {
-            console.error(
-              "플래너 상태 변경에 실패했습니다. 서버 응답 코드:",
-              response.status
-            );
             return false;
           }
         } catch (error) {
-          console.error("플래너 상태 변경 중 오류가 발생했습니다:", error);
           return false;
         }
       },
@@ -146,7 +140,6 @@ const usePlanStore = create(
 
       getTodayPlanRequest: async () => {
         const { today } = usePlanStore.getState();
-        console.log("오늘은: " + today);
         const { token } = useInfoStore.getState();
         const headers = {
           Authorization: `Bearer ${token}`,
@@ -163,7 +156,6 @@ const usePlanStore = create(
             throw new Error("정보불러오기 에러");
           }
         } catch (e) {
-          console.log(e);
           return false;
         }
       },
@@ -185,23 +177,18 @@ const usePlanStore = create(
             throw new Error("정보불러오기 에러");
           }
         } catch (e) {
-          console.log(e);
           return false;
         }
       },
 
       deletePlan: async (planId) => {
         const { token } = useInfoStore.getState();
-        console.log("Deleting plan with ID:", planId);
-        console.log("Authorization token:", token);
         try {
           const response = await axios.delete(API_URL + `planner/${planId}`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           });
-
-          console.log("Response status:", response.status);
 
           if (response.status === 200) {
             set((state) => ({
@@ -210,14 +197,9 @@ const usePlanStore = create(
             }));
             return true;
           } else {
-            console.error(
-              "플래너 삭제에 실패했습니다. 서버 응답 코드:",
-              response.status
-            );
             return false;
           }
         } catch (error) {
-          console.error("플래너 삭제 중 오류가 발생했습니다:", error);
           return false;
         }
       },
@@ -240,11 +222,9 @@ const usePlanStore = create(
             throw new Error("정보불러오기 에러");
           }
         } catch (e) {
-          console.log(e);
           return false;
         }
       },
-
     }),
     {
       name: "plan-storage", // 상태를 로컬 스토리지에 저장

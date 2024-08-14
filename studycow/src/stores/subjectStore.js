@@ -24,7 +24,6 @@ const useSubjectStore = create((set) => ({
       });
       set({ subjects: response.data });
     } catch (error) {
-      console.error("Failed to fetch subjects:", error);
       set({ error: "과목 정보를 가져오는 데 실패했습니다." });
     }
   },
@@ -41,7 +40,6 @@ const useSubjectStore = create((set) => ({
       });
       set({ problemTypes: response.data });
     } catch (error) {
-      console.error("Failed to fetch problem types:", error);
       set({ error: "문제 유형 정보를 가져오는 데 실패했습니다." });
     }
   },

@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import useInfoStore from "./infos";
 import axios from "axios";
+import Notiflix from "notiflix";
 
 const API_URL =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/studycow/";
@@ -47,7 +48,7 @@ const useGradeStore = create((set) => ({
 
       set({ subjectGrades: grades }); // 변환된 데이터를 상태에 저장
     } catch (error) {
-      console.error("성적 불러오기 실패:", error); // 에러 로그 출력
+      Notiflix.Notify.failure("성적 데이터를 불러오지 못했소..."); // 에러 로그 출력
     }
   },
 
@@ -82,7 +83,7 @@ const useGradeStore = create((set) => ({
       // 상태 업데이트
       set({ weaknessTop3 });
     } catch (error) {
-      console.error("취약점 불러오기 실패", error);
+      Notiflix.Notify.failure("취약한 부분에 대한 정보들을 불러오지 못했소...");
     }
   },
 }));

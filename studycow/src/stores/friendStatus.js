@@ -3,6 +3,7 @@ import { persist } from "zustand/middleware";
 import axios from "axios";
 import useInfoStore from "./infos";
 import useGradeStore from "./grade"; // grade.js에서 상태 가져오기
+import Notiflix from "notiflix";
 
 const API_URL =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/studycow/";
@@ -21,13 +22,13 @@ const FriendStatusStore = create(
         const { selectedSubject } = useGradeStore.getState();
 
         if (!token || !userId) {
-          console.error("사용자 인증 정보가 없습니다.");
+          Notiflix.Notify.failure("제대로 로그인이 되었는지 확인해보소!");
           set({ error: "로그인이 필요합니다." });
           return;
         }
 
         if (!selectedSubject) {
-          console.error("선택된 과목이 없습니다.");
+          Notiflix.Notify.failure("과목을 선택했는지 확인해보소!");
           set({ error: "과목을 선택하세요." });
           return;
         }
@@ -54,7 +55,7 @@ const FriendStatusStore = create(
             set({ error: "정보 불러오기 에러" });
           }
         } catch (error) {
-          console.error("API 요청 중 오류 발생:", error);
+          Notiflix.Notify.failure("친구의 학습 정보를 불러오지 못했소...");
           set({ error: "API 요청 중 오류 발생" });
         }
       },
