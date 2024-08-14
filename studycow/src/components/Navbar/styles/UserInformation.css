@@ -62,7 +62,11 @@ div .profileImg {
   padding-top: calc(5 / 1440 * 100vw);
   padding-bottom: calc(2.5 / 1440 * 100vw);
   padding-left: calc(5 / 1440 * 100vw);
+  width: calc(200 / 1440 * 100vw);
   background-color: transparent;
+  white-space: nowrap; /* 텍스트를 한 줄로 표시 */
+  overflow: hidden; /* 넘치는 텍스트를 숨김 */
+  text-overflow: ellipsis; /* 넘치는 부분을 '...'로 표시 */
 }
 
 .userInfoItem {
