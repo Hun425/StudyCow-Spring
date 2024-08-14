@@ -26,7 +26,7 @@
 }
 
 .navItem p {
-  font-size: calc(15 / 1440 * 100vw);
+  font-size: calc(18 / 1440 * 100vw);
   margin: 0;
 }
 
@@ -36,7 +36,7 @@
 }
 
 .loginItem p {
-  font-size: calc(15 / 1440 * 100vw);
+  font-size: calc(18 / 1440 * 100vw);
   margin: 0;
 }
 

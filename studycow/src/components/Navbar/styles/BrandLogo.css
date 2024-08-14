@@ -4,14 +4,14 @@
 }
 
 .navLogo {
-  width: calc(40/1440*100vw);
+  width: calc(48/1440*100vw);
   height: auto;
   text-decoration: none !important;
   padding-bottom: calc(5/1440*100vw);
 }
 
 .navLogoContent {
-  font-size: calc(20/1440*100vw);
+  font-size: calc(24/1440*100vw);
   text-decoration: none !important;
   color: #bf714d;
 }
