@@ -9,7 +9,7 @@
 .mainInfoPart {
   display: flex;
   width: 100%;
-  gap: 20px; /* 좌우 컨테이너 사이 간격 추가 */
+  gap: calc(20 / 1440 * 100vw);
 }
 
 .mainRightContainer {
@@ -26,7 +26,7 @@
   justify-content: space-around;
   align-items: center;
   height: calc(390 / 1440* 100vw);
-  background-color: #f0f4f8;
+  background-color: #FAFAFA;
   border-radius: calc(20 / 1440 * 100vw); /* 네비게이션 바 밑에 위치 */
   box-shadow: 0 calc(8 / 1440 * 100vw) calc(12 / 1440 * 100vw) rgba(0, 0, 0, 0.1);
   padding: calc(20 / 1440 * 100vw);
@@ -36,7 +36,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f0f4f8;
+  background-color: #FAFAFA;
   border-radius: calc(20 / 1440 * 100vw); /* 네비게이션 바 밑에 위치 */
   box-shadow: 0 calc(8 / 1440 * 100vw) calc(12 / 1440 * 100vw) rgba(0, 0, 0, 0.1);
   padding: calc(20 / 1440 * 100vw);
@@ -53,7 +53,7 @@
 .mainLeftContainer {
   width: calc(300 / 1440 * 100vw); /* 고정 폭 설정 */
   height: auto;
-  background-color: #f0f4f8;
+  background-color: #FAFAFA;
   display: flex;
   align-items: center;
   justify-content: flex-start;

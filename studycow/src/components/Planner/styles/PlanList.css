@@ -1,5 +1,5 @@
 .singlePlanBox {
-  width: calc(490 / 1440 * 100vw); /* 박스 크기 설정 */
+  width: calc(470 / 1440 * 100vw);
   margin: 0; /* 마진 0 */
   padding: 0; /* 패딩 0 */
   overflow-y: auto; /* 세로 스크롤바 표시 */

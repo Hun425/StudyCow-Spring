@@ -1,7 +1,9 @@
 .studyMain {
-  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: calc(20 / 1440 * 100vw);
+  margin-top: 0 !important;
+  width: 100vw;
+  background: linear-gradient(to bottom, #FFFFFF 0%, #F0F7FF 100%);
+  min-height: 100vh; /* 페이지 전체 높이에 그라데이션 적용 */
 }
