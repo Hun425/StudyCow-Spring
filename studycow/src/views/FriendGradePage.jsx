@@ -7,13 +7,18 @@ import useFriendsStore from "../stores/friends";
 
 const FriendGradePage = () => {
   const { userId } = useParams();
-  const { fetchFriendInfo } = useFriendsStore();
+  const { fetchFriendInfo, friendInfo } = useFriendsStore();
 
   useEffect(() => {
     if (userId) {
       fetchFriendInfo(userId);
     }
   }, [fetchFriendInfo, userId]);
+
+
+  useEffect(() => {
+    document.title = `${friendInfo.userNickName}님의 성적페이지`;
+  }, [friendInfo]);
 
   return (
     <>

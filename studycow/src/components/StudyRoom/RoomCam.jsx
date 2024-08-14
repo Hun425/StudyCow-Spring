@@ -7,6 +7,10 @@ import "./styles/RoomCam.css";
 
 // RoomCam 컴포넌트
 function RoomCam({ roomId }) {
+  useEffect(() => {
+    document.title = `캠스터디 ${roomId}번방`;
+  }, []);
+
   const { userInfo } = useInfoStore();
   const userRef = useRef(null);
 
