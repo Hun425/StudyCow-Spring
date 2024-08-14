@@ -22,4 +22,6 @@
 
 .recentGradesGraph h3 {
   text-align: center;
+  font-weight: 700;
+  font-size: calc(24 / 1440 * 100vw);
 }

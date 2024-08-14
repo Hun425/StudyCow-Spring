@@ -1,20 +1,18 @@
 .subjectGradeGraph {
   /* 그래프 컨테이너의 너비, 높이 설정 */
   width: 100%;
-  height: auto;
-  min-height: calc(400 / 1440 * 100vw);
+  height: calc(400 / 1440 * 100vw);
   /* 그래프 상하 여백 추가 */
   margin-top: calc(20 / 1440 * 100vw);
-  /* 그래프 컨테이너에 테두리 추가 */
-  border: calc(1 / 1440 * 100vw) solid #e0e0e0;
   /* 모서리를 둥글게 처리 */
-  border-radius: calc(8 / 1440 * 100vw);
+  border-radius: calc(20 / 1440 * 100vw);
   /* 내부 여백 추가 */
   padding: calc(15 / 1440 * 100vw);
   /* 배경색 설정 */
-  background-color: #ffffff;
+  background-color: #f0f4f8;
   /* 그림자 효과 추가 */
-  box-shadow: 0 calc(2 / 1440 * 100vw) calc(4 / 1440 * 100vw) rgba(0, 0, 0, 0.1);
+  box-shadow: 0 calc(8 / 1440 * 100vw) calc(12 / 1440 * 100vw)
+    rgba(0, 0, 0, 0.1);
 }
 
 /* 차트 내부 폰트 스타일 전역 설정 (선택 사항) */

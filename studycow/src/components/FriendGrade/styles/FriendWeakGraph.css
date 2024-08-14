@@ -3,7 +3,7 @@
   width: 60%;
   max-width: calc(800 / 1440 * 100vw); /* 최대 너비 설정 */
   height: auto;
-  min-height: calc(400 / 1440 * 100vw);
+  min-height: calc(375 / 1440 * 100vw);
   padding: calc(20 / 1440 * 100vw);
   box-sizing: border-box; /* 패딩을 너비에 포함 */
   display: flex;
@@ -15,18 +15,19 @@
 /* 그래프 제목 스타일 */
 .friendWeakGraph h3 {
   text-align: center;
-  color: #333;
+  font-size: calc(24 / 1440 * 100vw);
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 /* 차트 컨테이너 스타일 */
 .friendChartContainer {
   width: 100%;
-  height: auto;
-  min-height: calc(250 / 1440 * 100vw); /* 차트의 높이 설정 */
+  height: 100%;
+  min-height: calc(300 / 1440 * 100vw); /* 차트의 높이 설정 */
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: calc(20 / 1440 * 100vw);
   padding: calc(30 / 1440 * 100vw) calc(20 / 1440 * 100vw);
   background-color: white;
   border-radius: calc(20 / 1440 * 100vw);
