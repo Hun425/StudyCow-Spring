@@ -41,6 +41,7 @@
 .studyEnterPageBody h2 {
   margin-bottom: calc(10 / 1440 * 100vw);
   font-size: calc(24 / 1440 * 100vw);
+  font-family: "JalnanGothic", sans-serif !important;
 }
 
 .cameraTestArea {
@@ -59,7 +60,8 @@
   width: calc(180 / 1440 * 100vw);
   height: calc(50 / 1440 * 100vw);
   align-self: center;
-  font-size: calc(30 / 1440 * 100vw);
+  font-family: "JalnanGothic", sans-serif !important;
+  font-size: calc(24 / 1440 * 100vw);
   color: #ffffff;
   cursor: pointer;
   border-radius: calc(25 / 1440 * 100vw);

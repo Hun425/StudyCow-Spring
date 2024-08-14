@@ -26,6 +26,7 @@
 }
 
 .analyzeUserCheck h1 {
+  font-family: "JalnanGothic", sans-serif;
   margin: 0px;
 }
 
@@ -35,7 +36,12 @@
 }
 
 .gradeSubjectSelect select {
-  width: calc(150 / 1440 * 100vw);
+  width: calc(90 / 1440 * 100vw);
+  height: calc(18 / 1440 * 100vw);
+  font-size: calc(12 / 1440 * 100vw);
+  font-weight: 700;
+  padding: 0;
+  text-align: center;
 }
 
 /* 캐릭터 상태 스타일 */
@@ -82,21 +88,20 @@
 
 /* 성적 등록 버튼 스타일 */
 .analyzeScoreRegistButton {
-  background-color: #4caf50; /* 배경색: 녹색 */
-  border: none; /* 테두리 제거 */
-  color: white; /* 글자 색상 */
-  padding: calc(10 / 1440 * 100vw) calc(20 / 1440 * 100vw); /* 패딩 */
-  text-align: center; /* 텍스트 중앙 정렬 */
-  text-decoration: none; /* 텍스트 밑줄 제거 */
-  display: inline-block; /* 인라인 블록 요소 */
-  font-size: calc(16 / 1440 * 100vw); /* 폰트 크기 */
-  margin: calc(4 / 1440 * 100vw) calc(2 / 1440 * 100vw); /* 약간의 마진 */
-  cursor: pointer; /* 마우스 커서 포인터로 변경 */
-  border-radius: calc(8 / 1440 * 100vw); /* 모서리 둥글게 */
+  font-weight: 700;
+  width: calc(100 / 1440 * 100vw);
+  height: calc(40 / 1440 * 100vw);
+  border-radius: calc(8 / 1440 * 100vw);
+  border: none;
+  background: #8fcbb5;
+  font-size: calc(18 / 1440 * 100vw);
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .analyzeScoreRegistButton:hover {
-  background-color: #45a049; /* 호버 시 배경색 조금 더 어둡게 */
+  background-color: #4e8a75; /* 호버 시 배경색 조금 더 어둡게 */
 }
 
 /*성적 등록 버튼이랑 과목 선택 드롭다운 묶음*/
@@ -133,7 +138,8 @@
 }
 
 .unSelectSubject {
-  font-size: 30px;
+  font-weight: 700;
+  font-size: calc(24 / 1440 * 100vw);
   text-align: center;
-  margin-top: 200px;
+  margin-top: calc(160 / 1440 * 100vw);
 }

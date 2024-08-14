@@ -143,7 +143,7 @@ button {
 
 .MyPlanDatePlanDate p {
   font-size: calc(20 / 1440 * 100vw);
-  font-family: "Jalnan", sans-serif;
+  font-family: "JalnanGothic", sans-serif;
 }
 
 
@@ -180,8 +180,10 @@ button {
   align-items: center;
 }
 .MyPlanCatSelectControl {
-  font-size: calc(9 / 1440 * 100vw) !important;
-  font-family: "Jalnan", sans-serif;
+  width: calc(90 / 1440 * 100vw);
+  height: calc(18 / 1440 * 100vw);
+  font-size: calc(12 / 1440 * 100vw);
+  font-weight: 700;
   padding: 0 !important;
   text-align: center;
 }
@@ -230,7 +232,7 @@ button {
 
 .MyPlanCatPlanTitle p {
   font-size: calc(20 / 1440 * 100vw);
-  font-family: "Jalnan", sans-serif;
+  font-family: "JalnanGothic", sans-serif;
   margin: 0;
   padding-top: calc(10 / 1440 * 100vw);
   text-align: center;

@@ -45,3 +45,7 @@
   flex-grow: 1;
   color: #B4C8BB;
 }
+
+.settingsModalName {
+  font-family: "JalnanGothic", sans-serif !important;  
+}

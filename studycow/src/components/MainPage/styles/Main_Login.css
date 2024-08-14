@@ -30,6 +30,7 @@
   height: calc(390 / 1440* 100vw);
   border-radius: calc(20 / 1440 * 100vw); /* 네비게이션 바 밑에 위치 */
   padding: calc(20 / 1440 * 100vw);
+  padding-left: calc(10 / 1440 * 100vw);
 }
 
 .mainRightDownContainer {

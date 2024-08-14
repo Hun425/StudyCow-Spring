@@ -15,12 +15,12 @@
 
 /* 스터디 생성 버튼 스타일 */
 .studyCreateBtn {
-  font-family: "JalnanGothic", sans-serif;
-  width: calc(120 / 1440 * 100vw);
-  height: calc(60 / 1440 * 100vw);
+  font-weight: 700;
+  width: calc(100 / 1440 * 100vw);
+  height: calc(40 / 1440 * 100vw);
   border-radius: calc(8 / 1440 * 100vw);
   border: none;
-  background: #a7d7c5;  /* 파스텔 민트 그린 */
+  background: #8fcbb5;
   font-size: calc(18 / 1440 * 100vw);
   color: #ffffff;
   cursor: pointer;
@@ -28,7 +28,7 @@
 }
 
 .studyCreateBtn:hover {
-  background: #8fcbb5;  /* 호버 시 약간 더 진한 색상 */
+  background: #4e8a75;  /* 호버 시 약간 더 진한 색상 */
 }
 
 .studySysInfo {

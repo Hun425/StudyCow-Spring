@@ -8,7 +8,7 @@ function SettingsModal({ open, onClose, volume, micVolume, onVolumeChange, onMic
     <Modal open={open} onClose={onClose}>
       <Box className="settingsModalContainer">
         <div className="settingsModalHeader">
-          <Typography variant="h6">장비 설정</Typography>
+          <Typography variant="h6" className="settingsModalName">장비 설정</Typography>
           <IconButton onClick={onClose}>
             <Close />
           </IconButton>

@@ -27,6 +27,7 @@
     margin: 0;
     padding: 0;
     box-shadow: rgb(38, 57, 77) 0 calc(20 / 1440 * 100vw) calc(30 / 1440 * 100vw) calc(-10 / 1440 * 100vw);
+    font-family: "Jalnan", sans-serif !important;
   }
   
   .MyPageContent {
@@ -34,6 +35,7 @@
     width: calc(804 / 1440 * 100vw);
     background-color: #fff;
     box-sizing: border-box;
+    font-family: "JalnanGothic", sans-serif !important;
   }
 
   .FriendsTitle {

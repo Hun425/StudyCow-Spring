@@ -14,7 +14,7 @@ div .profileImg {
 }
 
 .userInfoClose {
-  font-family: "Jalnan", sans-serif;
+  font-family: "JalnanGothic", sans-serif;
   font-size: calc(12 / 1440 * 100vw);
   display: flex;
   align-items: center;
@@ -30,7 +30,7 @@ div .profileImg {
 }
 
 .userInfoOpen {
-  font-family: "Jalnan", sans-serif;
+  font-family: "JalnanGothic", sans-serif;
   font-size: calc(12 / 1440 * 100vw);
   display: flex;
   align-items: center;
@@ -43,7 +43,7 @@ div .profileImg {
 }
 
 .userInfoDetail {
-  font-family: "Jalnan", sans-serif;
+  font-family: "JalnanGothic", sans-serif;
   margin: 0;
   z-index: 2;
   height: calc(85 / 1440 * 100vw);
@@ -73,7 +73,7 @@ div .profileImg {
 }
 
 .userInfoItem {
-  font-family: "Jalnan", sans-serif;
+  font-family: "JalnanGothic", sans-serif;
   margin: 0;
   z-index: 2;
   font-size: calc(14 / 1440 * 100vw) !important;

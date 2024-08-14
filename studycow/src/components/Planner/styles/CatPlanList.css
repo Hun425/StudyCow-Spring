@@ -6,7 +6,7 @@
 }
 
 .singleSubNoPlan {
-  font-family: "Jalnan", sans-serif;
+  font-family: "JalnanGothic", sans-serif;
   font-size: calc(16 / 1440 * 100vw); /* 기본 폰트 크기 설정 */
   text-align: center;
 }

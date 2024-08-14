@@ -36,7 +36,9 @@
   justify-content: center;
   width: calc(90 / 1440 * 100vw);
   height: calc(18 / 1440 * 100vw);
-  padding: 0%;
-  font-size: calc(9 / 1440 * 100vw) !important;
+  font-size: calc(12 / 1440 * 100vw);
+  font-family: "Pretendard", sans-serif;
+  font-weight: 700;
+  padding: 0 !important;
   margin: 0;
 }

@@ -3,7 +3,7 @@
   justify-content: center;
   margin-top: 0 !important;
   width: 100vw;
-  padding: 0 calc(200 / 1440 * 100vw);
+  padding: 0 calc(180 / 1440 * 100vw);
   /* background-image: url('../assets/defaultBackground.png');
   background-size: cover;
   background-position: center;

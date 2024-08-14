@@ -18,9 +18,10 @@ const TestAnalyze = () => {
   useEffect(() => {
     fetchSubjects();
   }, [fetchSubjects]);
+
+
+  // 유저 성적 공개여부 감시
   useEffect(() => {
-    // userInfo.userPublic 값이 변경될 때마다 실행할 코드
-    console.log("userPublic 상태가 변경되었습니다:", userInfo.userPublic);
   }, [userInfo.userPublic]);
 
   const handleSubjectChange = (subjectCode) => {
@@ -55,20 +56,19 @@ const TestAnalyze = () => {
     <div className="analyzeTotalContainer">
       <div className="analyzeHeader">
         <div className="analyzeUserCheck">
-          <h1>{userInfo.userNickName}님 어서오세요</h1>
+          <h1>내 성적분석 페이지</h1>
         </div>
 
         <div className="analyzeSideNav">
           {/* 공개/비공개 스위치 적용 */}
           <Stack direction="row" spacing={0.5} alignItems="center">
-            <Typography>비공개</Typography>
+            <Typography>{userInfo.userPublic ? "공개" : "비공개"}</Typography>
             <Switch
               size="medium"
-              color="warning"
+              color="success"
               checked={Boolean(userInfo.userPublic)}
               onChange={handlePublicToggle}
             />
-            <Typography>공개</Typography>
           </Stack>
 
           {/* 성적 등록 버튼 */}
@@ -104,7 +104,7 @@ const TestAnalyze = () => {
             <GradeAnalyzeBox subject={selectedSubject} />
           ) : (
             <div className="unSelectSubject">
-              <p>과목 먼저 선택해보소</p>
+              <p>우선 과목을 선택하소</p>
             </div>
           )}
         </div>
