@@ -16,7 +16,6 @@ const MainGradeItem = () => {
   const handleSubjectChange = (e) => {
     const key = e.target.value;
     setSelectedSubject(key);
-    // console.log(key); // selectedSubject 변경 시 콘솔에 출력
   };
 
   return (
