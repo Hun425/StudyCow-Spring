@@ -70,7 +70,6 @@
 }
 
 .singleTodayPlanContent p {
-  display: flex;
   align-items: center;
   margin: 0;
   font-size: calc(14 / 1440 * 100vw); /* 화면 너비에 비례한 폰트 크기 */
@@ -79,7 +78,7 @@
   white-space: nowrap; /* 텍스트를 한 줄로 표시 */
   overflow: hidden; /* 넘치는 텍스트를 숨김 */
   text-overflow: ellipsis; /* 넘치는 부분을 '...'로 표시 */
-  width: calc(150 / 1440 * 100vw);
+  width: calc(200 / 1440 * 100vw);
 }
 
 /* 완료된 플랜에 대한 스타일 */

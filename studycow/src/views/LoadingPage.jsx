@@ -5,6 +5,9 @@ import "../styles/LoadingPage.css";
 const LoadingPage = () => {
   const [dots, setDots] = useState("");
   const [progress, setProgress] = useState(0);
+  useEffect(() => {
+    document.title = "기다려주소ㅠ";
+  }, []);
 
   useEffect(() => {
     const dotInterval = setInterval(() => {

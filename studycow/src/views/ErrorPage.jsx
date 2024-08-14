@@ -6,6 +6,10 @@ const ErrorPage = () => {
   const [semicolon, setSemicolon] = useState("");
 
   useEffect(() => {
+    document.title = "에러났소ㅠ";
+  }, []);
+
+  useEffect(() => {
     const interval = setInterval(() => {
       setSemicolon((prevSemicolon) => {
         if (prevSemicolon.length < 3) {

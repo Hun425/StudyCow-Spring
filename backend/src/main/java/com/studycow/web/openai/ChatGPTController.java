@@ -102,9 +102,11 @@ public class ChatGPTController {
             String response = chatGPTResponse.getChoices().get(0).getMessage().getContent();
 
             // JSON 마크다운 제거
-            if (response.startsWith("```json") && response.endsWith("```")) {
+            if (response.contains("```json") || response.contains("```")) {
                 // 마크다운을 제거하기 위해 처음과 끝의 부분을 잘라냅니다.
-                response = response.substring(7, response.length() - 3).trim();
+                int startIndex = response.indexOf("```json") + 7; // "```json"의 길이 7을 더하여 시작 인덱스 설정
+                int endIndex = response.lastIndexOf("```"); // 마지막 "```"의 인덱스
+                response = response.substring(startIndex, endIndex).trim(); // 사이 문자열 추출
             }
 
             return ResponseEntity.ok(response);
