@@ -1,6 +1,4 @@
 .mainPlanMover {
-  width: calc(360 / 1440 * 100vw);
-  height: calc(350 / 1440 * 100vw);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -8,9 +6,9 @@
 }
 
 .mainPlanContainer {
-  width: calc(360 / 1440 * 100vw);
+  width: calc(270 / 1440 * 100vw);
+  height: calc(262.5 / 1440 * 100vw);
   display: flex;
-  height: calc(350 / 1440 * 100vw);
   flex-direction: column;
   background-color: #ffeb3b;
   border-radius: calc(20 / 1440 * 100vw);
@@ -20,19 +18,22 @@
 }
 
 .mainTodayTodo {
-  font-size: calc(30 / 1440 * 100vw);
-  margin-top: calc(15 / 1440 * 100vw);
-  padding-bottom: calc(15 / 1440 * 100vw);
+  font-family: "JalnanGothic", sans-serif;
+  font-size: calc(17 / 1440 * 100vw);
+  margin-top: calc(10 / 1440 * 100vw);
+  padding-bottom: calc(5 / 1440 * 100vw);
   border-bottom: calc(1 / 1440 * 100vw) solid black;
 }
 
 .goToPlanPage {
   width: 100%;
-  height: calc(70 / 1440 * 100vw);
+  font-family: "JalnanGothic", sans-serif;
+  height: calc(40 / 1440 * 100vw);
+  padding: calc(5 / 1440 * 100vw) 0;
   bottom: 0;
   border: none;
   background-color: #fbc02d;
   margin-top: auto;
   border-radius: 0 0 calc(20 / 1440 * 100vw) calc(20 / 1440 * 100vw);
-  font-size: calc(20 / 1440 * 100vw);
+  font-size: calc(14 / 1440 * 100vw);
 }

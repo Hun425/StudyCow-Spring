@@ -25,10 +25,14 @@ const RecentRoomItem = ({
       className="recentRoomContainer"
       style={{ backgroundImage: `url(${thumb})` }}
     >
-      <p className="recentRoomTitle">{title}</p>
-      <p className="recentRoomCount1">현재 인원: {nowPerson}</p>
-      <p className="recentRoomCount2">최대 인원: {maxPerson}</p>
-      <p className="recentRoomContent">{content}</p>
+      <div className="mainRecentRoomInfo">
+        <p className="recentRoomTitle">{title}</p>
+        <div className="mainRecentRoomInfoDetail">
+          <p className="recentRoomCount1">현재 인원: {nowPerson}</p>
+          <p className="recentRoomCount2">최대 인원: {maxPerson}</p>
+          <p className="recentRoomContent">{content}</p>
+        </div>
+      </div>
       <button className="recentRoomEnterBtn" onClick={openModal}>
         입장하기
       </button>

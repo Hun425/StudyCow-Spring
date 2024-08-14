@@ -1,7 +1,6 @@
 .footer {
     background-color: #191f28;
     padding: calc(24 / 1440 * 100vw) calc(40 / 1440 * 100vw);
-    margin-top: calc(32 / 1440 * 100vw);
   }
   
   .footer-text-gray {

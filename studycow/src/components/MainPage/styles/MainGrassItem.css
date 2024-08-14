@@ -1,12 +1,12 @@
 .mainGrassContainer {
-  width: calc(440 / 1440 * 100vw);
-  height: calc(350 / 1440 * 100vw);
+  width: calc(330 / 1440 * 100vw);
+  height: calc(262.5 / 1440 * 100vw);
   border-radius: calc(20 / 1440 * 100vw);
-  padding: calc(20 / 1440 * 100vw);
+  padding: calc(15 / 1440 * 100vw);
   display: flex;
   justify-content: center;
   background-color: white;
-  padding-bottom: calc(40 / 1440 * 100vw);
+  padding-bottom: calc(30 / 1440 * 100vw);
   box-shadow: 0 calc(8 / 1440 * 100vw) calc(12 / 1440 * 100vw) rgba(0, 0, 0, 0.1);
 }
 
