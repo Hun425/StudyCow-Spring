@@ -12,19 +12,19 @@ button {
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
+  width: calc(940 / 1440 * 100vw);
 }
 
 /* 캘린더 컨테이너 */
 .MyPlanDateCalendar {
-  max-width: calc(600 / 1440 * 100vw);
+  width: calc(350 / 1440 * 100vw);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   flex: 1;
   margin: 0;
-  padding: calc(30 / 1440 * 100vw);
   background-color: rgba(0, 0, 0, 0); /* 완전 투명 배경 */
   max-height: calc(500 / 1440 * 100vw);
   border: none; /* 경계선 제거 */
@@ -33,7 +33,7 @@ button {
 
 /* 계획 목록 컨테이너 */
 .MyPlanDatePlanbox {
-  width: calc(600 / 1440 * 100vw);
+  width: calc(350 / 1440 * 100vw) !important;
   overflow-x: hidden;
   display: flex;
   align-items: center; /* 변경: center에서 flex-start로 */
@@ -41,13 +41,11 @@ button {
   flex-direction: column;
   flex: 1;
   border: none;
+  padding: calc(10 / 1440 * 100vw);
   border-radius: calc(12 / 1440 * 100vw);
-  margin: calc(35 / 1440 * 100vw);
-  padding: calc(30 / 1440 * 100vw);
-  margin-right: calc(10 / 1440 * 100vw);
   box-shadow: 0 calc(8 / 1440 * 100vw) calc(24 / 1440 * 100vw) rgba(0, 0, 0, 0.1);
   overflow-y: auto; /* 이미 있음: 세로 스크롤 허용 */
-  min-height: calc(395 / 1440 * 100vw);
+  min-height: calc(375 / 1440 * 100vw);
   max-height: calc(420 / 1440 * 100vw); /* 추가: 최대 높이 설정 */
   transition: all 0.3s ease;
   background-color: #ffeb3b;
@@ -67,6 +65,8 @@ button {
 
 /* 버튼 컨테이너 */
 .MyPlanButtonContainer {
+  position: absolute;
+  right: calc(20 / 1440 * 100vw);
   display: flex; /* 플렉스 박스로 설정하여 가로로 배치 */
   gap: calc(40 / 1440 * 100vw); /* 버튼 사이의 간격 */
   justify-content: center; /* 버튼을 가운데 정렬 */
@@ -136,19 +136,17 @@ button {
 .MyPlanDatePlanDate {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: calc(470 / 1440 * 100vw);
+  justify-content: center;
+  margin-top: calc(15 / 1440 * 100vw);
+  width: calc(350 / 1440 * 100vw);
 }
 
 .MyPlanDatePlanDate p {
-  font-size: calc(24 / 1440 * 100vw);
+  font-size: calc(20 / 1440 * 100vw);
+  font-family: "Jalnan", sans-serif;
 }
 
-.MyPlanEmptyCase {
-  height: calc(33 / 1440 * 100vw);
-  width: calc(33 / 1440 * 100vw);
-  padding-bottom: calc(1 / 1440 * 100vw);
-}
+
 
 .MyPlanOutoaddButton {
   height: calc(33 / 1440 * 100vw);
@@ -166,10 +164,11 @@ button {
 }
 
 .MyPlanCatPlanHeader {
+  position: absolute;
   padding: 0;
-  margin-right: calc(10 / 1440 * 100vw);
+  margin-right: calc(20 / 1440 * 100vw);
   max-height: calc(40 / 1440 * 100vw);
-  width: calc(1190 / 1440 * 100vw);
+  width: calc(935 / 1440 * 100vw);
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -181,11 +180,15 @@ button {
   align-items: center;
 }
 .MyPlanCatSelectControl {
-  font-size: calc(16 / 1440 * 100vw) !important;
+  font-size: calc(9 / 1440 * 100vw) !important;
+  font-family: "Jalnan", sans-serif;
+  padding: 0 !important;
+  text-align: center;
 }
 
 .MyPlanCatSelectbar select {
-  width: calc(150 / 1440 * 100vw);
+  width: calc(90 / 1440 * 100vw) !important;
+  height: calc(18 / 1440 * 100vw) !important;
 }
 
 .MyPlanCatPlanContainer {
@@ -194,12 +197,12 @@ button {
   justify-content: flex-start;
   flex-direction: column;
   gap: calc(30 / 1440 * 100vw);
-  width: calc(1199 / 1440 * 100vw);
+  width: calc(940 / 1440 * 100vw);
   box-sizing: border-box;
   border-radius: calc(12 / 1440 * 100vw);
   height: auto;
   max-height: calc(500 / 1440 * 100vw);
-  padding-top: calc(10 / 1440 * 100vw);
+  margin-top: calc(60 / 1440 * 100vw);
   padding: calc(10 / 1440 * 100vw);
   background-color: white;
   box-shadow: 0 calc(8 / 1440 * 100vw) calc(24 / 1440 * 100vw) rgba(0, 0, 0, 0.1);
@@ -210,7 +213,7 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: calc(1200 / 1440 * 100vw);
+  width: calc(940 / 1440 * 100vw);
   height: auto;
   max-height: calc(250 / 1440 * 100vw);
   background-color: rgba(0, 0, 0, 0);
@@ -226,9 +229,10 @@ button {
 }
 
 .MyPlanCatPlanTitle p {
-  font-size: calc(30 / 1440 * 100vw);
+  font-size: calc(20 / 1440 * 100vw);
+  font-family: "Jalnan", sans-serif;
   margin: 0;
-  padding: 0;
+  padding-top: calc(10 / 1440 * 100vw);
   text-align: center;
   width: 100%;
 }

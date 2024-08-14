@@ -1,9 +1,9 @@
 .Calendar {
-    font-weight: bold;
+    
     width: calc(350 / 1440 * 100vw);
     height: auto;
     border-radius: calc(15 / 1440 * 100vw);
-    font-family: 'Arial', sans-serif;
+    font-weight: 500 !important;
     box-shadow: 0 calc(8 / 1440 * 100vw) calc(24 / 1440 * 100vw) rgba(0,0,0,0.1);
     overflow: hidden;
     background-color: white;
@@ -16,6 +16,7 @@
     align-items: center;
     padding: calc(10 / 1440 * 100vw);
     background-color: #B4C8BB;
+    font-family: "Jalnan", sans-serif;
     color: white;
   }
   
