@@ -27,7 +27,6 @@
   background: #84c1f6;
   font-size: calc(30 / 1440 * 100vw);
   color: #ffffff;
-  font-family: "CustomFontGothic", sans-serif;
   cursor: pointer;
 }
 
@@ -137,7 +136,7 @@
   align-self: center;
   font-size: calc(30 / 1440 * 100vw);
   color: #ffffff;
-  font-family: "CustomFontGothic", sans-serif;
+  font-family: "Pretendard", sans-serif;
   cursor: pointer;
   border-radius: calc(25 / 1440 * 100vw);
   background: #494949;

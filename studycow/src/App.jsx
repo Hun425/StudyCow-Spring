@@ -7,7 +7,7 @@ import Notiflix from 'notiflix';
 // Material UI 폰트 적용
 const theme = createTheme({
   typography: {
-    fontFamily: "CustomFontGothic, sans-serif"
+    fontFamily: "Pretendard, sans-serif"
   },
 });
 

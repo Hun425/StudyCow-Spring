@@ -36,7 +36,6 @@
   
   .MonthYear {
     margin-top: calc(7 / 1440 * 100vw);
-    font-family: "CustomFontGothic", sans-serif;
     font-size: calc(25 / 1440 * 100vw);
   }
   
