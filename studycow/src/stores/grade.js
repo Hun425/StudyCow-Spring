@@ -9,6 +9,7 @@ const API_URL =
 const useGradeStore = create((set) => ({
   selectedSubject: "", // ""이 아닌 null, 0을 사용할 경우 기본값('과목 선택')이 제대로 작동하지 않음
   subjectGrades: {}, // 변환된 데이터를 저장할 상태 변수
+  weaknessParts: {}, // 틀린 문제 유형에 대한 정보 담을 변수
   weaknessTop3: {}, // 가장 많이 틀린 문제 유형 상위 3개와 틀린 개수 담을 변수
 
   // 선택된 과목을 설정하고, subjectGrades를 초기화하는 함수
@@ -71,6 +72,12 @@ const useGradeStore = create((set) => ({
       // wrongCnt를 기준으로 내림차순 정렬
       const sortedStats = detailStats.sort((a, b) => b.wrongCnt - a.wrongCnt);
 
+      // 틀린 유형에 대한 정보 업데이트
+      const weaknessParts = sortedStats.reduce((acc, item) => {
+        acc[item.catName] = item.wrongCnt;
+        return acc;
+      }, {});
+
       // 상위 3개 항목 선택
       const top3 = sortedStats.slice(0, 3);
 
@@ -81,7 +88,7 @@ const useGradeStore = create((set) => ({
       }, {});
 
       // 상태 업데이트
-      set({ weaknessTop3 });
+      set({ weaknessParts, weaknessTop3 });
     } catch (error) {
       Notiflix.Notify.failure("취약한 부분에 대한 정보들을 불러오지 못했소...");
     }
