@@ -134,14 +134,19 @@ const StudyList = () => {
   }, [fetchRooms, fetchRecentRoom, fetchYesterdayRankInfo]);
 
   const [currentRank, setCurrentRank] = useState(0);
+  const [isExpanded, setIsExpanded] = useState(false); // 추가된 상태: 랭킹 정보 확장 여부
 
   // 랭킹 슬라이드 애니메이션을 위한 Effect
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentRank((prevRank) => (prevRank + 1) % displayCount);
-    }, 3000);
+    }, 2000);
     return () => clearInterval(interval);
   }, [displayCount]);
+
+  const handleRankClick = () => {
+    setIsExpanded(!isExpanded); // 클릭 시 확장/축소 상태 변경
+  };
 
   return (
     <div className="studyListContainer">
@@ -156,7 +161,8 @@ const StudyList = () => {
       <div>
         <p className="rankTitle">누적 공부시간 랭킹</p>
         <Container className="studyListRankLeaderboard">
-          <StyledPaper elevation={3}>
+          <StyledPaper elevation={3} onClick={handleRankClick}>
+            {/* 클릭 이벤트 추가 */}
             <Box className="studyListRankContent">
               {yesterdayRankInfo?.rankUser
                 ?.slice(0, displayCount)
@@ -196,6 +202,24 @@ const StudyList = () => {
                 ))}
             </Box>
           </StyledPaper>
+          {/* 확장된 랭킹 정보를 렌더링 */}
+          {isExpanded && (
+            <Box className="expandedRankInfo">
+              {yesterdayRankInfo?.rankUser?.slice(0, 3).map((data) => (
+                <Box key={data.rank} className="expandedRankItem">
+                  <StyledTypography variant="h6">
+                    {data.rank}위
+                  </StyledTypography>
+                  <StyledTypography variant="body1">
+                    닉네임: {data.userNickName}
+                  </StyledTypography>
+                  <StyledTypography variant="body1">
+                    총 공부 시간: {formatStudyTime(data.sumTime)}
+                  </StyledTypography>
+                </Box>
+              ))}
+            </Box>
+          )}
         </Container>
       </div>
       <div className="recentStudyRoom">
