@@ -26,7 +26,9 @@
 body {
   font-family: "CustomFontGothic", sans-serif;
   width: 100vw;
-  height: 100vh;
+  height: auto;
   margin: 0;
   padding: 0;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #FFFFFF 0%, #F0F7FF 100%);
 }

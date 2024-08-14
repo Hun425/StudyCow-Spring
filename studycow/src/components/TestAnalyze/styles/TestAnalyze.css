@@ -1,10 +1,17 @@
 /* 전체 컨테이너 스타일 */
 .analyzeTotalContainer {
-  margin-bottom: calc(30 / 1440 * 100vw);
-  padding: 0 calc(80 / 1440 * 100vw);
+  min-height: 80vh;
+  margin: calc(75 / 1440 * 100vw); /* 전체 컨테이너에 여백 추가 */
+  margin-bottom: calc(30 / 1440 * 100vw) !important;
+  margin-top: calc(30 / 1440 * 100vw);
+  border-radius: calc(20 / 1440 * 100vw); /* 네비게이션 바 밑에 위치 */
+  box-shadow: 0 calc(8 / 1440 * 100vw) calc(12 / 1440 * 100vw) rgba(0, 0, 0, 0.1);
+  padding: calc(20 / 1440 * 100vw);
+  background-color: #FAFAFA;
+  padding-bottom: calc(50 / 1440 * 100vw);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 }
 
