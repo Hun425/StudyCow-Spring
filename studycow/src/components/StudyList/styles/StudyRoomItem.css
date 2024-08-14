@@ -1,6 +1,6 @@
 .studyRoomContainer {
-  width: calc(300 / 1440 * 100vw);
-  height: calc(200 / 1440 * 100vw);
+  width: calc(180 / 1440 * 100vw);
+  height: calc(120 / 1440 * 100vw);
   border-radius: calc(10 / 1440 * 100vw);
   background: #83a1ca; /* 기본 배경 색 */
   background-size: cover; /* 배경 이미지가 컨테이너를 덮도록 설정 */
@@ -11,7 +11,7 @@
   justify-content: space-between;
   position: relative; /* 위치를 조정하기 위해 상대적으로 설정 */
   overflow: hidden; /* 오버레이가 컨테이너를 벗어나지 않도록 설정 */
-  box-shadow: 0 calc(10 / 1440 * 100vw) calc(20 / 1440 * 100vw)
+  box-shadow: 0 calc(4 / 1440 * 100vw) calc(8 / 1440 * 100vw)
     rgba(0, 0, 0, 0.5);
 }
 
@@ -27,20 +27,23 @@
 }
 
 .studyRoomTitle {
+  text-align: center;
   color: #fff;
-  font-size: calc(25 / 1440 * 100vw);
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
+  font-size: calc(20 / 1440 * 100vw);
+  font-weight: 700;
   margin: 0;
   position: relative; /* 텍스트를 오버레이 위에 배치 */
   z-index: 2; /* 텍스트를 오버레이 위에 배치 */
+  white-space: nowrap; /* 텍스트를 한 줄로 표시 */
+  overflow: hidden; /* 넘치는 텍스트를 숨김 */
+  text-overflow: ellipsis; /* 넘치는 부분을 '...'로 표시 */
+  width: calc(160 / 1440 * 100vw);
 }
 
 .studyRoomCount {
   color: #fff;
   text-align: right;
-  font-size: calc(14 / 1440 * 100vw);
+  font-size: calc(12 / 1440 * 100vw);
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -50,10 +53,11 @@
 }
 
 .openEnterModalBtn {
-  width: calc(180 / 1440 * 100vw);
-  height: calc(50 / 1440 * 100vw);
+  font-family: "JalnanGothic", sans-serif;
+  width: calc(80 / 1440 * 100vw);
+  height: calc(20 / 1440 * 100vw);
   align-self: center;
-  font-size: calc(30 / 1440 * 100vw);
+  font-size: calc(11 / 1440 * 100vw);
   color: #ffffff;
   cursor: pointer;
   border-radius: calc(25 / 1440 * 100vw);

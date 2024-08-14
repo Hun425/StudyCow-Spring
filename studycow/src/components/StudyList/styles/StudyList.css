@@ -1,15 +1,10 @@
 /* 전체 스터디 리스트 컨테이너 스타일 */
 .studyListContainer {
   width: 100%;
-  height: auto;
-  margin: calc(75 / 1440 * 100vw); /* 전체 컨테이너에 여백 추가 */
-  margin-bottom: calc(30 / 1440 * 100vw);
-  margin-top: calc(30 / 1440 * 100vw);
-  border-radius: calc(20 / 1440 * 100vw); /* 네비게이션 바 밑에 위치 */
+  height: 100%;
   box-shadow: 0 calc(8 / 1440 * 100vw) calc(12 / 1440 * 100vw) rgba(0, 0, 0, 0.1);
-  padding: calc(20 / 1440 * 100vw);
-  background-color: #FAFAFA;
-  padding-bottom: calc(50 / 1440 * 100vw);
+  padding: calc(50 / 1440 * 100vw);
+  background: linear-gradient(to bottom, #FFFFFF 0%, #FAFAFA 100%);
 }
 
 .studyListHeader {
@@ -20,14 +15,20 @@
 
 /* 스터디 생성 버튼 스타일 */
 .studyCreateBtn {
-  width: calc(150 / 1440 * 100vw);
-  height: calc(75 / 1440 * 100vw);
-  border-radius: calc(10 / 1440 * 100vw);
+  font-family: "JalnanGothic", sans-serif;
+  width: calc(120 / 1440 * 100vw);
+  height: calc(60 / 1440 * 100vw);
+  border-radius: calc(8 / 1440 * 100vw);
   border: none;
-  background: #84c1f6;
-  font-size: calc(30 / 1440 * 100vw);
+  background: #a7d7c5;  /* 파스텔 민트 그린 */
+  font-size: calc(18 / 1440 * 100vw);
   color: #ffffff;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.studyCreateBtn:hover {
+  background: #8fcbb5;  /* 호버 시 약간 더 진한 색상 */
 }
 
 .studySysInfo {
@@ -51,13 +52,15 @@
 /* 최근 입장한 스터디와 스터디 리스트 제목 스타일 */
 .recentEnterTitle,
 .studyListTitle {
-  font-size: calc(30 / 1440 * 100vw);
+  font-family: "JalnanGothic", sans-serif;
+  font-size: calc(20 / 1440 * 100vw);
   margin: calc(40 / 1440 * 100vw) 0 calc(20 / 1440 * 100vw);
 }
 
 /* 랭킹 제목 스타일 */
 .rankTitle {
-  font-size: calc(30 / 1440 * 100vw);
+  font-family: "JalnanGothic", sans-serif;
+  font-size: calc(24 / 1440 * 100vw);
   text-align: center;
 }
 
@@ -178,7 +181,8 @@
   .rankTitle,
   .recentEnterTitle,
   .studyListTitle {
-    font-size: calc(24 / 1440 * 100vw); /* 제목 폰트 크기 줄임 */
+    font-family: "JalnanGothic", sans-serif;
+    font-size: calc(20 / 1440 * 100vw);
   }
 
   .studyCreateBtn {
