@@ -1,0 +1,22 @@
+.footer {
+    background-color: #191f28;
+    padding: calc(24 / 1440 * 100vw) calc(40 / 1440 * 100vw);
+    margin-top: calc(32 / 1440 * 100vw);
+  }
+  
+  .footer-text-gray {
+    color: gray;
+    font-size: calc(10 / 1440 * 100vw) !important;
+    font-weight: 500 !important;
+  }
+  
+  .footer-text-white {
+    color: white;
+    font-size: calc(12 / 1440 * 100vw) !important;
+    font-weight:400 !important;
+  }
+  
+  .footer-small {
+    margin-bottom: calc(8 / 1440 * 100vw);
+  }
+  
