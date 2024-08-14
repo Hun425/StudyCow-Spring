@@ -5,6 +5,7 @@ import editButton from "./img/editButton.png";
 import usePlanStore from "../../stores/plan";
 import useSubjectStore from "../../stores/subjectStore"; // subject store import
 import PlanModify from "./CreateModify/PlanModify"; // PlanModify 모달 컴포넌트
+import Notiflix from "notiflix";
 
 const PlanList = () => {
   const { plans, changePlanStatus, deletePlan, setPlans } = usePlanStore(); // changePlanStatus 가져오기
@@ -23,11 +24,10 @@ const PlanList = () => {
     try {
       const success = await changePlanStatus(planId); // 상태 변경 요청
       if (!success) {
-        alert("플랜 상태 변경에 실패했습니다.");
+        Notiflix.Notify.failure("플랜 상태 변경에 실패했습니다.");
       }
     } catch (error) {
-      console.error("플랜 상태 변경 중 오류가 발생했습니다:", error);
-      alert("플랜 상태 변경 중 오류가 발생했습니다.");
+      Notiflix.Notify.failure("플랜 상태 변경에 실패했습니다.");
     }
   };
 
@@ -43,21 +43,28 @@ const PlanList = () => {
 
   // 삭제 핸들러 함수
   const handleDeleteClick = async (planId) => {
-    const confirmed = window.confirm("정말로 삭제하시겠습니까?");
-    if (confirmed) {
-      try {
-        const success = await deletePlan(planId);
-        if (success) {
-          alert("플래너가 성공적으로 삭제되었습니다.");
-          setPlans(plans.filter((plan) => plan.planId !== planId)); // 상태 갱신
-        } else {
-          alert("플래너 삭제에 실패했습니다.");
+    Notiflix.Confirm.show(
+      "삭제 확인",
+      "정말로 삭제하시겠습니까?",
+      "예",
+      "아니오",
+      async () => {
+        try {
+          const success = await deletePlan(planId);
+          if (success) {
+            Notiflix.Notify.success("플래너가 성공적으로 삭제되었습니다.");
+            setPlans(plans.filter((plan) => plan.planId !== planId)); // 상태 갱신
+          } else {
+            Notiflix.Notify.failure("플래너 삭제에 실패했습니다.");
+          }
+        } catch (error) {
+          Notiflix.Notify.failure("플래너 삭제에 실패했습니다.");
         }
-      } catch (error) {
-        console.error("플래너 삭제 중 오류가 발생했습니다:", error);
-        alert("플래너 삭제 중 오류가 발생했습니다.");
+      },
+      () => {
+        Notiflix.Notify.info("플래너 삭제가 취소되었습니다.");
       }
-    }
+    );
   };
 
   const formatPlanStudyTime = (minutes) => {

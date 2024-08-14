@@ -5,6 +5,7 @@ import usePlanStore from "../../stores/plan.js";
 import useSubjectStore from "../../stores/subjectStore"; // subject store import
 import PlanModify from "./CreateModify/PlanModify"; // Import the PlanModify modal
 import "./styles/CatPlanList.css";
+import Notiflix from "notiflix";
 
 const CatPlanList = () => {
   const {
@@ -64,11 +65,10 @@ const CatPlanList = () => {
         );
         setSubPlans(updatedPlans);
       } else {
-        alert("플랜 상태 변경에 실패했습니다.");
+        Notiflix.Notify.failure("플랜 상태 변경에 실패했습니다.");
       }
     } catch (error) {
-      console.error("플랜 상태 변경 중 오류가 발생했습니다:", error);
-      alert("플랜 상태 변경 중 오류가 발생했습니다.");
+      Notiflix.Notify.failure("플랜 상태 변경에 실패했습니다.");
     }
   };
 
@@ -88,17 +88,16 @@ const CatPlanList = () => {
       try {
         const success = await deletePlan(planId);
         if (success) {
-          alert("플래너가 성공적으로 삭제되었습니다.");
+          Notiflix.Notify.success("플래너가 성공적으로 삭제되었습니다.");
           const filteredPlans = subPlans.filter(
             (plan) => plan.planId !== planId
           );
           setSubPlans(filteredPlans);
         } else {
-          alert("플래너 삭제에 실패했습니다.");
+          Notiflix.Notify.failure("플래너 삭제에 실패했습니다.");
         }
       } catch (error) {
-        console.error("플래너 삭제 중 오류가 발생했습니다:", error);
-        alert("플래너 삭제 중 오류가 발생했습니다.");
+        Notiflix.Notify.failure("플래너 삭제에 실패했습니다.");
       }
     }
   };
