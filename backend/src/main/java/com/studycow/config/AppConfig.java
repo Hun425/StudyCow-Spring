@@ -24,24 +24,7 @@ public class AppConfig {
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.registerModule(new Jsr310Module());
-        modelMapper.getConfiguration()
-                .setFieldMatchingEnabled(true)
-                .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE);
 
-        // PlannerGetDto에 대한 명시적 매핑 추가
-        modelMapper.createTypeMap(UserSubjectPlan.class, PlannerGetDto.class)
-                .setConverter(context -> {
-                    UserSubjectPlan source = context.getSource();
-                    return new PlannerGetDto(
-                            Integer.parseInt(String.valueOf(source.getPlanId())),
-                            source.getUser().getId(),
-                            Integer.parseInt(String.valueOf(source.getSubCode())),
-                            source.getPlanDate(),
-                            source.getPlanContent(),
-                            source.getPlanStudyTime(),
-                            source.getPlanStatus()
-                    );
-                });
         return modelMapper;
     }
 
