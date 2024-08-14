@@ -52,7 +52,8 @@ const getAvatarImage = (rank) => {
 const StyledPaper = styled(Paper)(({ theme }) => ({
   background: "#83a1ca", // 파란색
   borderRadius: 15,
-  boxShadow: "0 calc(3 / 1440 * 100vw) calc(5 / 1440 * 100vw) calc(2 / 1440 * 100vw) rgba(33, 203, 243, .3)", // 그림자 색상 조정
+  boxShadow:
+    "0 calc(3 / 1440 * 100vw) calc(5 / 1440 * 100vw) calc(2 / 1440 * 100vw) rgba(33, 203, 243, .3)", // 그림자 색상 조정
   color: "white",
   padding: theme.spacing(3), // 패딩 증가
 }));
@@ -90,7 +91,7 @@ const TooltipContent = () => (
       경험치 정산 방식
     </Typography>
     <ul style={{ paddingLeft: "20px", margin: 0, marginBottom: "10px" }}>
-      <li>경험치는 학습시간 1분당 1씩 쌓입니다.</li>
+      <li>경험치는 학습시간 1분당 1씩 적립됩니다.</li>
       <li>하루 동안 적립한 경험치는 익일 오전 6시에 정산됩니다.</li>
     </ul>
     <Typography variant="subtitle1" fontWeight="bold" mb={1}>
@@ -100,7 +101,7 @@ const TooltipContent = () => (
       <li>
         들어갔던 모든 방에서 공부했던 시간을 합산한 뒤, 순위를 정산합니다.
       </li>
-      <li>순위는 경험치와 동일하게 익일 오전 6시에 갱신됩니다.</li>
+      <li>순위는 실시간으로 갱신됩니다.</li>
     </ul>
   </div>
 );

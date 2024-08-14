@@ -8,10 +8,10 @@
   height: auto;
   min-height: calc(400 / 1440 * 100vw);
   padding: calc(20 / 1440 * 100vw);
-  background: linear-gradient(to bottom, #f7faff, #dce7f3);
+  background-color: white;
   border-radius: calc(8 / 1440 * 100vw);
   box-shadow: 0 calc(4 / 1440 * 100vw) calc(8 / 1440 * 100vw) rgba(0, 0, 0, 0.1);
-  font-family: Arial, sans-serif;
+  font-family: "CustomFontGothic", sans-serif;
 }
 
 .learning-status-title {
