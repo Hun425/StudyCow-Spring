@@ -4,7 +4,7 @@ import useScoreStore from "../../stores/scoreRegist";
 import useSubjectStore from "../../stores/subjectStore";
 import useInfoStore from "../../stores/infos";
 import useGradeStore from "../../stores/grade";
-import Notiflix from 'notiflix';
+import Notiflix from "notiflix";
 
 const ScoreRegist = ({ onCancel, onSubmit }) => {
   const { updateScore, submitScore } = useScoreStore();
@@ -18,7 +18,6 @@ const ScoreRegist = ({ onCancel, onSubmit }) => {
   const [testScore, setTestScore] = useState("");
   const [testGrade, setTestGrade] = useState("");
   const [wrongs, setWrongs] = useState([{ catCode: "", wrongCnt: "" }]);
-
 
   const grades = Array.from({ length: 9 }, (_, i) => `${i + 1}등급`);
 
@@ -56,8 +55,14 @@ const ScoreRegist = ({ onCancel, onSubmit }) => {
   };
 
   const handleScoreChange = (e) => {
-    const value = parseInt(e.target.value, 10);
-    const validValue = Math.max(0, Math.min(100, isNaN(value) ? 0 : value));
+    const value = e.target.value;
+    // 숫자 앞에 있는 0 제거
+    setTestScore(value);
+  };
+
+  const handleScoreBlur = () => {
+    const sanitizedValue = testScore ? String(Number(testScore)) : "";
+    const validValue = Math.max(0, Math.min(100, sanitizedValue));
     setTestScore(validValue);
     updateScore("testScore", validValue);
   };
@@ -71,16 +76,22 @@ const ScoreRegist = ({ onCancel, onSubmit }) => {
   const handleWrongChange = (index, field, value) => {
     const newWrongs = [...wrongs];
     if (field === "wrongCnt") {
-      const parsedValue = parseInt(value, 10);
-      const validValue = Math.min(
-        20,
-        Math.max(0, isNaN(parsedValue) ? 0 : parsedValue)
-      ); // 오답 개수를 20으로 제한
-      newWrongs[index][field] = validValue;
+      newWrongs[index][field] = value;
     } else if (field === "catCode") {
       newWrongs[index][field] = parseInt(value, 10);
       newWrongs[index]["wrongCnt"] = "";
     }
+    setWrongs(newWrongs);
+    updateScore("scoreDetails", newWrongs);
+  };
+
+  const handleWrongBlur = (index) => {
+    const newWrongs = [...wrongs];
+    const sanitizedValue = newWrongs[index].wrongCnt
+      ? String(Number(newWrongs[index].wrongCnt))
+      : "";
+    const validValue = Math.min(20, Math.max(0, sanitizedValue)); // 오답 개수를 20으로 제한
+    newWrongs[index].wrongCnt = validValue;
     setWrongs(newWrongs);
     updateScore("scoreDetails", newWrongs);
   };
@@ -99,7 +110,7 @@ const ScoreRegist = ({ onCancel, onSubmit }) => {
 
   const validateForm = () => {
     if (!subjectCode) {
-      Notiflix.Notify.warning('과목을 선택 하세요.');
+      Notiflix.Notify.warning("과목을 선택 하세요.");
       return false;
     }
     if (!testDate) {
@@ -211,6 +222,7 @@ const ScoreRegist = ({ onCancel, onSubmit }) => {
             max="100"
             value={testScore}
             onChange={handleScoreChange}
+            onBlur={handleScoreBlur}
             placeholder="점수 입력"
             required
           />
@@ -262,6 +274,7 @@ const ScoreRegist = ({ onCancel, onSubmit }) => {
               onChange={(e) =>
                 handleWrongChange(index, "wrongCnt", e.target.value)
               }
+              onBlur={() => handleWrongBlur(index)}
               placeholder="오답 개수"
               disabled={!wrong.catCode}
               required
