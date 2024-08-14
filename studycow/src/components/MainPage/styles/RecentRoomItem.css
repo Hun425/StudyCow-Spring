@@ -71,7 +71,7 @@
 .recentRoomEnterBtn {
   width: calc(120 / 1440 * 100vw);
   height: calc(40 / 1440 * 100vw);
-  margin-top: calc(40 / 1440 * 100vw);
+  /* margin-top: calc(40 / 1440 * 100vw); */
   align-self: center;
   font-size: calc(18 / 1440 * 100vw) !important;
   color: #ffffff;
