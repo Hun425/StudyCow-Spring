@@ -43,7 +43,7 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
 	//ModelMapper
-	implementation 'org.modelmapper:modelmapper:3.0.0'
+	implementation 'org.modelmapper:modelmapper:3.1.1'
 	implementation 'org.modelmapper:modelmapper-module-jsr310:1.2.3'
 
 	// STOMP 라이브러리

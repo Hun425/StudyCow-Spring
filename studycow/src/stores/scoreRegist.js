@@ -3,7 +3,7 @@
 import { create } from "zustand";
 import axios from "axios";
 import useInfoStore from "./infos";
-import Notiflix from 'notiflix';
+import Notiflix from "notiflix";
 
 const API_URL =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/studycow/";
@@ -29,9 +29,6 @@ const useScoreStore = create((set) => ({
   submitScore: async () => {
     const { token } = useInfoStore.getState(); // 토큰 가져오기
     const { score } = useScoreStore.getState(); // 상태에서 score 가져오기
-
-    // 데이터를 전송하기 전, 콘솔에 로그
-    console.log("전송할 데이터:", JSON.stringify(score));
 
     try {
       const response = await axios.post(API_URL + "score/regist", score, {

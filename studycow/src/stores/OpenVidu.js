@@ -1,8 +1,8 @@
-import { create } from 'zustand';
-import { OpenVidu } from 'openvidu-browser';
-import useStudyStore from './study.js';
-import Notiflix from 'notiflix';
-import axios from 'axios';
+import { create } from "zustand";
+import { OpenVidu } from "openvidu-browser";
+import useStudyStore from "./study.js";
+import Notiflix from "notiflix";
+import axios from "axios";
 
 // 로컬 미디어 서버 주소
 const OPENVIDU_SERVER_URL = "https://i11c202.p.ssafy.io:8444";
@@ -19,7 +19,7 @@ const useRoomStore = create((set) => ({
   isMike: true,
   isCamera: true,
   isSpeaker: true,
-  
+
   setSession: (session) => set({ session }),
   setMainStreamManager: (stream) => set({ mainStreamManager: stream }),
   setPublisher: (publisher) => set({ publisher }),
@@ -29,7 +29,7 @@ const useRoomStore = create((set) => ({
   setIsSpeaker: (isSpeaker) => set({ isSpeaker: !isSpeaker }),
   setMySessionId: (sessionId) => set({ mySessionId: sessionId }),
   setMyUserName: (userName) => set({ myUserName: userName }),
-  
+
   leaveSession: () => {
     const state = useRoomStore.getState();
     if (state.session) {
@@ -52,8 +52,7 @@ const useRoomStore = create((set) => ({
       const token = await createToken(sessionIdResult);
       return token;
     } catch (error) {
-      // console.error("Error while creating token:", error);
-      Notiflix.Notify.failure('세션 입장에 실패했소ㅜㅜ');
+      Notiflix.Notify.failure("세션 입장에 실패했소ㅜㅜ");
       const study = useStudyStore.getState();
       study.exitRoom();
       study.goStudyBack();
@@ -64,7 +63,7 @@ const useRoomStore = create((set) => ({
   joinSession: async () => {
     const state = useRoomStore.getState();
     const OV = new OpenVidu();
-    
+
     OV.setAdvancedConfiguration({
       publisherSpeakingEventsOptions: {
         interval: 50,
@@ -79,11 +78,10 @@ const useRoomStore = create((set) => ({
       try {
         const subscriber = await mySession.subscribeAsync(e.stream, undefined);
         set((state) => ({
-          subscribers: [...state.subscribers, subscriber]
+          subscribers: [...state.subscribers, subscriber],
         }));
       } catch (error) {
-        // console.error("Error subscribing to stream:", error);
-        Notiflix.Notify.failure('화상 화면에 스트리밍에 실패했소ㅜㅜ');
+        Notiflix.Notify.failure("화상 화면에 스트리밍에 실패했소ㅜㅜ");
         const study = useStudyStore.getState();
         study.exitRoom();
         study.goStudyBack();
@@ -92,15 +90,14 @@ const useRoomStore = create((set) => ({
 
     mySession.on("streamDestroyed", (e) => {
       set((state) => {
-        const updatedSubscribers = state.subscribers.filter(sub => sub !== e.stream.streamManager);
-        // console.log("Subscriber removed:", e.stream.streamManager.stream.connection.connectionId);
+        const updatedSubscribers = state.subscribers.filter(
+          (sub) => sub !== e.stream.streamManager
+        );
         return { subscribers: updatedSubscribers };
       });
     });
 
-    mySession.on("exception", (exception) => {
-      // console.warn(exception); ?
-    });
+    mySession.on("exception", (exception) => {});
 
     mySession.on("publisherStartSpeaking", (event) => {
       // UI 업데이트 로직
@@ -112,8 +109,8 @@ const useRoomStore = create((set) => ({
 
     try {
       const token = await state.getToken(state.mySessionId);
-      await mySession.connect(token, { 
-        clientData: state.myUserName
+      await mySession.connect(token, {
+        clientData: state.myUserName,
       });
 
       // 카메라 장치 확인
@@ -121,11 +118,12 @@ const useRoomStore = create((set) => ({
         await navigator.mediaDevices.getUserMedia({ video: true });
       } catch (error) {
         study.exitRoom();
-        Notiflix.Notify.failure('카메라 장치를 찾을 수 없어 입장에 실패했소ㅜㅜ');
+        Notiflix.Notify.failure(
+          "카메라 장치를 찾을 수 없어 입장에 실패했소ㅜㅜ"
+        );
         const study = useStudyStore.getState();
         study.exitRoom();
         study.goStudyBack();
-        // console.error("카메라 장치를 찾을 수 없습니다.", error);
         return;
       }
 
@@ -146,14 +144,12 @@ const useRoomStore = create((set) => ({
         publisher: publisher,
       });
     } catch (error) {
-      Notiflix.Notify.failure('비디오 세션 연결에 실패했소ㅜㅜ');
+      Notiflix.Notify.failure("비디오 세션 연결에 실패했소ㅜㅜ");
       const study = useStudyStore.getState();
       study.exitRoom();
       study.goStudyBack();
-      // console.log("세션 연결 오류", error.code, error.message);
     }
-  }
-
+  },
 }));
 
 // 세션 생성
@@ -165,7 +161,9 @@ const createSession = async (sessionId) => {
       data,
       {
         headers: {
-          Authorization: `Basic ${btoa(`OPENVIDUAPP:${OPENVIDU_SERVER_SECRET}`)}`,
+          Authorization: `Basic ${btoa(
+            `OPENVIDUAPP:${OPENVIDU_SERVER_SECRET}`
+          )}`,
           "Content-Type": "application/json",
         },
       }
@@ -173,7 +171,6 @@ const createSession = async (sessionId) => {
     return response.data.id;
   } catch (error) {
     if (error.response?.status === 409) {
-      // console.log("Session already exists. Attempting to connect...");
       return sessionId;
     } else {
       const userConfirmed = window.confirm(
@@ -196,14 +193,19 @@ const createToken = async (sessionId) => {
       data,
       {
         headers: {
-          Authorization: `Basic ${btoa(`OPENVIDUAPP:${OPENVIDU_SERVER_SECRET}`)}`,
+          Authorization: `Basic ${btoa(
+            `OPENVIDUAPP:${OPENVIDU_SERVER_SECRET}`
+          )}`,
           "Content-Type": "application/json",
         },
       }
     );
     return response.data.token;
   } catch (error) {
-    console.error("Error creating token:", error.response?.data || error.message);
+    console.error(
+      "Error creating token:",
+      error.response?.data || error.message
+    );
     throw error;
   }
 };

@@ -31,7 +31,6 @@ const TestAnalyze = () => {
     } else {
       setSelectedSubject(subjectCode);
     }
-    // console.log(subjectCode); // selectedSubject 변경 시 콘솔에 출력
   };
 
   const openModal = () => {
@@ -71,17 +70,6 @@ const TestAnalyze = () => {
             />
             <Typography>공개</Typography>
           </Stack>
-
-          {/* <button
-              className={`changePublicStatusBtn ${
-                userInfo.userPublic === true ? "public" : "private"
-              }`}
-              onClick={handlePublicToggle}
-            >
-              {userInfo.userPublic
-                ? "비공개로 설정 (현재: 공개)"
-                : "공개로 설정 (현재: 비공개)"}
-            </button> */}
 
           {/* 성적 등록 버튼 */}
           <button className="analyzeScoreRegistButton" onClick={openModal}>

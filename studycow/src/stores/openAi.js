@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
 import useInfoStore from "./infos"; // 사용자 정보 스토어
+import Notiflix from "notiflix";
 
 const API_URL =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/studycow/";
@@ -21,14 +22,13 @@ const useOpenAiStore = create((set) => ({
       });
 
       if (response.status === 200) {
-        console.log("플래너가 성공적으로 생성되었습니다.", response.data);
         return response.data; // AI 플래너 데이터 반환
       } else {
-        console.error("플래너 생성에 실패했습니다.");
+        Notiflix.Notify.failure("플래너를 생성하지 못했소...");
         return null;
       }
     } catch (error) {
-      console.error("플래너 생성 중 오류가 발생했습니다:", error);
+      Notiflix.Notify.failure("플래너를 생성하지 못했소...");
       return null;
     }
   },
@@ -46,14 +46,13 @@ const useOpenAiStore = create((set) => ({
         });
 
         if (response.status !== 201) {
-          console.error("플래너 등록에 실패했습니다:", response);
+          Notiflix.Notify.failure("플래너를 등록하지 못했소...");
           return false;
         }
       }
-      console.log("모든 플래너가 성공적으로 등록되었습니다.");
       return true;
     } catch (error) {
-      console.error("플래너 등록 중 오류가 발생했습니다:", error);
+      Notiflix.Notify.failure("플래너를 등록하지 못했소...");
       return false;
     }
   },
@@ -74,14 +73,13 @@ const useOpenAiStore = create((set) => ({
       );
 
       if (response.status === 200) {
-        console.log("성적 조언이 성공적으로 생성되었습니다.", response.data);
         return response.data; // 생성된 조언 데이터 반환
       } else {
-        console.error("성적 조언 생성에 실패했습니다.");
+        Notiflix.Notify.failure("성적 조언을 생성하지 못했소...");
         return null;
       }
     } catch (error) {
-      console.error("성적 조언 생성 중 오류가 발생했습니다:", error);
+      Notiflix.Notify.failure("성적 조언을 생성하지 못했소...");
       return null;
     }
   },

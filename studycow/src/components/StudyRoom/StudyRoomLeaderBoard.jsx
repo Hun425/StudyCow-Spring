@@ -69,7 +69,7 @@ const StudyRoomLeaderBoard = ({ myRankInfo = { userName: InfoStore.userInfo.user
         </Box>
       
       </Paper>
-      {rankInfo.length === 0 || myRankInfo.length === 0 ? (
+      {rankInfo === null || rankInfo.length === 0 || myRankInfo === null || myRankInfo.length === 0 ? (
         <Typography variant="body2" className="studyRoomRankNoData">
           현재 랭킹을 조회할 수 없습니다.
           <br/>

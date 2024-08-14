@@ -5,6 +5,8 @@ import usePlanStore from "../../stores/plan.js";
 import useSubjectStore from "../../stores/subjectStore"; // subject store import
 import PlanModify from "./CreateModify/PlanModify"; // Import the PlanModify modal
 import "./styles/CatPlanList.css";
+import Notiflix from "notiflix";
+import { Confirm } from "notiflix"; // Notiflix import 추가
 
 const CatPlanList = () => {
   const {
@@ -64,11 +66,10 @@ const CatPlanList = () => {
         );
         setSubPlans(updatedPlans);
       } else {
-        alert("플랜 상태 변경에 실패했습니다.");
+        Notiflix.Notify.failure("플랜 상태 변경에 실패했습니다.");
       }
     } catch (error) {
-      console.error("플랜 상태 변경 중 오류가 발생했습니다:", error);
-      alert("플랜 상태 변경 중 오류가 발생했습니다.");
+      Notiflix.Notify.failure("플랜 상태 변경에 실패했습니다.");
     }
   };
 
@@ -83,24 +84,43 @@ const CatPlanList = () => {
   };
 
   const handleDeleteClick = async (planId) => {
-    const confirmed = window.confirm("정말로 삭제하시겠습니까?");
-    if (confirmed) {
-      try {
-        const success = await deletePlan(planId);
-        if (success) {
-          alert("플래너가 성공적으로 삭제되었습니다.");
-          const filteredPlans = subPlans.filter(
-            (plan) => plan.planId !== planId
-          );
-          setSubPlans(filteredPlans);
-        } else {
-          alert("플래너 삭제에 실패했습니다.");
+    Confirm.init({
+      titleColor: "#ff5549", // 빨간색 (빨간색은 #ff5549, 초록색은 #008000)
+      okButtonBackground: "#ff5549", // 빨간색
+      cancelButtonBackground: "#a9a9a9", // 회색
+      titleFontSize: "20px", // 제목 폰트 크기 증가
+      width: "300px", // 대화상자 너비 설정
+      messageColor: "#1e1e1e", // 메시지 색상 설정
+      messageFontSize: "16px", // 메시지 폰트 크기 설정
+      buttonsFontSize: "14px", // 버튼 폰트 크기 설정
+      borderRadius: "20px",
+    });
+
+    Confirm.show(
+      "플랜 삭제",
+      "정말로 삭제하시겠습니까?",
+      "네",
+      "아니오",
+      async () => {
+        try {
+          const success = await deletePlan(planId);
+          if (success) {
+            Notiflix.Notify.success("플래너가 성공적으로 삭제되었습니다.");
+            const filteredPlans = subPlans.filter(
+              (plan) => plan.planId !== planId
+            );
+            setSubPlans(filteredPlans);
+          } else {
+            Notiflix.Notify.failure("플래너 삭제에 실패했습니다.");
+          }
+        } catch (error) {
+          Notiflix.Notify.failure("플래너 삭제에 실패했습니다.");
         }
-      } catch (error) {
-        console.error("플래너 삭제 중 오류가 발생했습니다:", error);
-        alert("플래너 삭제 중 오류가 발생했습니다.");
+      },
+      () => {
+        Notiflix.Notify.info("삭제가 취소되었습니다.");
       }
-    }
+    );
   };
 
   return (

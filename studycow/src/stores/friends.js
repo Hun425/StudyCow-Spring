@@ -35,7 +35,7 @@ const useFriendsStore = create((set, get) => ({
 
       set({ friends: friendsData });
     } catch (error) {
-      console.error("API 요청 실패:", error);
+      Notiflix.Notify.failure("친구 목록을 불러오는 데 실패했소...");
     }
   },
 
@@ -86,7 +86,7 @@ const useFriendsStore = create((set, get) => ({
 
       set({ getRequests: getRequestsData });
     } catch (error) {
-      console.error("API 요청 실패:", error);
+      Notiflix.Notify.failure("받은 친구 요청들을 불러오지 못했소...");
     }
   },
 
@@ -119,7 +119,6 @@ const useFriendsStore = create((set, get) => ({
       await useFriendsStore.getState().fetchFriends();
     } catch (error) {
       // 오류 발생 시 에러 메시지 표시
-      console.error("친구 요청 수락 실패:", error);
       Notiflix.Notify.failure("친구 요청 수락에 실패했소...");
     }
   },
@@ -147,7 +146,7 @@ const useFriendsStore = create((set, get) => ({
 
       set({ sendRequests: sendRequestsData });
     } catch (error) {
-      console.error("API 요청 실패:", error);
+      Notiflix.Notify.failure("보낸 친구 요청들을 불러오지 못했소...");
     }
   },
 
@@ -172,7 +171,6 @@ const useFriendsStore = create((set, get) => ({
       }));
       Notiflix.Notify.success("친구 요청을 취소했소!");
     } catch (error) {
-      console.error("친구 요청 취소 실패:", error);
       Notiflix.Notify.failure("친구 요청 취소에 실패했소...");
     }
   },
@@ -205,7 +203,7 @@ const useFriendsStore = create((set, get) => ({
 
       set({ searchedFriends: filteredFriends });
     } catch (error) {
-      console.error("검색 결과 불러오기 실패:", error);
+      Notiflix.Notify.failure("친구 검색 결과를 불러오지 못했소...");
       set({ searchedFriends: [] });
     }
   },
@@ -249,7 +247,6 @@ const useFriendsStore = create((set, get) => ({
       await useFriendsStore.getState().fetchSendRequests();
       Notiflix.Notify.success("친구 요청을 보냈소!");
     } catch (error) {
-      console.error("친구 요청 실패:", error);
       Notiflix.Notify.failure("친구 요청이 실패했소...");
     }
   },
@@ -278,9 +275,9 @@ const useFriendsStore = create((set, get) => ({
       set({ friendInfo: response.data });
     } catch (error) {
       // 에러 처리
-      console.error("친구 정보 조회 중 오류 발생:", error);
+      Notiflix.Notify.failure("해당 친구의 정보를 확인하지 못했소...");
       if (error.response) {
-        console.error("서버 응답 내용:", error.response.data);
+        Notiflix.Notify.failure("해당 친구의 정보를 확인하지 못했소...");
       }
     }
   },

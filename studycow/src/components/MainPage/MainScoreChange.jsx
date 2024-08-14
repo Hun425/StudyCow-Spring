@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./styles/MainScoreChange.css";
 import useScoreChangeStore from "../../stores/scoreChange";
 import useSubjectStore from "../../stores/subjectStore"; // subject store import
-import Notiflix from 'notiflix';
+import Notiflix from "notiflix";
 
 const ScoreChange = ({ initialData, onClose, onScoreChange }) => {
   const { updatePlanner, deletePlanner } = useScoreChangeStore();
@@ -16,12 +16,11 @@ const ScoreChange = ({ initialData, onClose, onScoreChange }) => {
     testGrade: "",
     scoreDetails: [],
   });
-  
+
   useEffect(() => {
     fetchSubjects(); // 컴포넌트가 마운트될 때 과목 데이터 가져오기
 
     if (initialData) {
-      // console.log("initialData:", initialData); // 초기 데이터 확인
       setScoreData({
         subCode: initialData.subCode || "",
         testDate: initialData.testDate || "",
@@ -143,7 +142,6 @@ const ScoreChange = ({ initialData, onClose, onScoreChange }) => {
       ...scoreData,
       scoreDetails: mergedDetails,
     }).then(() => {
-
       onClose(); // 모달 닫기
       if (onScoreChange) {
         onScoreChange(); // 부모 컴포넌트에 신호 보내기
@@ -153,7 +151,6 @@ const ScoreChange = ({ initialData, onClose, onScoreChange }) => {
 
   const handleDelete = () => {
     deletePlanner(initialData.scoreId).then(() => {
-
       onClose(); // 모달 닫기
       if (onScoreChange) {
         onScoreChange(); // 부모 컴포넌트에 신호 보내기

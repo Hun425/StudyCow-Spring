@@ -45,7 +45,6 @@ const useInfoStore = create(
             Notiflix.Notify.failure("회원가입 실패.");
           }
         } catch (e) {
-          // console.log(e);
           return false;
         }
       },
@@ -82,7 +81,6 @@ const useInfoStore = create(
             Notiflix.Notify.failure("로그인 에러");
           }
         } catch (e) {
-          console.log(e);
           return false;
         }
       },
@@ -107,7 +105,6 @@ const useInfoStore = create(
           const { token, ChangeInfoUrl, userInfo } = get();
           if (!token) {
             Notiflix.Notify.failure("세션 만료, 다시 로그인 해주세요");
-            // console.error("토큰이 없습니다.");
             return false;
           }
           const formData = new FormData();
@@ -116,9 +113,6 @@ const useInfoStore = create(
           }
           formData.append("userEmail", email);
           formData.append("userNickname", nickname);
-
-          // console.log("보내는 데이터:", formData);
-          // console.log("토큰:", token);
 
           const response = await axios.patch(ChangeInfoUrl, formData, {
             headers: {
@@ -140,7 +134,6 @@ const useInfoStore = create(
             return true;
           }
         } catch (error) {
-          // console.error("Error updating user info:", error);
           return false;
         }
       },
@@ -158,7 +151,6 @@ const useInfoStore = create(
           const { token, ChangePublicUrl, userInfo } = get();
           if (!token) {
             Notiflix.Notify.failure("세션 만료, 다시 로그인 해주세요");
-            // console.error("토큰이 없습니다.");
             return false;
           }
 
@@ -185,7 +177,6 @@ const useInfoStore = create(
             Notiflix.Notify.failure("회원 공개여부 변경에 실패했습니다.");
           }
         } catch (error) {
-          // console.error(error);
           Notiflix.Notify.failure("회원 공개여부 변경에 실패했습니다.");
           return false;
         }

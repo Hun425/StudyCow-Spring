@@ -156,20 +156,7 @@ function StudyRoom() {
             {showLank && (
               // 컴포넌트의 렌더링 타이밍과 데이터 로딩 타이밍의 불일치 처리, 랭크 표출
               <div className="studyRoomUtilItem">
-                {myRankInfo ? (
-                  <StudyRoomLeaderBoard myRankInfo={myRankInfo} />
-                ) : (
-                  <Box
-                    sx={{
-                      display: 'flex', // Flexbox 사용
-                      justifyContent: 'center', // 수평 중앙 정렬
-                      alignItems: 'center', // 수직 중앙 정렬
-                      height: '100%', // Box의 높이를 100%로 설정
-                    }}
-                  >
-                    <CircularProgress />
-                  </Box>
-                )}
+                <StudyRoomLeaderBoard myRankInfo={myRankInfo} />
               </div>
             )}
             {showChat && (

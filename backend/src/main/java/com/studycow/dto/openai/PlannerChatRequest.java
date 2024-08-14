@@ -455,7 +455,7 @@ public class PlannerChatRequest {
                 .append("## 다음 규칙을 반드시 따라주세요: \n")
                 .append("1. 각 날짜(planDate)에 대해 학습 계획들의 planStudyTime의 합은 하루에 정확히 ").append(studyTime).append("분이 되어야 합니다.\n")
                 .append("2. 다양한 과목에 대한 학습 계획을 생성하되, 현재 성적이 과목별 만점이나 1등급에서 가장 먼 과목에 대해서는 다른 과목보다 조금 더 많은 시간을 할당해 주세요. \n")
-                .append("3. 각 과목별로 구체적인 학습 내용(예: '과목 이름 : 세부 유형 이름 : 학습 방법')을 포함해 주세요. \n\n")
+                .append("3. 각 과목별로 구체적인 학습 내용(예: '세부 유형 이름 : 학습 방법')을 포함해 주세요. \n\n")
                 .append("## 출력 형식: \n")
                 .append("{ \n")
                 .append("  \"analysis\": \"데이터 분석 및 전략 설명 (문자열)\", \n")

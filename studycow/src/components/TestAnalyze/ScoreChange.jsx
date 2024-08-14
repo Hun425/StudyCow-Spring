@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./styles/ScoreChange.css";
 import useScoreChangeStore from "../../stores/scoreChange";
 import useSubjectStore from "../../stores/subjectStore"; // subject store import
-import Notiflix from 'notiflix';
+import Notiflix from "notiflix";
 
 const ScoreChange = ({ initialData, onClose, onScoreChange }) => {
   const { updatePlanner, deletePlanner } = useScoreChangeStore();
@@ -16,12 +16,11 @@ const ScoreChange = ({ initialData, onClose, onScoreChange }) => {
     testGrade: "",
     scoreDetails: [],
   });
-  
+
   useEffect(() => {
     fetchSubjects(); // 컴포넌트가 마운트될 때 과목 데이터 가져오기
 
     if (initialData) {
-      // console.log("initialData:", initialData); // 초기 데이터 확인
       setScoreData({
         subCode: initialData.subCode || "",
         testDate: initialData.testDate || "",
@@ -45,19 +44,40 @@ const ScoreChange = ({ initialData, onClose, onScoreChange }) => {
     }
   };
 
+  const handleScoreBlur = () => {
+    const sanitizedValue = scoreData.testScore
+      ? String(Number(scoreData.testScore))
+      : "";
+    const validValue = Math.max(0, Math.min(100, sanitizedValue));
+    setScoreData({ ...scoreData, testScore: validValue });
+  };
+
+  const handleGradeBlur = () => {
+    const sanitizedValue = scoreData.testGrade
+      ? String(Number(scoreData.testGrade))
+      : "";
+    const validValue = Math.max(1, Math.min(9, sanitizedValue));
+    setScoreData({ ...scoreData, testGrade: validValue });
+  };
+
   const handleScoreDetailChange = (index, field, value) => {
     const newDetails = [...scoreData.scoreDetails];
     if (field === "wrongCnt") {
-      const parsedValue = parseInt(value, 10);
-      const validValue = Math.max(
-        0,
-        Math.min(20, isNaN(parsedValue) ? 0 : parsedValue)
-      ); // 0에서 20 사이로 제한
-      newDetails[index][field] = validValue;
+      newDetails[index][field] = value;
     } else if (field === "catCode") {
       newDetails[index][field] = parseInt(value, 10);
       newDetails[index]["wrongCnt"] = ""; // 유형이 바뀌면 오답 개수 초기화
     }
+    setScoreData({ ...scoreData, scoreDetails: newDetails });
+  };
+
+  const handleScoreDetailBlur = (index) => {
+    const newDetails = [...scoreData.scoreDetails];
+    const sanitizedValue = newDetails[index].wrongCnt
+      ? String(Number(newDetails[index].wrongCnt))
+      : "";
+    const validValue = Math.min(20, Math.max(0, sanitizedValue)); // 오답 개수를 20으로 제한
+    newDetails[index].wrongCnt = validValue;
     setScoreData({ ...scoreData, scoreDetails: newDetails });
   };
 
@@ -143,7 +163,6 @@ const ScoreChange = ({ initialData, onClose, onScoreChange }) => {
       ...scoreData,
       scoreDetails: mergedDetails,
     }).then(() => {
-
       onClose(); // 모달 닫기
       if (onScoreChange) {
         onScoreChange(); // 부모 컴포넌트에 신호 보내기
@@ -153,7 +172,6 @@ const ScoreChange = ({ initialData, onClose, onScoreChange }) => {
 
   const handleDelete = () => {
     deletePlanner(initialData.scoreId).then(() => {
-
       onClose(); // 모달 닫기
       if (onScoreChange) {
         onScoreChange(); // 부모 컴포넌트에 신호 보내기
@@ -201,6 +219,7 @@ const ScoreChange = ({ initialData, onClose, onScoreChange }) => {
             max="100"
             value={scoreData.testScore}
             onChange={handleInputChange}
+            onBlur={handleScoreBlur}
             placeholder="점수 입력"
             required
           />
@@ -212,6 +231,7 @@ const ScoreChange = ({ initialData, onClose, onScoreChange }) => {
             max="9"
             value={scoreData.testGrade}
             onChange={handleInputChange}
+            onBlur={handleGradeBlur}
             placeholder="등급 입력"
             required
           />
@@ -249,6 +269,7 @@ const ScoreChange = ({ initialData, onClose, onScoreChange }) => {
               onChange={(e) =>
                 handleScoreDetailChange(index, "wrongCnt", e.target.value)
               }
+              onBlur={() => handleScoreDetailBlur(index)}
               placeholder="오답 개수"
               disabled={!detail.catCode} // 오답 유형이 선택되지 않으면 비활성화
               required
