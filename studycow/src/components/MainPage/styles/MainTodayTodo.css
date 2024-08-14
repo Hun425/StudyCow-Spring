@@ -9,13 +9,17 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  text-align: center;
+  text-align: start;
   font-size: calc(20 / 1440 * 100vw);
   padding: calc(7 / 1440 * 100vw) 0;
 }
 
 .mainTodayTodoItem p {
   margin: 0;
+  white-space: nowrap; /* 텍스트를 한 줄로 표시 */
+  overflow: hidden; /* 넘치는 텍스트를 숨김 */
+  text-overflow: ellipsis; /* 넘치는 부분을 '...'로 표시 */
+  width: calc(330 / 1440 * 100vw);
 }
 
 .mainTodayTodoNone {

@@ -21,7 +21,7 @@ const MainTodayTodo = ({ todayPlans }) => {
           return (
             <div key={plan.planId} className="mainTodayTodoItem">
               <p>
-                ({subjectName}): {plan.planContent}
+                {subjectName}: {plan.planContent}
               </p>
             </div>
           );
