@@ -3,7 +3,7 @@
   position: absolute;
   bottom: calc(80 / 1440 * 100vw); /* 버튼의 수직 위치 */
   left: 50%; /* 버튼을 중앙에 위치시키기 위해 왼쪽 50% */
-  width: calc(170 / 1440 * 100vw); /* 버튼 너비 */
+  width: calc(180 / 1440 * 100vw); /* 버튼 너비 */
   transform: translateX(-50%); /* 버튼을 수평 중앙으로 이동 */
   padding: calc(10 / 1440 * 100vw) calc(20 / 1440 * 100vw); /* 버튼 패딩 */
   font-size: calc(24 / 1440 * 100vw); /* 버튼 글자 크기 */
@@ -13,7 +13,7 @@
   border-radius: calc(5 / 1440 * 100vw); /* 버튼 모서리 둥글게 */
   cursor: pointer; /* 마우스 커서가 포인터로 변경 */
   transition: background-color 0.3s; /* 배경색 변화 애니메이션 */
-  font-family: "JalnanGothic", sans-serif;
+  font-family: "Jalnan", sans-serif;
   font-weight: 500;
 }
 
