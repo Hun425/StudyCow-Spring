@@ -1,5 +1,7 @@
 .carousel-container {
   position: relative;
+  font-family: "Jalnan", sans-serif;
+  font-weight: 500;
 }
 
 .d-block {
@@ -12,7 +14,6 @@
   width: calc(1000 / 1440 * 100vw); /* 너비 조절(단어별로 줄나눔한 효과 주기 위해) */
   transform: translateX(-50%);
   color: #ffffff; /* 글자 색상 */
-  font-weight: bold; /* 글자 두껍게 */
 }
 
 .recommendation-text p {

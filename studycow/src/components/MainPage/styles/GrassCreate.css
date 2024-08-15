@@ -11,7 +11,8 @@
 /* 캘린더 제목 스타일 */
 .grassCalendar h1 {
   margin-bottom: 4%;
-  font-size: clamp(calc(16 / 1440 * 100vw), 3vw, calc(24 / 1440 * 100vw)); /* 반응형 폰트 크기 */
+  font-family: "JalnanGothic", sans-serif;
+  font-size: calc(17 / 1440 * 100vw); /* 반응형 폰트 크기 */
 }
 
 /* 캘린더 그리드 레이아웃 */
@@ -24,13 +25,13 @@
 /* 각 날짜 칸 스타일 */
 .grassCalendar-day {
   aspect-ratio: 1 / 1;
-  border: calc(1 / 1440 * 100vw) solid #e7e3e3;
+  border: calc(0.1 / 1440 * 100vw) solid #e7e3e3;
   box-sizing: border-box;
   display: flex;
   background-color: #f3f8f3;
   align-items: center;
   justify-content: center;
-  font-size: clamp(calc(8 / 1440 * 100vw), 1.5vw, calc(16 / 1440 * 100vw)); /* 반응형 폰트 크기 */
+  font-size: clamp(calc(6 / 1440 * 100vw), 1.5vw, calc(12 / 1440 * 100vw)); /* 반응형 폰트 크기 */
   padding: 2%;
 }
 
@@ -40,13 +41,3 @@
   border-color: #e7e3e3;
 }
 
-/* 미디어 쿼리는 필요한 경우에만 사용 */
-@media (max-width: 480px) {
-  .grassCalendar {
-    padding: 0 2%;
-  }
-
-  .grassCalendar-grid {
-    gap: 0.5%;
-  }
-}

@@ -1,14 +1,11 @@
 /* 전체 컨테이너 스타일 */
 .friendGradeContainer {
-  min-height: 80vh;
-  margin: calc(75 / 1440 * 100vw); /* 전체 컨테이너에 여백 추가 */
-  margin-bottom: calc(30 / 1440 * 100vw) !important;
-  margin-top: calc(30 / 1440 * 100vw);
-  border-radius: calc(20 / 1440 * 100vw); /* 네비게이션 바 밑에 위치 */
-  box-shadow: 0 calc(8 / 1440 * 100vw) calc(12 / 1440 * 100vw) rgba(0, 0, 0, 0.1);
-  padding: calc(20 / 1440 * 100vw);
-  background-color: #FAFAFA;
-  padding-bottom: calc(50 / 1440 * 100vw);
+  width: 100%;
+  min-height: 100vh;
+  box-shadow: 0 calc(8 / 1440 * 100vw) calc(12 / 1440 * 100vw)
+    rgba(0, 0, 0, 0.1);
+  padding: calc(50 / 1440 * 100vw);
+  background: linear-gradient(to bottom, #ffffff 0%, #fafafa 100%);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -23,13 +20,23 @@
   width: 93%;
 }
 
+.friendGradeHeader h1 {
+  font-family: "JalnanGothic", sans-serif;
+  margin: 0px;
+}
+
 /* 과목 선택 스타일 */
 .friendGradeSubjectSelect {
   align-items: center;
 }
 
 .friendGradeSubjectSelect select {
-  width: calc(150 / 1440 * 100vw);
+  width: calc(90 / 1440 * 100vw);
+  height: calc(18 / 1440 * 100vw);
+  font-size: calc(12 / 1440 * 100vw);
+  font-weight: 700;
+  padding: 0;
+  text-align: center;
 }
 
 /* 캐릭터 상태 스타일 */

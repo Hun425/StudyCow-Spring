@@ -1,6 +1,6 @@
 .mainGradeContainer {
-  width: calc(860 / 1440 * 100vw);
-  height: calc(350 / 1440 * 100vw);
+  width: calc(660 / 1440 * 100vw);
+  height: calc(262.5 / 1440 * 100vw);
   background-color: white;
   border-radius: calc(20 / 1440 * 100vw);
   display: flex;
@@ -12,27 +12,33 @@
 }
 
 .mainGradeHeader {
+  font-family: "JalnanGothic", sans-serif;
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  font-size: calc(24 / 1440 * 100vw) !important;
+  font-size: calc(17 / 1440 * 100vw) !important;
   padding: calc(5 / 1440 * 100vw);
 }
 .mainGradeHeader p {
   margin: 0;
-  margin-left: calc(20 / 1440 * 100vw);
 }
 
 
 .mainGradeSubjectSelect {
+  position: absolute;
   align-items: center;
-  font-size: calc(24 / 1440 * 100vw) !important;
+  right: calc(90 / 1440 * 100vw);
 }
 
 .mainGradeSubjectSelect select {
-  width: calc(200 / 1440 * 100vw);
-  font-size: calc(20 / 1440 * 100vw) !important;
+  text-align: center;
+  justify-content: center;
+  width: calc(90 / 1440 * 100vw);
+  height: calc(18 / 1440 * 100vw);
+  font-size: calc(12 / 1440 * 100vw);
+  font-family: "Pretendard", sans-serif;
+  font-weight: 700;
+  padding: 0 !important;
   margin: 0;
-  margin-right: calc(20 / 1440 * 100vw);
 }

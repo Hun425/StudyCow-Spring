@@ -24,8 +24,8 @@
     flex: 1;
     text-align: center;
     margin-top: calc(7 / 1440 * 100vw);
+    font-family: "JalnanGothic", sans-serif !important;
     font-size: calc(20 / 1440 * 100vw); /* 폰트 크기 설정 */
-    font-family: "CustomFontGothic", sans-serif;
 }
 
 .studyRoomRankPaper {
@@ -70,7 +70,7 @@
 .studyRoomRankSliding .MuiTypography-body2 {
     white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */
     font-size: calc(20 / 1440 * 100vw); /* 폰트 크기 설정 */
-    font-family: "CustomFontGothic", sans-serif;
+    font-family: "JalnanGothic", sans-serif !important;
 }
 
 .studyRoomRankinfoPaper {
@@ -102,7 +102,7 @@
 .studyRoomRankinfoContent .MuiTypography-body2 {
     white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */
     font-size: calc(20 / 1440 * 100vw); /* 폰트 크기 설정 */
-    font-family: "CustomFontGothic", sans-serif;
+    font-family: "JalnanGothic", sans-serif !important;
 }
 
 .studyRoomRankUserNick {
@@ -122,7 +122,7 @@
     align-items: center; /* 수직 정렬 */
     justify-content: center; /* 가로 방향으로 space-between 정렬 */
     width: 100%; /* Paper의 너비를 전체 컨테이너 너비와 맞춤 */
-    font-family: "CustomFontGothic", sans-serif !important;
+    font-family: "JalnanGothic", sans-serif !important;
     font-size: calc(17 / 1440 * 100vw) !important; /* 폰트 크기 설정 */
     border-radius: calc(10 / 1440 * 100vw) calc(10 / 1440 * 100vw); /* 붙이는 부분 둥글게 */
 }

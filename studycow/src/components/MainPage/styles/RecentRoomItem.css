@@ -1,11 +1,11 @@
 .recentRoomContainer {
   width: 100%;
-  height: calc(190 / 1440 * 100vw);
+  height: calc(160 / 1440 * 100vw);
   border-radius: calc(10 / 1440 * 100vw);
-  background: #83a1ca; /* 기본 배경 색 */
+  background: #7092BE; /* 기본 배경 색 */
   background-size: cover; /* 배경 이미지가 컨테이너를 덮도록 설정 */
   background-position: center; /* 배경 이미지 중앙 정렬 */
-  padding: calc(10 / 1440 * 100vw) calc(10 / 1440 * 100vw);
+  padding: calc(10 / 1440 * 100vw);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -24,15 +24,29 @@
   z-index: 1; /* 텍스트 및 버튼 위에 배치 */
 }
 
+.mainRecentRoomInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  position: relative; /* 위치를 조정하기 위해 상대적으로 설정 */
+  height: calc(100 / 1440 * 100vw);
+}
+
 .recentRoomTitle {
+  text-align: center;
   color: #fff;
   font-size: calc(25 / 1440 * 100vw);
   font-style: normal;
-  font-weight: 400;
+  font-weight: 700;
   line-height: normal;
   margin: 0;
   position: relative; /* 텍스트를 오버레이 위에 배치 */
   z-index: 2; /* 텍스트를 오버레이 위에 배치 */
+  white-space: nowrap; /* 텍스트를 한 줄로 표시 */
+  overflow: hidden; /* 넘치는 텍스트를 숨김 */
+  text-overflow: ellipsis; /* 넘치는 부분을 '...'로 표시 */
+  width: calc(230 / 1440 * 100vw);
 }
 
 .recentRoomCount1 {
@@ -42,19 +56,30 @@
   font-weight: 400;
   line-height: normal;
   margin: 0;
+  margin-bottom: calc(3 / 1440 * 100vw);
   position: relative; /* 텍스트를 오버레이 위에 배치 */
   z-index: 2; /* 텍스트를 오버레이 위에 배치 */
+  white-space: nowrap; /* 텍스트를 한 줄로 표시 */
+  overflow: hidden; /* 넘치는 텍스트를 숨김 */
+  text-overflow: ellipsis; /* 넘치는 부분을 '...'로 표시 */
+  width: calc(230 / 1440 * 100vw);  
 }
 
 .recentRoomCount2 {
   color: #fff;
   font-size: calc(14 / 1440 * 100vw);
+  margin-bottom: calc(3 / 1440 * 100vw);
   font-style: normal;
   font-weight: 400;
   line-height: normal;
   margin: 0;
+  margin-bottom: calc(3 / 1440 * 100vw);
   position: relative; /* 텍스트를 오버레이 위에 배치 */
   z-index: 2; /* 텍스트를 오버레이 위에 배치 */
+  white-space: nowrap; /* 텍스트를 한 줄로 표시 */
+  overflow: hidden; /* 넘치는 텍스트를 숨김 */
+  text-overflow: ellipsis; /* 넘치는 부분을 '...'로 표시 */
+  width: calc(230 / 1440 * 100vw);
 }
 
 .recentRoomContent {
@@ -64,18 +89,23 @@
   font-weight: 400;
   line-height: normal;
   margin: 0;
+  margin-bottom: calc(3 / 1440 * 100vw);
   position: relative; /* 텍스트를 오버레이 위에 배치 */
   z-index: 2; /* 텍스트를 오버레이 위에 배치 */
+  white-space: nowrap; /* 텍스트를 한 줄로 표시 */
+  overflow: hidden; /* 넘치는 텍스트를 숨김 */
+  text-overflow: ellipsis; /* 넘치는 부분을 '...'로 표시 */
+  width: calc(230 / 1440 * 100vw);
 }
 
 .recentRoomEnterBtn {
+  font-family: "JalnanGothic", sans-serif;
   width: calc(120 / 1440 * 100vw);
-  height: calc(40 / 1440 * 100vw);
+  height: calc(30 / 1440 * 100vw);
   /* margin-top: calc(40 / 1440 * 100vw); */
   align-self: center;
-  font-size: calc(18 / 1440 * 100vw) !important;
+  font-size: calc(16 / 1440 * 100vw) !important;
   color: #ffffff;
-  font-family: "CustomFontGothic", sans-serif;
   cursor: pointer;
   border-radius: calc(25 / 1440 * 100vw);
   background: #494949;

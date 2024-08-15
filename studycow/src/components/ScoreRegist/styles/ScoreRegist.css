@@ -3,19 +3,21 @@
   max-width: calc(500 / 1440 * 100vw);
   margin: 0 auto;
   padding: calc(20 / 1440 * 100vw);
-  background-color: #f0f8f8;
+  background-color: #fff;
   border-radius: calc(8 / 1440 * 100vw);
 }
 
 .ScoreRegist-register,
 .ScoreRegist-mistake-register {
   padding: calc(15 / 1440 * 100vw);
-  background-color: #dceaea;
+  background-color: #fff;
   margin-bottom: calc(20 / 1440 * 100vw);
   border-radius: calc(8 / 1440 * 100vw);
 }
 
 .ScoreRegist-form {
+  font-weight: 500;
+  font-size: calc(12 / 1440 * 100vw);
   display: flex;
   align-items: center;
   justify-content: space-between; /* 내부 요소를 좌우 끝에 배치 */
@@ -23,12 +25,17 @@
 }
 
 .ScoreRegist-mistake-form {
+  font-weight: 500;
+  font-size: calc(12 / 1440 * 100vw);
   display: flex;
   align-items: center;
   margin-bottom: calc(10 / 1440 * 100vw);
 }
 
 .ScoreRegist-select {
+  height: calc(45 / 1440 * 100vw);
+  font-weight: 500;
+  font-size: calc(12 / 1440 * 100vw);
   width: 45%; /* 기존 너비를 유지 */
   margin-right: 2%;
   padding: calc(10 / 1440 * 100vw);
@@ -41,6 +48,9 @@
 }
 
 .ScoreRegist-select option {
+  height: calc(45 / 1440 * 100vw);
+  font-weight: 500;
+  font-size: calc(12 / 1440 * 100vw);
   white-space: normal; /* 선택된 항목의 텍스트가 잘리지 않고 줄바꿈되도록 설정 */
   word-wrap: break-word; /* 긴 단어를 적절하게 줄바꿈 */
   overflow-wrap: break-word; /* 텍스트가 박스를 넘어서지 않도록 줄바꿈 */
@@ -50,6 +60,9 @@
 
 .ScoreRegist-input-number,
 .ScoreRegist-input-date {
+  height: calc(45 / 1440 * 100vw);
+  font-weight: 500;
+  font-size: calc(12 / 1440 * 100vw);
   width: 45%; /* 각 요소가 동일한 공간을 차지하도록 설정 */
   margin-right: 2%;
   padding: calc(10 / 1440 * 100vw);
@@ -62,22 +75,32 @@
   width: calc(48 / 1440 * 100vw);
   height: calc(40 / 1440 * 100vw);
   margin-left: 2%;
-  background-color: #7c9ee3;
+  background-color: #B3B3B3;
+  color: white;
+  border: none;
+  border-radius: calc(4 / 1440 * 100vw);
+  cursor: pointer;
+}
+.ScoreRegist-add-btn:hover {
+  background-color: #A3A3A3;
+}
+
+
+.ScoreRegist-remove-btn {
+  width: calc(48 / 1440 * 100vw);
+  height: calc(40 / 1440 * 100vw);
+  margin-left: 2%;
+  font-weight: 700;
+  font-size: calc(13 / 1440 * 100vw);
+  background-color: #e57373;
   color: white;
   border: none;
   border-radius: calc(4 / 1440 * 100vw);
   cursor: pointer;
 }
 
-.ScoreRegist-remove-btn {
-  width: calc(48 / 1440 * 100vw);
-  height: calc(40 / 1440 * 100vw);
-  margin-left: 2%;
-  background-color: #e57373;
-  color: white;
-  border: none;
-  border-radius: calc(4 / 1440 * 100vw);
-  cursor: pointer;
+.ScoreRegist-remove-btn:hover {
+  background-color: #d64d4d; /* 호버 시 더 짙은 레드 */
 }
 
 .ScoreRegist-button-group {
@@ -88,19 +111,36 @@
 .ScoreRegist-register-btn {
   width: 48%;
   padding: calc(10 / 1440 * 100vw);
-  background-color: #7c9ee3;
+  font-weight: 700;
+  background-color: #494949;
   color: white;
+  font-size: calc(13 / 1440 * 100vw);
   border: none;
   border-radius: calc(4 / 1440 * 100vw);
   cursor: pointer;
+}
+.ScoreRegist-register-btn:hover {
+  background-color: #3A3A3A;
 }
 
 .ScoreRegist-cancel-btn {
   width: 48%;
   padding: calc(10 / 1440 * 100vw);
-  background-color: #ccc;
+  font-weight: 700;
+  font-size: calc(13 / 1440 * 100vw);
+  background-color: #B3B3B3;
   color: white;
   border: none;
   border-radius: calc(4 / 1440 * 100vw);
   cursor: pointer;
+}
+.ScoreRegist-cancel-btn:hover {
+  background-color: #A3A3A3;
+}
+
+
+.ScoreRegist-header {
+  font-weight: 500;
+  font-size: calc(18 / 1440 * 100vw);
+  font-family: "JalnanGothic", sans-serif;
 }

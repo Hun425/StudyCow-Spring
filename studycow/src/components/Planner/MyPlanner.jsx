@@ -84,7 +84,6 @@ const MyPlanner = () => {
         </div>
         <div className="MyPlanDatePlanbox">
           <div className="MyPlanDatePlanDate">
-            <div className="MyPlanEmptyCase" />
             <div className="MyPlanDateCase">
               <p>{date}</p> {/* 전역 상태의 날짜를 표시 */}
             </div>

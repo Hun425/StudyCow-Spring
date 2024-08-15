@@ -15,7 +15,7 @@ const AudioModal = ({ open, onClose, selectedAudio, onAudioChange, volume, onVol
     <Modal open={open} onClose={onClose}>
       <Box className="audioModalContainer">
         <div className="audioModalHeader">
-          <Typography variant="h6">배경음악 설정</Typography>
+          <Typography variant="h6" className="audioModalHeaderTitle">배경음악 설정</Typography>
           <IconButton onClick={onClose}>
             <Close />
           </IconButton>

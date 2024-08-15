@@ -5,16 +5,18 @@
 .learning-status-container {
   width: 100%;
   margin: 0;
-  height: auto;
-  min-height: calc(400 / 1440 * 100vw);
+  margin-left: calc(20 / 1440 * 100vw);
+  height: calc(400 / 1440 * 100vw);
   padding: calc(20 / 1440 * 100vw);
-  background-color: white;
-  border-radius: calc(8 / 1440 * 100vw);
-  box-shadow: 0 calc(4 / 1440 * 100vw) calc(8 / 1440 * 100vw) rgba(0, 0, 0, 0.1);
-  font-family: "CustomFontGothic", sans-serif;
+  background-color: #f0f4f8;
+  border-radius: calc(20 / 1440 * 100vw);
+  box-shadow: 0 calc(8 / 1440 * 100vw) calc(12 / 1440 * 100vw) rgba(0, 0, 0, 0.1);
 }
 
 .learning-status-title {
+  font-weight: 700;
+  margin-left: calc(20 / 1440 * 100vw);
+  padding-left: calc(20 / 1440 * 100vw);
   font-size: calc(24 / 1440 * 100vw);
   text-align: center;
   margin-bottom: calc(20 / 1440 * 100vw);
@@ -32,14 +34,14 @@
 }
 
 .learning-status-label {
-  font-size: calc(16 / 1440 * 100vw);
-  color: #333;
+  white-space: nowrap;
+  font-size: calc(13 / 1440 * 100vw);
+  font-weight: 500;
 }
 
 .learning-status-value {
-  font-size: calc(16 / 1440 * 100vw);
-  font-weight: bold;
-  color: #555;
+  font-size: calc(13 / 1440 * 100vw);
+  font-weight: 700;
 }
 
 /* 조언 섹션 스타일링 */
@@ -49,19 +51,21 @@
 }
 
 .learning-status-advice-button {
-  background-color: #007bff; /* 파란색 배경 */
+  background-color: #4a7aaf; /* 파란색 배경 */
   color: white;
   padding: calc(10 / 1440 * 100vw) calc(20 / 1440 * 100vw);
   border: none;
   border-radius: calc(5 / 1440 * 100vw);
   cursor: pointer;
-  font-size: calc(16 / 1440 * 100vw);
+  white-space: nowrap;
+  font-weight: 700;
+  font-size: calc(18 / 1440 * 100vw);
   transition: background-color 0.3s ease; /* 호버 시 부드러운 색상 전환 */
   box-shadow: 0 calc(4 / 1440 * 100vw) calc(6 / 1440 * 100vw) rgba(0, 0, 0, 0.1); /* 버튼에 약간의 그림자 추가 */
 }
 
 .learning-status-advice-button:hover {
-  background-color: #0056b3; /* 호버 시 배경색을 더 어둡게 */
+  background-color: #3d6491; /* 호버 시 배경색을 더 어둡게 */
 }
 
 .learning-status-advice-result {
@@ -69,7 +73,7 @@
   padding: calc(15 / 1440 * 100vw);
   background-color: #e9f7ef;
   border-radius: calc(5 / 1440 * 100vw);
-  font-size: calc(16 / 1440 * 100vw);
+  font-size: calc(13 / 1440 * 100vw);
+  font-weight: 700;
   text-align: left;
-  font-weight: bold; /* 텍스트를 볼드체로 설정 */
 }

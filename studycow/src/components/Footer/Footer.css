@@ -1,0 +1,22 @@
+.footer {
+    background-color: #191f28;
+    padding: calc(24 / 1440 * 100vw) calc(40 / 1440 * 100vw);
+  }
+  
+  .footer-text-gray {
+    color: gray;
+    font-size: calc(10 / 1440 * 100vw) !important;
+    font-weight: 500 !important;
+  }
+  
+  .footer-text-white {
+    padding-top: calc(5 / 1440 * 100vw) !important;
+    color: white;
+    font-size: calc(10 / 1440 * 100vw) !important;
+    font-family: "JalnanGothic", sans-serif !important;
+  }
+  
+  .footer-small {
+    margin-bottom: calc(2 / 1440 * 100vw) !important;
+  }
+  

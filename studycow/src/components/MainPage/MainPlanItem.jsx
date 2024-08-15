@@ -37,7 +37,7 @@ const MainPlanItem = () => {
         <h1 className="mainTodayTodo">오늘의 할일</h1>
         <MainTodayTodo todayPlans={todayPlans} />
         <button className="goToPlanPage" onClick={goPlanner}>
-          플래너로 바로가기
+          바로가기
         </button>
       </div>
     </div>

@@ -30,7 +30,7 @@ const SignUp = () => {
   return (
     <div className="form-container sign-up-container">
       <form onSubmit={handleSubmit}>
-        <h1>Sign Up</h1>
+        <h1>회원가입</h1>
         <input
           type="text"
           placeholder="닉네임"
@@ -61,7 +61,7 @@ const SignUp = () => {
         />
         {error && <p className="error">{error}</p>}
         {success && <p className="success">{success}</p>}
-        <button type="submit">Sign Up</button>
+        <button type="submit">가입</button>
       </form>
     </div>
   );

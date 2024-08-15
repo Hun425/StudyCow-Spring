@@ -1,5 +1,5 @@
 .singlePlanBox {
-  width: calc(470 / 1440 * 100vw);
+  width: calc(435 / 1440 * 100vw);
   margin: 0; /* 마진 0 */
   padding: 0; /* 패딩 0 */
   overflow-y: auto; /* 세로 스크롤바 표시 */
@@ -33,7 +33,8 @@
   display: flex; /* 체크박스와 텍스트를 일렬로 정렬 */
   align-items: center; /* 세로 방향 중앙 정렬 */
   justify-content: center;
-  font-size: calc(30 / 1440 * 100vw);
+  font-size: calc(18 / 1440 * 100vw);
+  font-weight: 600;
 }
 
 .singlePlanContent {
@@ -49,7 +50,8 @@
   display: flex;
   align-items: center;
   margin: 0;
-  font-size: calc(16 / 1440 * 100vw); /* 글자 크기 설정 */
+  font-size: calc(18 / 1440 * 100vw);
+  font-weight: 600;
 }
 
 /* .singlePlanContent label { } */
@@ -71,7 +73,8 @@
 
 .singlePlanStudyTime {
   margin-left: calc(8 / 1440 * 100vw); /* 체크박스와 시간 텍스트 사이의 간격 */
-  font-size: calc(16 / 1440 * 100vw); /* 시간 텍스트 크기 */
+  font-size: calc(18 / 1440 * 100vw);
+  font-weight: 600;
 }
 
 .singlePlanButtonBox {
@@ -109,7 +112,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: 50%; /* 텍스트 중앙에 위치 */
+  top: 60%; /* 텍스트 중앙에 위치 */
   height: calc(2 / 1440 * 100vw); /* 선의 두께 */
   background-color: gray; /* 선의 색상 */
   z-index: 1; /* 텍스트 위에 표시 */

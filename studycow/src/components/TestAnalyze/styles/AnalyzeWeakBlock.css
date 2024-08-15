@@ -1,5 +1,5 @@
 .analyzeWeakBlock {
-  width: 35%;
+  width: 60%;
   height: auto;
   padding: calc(20 / 1440 * 100vw);
   box-sizing: border-box; /* 패딩을 너비에 포함 */
@@ -11,6 +11,9 @@
 
 .analyzeWeakBlock h4 {
   text-align: center;
+  font-size: calc(24 / 1440* 100vw);
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 .weaknessList {

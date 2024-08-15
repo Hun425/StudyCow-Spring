@@ -9,13 +9,11 @@ const Main_login = () => {
   return (
     <>
     <div className="mainTotalContainer">
+      <div className="MainPageSideBar">
+        <UserGradeImage/>
+        <MainRecentRoom />
+      </div>
       <div className="mainInfoPart">
-        <div className="mainLeftContainer">
-          <div className="charImgPart">
-            <UserGradeImage /> {/* 유저 등급 이미지 추가 */}
-          </div>
-          <MainRecentRoom />
-        </div>
         <div className="mainRightContainer">
           <div className="mainRightUpperContainer">
             <MainPlanItem />

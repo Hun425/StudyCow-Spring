@@ -5,4 +5,5 @@
   margin-top: 0 !important;
   width: 100vw;
   min-height: 100vh; /* 페이지 전체 높이에 그라데이션 적용 */
+  padding: 0 calc(180 / 1440 * 100vw);
 }

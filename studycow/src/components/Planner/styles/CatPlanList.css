@@ -6,6 +6,7 @@
 }
 
 .singleSubNoPlan {
+  font-family: "JalnanGothic", sans-serif;
   font-size: calc(16 / 1440 * 100vw); /* 기본 폰트 크기 설정 */
   text-align: center;
 }
@@ -18,12 +19,13 @@
   border-bottom: calc(1 / 1440 * 100vw) solid red; /* 빨간 밑줄 */
   padding-top: calc(10 / 1440 * 100vw);
   position: relative; /* ::before 가상 요소를 위해 추가 */
-  font-size: calc(16 / 1440 * 100vw); /* 기본 폰트 크기 설정 */
+  font-weight: 600 !important;
+  font-size: calc(18 / 1440 * 100vw); /* 기본 폰트 크기 설정 */
 }
 
 .MyPlanCatSelectControl{
-  width: calc(150 / 1440 * 100vw) !important;
-  height: calc(35 / 1440 * 100vw) !important;
+  width: calc(90 / 1440 * 100vw) !important;
+  height: calc(18 / 1440 * 100vw) !important;
   padding: calc(6 / 1440 * 100vw) calc(12 / 1440 * 100vw) !important;
   border-radius: calc(6 / 1440 * 100vw);
 }
@@ -38,18 +40,22 @@
 
 .singleSubPlanStudyTime {
   margin-left: calc(8 / 1440 * 100vw); /* 체크박스와 시간 텍스트 사이의 간격 */
-  font-size: calc(16 / 1440 * 100vw); /* 시간 텍스트 크기 */
-  font-weight: normal; /* 폰트 두께 설정 */
+  font-weight: 600;
+  font-size: calc(18 / 1440 * 100vw); /* 텍스트의 기본 폰트 크기 *
+  white-space: nowrap; /* 텍스트를 한 줄로 표시 */
+  overflow: hidden; /* 넘치는 텍스트를 숨김 */
+  text-overflow: ellipsis; /* 넘치는 부분을 '...'로 표시 */
+  width: calc(170 / 1440 * 100vw);
 }
 
 .singleSubPlanContentText {
   margin: 0;
-  font-size: calc(16 / 1440 * 100vw); /* 텍스트의 기본 폰트 크기 */
-  font-weight: normal; /* 텍스트 두께 */
+  font-size: calc(18 / 1440 * 100vw); /* 텍스트의 기본 폰트 크기 */
+  font-weight: 600;
   white-space: nowrap; /* 텍스트를 한 줄로 표시 */
   overflow: hidden; /* 넘치는 텍스트를 숨김 */
   text-overflow: ellipsis; /* 넘치는 부분을 '...'로 표시 */
-  width: calc(750 / 1440 * 100vw);
+  width: calc(520 / 1440 * 100vw);
 }
 
 .singleSubButtonBox {
@@ -80,7 +86,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: 50%; /* 텍스트 중앙에 위치 */
+  top: 60%; /* 텍스트 중앙에 위치 */
   height: calc(2 / 1440 * 100vw); /* 선의 두께 */
   background-color: gray; /* 선의 색상 */
   z-index: 1; /* 텍스트 위에 표시 */

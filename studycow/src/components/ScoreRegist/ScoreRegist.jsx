@@ -188,7 +188,7 @@ const ScoreRegist = ({ onCancel, onSubmit }) => {
   return (
     <div className="ScoreRegist-container">
       <div className="ScoreRegist-register">
-        <h3>성적 등록</h3>
+        <h3 className="ScoreRegist-header">성적 등록</h3>
         <div className="ScoreRegist-form">
           <select
             className="ScoreRegist-select"
@@ -245,7 +245,7 @@ const ScoreRegist = ({ onCancel, onSubmit }) => {
       </div>
 
       <div className="ScoreRegist-mistake-register">
-        <h3>오답 등록(선택사항)</h3>
+        <h3 className="ScoreRegist-header">오답 등록(선택사항)</h3>
         {wrongs.map((wrong, index) => (
           <div key={index} className="ScoreRegist-mistake-form">
             <select

@@ -58,7 +58,7 @@ const Main_Unlogin = () => {
           />
         </Carousel.Item>
       </Carousel>
-      <button className="start-button" onClick={goHome}>START 🚀</button>
+      <button className="start-button" onClick={goHome}>시작하기 🚀</button>
     </>
   );
 };

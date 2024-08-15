@@ -53,3 +53,7 @@
 .MuiSlider-root {
   color: #B4C8BB;
 }
+
+.audioModalHeaderTitle {
+  font-family: "JalnanGothic", sans-serif !important;
+}

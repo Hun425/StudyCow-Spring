@@ -27,7 +27,8 @@
 .auto-create-form-group label {
   display: block;
   margin-bottom: calc(5 / 1440 * 100vw);
-  font-weight: bold;
+  font-weight: 700;
+  font-size: calc(14 / 1440 * 100vw);
 }
 
 .auto-create-form-group input {
@@ -36,6 +37,8 @@
   box-sizing: border-box;
   border: calc(1 / 1440 * 100vw) solid #ddd;
   border-radius: calc(4 / 1440 * 100vw);
+  font-weight: 500;
+  font-size: calc(12 / 1440 * 100vw);
 }
 
 .auto-create-form-buttons {
@@ -53,6 +56,8 @@
 }
 
 .auto-create-register-button {
+  font-weight: 700;
+  font-size: calc(13 / 1440 * 100vw);
   background-color: #4caf50;
   color: white;
 }
@@ -62,10 +67,20 @@
 }
 
 .auto-create-close-button {
-  background-color: #f44336;
+  font-weight: 700;
+  font-size: calc(13 / 1440 * 100vw);
+  background-color: #B3B3B3;
   color: white;
 }
 
 .auto-create-close-button:hover {
-  background-color: #d32f2f;
+  background-color: #A3A3A3;
+}
+
+
+.auto-create-modal-content-title {
+  font-weight: 500;
+  font-size: calc(18 / 1440 * 100vw);
+  font-family: "JalnanGothic", sans-serif;
+  margin-bottom: calc(20 / 1440 * 100vw);
 }

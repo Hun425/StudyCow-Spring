@@ -10,7 +10,7 @@
   box-sizing: border-box;
   background-color: rgba(255, 255, 255, 0.6); /* 흰색 배경에 60% 불투명도 */
   backdrop-filter: blur(calc(10 / 1440 * 100vw)); /* 배경 블러 처리 */
-  font-family: "CustomFont", sans-serif;
+  font-family: "Jalnan", sans-serif;
   text-decoration: none !important;
 }
 
@@ -26,7 +26,7 @@
 }
 
 .navItem p {
-  font-size: calc(15 / 1440 * 100vw);
+  font-size: calc(18 / 1440 * 100vw);
   margin: 0;
 }
 
@@ -36,7 +36,7 @@
 }
 
 .loginItem p {
-  font-size: calc(15 / 1440 * 100vw);
+  font-size: calc(18 / 1440 * 100vw);
   margin: 0;
 }
 

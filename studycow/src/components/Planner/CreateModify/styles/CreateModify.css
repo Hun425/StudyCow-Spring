@@ -9,6 +9,7 @@
   justify-content: center;
   align-items: center;
   z-index: 1000; /* z-index 설정 추가 */
+  font-weight: 700;
 }
 
 .CreateModify-modal-content {
@@ -37,6 +38,8 @@
   width: calc(100 / 1440 * 100vw); /* 레이블의 너비를 고정합니다 */
   margin-right: calc(10 / 1440 * 100vw);
   text-align: right; /* 레이블을 오른쪽 정렬합니다 */
+  font-weight: 700;
+  font-size: calc(14 / 1440 * 100vw);
 }
 
 .CreateModify-form-group input,
@@ -47,6 +50,8 @@
   box-sizing: border-box;
   border: calc(1 / 1440 * 100vw) solid #ccc;
   border-radius: calc(4 / 1440 * 100vw);
+  font-weight: 500;
+  font-size: calc(12 / 1440 * 100vw);
 }
 
 .CreateModify-form-group textarea {
@@ -59,7 +64,7 @@
   appearance: none;
   width: calc(100% - calc(160 / 1440 * 100vw)); /* 슬라이더 길이를 조정했습니다 */
   height: calc(8 / 1440 * 100vw);
-  background: #ddd;
+  background: #A3A3A3;
   outline: none;
   border-radius: calc(4 / 1440 * 100vw);
   cursor: pointer;
@@ -70,7 +75,7 @@
   appearance: none;
   width: calc(20 / 1440 * 100vw);
   height: calc(20 / 1440 * 100vw);
-  background: #4a90e2;
+  background: #494949;
   cursor: pointer;
   border-radius: 50%;
 }
@@ -78,7 +83,7 @@
 .CreateModify-form-group input[type="range"]::-moz-range-thumb {
   width: calc(20 / 1440 * 100vw);
   height: calc(20 / 1440 * 100vw);
-  background: #4a90e2;
+  background: #494949;
   cursor: pointer;
   border-radius: 50%;
 }
@@ -88,6 +93,8 @@
   width: calc(50 / 1440 * 100vw); /* 시간 표시의 너비를 조정합니다 */
   text-align: left; /* 시간 표시를 왼쪽 정렬합니다 */
   white-space: nowrap; /* 줄바꿈을 방지합니다 */
+  font-weight: 700;
+  font-size: calc(14 / 1440 * 100vw);
 }
 
 .CreateModify-form-buttons {
@@ -107,16 +114,41 @@
 }
 
 .CreateModify-register-button {
-  background-color: #4a90e2;
+  font-weight: 700;
+  background-color: #494949;
   color: white;
+  font-size: calc(13 / 1440 * 100vw);
+}
+
+.CreateModify-register-button:hover {
+  background-color: #3A3A3A;
 }
 
 .CreateModify-autocomplete-button {
-  background-color: #ffccff;
-  color: black;
+  font-weight: 700;
+  background-color: #494949;
+  color: white;
+  font-size: calc(13 / 1440 * 100vw);
+}
+.CreateModify-autocomplete-button:hover {
+  background-color: #3A3A3A;
 }
 
 .CreateModify-cancel-button {
-  background-color: #f86c6b;
+  font-weight: 700;
+  font-size: calc(13 / 1440 * 100vw);
+  background-color: #B3B3B3;
   color: white;
+}
+
+
+.CreateModify-cancel-button:hover {
+  background-color: #A3A3A3;
+}
+
+.CreateModify-modal-content-title {
+  font-weight: 500;
+  font-size: calc(18 / 1440 * 100vw);
+  font-family: "JalnanGothic", sans-serif;
+  margin-bottom: calc(20 / 1440 * 100vw);
 }
