@@ -50,7 +50,7 @@
   flex-direction: column;
   align-items: center;
   position: sticky;
-  top: calc(60 / 1440 * 100vw);  /* 스크롤 시 고정되는 위치 */
+  top: calc(120 / 1440 * 100vw);  /* 스크롤 시 고정되는 위치 */
   min-width: calc(300 / 1440 * 100vw);  /* 최소 폭 설정 */
   margin-left: calc(60 / 1440 * 100vw);
 }

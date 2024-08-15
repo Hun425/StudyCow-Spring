@@ -49,7 +49,7 @@
   height: auto;
   border-radius: 20px;
   position: sticky;
-  top: calc(200 / 1440 * 100vw);
+  top: calc(247 / 1440 * 100vw);
 }
 
 /* 본문 스타일 */

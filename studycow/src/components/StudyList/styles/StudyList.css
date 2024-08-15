@@ -267,19 +267,35 @@
 }
 
 .studyListRankNumber {
-  font-weight: bold;
+  font-size: calc(24 / 1440 * 100vw) !important;
 }
 
 .studyListRankUserNick {
   flex-grow: 1;
   text-align: center;
-  font-weight: bold;
-  font-size: 1.2em;
+  font-size: calc(24 / 1440 * 100vw) !important;
 }
 
 .studyListRankTime {
   width: 30%;
   text-align: right;
-  font-size: 1em;
+  font-size: calc(24 / 1440 * 100vw) !important;
   color: #f0f0f0;
+}
+
+.expandedRankItem {
+  display: flex;
+  justify-content: space-between;
+  padding: calc(10 / 1440 * 100vw) calc(30 / 1440 * 100vw);
+  background-color: #a1c4f7;
+  border-radius: calc(20 / 1440 * 100vw);
+  margin: calc(10 / 1440 * 100vw) 0;
+}
+
+.expandedRankNumber,
+.expandedRankUserNick,
+.expandedRankTime {
+  font-family: "JalnanGothic", sans-serif !important;
+  font-size: calc(20 / 1440 * 100vw) !important;
+  font-weight: 500 !important;
 }
