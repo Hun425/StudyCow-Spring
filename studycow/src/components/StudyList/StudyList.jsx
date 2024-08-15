@@ -220,7 +220,7 @@ const StudyList = () => {
                     variant="body1"
                     className="expandedRankTime"
                   >
-                    총 공부 시간: {formatStudyTime(data.sumTime)}
+                    {formatStudyTime(data.sumTime)}
                   </StyledTypography>
                 </Box>
               ))}
