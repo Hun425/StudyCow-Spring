@@ -1,7 +1,7 @@
 import "./styles/StudyRoomItem.css";
 import { useState } from "react";
 import StudyEnterModal from "../StudyEnter/StudyEnterModal";
-
+import defaultRoomImg from "../../assets/defaultRoomImage.jpeg"
 const StudyRoomItem = ({ roomId, title, thumb, maxPerson, nowPerson }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -16,7 +16,7 @@ const StudyRoomItem = ({ roomId, title, thumb, maxPerson, nowPerson }) => {
   return (
     <div
       className="studyRoomContainer"
-      style={{ backgroundImage: `url(${thumb})` }}
+      style={{ backgroundImage: `url(${thumb || defaultRoomImg})` }}
     >
       <p className="studyRoomTitle">{title}</p>
       <p className="studyRoomCount">

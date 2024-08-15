@@ -2,7 +2,6 @@
   width: calc(180 / 1440 * 100vw);
   height: calc(120 / 1440 * 100vw);
   border-radius: calc(10 / 1440 * 100vw);
-  background: url("../../../assets/defaultRoomImage.jpeg") !important; /* 기본 배경 색 */
   background-size: cover !important; /* 배경 이미지가 컨테이너를 덮도록 설정 */
   background-position: center !important; /* 배경 이미지 중앙 정렬 */
   padding: calc(10 / 1440 * 100vw);

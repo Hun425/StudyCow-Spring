@@ -1,6 +1,7 @@
 import "./styles/RecentRoomItem.css";
 import { useState } from "react";
 import StudyEnterModal from "../StudyEnter/StudyEnterModal";
+import defaultRoomImg from "../../assets/defaultRoomImage.jpeg"
 
 const RecentRoomItem = ({
   roomId,
@@ -23,7 +24,7 @@ const RecentRoomItem = ({
   return (
     <div
       className="recentRoomContainer"
-      style={{ backgroundImage: `url(${thumb})` }}
+      style={{ backgroundImage: `url(${thumb || defaultRoomImg})` }}
     >
       <div className="mainRecentRoomInfo">
         <p className="recentRoomTitle">{title}</p>
