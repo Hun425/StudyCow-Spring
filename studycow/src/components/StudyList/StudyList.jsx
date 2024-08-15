@@ -207,13 +207,19 @@ const StudyList = () => {
             <Box className="expandedRankInfo">
               {yesterdayRankInfo?.rankUser?.slice(0, 3).map((data) => (
                 <Box key={data.rank} className="expandedRankItem">
-                  <StyledTypography variant="h6">
+                  <StyledTypography variant="h6" className="expandedRankNumber">
                     {data.rank}위
                   </StyledTypography>
-                  <StyledTypography variant="body1">
+                  <StyledTypography
+                    variant="body1"
+                    className="expandedRankUserNick"
+                  >
                     닉네임: {data.userNickName}
                   </StyledTypography>
-                  <StyledTypography variant="body1">
+                  <StyledTypography
+                    variant="body1"
+                    className="expandedRankTime"
+                  >
                     총 공부 시간: {formatStudyTime(data.sumTime)}
                   </StyledTypography>
                 </Box>
