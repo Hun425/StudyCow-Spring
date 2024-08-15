@@ -21,7 +21,7 @@ const SignIn = () => {
   return (
     <div className="form-container sign-in-container">
       <form onSubmit={handleSubmit}>
-        <h1>Sign in</h1>
+        <h1>로그인</h1>
         <input
           type="email"
           placeholder="Email"
@@ -37,7 +37,7 @@ const SignIn = () => {
           required
         />
         {error && <p className="error">{error}</p>}
-        <button type="submit">Sign In</button>
+        <button type="submit">로그인</button>
       </form>
     </div>
   );

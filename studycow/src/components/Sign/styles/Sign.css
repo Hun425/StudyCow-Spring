@@ -3,6 +3,7 @@
 }
 
 .sign-container {
+  font-family: "JalnanGothic", sans-serif;
   background: #f6f5f7;
   display: flex;
   justify-content: center;
@@ -13,11 +14,12 @@
 }
 
 .sign-container h1 {
-  font-weight: bold;
   margin: 0;
+  font-size: calc(40 / 1440 * 100vw);
 }
 
 .sign-container h2 {
+  font-size: calc(24 / 1440 * 100vw);
   text-align: center;
 }
 
@@ -30,7 +32,7 @@
 }
 
 .sign-container span {
-  font-size: calc(12 / 1440 * 100vw);
+  font-size: calc(14 / 1440 * 100vw);
 }
 
 .sign-container a {
@@ -45,10 +47,10 @@
   border: calc(1 / 1440 * 100vw) solid #7092be;
   background-color: #7092be;
   color: #ffffff;
-  font-size: calc(12 / 1440 * 100vw);
-  font-weight: bold;
+  font-size: calc(14 / 1440 * 100vw);
+  font-weight: 500;
   padding: calc(12 / 1440 * 100vw) calc(45 / 1440 * 100vw);
-  letter-spacing: calc(1 / 1440 * 100vw);
+  letter-spacing: calc(2 / 1440 * 100vw);
   text-transform: uppercase;
   transition: transform 80ms ease-in;
 }
@@ -80,6 +82,7 @@
 .sign-container input {
   background-color: #eee;
   border: none;
+  font-size: calc(14 / 1440 * 100vw);
   padding: calc(12 / 1440 * 100vw) calc(15 / 1440 * 100vw);
   margin: calc(8 / 1440 * 100vw) 0;
   width: 100%;

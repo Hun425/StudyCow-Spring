@@ -1,5 +1,7 @@
 .carousel-container {
   position: relative;
+  font-family: "JalnanGothic", sans-serif;
+  font-weight: 500;
 }
 
 .d-block {
@@ -18,7 +20,7 @@
 .recommendation-text p {
   display: block; /* 각 단어를 블록 요소로 만들어 줄바꿈 */
   margin: calc(5 / 1440 * 100vw) 0; /* 단어 간의 간격 조정 */
-  font-size: calc(50 / 1440 * 100vw); /* 글자 크기 조정 */
+  font-size: calc(40 / 1440 * 100vw); /* 글자 크기 조정 */
   color: #ffffff; /* 글자 색상 */
   opacity: 0; /* 초기 상태에서 투명 */
   animation: fadeIn 0.5s forwards; /* 애니메이션 적용 */

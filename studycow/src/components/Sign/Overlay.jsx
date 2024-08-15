@@ -12,7 +12,7 @@ const Overlay = ({ setRightPanelActive }) => {
             id="signIn"
             onClick={() => setRightPanelActive(false)}
           >
-            Sign In
+            로그인
           </button>
         </div>
         <div className="overlay-panel overlay-right">
@@ -23,7 +23,7 @@ const Overlay = ({ setRightPanelActive }) => {
             id="signUp"
             onClick={() => setRightPanelActive(true)}
           >
-            Sign Up
+            회원가입
           </button>
         </div>
       </div>
