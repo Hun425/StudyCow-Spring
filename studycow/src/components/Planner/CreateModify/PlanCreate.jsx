@@ -160,7 +160,7 @@ const PlanCreate = ({ show, onClose }) => {
   return (
     <div className="CreateModify-modal-overlay">
       <div className="CreateModify-modal-content">
-        <h2>플래너 생성</h2>
+        <p className="CreateModify-modal-content-title">플래너 생성</p>
         <form className="CreateModify-modal-form" onSubmit={handleSubmit}>
           <div className="CreateModify-form-group">
             <label htmlFor="subject">과목</label>

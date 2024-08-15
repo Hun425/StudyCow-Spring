@@ -34,3 +34,7 @@
   font-size: calc(16 / 1440 * 100vw);
   font-family: "JalnanGothic", sans-serif !important;
 }
+
+.roomDetailInfoSetting {
+  font-size: calc(20 / 1440 * 100vw) !important;
+}

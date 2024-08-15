@@ -60,7 +60,7 @@ const AutoCreate = ({ show, onClose }) => {
       {loading && <LoadingPage />} {/* 로딩 화면 표시 */}
       <div className="auto-create-modal-overlay">
         <div className="auto-create-modal-content">
-          <h2>AI 플래너 자동 생성</h2>
+          <h2 className="auto-create-modal-content-title">AI 플래너 자동 생성</h2>
           <div className="auto-create-form-group">
             <label>시작 날짜</label>
             <input
