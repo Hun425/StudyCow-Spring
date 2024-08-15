@@ -230,6 +230,8 @@
   position: relative;
   height: calc(80 / 1440 * 100vw);
   padding: calc(10 / 1440 * 100vw);
+  font-family: "JalnanGothic", sans-serif !important;
+  font-size: calc(20 / 1440 * 100vw) !important;
 }
 
 /* 랭킹 아이템 스타일 (변경 없음) */
