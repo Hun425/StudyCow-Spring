@@ -61,7 +61,7 @@
 
 <div align="center">
 
-| **채기훈** | **황민채** |
+| **채기훈** |  |
 | :------: |  :------: |
 | [<img src="https://avatars.githubusercontent.com/Hun425?v=4" height=150 width=150><br/> @Hun425](https://github.com/Hun425) | [<img src="https://avatars.githubusercontent.com/trick0846?v=4" height=150 width=150> <br/> @trick0846](https://github.com/trick0846) |
 
@@ -127,11 +127,11 @@
 
 ### JDK17
 
-- record 기능을 사용한 Dto 및 instancof 패턴 매칭을 위한 JDK17버전 
+- record 기능을 사용한 Dto 및 instancof 패턴 매칭을 위한 JDK17버전 채택
 
 ### React
 
-- Vue.js 보다 자유로운 편집 및 커스텀을 위한 React 
+- Vue.js 보다 자유로운 편집 및 커스텀을 위한 React 선택
 
 
 ### 브랜치 전략
@@ -143,24 +143,37 @@
 
 <br>
 
-## 3. DB 설계
+## 3. 기획 과정
+
+
+| 요구사항 분석 |
+|----------|
+|[C202 기획 - 요구사항 분석 최종.pdf](https://github.com/user-attachments/files/16845680/C202.-.pdf)|
+
+| 기능 정의서 + IA |
+|----------|
+|[C202 기획 - 기능 정의.pdf](https://github.com/user-attachments/files/16845763/C202.-.3.pdf)|
+
+<br>
+
+## 4. DB 설계 
 
 
 | ERD |
 |----------|
-|![StudyCow_ERD__1_](/uploads/07b4c9a8b02cdf507700b6a59f9358a7/StudyCow_ERD__1_.png)|
+|![공부했소](https://github.com/user-attachments/assets/07e5352e-2412-40f4-a028-c31aaa8cea1c)|
 
 ## 4. 일정 관리
 
 | WBS |
 |----------|
-|[C202_기획_-_WBS.pdf](/uploads/8c483dad261c1ec352e4ac540b12852b/C202_기획_-_WBS.pdf)|
+|[C202 기획 - WBS.pdf](https://github.com/user-attachments/files/16845740/C202.-.WBS.1.pdf)|
 
 
 
 <br>
 
-## 4. 역할 분담
+## 5. 역할 분담
 
     
 ### 👻채기훈 (조장)
@@ -178,15 +191,10 @@
 
 
 
-### 🐬황민채
-
-
-- **기능**
-    - 프론트앤드 SPA View 및 Component 구성, CSS 디자인 및 Props 연결, 비동기 동작 처리
     
 <br>
 
-## 5. 개발 기간 및 작업 관리
+## 6. 개발 기간 및 작업 관리
 
 ### 개발 기간
 
@@ -284,10 +292,10 @@
 <br>
 
 
-### 캠스터디 내부페이지
+### ⭐ 캠스터디 내부페이지
 
 <br>
-
+⭐
 | 손 감지 & 타이밍 기능 |
 |----------|
 ||
@@ -295,7 +303,7 @@
 - 캠에 손이 검출된다면, 자동으로 타이머가 시작되고 1분단위로 랭킹이 기록됩니다.
 
 <br>
-
+⭐
 | 실시간 채팅 & 랭킹 플래너 |
 |----------|
 |![캠스터디 채팅 랭킹 플래너](https://github.com/user-attachments/assets/c6783faf-7d48-417a-be5b-931eb75e9aba)|
@@ -334,7 +342,7 @@
 - 플래너를 수정 및 삭제 할 수 있습니다.
 
 <br>
-
+⭐
 |플래너 자동화|
 |----------|
 |![플래너 자동화](https://github.com/user-attachments/assets/c95fc7b4-4038-4f1e-bf7d-ecec7ce890de)|
@@ -413,6 +421,7 @@
 
 
 ## 9. 개선 목표
+
 채기훈 
 - 더 자세한 테스트 코드 (단위, 통합 구분)
 - 서버 과부하 테스트 및 최적화 
@@ -422,10 +431,10 @@
 
 ## 10. 프로젝트 후기
 
-
-
 ### 👻 채기훈
-
+- 백엔드와 인프라를 담당하면서, 새로운 기술들을 적용해볼 수 있어 매우 유익한 경험이었습니다. 특히 CI/CD 자동화, 실시간 채팅 API 구현, 신체 인식 AI 적용 등 다양한 기술을 실제 프로젝트에 적용해볼 수 있어 기술적으로 많은 성장을 이루었습니다.
+- 팀원들과의 협업 과정에서 의사소통의 중요성을 다시 한 번 깨달았습니다. Jira와 WBS를 활용한 업무 분담, Notion을 통한 API 명세 공유 등 체계적인 프로젝트 관리 방법을 익힐 수 있었습니다.
+- 프로젝트 진행 중 여러 기술적 난관에 부딪혔지만, 이를 해결해 나가는 과정에서 문제 해결 능력이 크게 향상되었습니다. 특히 트러블 슈팅 경험을 블로그에 정리하면서 지식을 체계화할 수 있었습니다.
 
 
 <br>
