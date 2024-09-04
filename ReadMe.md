@@ -156,12 +156,17 @@
 
 <br>
 
-## 4. DB 설계 
+## 4. DB 설계 & 객체 다이어그램
 
 
 | ERD |
 |----------|
 |![공부했소](https://github.com/user-attachments/assets/07e5352e-2412-40f4-a028-c31aaa8cea1c)|
+
+
+| 객체 다이어그램 |
+|----------|
+|![실버오더ERD (1)](https://github.com/user-attachments/assets/0d29f0d6-86bd-4ed0-8066-de3dd91d8b5c)|
 
 ## 4. 일정 관리
 
