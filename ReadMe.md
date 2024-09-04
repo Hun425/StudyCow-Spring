@@ -166,7 +166,7 @@
 
 | 객체 다이어그램 |
 |----------|
-|![실버오더ERD (1)](https://github.com/user-attachments/assets/0d29f0d6-86bd-4ed0-8066-de3dd91d8b5c)|
+|![특화_C202_설계-객체_다이어그램_예시 drawio](https://github.com/user-attachments/assets/3a783edf-e573-444f-8aa4-58c6edecac72)|
 
 ## 4. 일정 관리
 
