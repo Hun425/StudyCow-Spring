@@ -61,9 +61,10 @@
 
 <div align="center">
 
-| **채기훈** |  |
-| :------: |  :------: |
-| [<img src="https://avatars.githubusercontent.com/Hun425?v=4" height=150 width=150><br/> @Hun425](https://github.com/Hun425) | [<img src="https://avatars.githubusercontent.com/trick0846?v=4" height=150 width=150> <br/> @trick0846](https://github.com/trick0846) |
+| **채기훈** | **박동민** | **윤성준** | **김정환** | **박봉균** | **노명환** |
+| :------: | :------: | :------: | :------: | :------: | :------: |
+| [<img src="https://avatars.githubusercontent.com/Hun425?v=4" height=150 width=150><br/> @Hun425](https://github.com/Hun425) | [<img src="https://avatars.githubusercontent.com/trick0846?v=4" height=150 width=150><br/> @박동민](https://github.com/trick0846) | [<img src="https://avatars.githubusercontent.com/trick0846?v=4" height=150 width=150><br/> @윤성준]() | [<img src="https://avatars.githubusercontent.com/trick0846?v=4" height=150 width=150><br/> @김정환]() | [<img src="https://avatars.githubusercontent.com/trick0846?v=4" height=150 width=150><br/> @박봉균]() | [<img src="https://avatars.githubusercontent.com/trick0846?v=4" height=150 width=150><br/> @노명환]() |
+
 
 </div>
 
